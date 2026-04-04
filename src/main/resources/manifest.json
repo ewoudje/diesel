@@ -1,0 +1,32 @@
+{
+    "Group": "DieselGroup",
+    "Name": "DieselPlugin",
+    "Version": "0.0.0",
+    "Description": "Epic robot adventure play now free",
+    "Authors": [
+        {
+            "Name": "ewoudje",
+            "Url": "https://github.com/ewoudje"
+        },
+        {
+            "Name": "rainyatrium",
+            "Email": "ana@rainyatrium.net",
+            "Url": "https://rainyatrium.net"
+        },
+        {
+            "Name": "ComicalSomber",
+            "Url": "https://github.com/ComicalSomber"
+        },
+        {
+            "Name": "octofoss",
+            "Url": "https://metaphorical.monster/octofoss/"
+        }
+    ],
+    "Website": "https://your-plugin-website.com",
+    "DisabledByDefault": false,
+    "IncludesAssetPack": false,
+    "Dependencies": {},
+    "OptionalDependencies": {},
+    "ServerVersion": "*",
+    "Main": "dev.hytalemodding.DieselPlugin"
+}
