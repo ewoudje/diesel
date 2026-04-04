@@ -1,0 +1,6 @@
+stateReader.title = State Reader
+stateReader.currentState = Current State:
+stateReader.logicId = Logic ID:
+stateReader.apply = Apply
+
+stateWriter.title = State Writer

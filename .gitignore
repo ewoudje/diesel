@@ -43,4 +43,6 @@ build/
 .gradle
 .kotlin
 devserver
+/hyassets/
+/myassets/
 /.idea/

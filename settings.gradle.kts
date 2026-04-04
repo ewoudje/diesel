@@ -1,12 +1,10 @@
-rootProject.name = "dev.dieselgame"
+import dev.scaffoldit.hytale.wire.HytaleManifest
+
+rootProject.name = "dieselgame"
 
 plugins {
-    // See documentation on https://scaffoldit.dev
     id("dev.scaffoldit") version "0.2.+"
 }
-
-// Would you like to do a split project?
-// Create a folder named "common", then configure details with `common { }`
 
 hytale {
     usePatchline("release")
@@ -21,8 +19,16 @@ hytale {
     }
 
     manifest {
-        Group = "DieselGroup"
+        Group = "nsane"
         Name = "DieselPlugin"
-        Main = "dev.hytalemodding.DieselPlugin"
+        Main = "com.nsane.diesel.DieselPlugin"
+        IncludesAssetPack = true
+        Description = "Epic robot adventure play now free"
+        Authors = listOf(
+            HytaleManifest.Author("ewoudje", "me@ewoudje.com", "https://ewoudje.com"),
+            HytaleManifest.Author("rainyatrium", "ana@rainyatrium.net", "https://rainyatrium.net"),
+            HytaleManifest.Author("ComicalSomber", "https://github.com/ComicalSomber"),
+            HytaleManifest.Author("octofoss", "https://metaphorical.monster/octofoss/"),
+        )
     }
 }

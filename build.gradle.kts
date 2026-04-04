@@ -1,13 +1,38 @@
-/**
- * NOTE: This is entirely optional and basics can be done in `settings.gradle.kts`
- */
+plugins {
+    kotlin("jvm")
+    id("com.gradleup.shadow") version "9.3.1"
+}
+
+group = "com.nsane.diesel"
+version = "1.0-SNAPSHOT"
 
 repositories {
-    // Any external repositories besides: MavenLocal, MavenCentral, HytaleMaven, and CurseMaven
+    mavenCentral()
+    maven {
+        name = "hytale"
+        url = uri("https://maven.hytale.com/release")
+    }
 }
 
 dependencies {
-    // Any external dependency you also want to include
+    compileOnly("com.hypixel.hytale:Server:+")
+
+    implementation("io.github.hytalekt:kytale:+")
+    implementation("io.github.hytalekt:kytale-serialization:+")
+    implementation("io.github.hytalekt:kytale-coroutines:+")
+}
+
+kotlin {
+    jvmToolchain(25)
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(25))
+    }
 }
 
 //move the jar to your hytale mods directory
@@ -24,4 +49,18 @@ tasks.named("build") {
         jar?.copyTo(file(finalpath),overwrite = true)
         println("MOVED DEV JAR TO ${finalpath}")
     }
+}
+
+tasks.shadowJar {
+    // Relocate Kytale
+    relocate("io.github.hytalekt.kytale", "com.nsane.diesel.kytale")
+
+    // Include dependencies
+    configurations.set(listOf(project.configurations.runtimeClasspath.get()))
+
+    archiveClassifier.set("")
+}
+
+tasks.build {
+    dependsOn("shadowJar")
 }

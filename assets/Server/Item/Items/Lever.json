@@ -1,0 +1,100 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Lever.name"
+  },
+  "PlayerAnimationsId": "Torch",
+  "Categories": [
+    "Furniture.Lighting"
+  ],
+  "Icon": "Icons/ItemsGenerated/Lever.png",
+  "IconProperties": {
+    "Scale": 1.1,
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Translation": [
+      1,
+      -4
+    ]
+  },
+  "InteractionConfig": {
+    "Priorities": {
+      "Secondary": {
+        "MainHand": 1,
+        "OffHand": -1
+      }
+    }
+  },
+  "Interactions": {
+    "Primary": "Root_Unarmed_Attack_Swing_Left",
+    "Secondary": "Block_Secondary"
+  },
+  "Utility": {
+    "Usable": true
+  },
+  "Scale": 1.5,
+  "ItemSoundSetId": "ISS_Blocks_Wood",
+  "BlockType": {
+    "BlockSoundSetId": "Metal",
+    "CustomModel": "Blocks/lever.blockymodel",
+    "CustomModelScale": 1,
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Decorative_Sets/Crude/Candle_Texture.png",
+        "Weight": 1
+      }
+    ],
+    "DrawType": "Model",
+    "HitboxType": "Torch_Small",
+    "Opacity": "Transparent",
+    "Support": {
+      "Down": [
+        {
+          "FaceType": "Full"
+        },
+        {
+          "FaceType": "Wood_Beam"
+        }
+      ]
+    },
+    "Looping": true,
+    "Material": "Solid",
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "ChangeState",
+            "Changes": {
+              "default": "Off",
+              "Off": "On",
+              "On": "Off"
+            }
+          }
+        ]
+      }
+    },
+    "State": {
+      "Definitions": {
+        "On": {
+          "Looping": false,
+          "CustomModelAnimation": "Blocks/leverup.blockyanim"
+        },
+        "Off": {
+          "InteractionHint": "server.interactionHints.turnon",
+          "AmbientSoundEventId": null,
+          "Looping": false,
+          "CustomModelAnimation": "Blocks/leverdown.blockyanim"
+        }
+      }
+    },
+    "InteractionHint": "server.interactionHints.turnoff",
+    "AmbientSoundEventId": "SFX_Candle_Default_Loop",
+    "BlockEntity": {
+      "Components": {
+        "StateReader": {}
+      }
+    }
+  }
+}

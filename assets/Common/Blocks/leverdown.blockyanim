@@ -1,0 +1,25 @@
+{
+  "formatVersion": 1,
+  "duration": 90,
+  "holdLastKeyframe": true,
+  "nodeAnimations": {
+    "lever_arm": {
+      "position": [],
+      "orientation": [
+        {
+          "time": 0,
+          "delta": {"x": 0, "y": 0, "z": 0, "w": 1},
+          "interpolationType": "linear"
+        },
+        {
+          "time": 90,
+          "delta": {"x": 0.88701, "y": 0, "z": 0, "w": 0.46175},
+          "interpolationType": "linear"
+        }
+      ],
+      "shapeStretch": [],
+      "shapeVisible": [],
+      "shapeUvOffset": []
+    }
+  }
+}

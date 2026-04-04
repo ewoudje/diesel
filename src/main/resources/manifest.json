@@ -1,12 +1,13 @@
 {
-    "Group": "DieselGroup",
+    "Group": "nsane",
     "Name": "DieselPlugin",
-    "Version": "0.0.0",
+    "Version": "1.0-SNAPSHOT",
     "Description": "Epic robot adventure play now free",
     "Authors": [
         {
             "Name": "ewoudje",
-            "Url": "https://github.com/ewoudje"
+            "Email": "me@ewoudje.com",
+            "Url": "https://ewoudje.com"
         },
         {
             "Name": "rainyatrium",
@@ -15,18 +16,14 @@
         },
         {
             "Name": "ComicalSomber",
-            "Url": "https://github.com/ComicalSomber"
+            "Email": "https://github.com/ComicalSomber"
         },
         {
             "Name": "octofoss",
-            "Url": "https://metaphorical.monster/octofoss/"
+            "Email": "https://metaphorical.monster/octofoss/"
         }
     ],
-    "Website": "https://your-plugin-website.com",
     "DisabledByDefault": false,
-    "IncludesAssetPack": false,
-    "Dependencies": {},
-    "OptionalDependencies": {},
-    "ServerVersion": "*",
-    "Main": "dev.hytalemodding.DieselPlugin"
+    "IncludesAssetPack": true,
+    "Main": "com.nsane.diesel.DieselPlugin"
 }

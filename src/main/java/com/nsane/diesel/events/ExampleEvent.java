@@ -1,4 +1,4 @@
-package dev.hytalemodding.events;
+package com.nsane.diesel.events;
 
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.entities.Player;

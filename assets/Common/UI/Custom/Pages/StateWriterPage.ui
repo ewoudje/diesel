@@ -1,0 +1,122 @@
+$C = "../Common.ui";
+$Sounds = "../Sounds.ui";
+
+@InputLabel = Label {
+  Anchor: (Left: 6, Right: 16, Width: 50);
+  Style: (...$C.@DefaultLabelStyle, VerticalAlignment: Center, Wrap: true);
+};
+
+@ComparisonDropdown = DropdownBox {
+    Anchor: (Width: 60, Height: $C.@DropdownBoxHeight);
+    Style: $C.@DefaultDropdownBoxStyle;
+    Value: "EQUAL";
+
+    DropdownEntry {
+        Value: "EQUAL";
+        Text: "==";
+    }
+
+    DropdownEntry {
+        Value: "NOT_EQUAL";
+        Text: "!=";
+    }
+
+    DropdownEntry {
+        Value: "GREATER";
+        Text: ">";
+    }
+
+    DropdownEntry {
+        Value: "LESSER";
+        Text: "<";
+    }
+
+    DropdownEntry {
+        Value: "GREATER_OR_EQUAL";
+        Text: ">=";
+    }
+
+    DropdownEntry {
+        Value: "LESS_OR_EQUAL";
+        Text: "<=";
+    }
+};
+
+@Entry = Group {
+  LayoutMode: Left;
+  Anchor: (Bottom: 16);
+
+  $C.@TextField #LogicId {
+    @Anchor = (Width: 150, Left: 15, Right: 15);
+    PlaceholderText: "anyString";
+  }
+
+  @ComparisonDropdown #LogicComparison {}
+
+  $C.@TextField #LogicValue {
+    @Anchor = (Width: 150, Left: 15);
+    PlaceholderText: "anyString";
+  }
+
+  $C.@TextField #State {
+    @Anchor = (Width: 150, Left: 15);
+    PlaceholderText: "anyValidState";
+  }
+};
+
+$C.@Container {
+  Anchor: (Left: 50, Top: 170, Width: 650, Height: 450);
+
+  #Title {
+    Group {
+      LayoutMode: Left;
+      $C.@Title {
+        @Text = %server.customUI.stateWriter.title;
+      }
+    }
+
+    $C.@HeaderSearch {}
+  }
+
+  #Content {
+    Group {
+      LayoutMode: Top;
+      Padding: (Full: 16);
+
+      @Entry #Entry1 {
+
+      }
+
+    
+      @Entry #Entry2 {
+        
+      }
+      
+      @Entry #Entry3 {
+        
+      }
+      
+      @Entry #Entry4 {
+       
+      }
+      
+      @Entry #Entry5 {
+        
+      }
+      
+      @Entry #Entry6 {
+        
+      }
+
+      $C.@TextButton #ApplyButton {
+        @Sounds = $Sounds.@SaveSettings;
+        @Anchor = (Right: 4, Top: 5);
+        Padding: (Full: 16);
+        Text: %server.customUI.stateReader.apply;
+        FlexWeight: 1;
+      }
+    }
+  }
+}
+
+$C.@BackButton {}
