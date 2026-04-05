@@ -91,26 +91,15 @@
     },
     "InteractionHint": "server.interactionHints.turnoff",
     "AmbientSoundEventId": "SFX_Candle_Default_Loop",
-    "Looping": true
+    "Looping": true,
+    "BlockEntity": {
+      "Components": {
+        "StateWriter": {}
+      }
+    }
   },
   "Model": "Blocks/Decorative_Sets/Tavern/Lantern.blockymodel",
   "Texture": "Blocks/Decorative_Sets/Tavern/Lantern_Texture.png",
-  "ResourceTypes": [
-    {
-      "Id": "Fuel"
-    },
-    {
-      "Id": "Charcoal"
-    }
-  ],
-  "Tags": {
-    "Type": [
-      "Furniture"
-    ],
-    "Family": [
-      "Tavern"
-    ]
-  },
   "Scale": 1.5,
   "Utility": {
     "Usable": true
@@ -125,12 +114,7 @@
       22.5,
       45,
       22.5
-    ],
-    "BlockEntity": {
-      "Components": {
-        "StateWriter": {}
-      }
-    }
+    ]
   },
   "ItemSoundSetId": "ISS_Blocks_Wood"
 }

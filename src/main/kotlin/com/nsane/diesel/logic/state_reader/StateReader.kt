@@ -20,7 +20,7 @@ class StateReader(override var id: String = "") : LogicComponent<ChunkStore?> {
 
     override fun logicUI(
         playerRef: PlayerRef,
-        selfRef: Ref<ChunkStore>
+        selfRef: Ref<ChunkStore?>
     ): CustomUIPage = StateReaderPage(playerRef, selfRef)
 
     override fun clone(): Component<ChunkStore?> = StateReader(id)

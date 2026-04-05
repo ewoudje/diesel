@@ -14,5 +14,5 @@ interface LogicComponent<T> : Component<T> {
     fun getAsString(): String
     fun getAsDouble(): Double
 
-    fun logicUI(playerRef: PlayerRef, selfRef: Ref<ChunkStore>): CustomUIPage
+    fun logicUI(playerRef: PlayerRef, selfRef: Ref<ChunkStore?>): CustomUIPage
 }

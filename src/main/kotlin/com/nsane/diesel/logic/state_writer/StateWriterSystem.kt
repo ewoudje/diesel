@@ -15,6 +15,7 @@ import com.hypixel.hytale.math.util.ChunkUtil
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType
 import com.hypixel.hytale.server.core.modules.block.BlockModule
 import com.hypixel.hytale.server.core.universe.world.chunk.BlockChunk
+import com.hypixel.hytale.server.core.universe.world.chunk.WorldChunk
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
 
 object StateWriterSystem: com.hypixel.hytale.component.system.tick.EntityTickingSystem<ChunkStore>() {
@@ -28,7 +29,8 @@ object StateWriterSystem: com.hypixel.hytale.component.system.tick.EntityTicking
     ) {
         val stateWriter = chunk.getComponent(index, StateWriter.TYPE) ?: return
         val info = chunk.getComponent(index, BlockModule.BlockStateInfo.getComponentType()) ?: return
-        val blockChunk = store.getComponent<BlockChunk?>(info.chunkRef, BlockChunk.getComponentType()) ?: return
+        val blockChunk = store.getComponent(info.chunkRef, BlockChunk.getComponentType()) ?: return
+        val worldChunk = store.getComponent(info.chunkRef, WorldChunk.getComponentType()) ?: return
         val localX = ChunkUtil.xFromBlockInColumn(info.index)
         val localY = ChunkUtil.yFromBlockInColumn(info.index)
         val localZ = ChunkUtil.zFromBlockInColumn(info.index)
@@ -43,10 +45,12 @@ object StateWriterSystem: com.hypixel.hytale.component.system.tick.EntityTicking
                     stateWriter.entries.entryComparisons[i],
                     stateWriter.entries.entryValues[i])) {
                 val targetState = stateWriter.entries.entryStates[i]
-                if (targetState == type.getStateForBlock(type)) return
+                if (targetState == (type.getStateForBlock(type) ?: "default")) return
 
-                val newId = BlockType.getAssetMap().getIndex(type.getBlockKeyForState(targetState))
-                blockChunk.setBlock(localX, localY, localZ, newId, 0, 0)
+                val newType = type.getBlockKeyForState(targetState) ?:
+                    run { DieselPlugin.LOGGER.atInfo().log("State $targetState not found?"); return }
+
+                blockChunk.setBlock(localX, localY, localZ, BlockType.getAssetMap().getIndex(newType), 0, 0)
             }
         }
     }

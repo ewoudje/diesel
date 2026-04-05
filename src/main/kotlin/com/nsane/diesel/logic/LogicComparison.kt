@@ -3,6 +3,7 @@ package com.nsane.diesel.logic
 import com.hypixel.hytale.codec.Codec
 import com.hypixel.hytale.codec.codecs.EnumCodec
 import io.github.hytalekt.kytale.codec.CodecBuilder
+import java.util.EnumSet
 
 enum class LogicComparison {
     EQUAL,
@@ -22,6 +23,6 @@ enum class LogicComparison {
     }
 
     companion object {
-        val CODEC = EnumCodec(LogicComparison::class.java)
+        val CODEC = EnumCodec(LogicComparison::class.java, EnumCodec.EnumStyle.LEGACY)
     }
 }

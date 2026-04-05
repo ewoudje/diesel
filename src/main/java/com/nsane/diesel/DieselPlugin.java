@@ -7,12 +7,14 @@ import com.hypixel.hytale.component.ComponentRegistryProxy;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
+import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import com.nsane.diesel.commands.ExampleCommand;
 import com.nsane.diesel.events.ExampleEvent;
 import com.nsane.diesel.logic.LogicComponentTracker;
+import com.nsane.diesel.logic.OpenLogicUIInteraction;
 import com.nsane.diesel.logic.state_reader.StateReader;
 import com.nsane.diesel.logic.state_reader.StateReaderSystem;
 import com.nsane.diesel.logic.state_writer.StateWriter;
@@ -37,6 +39,7 @@ public class DieselPlugin extends JavaPlugin {
 
         registerChunkComponent(StateReader.class, "StateReader", StateReader.Companion.getCODEC());
         registerChunkComponent(StateWriter.class, "StateWriter", StateWriter.Companion.getCODEC());
+        getCodecRegistry(Interaction.CODEC).register("OpenLogicUI", OpenLogicUIInteraction.class, OpenLogicUIInteraction.Companion.getCODEC());
 
         getChunkStoreRegistry().registerSystem(StateReaderSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(StateWriterSystem.INSTANCE);
@@ -50,6 +53,11 @@ public class DieselPlugin extends JavaPlugin {
 
     public static <C extends Component<ChunkStore>> ComponentType<ChunkStore, C> getChunkComponent(@Nonnull Class<C> componentClass) {
         return (ComponentType<ChunkStore, C>) instance.components.get(componentClass);
+    }
+
+    @Override
+    protected void shutdown() {
+        //TODO LogicComponentTracker.INSTANCE.clear();
     }
 
     private <C extends Component<ChunkStore>> void registerChunkComponent(

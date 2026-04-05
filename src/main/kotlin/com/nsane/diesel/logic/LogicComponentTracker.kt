@@ -20,6 +20,7 @@ object LogicComponentTracker: RefSystem<ChunkStore?>() {
         buffer: CommandBuffer<ChunkStore?>
     ) {
         for (f in find(ref, buffer)) {
+            if (f.id.isEmpty()) continue
             refs[f.id] = ref
         }
     }
@@ -45,6 +46,11 @@ object LogicComponentTracker: RefSystem<ChunkStore?>() {
     }
 
     fun getRef(id: String): Ref<ChunkStore?>? = refs[id]
+
+    fun idChanged(id: String, ref: Ref<ChunkStore?>, newId: String) {
+        refs.remove(id)
+        refs[newId] = ref
+    }
 
     fun clear() {
         refs.clear()
