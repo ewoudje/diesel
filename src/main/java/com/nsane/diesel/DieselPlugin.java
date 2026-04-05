@@ -15,6 +15,8 @@ import com.nsane.diesel.commands.ExampleCommand;
 import com.nsane.diesel.events.ExampleEvent;
 import com.nsane.diesel.logic.LogicComponentTracker;
 import com.nsane.diesel.logic.OpenLogicUIInteraction;
+import com.nsane.diesel.logic.bool_computer.BoolComputer;
+import com.nsane.diesel.logic.bool_computer.BoolComputerSystem;
 import com.nsane.diesel.logic.state_reader.StateReader;
 import com.nsane.diesel.logic.state_reader.StateReaderSystem;
 import com.nsane.diesel.logic.state_writer.StateWriter;
@@ -39,10 +41,12 @@ public class DieselPlugin extends JavaPlugin {
 
         registerChunkComponent(StateReader.class, "StateReader", StateReader.Companion.getCODEC());
         registerChunkComponent(StateWriter.class, "StateWriter", StateWriter.Companion.getCODEC());
+        registerChunkComponent(BoolComputer.class, "BoolComputer", BoolComputer.Companion.getCODEC());
         getCodecRegistry(Interaction.CODEC).register("OpenLogicUI", OpenLogicUIInteraction.class, OpenLogicUIInteraction.Companion.getCODEC());
 
         getChunkStoreRegistry().registerSystem(StateReaderSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(StateWriterSystem.INSTANCE);
+        getChunkStoreRegistry().registerSystem(BoolComputerSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(LogicComponentTracker.INSTANCE);
 
         getCommandRegistry().registerCommand(new ExampleCommand("example", "An example command"));
