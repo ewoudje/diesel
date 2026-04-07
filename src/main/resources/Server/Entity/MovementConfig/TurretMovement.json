@@ -1,0 +1,11 @@
+{
+  "MaxHorizontalSpeed": 15,
+  "MaxSinkSpeed": 2,
+  "MaxClimbSpeed": 2,
+  "MinAirSpeed": 0,
+  "Acceleration": 5,
+  "MinHeightOverGround": 15,
+  "MaxHeightOverGround": 15,
+  "MaxRollAngle": 180,
+  "MaxTurnSpeed": 360
+}

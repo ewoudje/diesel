@@ -1,0 +1,62 @@
+{
+  "Type": "Generic",
+  "Appearance": "Minecart",
+  "MaxHealth": 100,
+  "NameTranslationKey": "npcRoles.Turret.name",
+  "MotionControllerList": [
+    {
+      "Type": "Fly"
+    }
+  ],
+  "InteractionInstruction": {
+    "Instructions": [
+      {
+        "Sensor": {
+          "Type": "Not",
+          "Sensor": {
+            "Type": "CanInteract",
+            "ViewSector": 360,
+            "Attitudes": [
+              "Neutral",
+              "Friendly",
+              "Hostile"
+            ]
+          }
+        },
+        "Actions": [
+          {
+            "Type": "SetInteractable",
+            "Interactable": false
+          }
+        ]
+      },
+      {
+        "Continue": true,
+        "Sensor": {
+          "Type": "Any"
+        },
+        "Actions": [
+          {
+            "Type": "SetInteractable",
+            "Interactable": true,
+            "Hint": "server.interactionHints.mount"
+          }
+        ]
+      },
+      {
+        "Sensor": {
+          "Type": "HasInteracted"
+        },
+        "Actions": [
+          {
+            "Type": "Mount",
+            "AnchorX": 0,
+            "AnchorY": 0.5,
+            "AnchorZ": 0,
+            "MovementConfig": "TurretMovement"
+          }
+        ]
+      }
+    ]
+  }
+}
