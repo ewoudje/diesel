@@ -49,13 +49,16 @@ public class DieselPlugin extends JavaPlugin {
         registerChunkComponent(StateReader.class, "StateReader", StateReader.Companion.getCODEC());
         registerChunkComponent(StateWriter.class, "StateWriter", StateWriter.Companion.getCODEC());
         registerChunkComponent(BoolComputer.class, "BoolComputer", BoolComputer.Companion.getCODEC());
+
         registerEntityComponent(SimulatedPositionComponent.class, "SimulatedInAir", SimulatedPositionComponent.Companion.getCODEC());
         registerEntityResource(AirSimulator.class, "AirSimulator", AirSimulator.Companion.getCODEC());
+
         getCodecRegistry(Interaction.CODEC).register("OpenLogicUI", OpenLogicUIInteraction.class, OpenLogicUIInteraction.Companion.getCODEC());
 
         getCommandRegistry().registerCommand(new ExampleCommand("example", "An example command"));
         getCommandRegistry().registerCommand(new FlyingCommand());
         getCommandRegistry().registerCommand(new CloudCommand());
+
         getEventRegistry().registerGlobal(PlayerReadyEvent.class, ExampleEvent::onPlayerReady);
 
         LOGGER.atInfo().log("Setup complete!!!");
@@ -65,6 +68,7 @@ public class DieselPlugin extends JavaPlugin {
     protected void start() {
         getEntityStoreRegistry().registerSystem(SimulatedTransformationSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(SimulationSystem.INSTANCE);
+
         getChunkStoreRegistry().registerSystem(StateReaderSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(StateWriterSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(BoolComputerSystem.INSTANCE);

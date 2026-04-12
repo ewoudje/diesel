@@ -48,6 +48,6 @@ class BoolComputer(override var id: String = "") : LogicComponent<ChunkStore?> {
             }
         }
 
-        val TYPE get() = DieselPlugin.getChunkComponent(BoolComputer::class.java)
+        val TYPE get() = DieselPlugin.getComponent(BoolComputer::class.java)
     }
 }
