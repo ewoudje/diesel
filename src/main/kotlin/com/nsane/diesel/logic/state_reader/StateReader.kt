@@ -35,6 +35,6 @@ class StateReader(override var id: String = "") : LogicComponent<ChunkStore?> {
             }
         }
 
-        val TYPE get() = DieselPlugin.getChunkComponent(StateReader::class.java)
+        val TYPE get() = DieselPlugin.getComponent(StateReader::class.java)
     }
 }
