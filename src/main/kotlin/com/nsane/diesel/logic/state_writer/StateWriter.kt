@@ -6,7 +6,6 @@ import com.hypixel.hytale.component.Ref
 import com.hypixel.hytale.server.core.entity.entities.player.pages.CustomUIPage
 import com.hypixel.hytale.server.core.universe.PlayerRef
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
-import com.nsane.diesel.logic.state_reader.StateReader
 import io.github.hytalekt.kytale.codec.buildCodec
 
 
@@ -29,6 +28,6 @@ class StateWriter : Component<ChunkStore?> {
             }
         }
 
-        val TYPE get() =  DieselPlugin.getChunkComponent(StateWriter::class.java)
+        val TYPE get() =  DieselPlugin.getComponent(StateWriter::class.java)
     }
 }

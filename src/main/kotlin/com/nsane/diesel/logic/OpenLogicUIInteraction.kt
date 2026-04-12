@@ -15,6 +15,7 @@ import com.hypixel.hytale.server.core.modules.interaction.interaction.config.cli
 import com.hypixel.hytale.server.core.universe.PlayerRef
 import com.hypixel.hytale.server.core.universe.world.World
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
+import com.nsane.diesel.logic.bool_computer.BoolComputer
 import io.github.hytalekt.kytale.codec.buildCodec
 
 class OpenLogicUIInteraction : SimpleBlockInteraction() {
@@ -58,6 +59,7 @@ class OpenLogicUIInteraction : SimpleBlockInteraction() {
         if (fireEvent) {
             val logicUI = block.store.getComponent(block, StateReader.TYPE)?.logicUI(playerRef, block)
                     ?: block.store.getComponent(block, StateWriter.TYPE)?.logicUI(playerRef, block)
+                    ?: block.store.getComponent(block, BoolComputer.TYPE)?.logicUI(playerRef, block)
                     ?: return InteractionState.Failed
             player.pageManager.openCustomPage(context.entity, store, logicUI)
         }
