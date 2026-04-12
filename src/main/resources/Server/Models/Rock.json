@@ -1,0 +1,16 @@
+{
+  "Model": "NPC/Models/rock.blockymodel",
+  "Texture": "NPC/Models/Rock.png",
+  "HitBox": {
+    "Max": {
+      "X": 1,
+      "Y": 1,
+      "Z": 2
+    },
+    "Min": {
+      "X": 0,
+      "Y": 0,
+      "Z": -1
+    }
+  }
+}
