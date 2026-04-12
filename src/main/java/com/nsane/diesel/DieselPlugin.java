@@ -28,6 +28,9 @@ import com.nsane.diesel.logic.state_reader.StateReader;
 import com.nsane.diesel.logic.state_reader.StateReaderSystem;
 import com.nsane.diesel.logic.state_writer.StateWriter;
 import com.nsane.diesel.logic.state_writer.StateWriterSystem;
+import com.nsane.diesel.player.DieselPlayerComponent;
+import com.nsane.diesel.player.DieselPlayerSystem;
+import com.nsane.diesel.player.DieselPlayersResource;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -50,7 +53,9 @@ public class DieselPlugin extends JavaPlugin {
         registerChunkComponent(StateWriter.class, "StateWriter", StateWriter.Companion.getCODEC());
         registerChunkComponent(BoolComputer.class, "BoolComputer", BoolComputer.Companion.getCODEC());
 
+        registerEntityComponent(DieselPlayerComponent.class, "DieselPlayerComponent", DieselPlayerComponent.Companion.getCODEC());
         registerEntityComponent(SimulatedPositionComponent.class, "SimulatedInAir", SimulatedPositionComponent.Companion.getCODEC());
+        registerEntityResource(DieselPlayersResource.class, "DieselPlayersResource", DieselPlayersResource.Companion.getCODEC());
         registerEntityResource(AirSimulator.class, "AirSimulator", AirSimulator.Companion.getCODEC());
 
         getCodecRegistry(Interaction.CODEC).register("OpenLogicUI", OpenLogicUIInteraction.class, OpenLogicUIInteraction.Companion.getCODEC());
@@ -60,6 +65,7 @@ public class DieselPlugin extends JavaPlugin {
         getCommandRegistry().registerCommand(new CloudCommand());
 
         getEventRegistry().registerGlobal(PlayerReadyEvent.class, ExampleEvent::onPlayerReady);
+        getEventRegistry().registerGlobal(PlayerReadyEvent.class, DieselPlayerSystem::playerReadyEvent);
 
         LOGGER.atInfo().log("Setup complete!!!");
     }
