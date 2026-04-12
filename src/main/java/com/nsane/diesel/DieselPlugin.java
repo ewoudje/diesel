@@ -12,6 +12,7 @@ import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.nsane.diesel.boss.RisenRockComponent;
 import com.nsane.diesel.commands.ExampleCommand;
 import com.nsane.diesel.events.ExampleEvent;
 import com.nsane.diesel.flying.AirSimulator;
@@ -50,6 +51,7 @@ public class DieselPlugin extends JavaPlugin {
         registerChunkComponent(StateWriter.class, "StateWriter", StateWriter.Companion.getCODEC());
         registerChunkComponent(BoolComputer.class, "BoolComputer", BoolComputer.Companion.getCODEC());
 
+        registerEntityComponent(RisenRockComponent.class, "RisenRockComponent", RisenRockComponent.Companion.getCODEC());
         registerEntityComponent(SimulatedPositionComponent.class, "SimulatedInAir", SimulatedPositionComponent.Companion.getCODEC());
         registerEntityResource(AirSimulator.class, "AirSimulator", AirSimulator.Companion.getCODEC());
 
