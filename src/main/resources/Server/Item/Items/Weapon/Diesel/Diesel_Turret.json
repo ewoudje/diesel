@@ -1,0 +1,6 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Diesel_Turret_AA.name"
+  },
+  "Parent": "Template_Diesel_Gun"
+}
