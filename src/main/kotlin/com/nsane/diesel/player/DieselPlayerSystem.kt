@@ -2,6 +2,7 @@ package com.nsane.diesel.player
 
 import com.hypixel.hytale.server.core.Message
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent
+import com.hypixel.hytale.server.core.inventory.InventoryComponent
 import com.hypixel.hytale.server.core.universe.PlayerRef
 
 object DieselPlayerSystem {
@@ -16,13 +17,23 @@ object DieselPlayerSystem {
             ref.packetHandler.disconnect(Message.raw("Too many scrubs on this server!"))
             return
         }
+
         store.ensureComponent(event.playerRef, DieselPlayerComponent.TYPE)
 
         val playersResource = store.getResource(DieselPlayersResource.TYPE)
-        val playerComponent = store.getComponent(event.playerRef, DieselPlayerComponent.TYPE)
-        val hud = event.player.hudManager
-        hud.setVisibleHudComponents(ref) // Clears it
-        hud.setCustomHud(ref, DieselUIHud(ref))
+        val playerComponent = store.getComponent(event.playerRef, DieselPlayerComponent.TYPE) ?: throw IllegalArgumentException()
+        val hotbar = store.getComponent(event.playerRef, InventoryComponent.HOTBAR_FIRST[0]) ?: throw IllegalArgumentException()
+        val hudManager = event.player.hudManager
+        val hud = DieselUIHud(ref)
+
+        hudManager.setVisibleHudComponents(ref) // Clears it
+        hudManager.setCustomHud(ref, hud)
+
+        hotbar.inventory.registerChangeEvent(hud::onHotbarChange)
+
+        if (playerComponent.playerClass == null) {
+            event.player.pageManager.openCustomPage(event.playerRef, store, ClassSelectPage(ref))
+        }
     }
 
 }
