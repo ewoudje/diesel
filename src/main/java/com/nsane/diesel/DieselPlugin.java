@@ -12,7 +12,10 @@ import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.nsane.diesel.boss.RiseRockInteraction;
 import com.nsane.diesel.boss.RisenRockComponent;
+import com.nsane.diesel.boss.RisenRockRefSystem;
+import com.nsane.diesel.boss.RisenRockTickSystem;
 import com.nsane.diesel.commands.ExampleCommand;
 import com.nsane.diesel.events.ExampleEvent;
 import com.nsane.diesel.flying.AirSimulator;
@@ -55,7 +58,10 @@ public class DieselPlugin extends JavaPlugin {
         registerEntityComponent(SimulatedPositionComponent.class, "SimulatedInAir", SimulatedPositionComponent.Companion.getCODEC());
         registerEntityResource(AirSimulator.class, "AirSimulator", AirSimulator.Companion.getCODEC());
 
-        getCodecRegistry(Interaction.CODEC).register("OpenLogicUI", OpenLogicUIInteraction.class, OpenLogicUIInteraction.Companion.getCODEC());
+        getCodecRegistry(Interaction.CODEC)
+                .register("OpenLogicUI", OpenLogicUIInteraction.class, OpenLogicUIInteraction.Companion.getCODEC())
+                .register("RiseRock", RiseRockInteraction.class, RiseRockInteraction.Companion.getCODEC());
+
 
         getCommandRegistry().registerCommand(new ExampleCommand("example", "An example command"));
         getCommandRegistry().registerCommand(new FlyingCommand());
@@ -70,6 +76,8 @@ public class DieselPlugin extends JavaPlugin {
     protected void start() {
         getEntityStoreRegistry().registerSystem(SimulatedTransformationSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(SimulationSystem.INSTANCE);
+        getEntityStoreRegistry().registerSystem(RisenRockRefSystem.INSTANCE);
+        getEntityStoreRegistry().registerSystem(RisenRockTickSystem.INSTANCE);
 
         getChunkStoreRegistry().registerSystem(StateReaderSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(StateWriterSystem.INSTANCE);
