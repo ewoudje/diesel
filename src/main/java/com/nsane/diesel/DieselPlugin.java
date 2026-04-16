@@ -74,7 +74,7 @@ public class DieselPlugin extends JavaPlugin {
         getCommandRegistry().registerCommand(new CloudCommand());
 
         getEventRegistry().registerGlobal(PlayerReadyEvent.class, ExampleEvent::onPlayerReady);
-        getEventRegistry().registerGlobal(PlayerReadyEvent.class, DieselPlayerSystem::playerReadyEvent);
+        // Disabled for now getEventRegistry().registerGlobal(PlayerReadyEvent.class, DieselPlayerSystem::playerReadyEvent);
 
         LOGGER.atInfo().log("Setup complete!!!");
     }
@@ -83,6 +83,9 @@ public class DieselPlugin extends JavaPlugin {
     protected void start() {
         getEntityStoreRegistry().registerSystem(SimulatedTransformationSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(SimulationSystem.INSTANCE);
+        getEntityStoreRegistry().registerSystem(RisenRockTickSystem.INSTANCE);
+        getEntityStoreRegistry().registerSystem(RisenRockRefSystem.INSTANCE);
+
 
         getChunkStoreRegistry().registerSystem(StateReaderSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(StateWriterSystem.INSTANCE);
