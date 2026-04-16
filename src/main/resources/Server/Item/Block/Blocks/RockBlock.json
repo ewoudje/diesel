@@ -1,0 +1,6 @@
+{
+  "DrawType": "Empty",
+  "HitboxType": "RockBlock",
+  "Material": "Solid",
+  "InteractionHitboxType": "Empty"
+}
