@@ -1,0 +1,17 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "OurWind",
+      "PositionOffset": {
+        "Z": 1.0
+      },
+      "FixedRotation": true,
+      "RotationOffset": {
+        "Pitch": 270,
+        "Yaw": 180
+      }
+    }
+  ],
+  "CullDistance": 30.0,
+  "IsImportant": false
+}

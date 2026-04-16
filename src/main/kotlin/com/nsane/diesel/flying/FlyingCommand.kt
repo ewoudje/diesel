@@ -32,6 +32,7 @@ class FlyingCommand : AbstractWorldCommand("flying", "flying") {
         yaw.get(ctx)?.let { sim.shipRotation.yaw = it }
         roll.get(ctx)?.let { sim.shipRotation.roll = it }
         speedModifier.get(ctx)?.let { sim.velocityModifier = it }
+        sim.flying = true
         ctx.sendMessage(Message.raw("Done"))
     }
 }
