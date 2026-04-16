@@ -7,17 +7,21 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselPlugin
 import io.github.hytalekt.kytale.codec.buildCodec
 
-class SimulatedPositionComponent : Component<EntityStore?> {
+class SimulatedTransformComponent : Component<EntityStore?> {
     val position: Vector3d = Vector3d()
     val rotation: Vector3f = Vector3f()
+    val velocity: Vector3d = Vector3d()
+    val omega: Vector3f = Vector3f()
 
-    override fun clone(): Component<EntityStore?>? = SimulatedPositionComponent().also {
+    override fun clone(): Component<EntityStore?>? = SimulatedTransformComponent().also {
         it.position.assign(this.position)
         it.rotation.assign(this.rotation)
+        it.velocity.assign(this.velocity)
+        it.omega.assign(this.omega)
     }
 
     companion object {
-        val CODEC = buildCodec(::SimulatedPositionComponent) {
+        val CODEC = buildCodec(::SimulatedTransformComponent) {
             addField("Position", Vector3d.CODEC) {
                 getter { position }
                 setter { position.assign(it) }
@@ -29,6 +33,6 @@ class SimulatedPositionComponent : Component<EntityStore?> {
             }
         }
 
-        val TYPE by lazy { DieselPlugin.getComponent(SimulatedPositionComponent::class.java) }
+        val TYPE by lazy { DieselPlugin.getComponent(SimulatedTransformComponent::class.java) }
     }
 }

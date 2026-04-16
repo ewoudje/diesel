@@ -25,14 +25,22 @@ object SimulationSystem : TickingSystem<EntityStore?>() {
     }
 
     private fun doPathing(sim: AirSimulator): Pair<Vector3d, Vector3f> = when (sim.distanceTraveled) {
-        in 0.0..10.0 -> Vector3d(0.0, 0.0, 0.1) to rotateTo(sim, 0.0, 0.0, 0.0, 0.2)
-        in 10.0..20.0 -> Vector3d(0.1, 0.0, 0.0) to rotateTo(sim, 0.0, 90.0, 0.0, 0.2)
-        in 20.0..30.0 -> Vector3d(0.0, 0.0, -0.1) to rotateTo(sim, 0.0, 180.0, 0.0, 0.2)
-        in 30.0..40.0 -> Vector3d(-0.1, 0.0, 0.0) to rotateTo(sim, 0.0, 270.0, 0.0, 0.2)
+        in 0.0..500.0 -> forward(sim, 0.2) to rotateTo(sim, 0.0, 0.0, 0.0, 0.002)
+        in 500.0..1000.0 -> forward(sim, 0.2) to rotateTo(sim, 0.0, 90.0, 0.0, 0.002)
+        in 1000.0..1500.0 -> forward(sim, 0.2) to rotateTo(sim, 0.0, 180.0, 0.0, 0.002)
+        in 1500.0..2000.0 -> forward(sim, 0.2) to rotateTo(sim, 0.0, 270.0, 0.0, 0.002)
         else -> {
             sim.distanceTraveled = 0.0
             doPathing(sim)
         }
+    }
+
+    private fun forward(sim: AirSimulator, speed: Double): Vector3d {
+        val r = Vector3d(0.0, 0.0, 1.0)
+        r.rotateX(sim.shipRotation.x)
+        r.rotateY(sim.shipRotation.y)
+        r.rotateZ(sim.shipRotation.z)
+        return r.scale(speed)
     }
 
     private fun rotateTo(sim: AirSimulator, pitch: Double, yaw: Double, roll: Double, speed: Double): Vector3f {
@@ -40,6 +48,7 @@ object SimulationSystem : TickingSystem<EntityStore?>() {
         val diff = targetRotation - sim.shipRotation
         val l = diff.length()
         if (l > speed) diff.scale(speed.toFloat() / l)
+        if (l < 0.0001) return Vector3f.ZERO
         return diff
     }
 }

@@ -8,6 +8,7 @@ import com.hypixel.hytale.component.system.tick.EntityTickingSystem
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import io.github.hytalekt.kytale.ext.minus
+import io.github.hytalekt.kytale.ext.plusAssign
 import java.rmi.UnexpectedException
 
 object SimulatedTransformationSystem : EntityTickingSystem<EntityStore?>() {
@@ -21,16 +22,19 @@ object SimulatedTransformationSystem : EntityTickingSystem<EntityStore?>() {
         val sim = buffer.getResource(AirSimulator.TYPE)
         val transform = archTypes.getComponent(idx, TransformComponent.getComponentType())
             ?: throw UnexpectedException("TransformComponent is null")
-        val simulatedPos = archTypes.getComponent(idx, SimulatedPositionComponent.TYPE)
+        val simulatedPos = archTypes.getComponent(idx, SimulatedTransformComponent.TYPE)
             ?: throw UnexpectedException("SimulatedPositionComponent is null")
+
+        simulatedPos.position += simulatedPos.velocity.clone().scale(dt.toDouble())
+        simulatedPos.rotation += simulatedPos.omega.clone().scale(dt)
 
         val diffPos = simulatedPos.position - sim.shipPosition
         diffPos.rotateX(-sim.shipRotation.x)
         diffPos.rotateY(-sim.shipRotation.y)
-        diffPos.rotateZ(sim.shipRotation.z)
+        diffPos.rotateZ(-sim.shipRotation.z)
         transform.rotation = simulatedPos.rotation - sim.shipRotation
         transform.position = diffPos
     }
 
-    override fun getQuery(): Query<EntityStore?>? = Query.and(SimulatedPositionComponent.TYPE, TransformComponent.getComponentType())
+    override fun getQuery(): Query<EntityStore?>? = Query.and(SimulatedTransformComponent.TYPE, TransformComponent.getComponentType())
 }

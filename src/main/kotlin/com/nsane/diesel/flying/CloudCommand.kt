@@ -17,6 +17,8 @@ import com.hypixel.hytale.server.core.universe.PlayerRef
 import com.hypixel.hytale.server.core.universe.world.World
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import io.github.hytalekt.kytale.ext.minus
+import kotlin.math.abs
+import kotlin.random.Random
 
 
 class CloudCommand: AbstractPlayerCommand("cloud", "") {
@@ -28,18 +30,8 @@ class CloudCommand: AbstractPlayerCommand("cloud", "") {
         world: World
     ) {
         val sim = store.getResource(AirSimulator.TYPE)
-        val modelAsset = ModelAsset.getAssetMap().getAsset("Cloud") ?: throw NullPointerException("Cloud asset not found")
-        val model = Model.createScaledModel(modelAsset, 3.0f)
-        val holder = EntityStore.REGISTRY.newHolder()
-        val transformedPos = playerRef.transform.position - sim.shipPosition
-
-        holder.addComponent(TransformComponent.getComponentType(), TransformComponent())
-        holder.addComponent(PersistentModel.getComponentType(), PersistentModel(model.toReference()))
-        holder.addComponent(ModelComponent.getComponentType(), ModelComponent(model))
-        holder.addComponent(NetworkId.getComponentType(), NetworkId(store.getExternalData().takeNextNetworkId()))
-        holder.addComponent(SimulatedPositionComponent.TYPE, SimulatedPositionComponent().apply { position.assign(transformedPos) })
-        holder.ensureComponent(UUIDComponent.getComponentType())
-        holder.ensureComponent(PropComponent.getComponentType())
-        store.addEntity(holder, AddReason.SPAWN)
+        repeat(30) {
+            store.addEntity(CloudTickSystem.buildCloud(sim), AddReason.SPAWN)
+        }
     }
 }

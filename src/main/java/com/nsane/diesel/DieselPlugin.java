@@ -16,9 +16,12 @@ import com.nsane.diesel.commands.ExampleCommand;
 import com.nsane.diesel.events.ExampleEvent;
 import com.nsane.diesel.flying.AirSimulator;
 import com.nsane.diesel.flying.CloudCommand;
+import com.nsane.diesel.flying.CloudComponent;
+import com.nsane.diesel.flying.CloudRefSystem;
+import com.nsane.diesel.flying.CloudTickSystem;
 import com.nsane.diesel.flying.FlyingCommand;
 import com.nsane.diesel.flying.SimulatedTransformationSystem;
-import com.nsane.diesel.flying.SimulatedPositionComponent;
+import com.nsane.diesel.flying.SimulatedTransformComponent;
 import com.nsane.diesel.flying.SimulationSystem;
 import com.nsane.diesel.logic.LogicComponentTracker;
 import com.nsane.diesel.logic.OpenLogicUIInteraction;
@@ -46,13 +49,18 @@ public class DieselPlugin extends JavaPlugin {
 
         registerChunkComponent(StateReader.class, "StateReader", StateReader.Companion.getCODEC());
         registerChunkComponent(StateWriter.class, "StateWriter", StateWriter.Companion.getCODEC());
-        registerEntityComponent(SimulatedPositionComponent.class, "SimulatedInAir", SimulatedPositionComponent.Companion.getCODEC());
+
+        registerEntityComponent(SimulatedTransformComponent.class, "SimulatedInAir", SimulatedTransformComponent.Companion.getCODEC());
+        registerEntityComponent(CloudComponent.class, "Cloud", CloudComponent.Companion.getCODEC());
+
         registerEntityResource(AirSimulator.class, "AirSimulator", AirSimulator.Companion.getCODEC());
+
         getCodecRegistry(Interaction.CODEC).register("OpenLogicUI", OpenLogicUIInteraction.class, OpenLogicUIInteraction.Companion.getCODEC());
 
         getCommandRegistry().registerCommand(new ExampleCommand("example", "An example command"));
         getCommandRegistry().registerCommand(new FlyingCommand());
         getCommandRegistry().registerCommand(new CloudCommand());
+
         getEventRegistry().registerGlobal(PlayerReadyEvent.class, ExampleEvent::onPlayerReady);
 
         LOGGER.atInfo().log("Setup complete!!!");
@@ -61,7 +69,10 @@ public class DieselPlugin extends JavaPlugin {
     @Override
     protected void start() {
         getEntityStoreRegistry().registerSystem(SimulatedTransformationSystem.INSTANCE);
+        getEntityStoreRegistry().registerSystem(CloudTickSystem.INSTANCE);
+        getEntityStoreRegistry().registerSystem(CloudRefSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(SimulationSystem.INSTANCE);
+
         getChunkStoreRegistry().registerSystem(StateReaderSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(StateWriterSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(LogicComponentTracker.INSTANCE);
