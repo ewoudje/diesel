@@ -1,0 +1,28 @@
+{
+  "Model": "Items/Hypixel/Minigames/GunPvP/Weapons/Bullet.blockymodel",
+  "Texture": "Items/Hypixel/Minigames/GunPvP/Weapons/Bullet_Texture.png",
+  "HitBox": {
+    "Max": {
+      "X": 0.1,
+      "Y": 0.1,
+      "Z": 0.1
+    },
+    "Min": {
+      "X": -0.1,
+      "Y": -0.1,
+      "Z": -0.1
+    }
+  },
+  "MinScale": 3,
+  "MaxScale": 5,
+  "Light": {
+    "Color": "#831",
+    "Radius": 1
+  },
+  "Particles": [
+    {
+      "SystemId": "Fire_Stick_Charge_Charging",
+      "Color": "#ffffff"
+    }
+  ]
+}
