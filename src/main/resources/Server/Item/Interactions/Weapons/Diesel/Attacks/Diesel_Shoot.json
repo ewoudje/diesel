@@ -1,24 +1,9 @@
 {
-  "Type": "LaunchProjectile",
-  "RunTime": 5,
+  "Type": "DieselShoot",
+  "Config": "Projectile_Config_AA",
   "Effects": {
-    "ItemAnimationId": "Shoot",
-    "CameraEffect": "Handgun_Shoot",
-    "Particles": [
-      {
-        "SystemId": "RifleShooting",
-        "PositionOffset": {
-          "Z": 0.85,
-          "Y": 0.15
-        },
-        "RotationOffset": {
-          "Pitch": 80
-        }
-      }
-    ],
-    "MovementEffects": {
-      "DisableAll": false
-    }
+    "CameraEffect": "Impact"
   },
-  "ProjectileId": "Diesel_Projectile_Base"
+  "ProjectileCount": 5,
+  "SpreadAmount": 1000
 }

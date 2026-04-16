@@ -1,0 +1,68 @@
+{
+  "Model": "Projectile_AA_Asset",
+  "LaunchLocalSoundEventId": "SFX_Handgun_Fire_Local",
+  "LaunchWorldSoundEventId": "SFX_Handgun_Fire",
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 30,
+    "TerminalVelocityAir": 50,
+    "TerminalVelocityWater": 15,
+    "RotationMode": "VelocityDamped",
+    "Bounciness": 0.0,
+    "SticksVertically": true,
+    "SwimmingDampingFactor": 0
+  },
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Parent": "DamageEntityParent",
+          "DamageCalculator": {
+            "Class": "Signature",
+            "BaseDamage": {
+              "Physical": 6
+            }
+          },
+          "DamageEffects": {
+            "Knockback": {
+              "Type": "Force",
+              "VelocityConfig": {
+                "AirResistance": 0.99,
+                "AirResistanceMax": 0.98,
+                "GroundResistance": 0.94,
+                "GroundResistanceMax": 0.3,
+                "Threshold": 3.0,
+                "Style": "Linear"
+              },
+              "Direction": {
+                "X": 0.0,
+                "Y": 0.5,
+                "Z": -1
+              },
+              "Force": 22,
+              "VelocityType": "Add"
+            },
+            "WorldParticles": [
+              {
+                "SystemId": "Impact_Daggers_Signature",
+                "Scale": 1
+              }
+            ]
+          }
+        },
+        "Common_Projectile_Despawn"
+      ]
+    },
+    "ProjectileMiss": {
+      "Interactions": [
+        "Common_Projectile_Despawn"
+      ]
+    }
+  },
+  "SpawnOffset": {
+    "Z": 0.3,
+    "Y": 0,
+    "X": 0.1
+  },
+  "LaunchForce": 80
+}

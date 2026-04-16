@@ -35,17 +35,27 @@ import java.util.function.Predicate
 
 class DieselShootInteraction: SimpleInstantInteraction() {
     var config: String? = null
+    var projectileCount = 10
+    var spreadAmount = 5f
 
     override fun firstRun(
         type: InteractionType,
         ctx: InteractionContext,
         cooldown: CooldownHandler
     ) {
+        System.out.println("Diesel Shoot")
         val config = ProjectileConfig.getAssetMap().getAsset(this.config) ?: return
         val buffer = ctx.commandBuffer ?: return
         val lookVec = TargetUtil.getLook(ctx.owningEntity, buffer)
 
-        spawnProjectile(ctx.owningEntity, buffer, config, lookVec.position, lookVec.direction)
+        repeat(projectileCount) {
+            spawnProjectile(ctx.owningEntity, buffer, config, lookVec.position, lookVec.direction)
+        }
+        /*
+        float yaw = (float) (Math.atan2(-direction.x, -direction.z) + (Math.random() - 0.5) * Math.toRadians(spreadAmount));
+                float pitch = (float) (Math.asin(direction.y) + (Math.random() - 0.5) * Math.toRadians(spreadAmount));
+                Vector3d modifiedDirection = new Vector3d(yaw, pitch);
+        */
 
         ctx.state.state = InteractionState.Finished
     }

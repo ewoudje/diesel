@@ -33,7 +33,6 @@ import com.nsane.diesel.logic.state_reader.StateReaderSystem;
 import com.nsane.diesel.logic.state_writer.StateWriter;
 import com.nsane.diesel.logic.state_writer.StateWriterSystem;
 import com.nsane.diesel.player.DieselPlayerComponent;
-import com.nsane.diesel.player.DieselPlayerSystem;
 import com.nsane.diesel.player.DieselPlayersResource;
 import com.nsane.diesel.projectiles.DieselShootInteraction;
 

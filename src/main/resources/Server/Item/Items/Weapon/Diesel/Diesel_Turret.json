@@ -1,13 +1,13 @@
 {
   "TranslationProperties": {
-    "Name": "diesel gun"
+    "Name": "server.items.Diesel_Turret.name"
   },
   "Categories": [
     "Items.Weapons"
   ],
-  "Icon": "Icons/ItemsGenerated/Weapon_Gun.png",
-  "Model": "Items/Hypixel/Minigames/Space_Swarm/Weapons/Pulse_Rifle.blockymodel",
-  "Texture": "Items/Hypixel/Minigames/Space_Swarm/Weapons/Pulse_Rifle_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Weapon_Gun_Blunderbuss.png",
+  "Texture": "Items/Weapons/Gun/Blunderbuss_Rusty_Texture.png",
+  "Model": "Items/Weapons/Gun/Blunderbuss.blockymodel",
   "PlayerAnimationsId": {
     "Parent": "Rifle",
     "Animations": {
@@ -25,8 +25,8 @@
     "Primary": {
       "Interactions": [
         {
-          "Parent": "Diesel_Shoot",
-          "RunTime": 0.05
+          "Type": "DieselShoot",
+          "Config": "Projectile_Config_Arrow_Crossbow"
         }
       ]
     },
@@ -89,7 +89,6 @@
       0
     ]
   },
-  "Quality": "Technical",
   "Tags": {
     "Type": [
       "Weapon"

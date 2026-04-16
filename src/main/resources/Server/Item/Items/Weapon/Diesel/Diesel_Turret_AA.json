@@ -2,5 +2,27 @@
   "TranslationProperties": {
     "Name": "server.items.Diesel_Turret_AA.name"
   },
-  "Parent": "Diesel_Turret"
+  "Parent": "Diesel_Turret",
+  "Weapon": {
+    "RenderDualWielded": false
+  },
+  "Interactions": {
+    "Primary": {
+      "Cooldown": {
+        "Cooldown":0.1
+      },
+      "Interactions": [
+        {
+          "Type": "DieselShoot",
+          "Config": "Projectile_Config_AA",
+          "Effects": {
+            "CameraEffect": "Impact"
+          },
+          "ProjectileCount": 5,
+          "SpreadAmount": 5
+        }
+      ]
+    },
+    "Secondary": "Gun_Attack"
+  }
 }
