@@ -1,0 +1,31 @@
+$C = "../Common.ui";
+$Sounds = "../Sounds.ui";
+
+
+$C.@Container {
+  #Title {
+    Group {
+      LayoutMode: Left;
+      $C.@Title {
+        @Text = %server.customUI.classSelect.title;
+      }
+    }
+  }
+
+  #Content {
+    Group {
+      LayoutMode: Top;
+      Padding: (Full: 16);
+
+
+
+      $C.@TextButton #ChooseButton {
+        @Sounds = $Sounds.@SaveSettings;
+        @Anchor = (Right: 4);
+        Padding: (Full: 16);
+        Text: %server.customUI.classSelect.choose;
+        FlexWeight: 1;
+      }
+    }
+  }
+}
