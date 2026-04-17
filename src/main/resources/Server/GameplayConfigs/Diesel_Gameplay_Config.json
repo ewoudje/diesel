@@ -1,0 +1,69 @@
+{
+  "Gathering": {
+    "UnbreakableBlock": {
+      "ParticleSystemId": "Block_Break_Dust",
+      "SoundEventId": "SFX_Unbreakable_Block"
+    },
+    "IncorrectTool": {
+      "ParticleSystemId": "Block_Break_Dust",
+      "SoundEventId": "SFX_Unbreakable_Block"
+    }
+  },
+  "Death": {
+    "ItemsLossMode": "Configured",
+    "ItemsAmountLossPercentage": 50.0,
+    "ItemsDurabilityLossPercentage": 10.0
+  },
+  "ItemEntity": {
+    "Lifetime": 600.0
+  },
+  "Plugin": {
+    "Stamina": {
+      "SprintRegenDelay": {
+        "EntityStatId": "StaminaRegenDelay"
+      }
+    }
+  },
+  "Respawn": {
+    "RadiusLimitRespawnPoint": 500,
+    "MaxRespawnPointsPerPlayer": 3
+  },
+  "World": {
+    "DaytimeDurationSeconds": 100000000,
+    "NighttimeDurationSeconds": 0,
+    "BlockPlacementFragilityTimer": 0,
+    "AllowBlockGathering": false,
+    "AllowBlockBreaking": false,
+    "AllowBlockPlacement": false
+  },
+  "Player": {
+    "MovementConfig": "Diesel_Movement",
+    "HitboxCollisionConfig": "SoftCollision",
+    "ArmorVisibilityOption": "All"
+  },
+  "CameraEffects": {
+    "DamageEffects": {
+      "Fall": "Damage_Fall"
+    }
+  },
+  "CreativePlaySoundSet": "CreativePlayDefaults",
+  "Spawn": {
+    "FirstSpawnParticles": [
+      {
+        "SystemId": "PlayerSpawn_Spawn",
+        "RotationOffset": {
+          "Yaw": 0
+        },
+        "PositionOffset": {
+          "Y": -0.9
+        }
+      }
+    ]
+  },
+  "Ping": {
+    "PingDuration": 5.0,
+    "PingCooldown": 1.0,
+    "PingBroadcastRadius": 100.0,
+    "PingSound": "SFX_Ping"
+  }
+}

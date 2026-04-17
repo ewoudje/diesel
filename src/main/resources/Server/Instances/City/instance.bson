@@ -11,7 +11,7 @@
     "$binary": "AZKxiVAMQfWIS0qBsBfjzQ==",
     "$type": "04"
   },
-  "GameplayConfig": "Default",
+  "GameplayConfig": "Diesel_Gameplay_Config",
   "IsCompassUpdating": true,
   "IsTicking": true,
   "IsGameTimePaused": false,
