@@ -69,8 +69,7 @@ public class DieselPlugin extends JavaPlugin {
         getCodecRegistry(Interaction.CODEC)
                 .register("OpenLogicUI", OpenLogicUIInteraction.class, OpenLogicUIInteraction.Companion.getCODEC())
                 .register("RiseRock", RiseRockInteraction.class, RiseRockInteraction.Companion.getCODEC())
-                .register("DieselShoot", DieselShootInteraction.class, DieselShootInteraction.Companion.getCODEC());
-
+                .register("DieselShoot", DieselShootInteraction.class, DieselShootInteraction.Companion.getCODEC())
                 .register("RiseRock", RiseRockInteraction.class, RiseRockInteraction.Companion.getCODEC())
                 .register("ApplyMovementConfig", ApplyMovementConfigInteraction.class,ApplyMovementConfigInteraction.CODEC);
 
