@@ -1,0 +1,41 @@
+
+{
+  "Type": "MovementCondition",
+  "Failed": {
+    "Parent": "DodgeF",
+    "Force": 15
+  },
+  "Forward": {
+    "Parent": "DodgeF",
+    "Force": 15
+  },
+  "Back": {
+    "Parent": "DodgeB",
+    "Force": 15
+  },
+  "Left": {
+    "Parent": "DodgeL",
+    "Force": 15
+  },
+  "Right": {
+    "Parent": "DodgeR",
+    "Force": 15
+  },
+  "ForwardLeft": {
+    "Parent": "DodgeFL",
+    "Force": 15
+  },
+  "ForwardRight": {
+    "Parent": "DodgeFR",
+    "Force": 15
+  },
+  "BackLeft": {
+    "Parent": "DodgeBL",
+    "Force": 15
+  },
+  "BackRight": {
+    "Parent": "DodgeBR",
+    "Force": 15
+  }
+}
+

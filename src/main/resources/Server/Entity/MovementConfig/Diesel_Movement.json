@@ -42,7 +42,7 @@
   "ForwardCrouchSpeedMultiplier": 0.55,
   "BackwardCrouchSpeedMultiplier": 0.4,
   "StrafeCrouchSpeedMultiplier": 0.45,
-  "ForwardSprintSpeedMultiplier": 1.001,
+  "ForwardSprintSpeedMultiplier": 1.0001,
   "VariableJumpFallForce": 35,
   "FallEffectDuration": 0.0,
   "FallJumpForce": 7,

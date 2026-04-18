@@ -33,7 +33,6 @@ import com.nsane.diesel.logic.state_reader.StateReaderSystem;
 import com.nsane.diesel.logic.state_writer.StateWriter;
 import com.nsane.diesel.logic.state_writer.StateWriterSystem;
 import com.nsane.diesel.player.DieselPlayerComponent;
-import com.nsane.diesel.player.DieselPlayerSystem;
 import com.nsane.diesel.player.DieselPlayersResource;
 
 import javax.annotation.Nonnull;
@@ -67,7 +66,6 @@ public class DieselPlugin extends JavaPlugin {
         getCodecRegistry(Interaction.CODEC)
                 .register("OpenLogicUI", OpenLogicUIInteraction.class, OpenLogicUIInteraction.Companion.getCODEC())
                 .register("RiseRock", RiseRockInteraction.class, RiseRockInteraction.Companion.getCODEC());
-
 
         getCommandRegistry().registerCommand(new ExampleCommand("example", "An example command"));
         getCommandRegistry().registerCommand(new FlyingCommand());
