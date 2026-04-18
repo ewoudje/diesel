@@ -29,9 +29,9 @@
     "Compatible": false
   },
   "Interactions": {
-    "Primary": "Root_Diesel_Dodge",
+    "Primary": "Root_Weapon_Daggers_Primary",
     "Secondary": "Root_Weapon_Daggers_Secondary_Guard",
-    "Ability1": "Root_Diesel_Dodge"
+    "Ability1": "Root_Diesel_Dodge_Scout"
   },
   "Tags": {
     "Type": [

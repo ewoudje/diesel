@@ -1,0 +1,27 @@
+{
+  "Type": "Simple",
+  "Effects": {
+    "Particles": [
+      {
+        "SystemId": "Explosion_Small",
+        "TargetEntityPart": "Entity",
+        "PositionOffset": {
+          "Y": -0.5
+        }
+      }
+    ],
+    "CameraEffect": {
+      "Type": "CameraShake",
+      "CameraShake": "Daggers_Jump",
+      "Intensity": {
+        "Value": 0.04
+      }
+    },
+    "WorldSoundEventId": "SFX_Staff_Fire_Shoot",
+    "MovementEffects": {
+      "DisableLeft": false,
+      "DisableRight": false,
+      "DisableAll": false
+    }
+  }
+}
