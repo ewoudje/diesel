@@ -1,0 +1,14 @@
+{
+  "Parent": "Template_Dodge_FX",
+  "Effects": {
+    "Particles": [
+      {
+        "SystemId": "Explosion_Small",
+        "TargetEntityPart": "Entity",
+        "PositionOffset": {
+          "Y": -0.5
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "Interactions": [
+    {
+      "Type":"ApplyMovementConfig",
+      "MovementConfig": "Default"
+    }
+  ]
+}

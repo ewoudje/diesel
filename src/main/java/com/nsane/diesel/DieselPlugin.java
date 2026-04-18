@@ -27,6 +27,7 @@ import com.nsane.diesel.flying.FlyingCommand;
 import com.nsane.diesel.flying.SimulatedTransformationSystem;
 import com.nsane.diesel.flying.SimulatedTransformComponent;
 import com.nsane.diesel.flying.SimulationSystem;
+import com.nsane.diesel.interactions.ApplyMovementConfigInteraction;
 import com.nsane.diesel.logic.LogicComponentTracker;
 import com.nsane.diesel.logic.OpenLogicUIInteraction;
 import com.nsane.diesel.logic.bool_computer.BoolComputer;
@@ -72,8 +73,8 @@ public class DieselPlugin extends JavaPlugin {
         getCodecRegistry(Interaction.CODEC)
                 .register("OpenLogicUI", OpenLogicUIInteraction.class, OpenLogicUIInteraction.Companion.getCODEC())
                 .register("RiseRock", RiseRockInteraction.class, RiseRockInteraction.Companion.getCODEC())
-                .register("DieselShoot", DieselShootInteraction.class, DieselShootInteraction.Companion.getCODEC());
-
+                .register("DieselShoot", DieselShootInteraction.class, DieselShootInteraction.Companion.getCODEC())
+                .register("ApplyMovementConfig", ApplyMovementConfigInteraction.class,ApplyMovementConfigInteraction.CODEC);
 
         getCommandRegistry().registerCommand(new ExampleCommand("example", "An example command"));
         getCommandRegistry().registerCommand(new FlyingCommand());
