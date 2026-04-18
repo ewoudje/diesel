@@ -24,6 +24,7 @@ import com.nsane.diesel.flying.FlyingCommand;
 import com.nsane.diesel.flying.SimulatedTransformationSystem;
 import com.nsane.diesel.flying.SimulatedPositionComponent;
 import com.nsane.diesel.flying.SimulationSystem;
+import com.nsane.diesel.interactions.ApplyMovementConfigInteraction;
 import com.nsane.diesel.logic.LogicComponentTracker;
 import com.nsane.diesel.logic.OpenLogicUIInteraction;
 import com.nsane.diesel.logic.bool_computer.BoolComputer;
@@ -33,6 +34,7 @@ import com.nsane.diesel.logic.state_reader.StateReaderSystem;
 import com.nsane.diesel.logic.state_writer.StateWriter;
 import com.nsane.diesel.logic.state_writer.StateWriterSystem;
 import com.nsane.diesel.player.DieselPlayerComponent;
+import com.nsane.diesel.player.DieselPlayerSystem;
 import com.nsane.diesel.player.DieselPlayersResource;
 import com.nsane.diesel.projectiles.DieselShootInteraction;
 
@@ -69,6 +71,8 @@ public class DieselPlugin extends JavaPlugin {
                 .register("RiseRock", RiseRockInteraction.class, RiseRockInteraction.Companion.getCODEC())
                 .register("DieselShoot", DieselShootInteraction.class, DieselShootInteraction.Companion.getCODEC());
 
+                .register("RiseRock", RiseRockInteraction.class, RiseRockInteraction.Companion.getCODEC())
+                .register("ApplyMovementConfig", ApplyMovementConfigInteraction.class,ApplyMovementConfigInteraction.CODEC);
 
         getCommandRegistry().registerCommand(new ExampleCommand("example", "An example command"));
         getCommandRegistry().registerCommand(new FlyingCommand());
