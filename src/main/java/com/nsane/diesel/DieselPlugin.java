@@ -37,6 +37,8 @@ import com.nsane.diesel.logic.state_writer.StateWriter;
 import com.nsane.diesel.logic.state_writer.StateWriterSystem;
 import com.nsane.diesel.player.DieselPlayerComponent;
 import com.nsane.diesel.player.DieselPlayersResource;
+import com.nsane.diesel.projectiles.DieselProjectileComponent;
+import com.nsane.diesel.projectiles.DieselProjectileSystem;
 import com.nsane.diesel.projectiles.DieselShootInteraction;
 
 import javax.annotation.Nonnull;
@@ -62,6 +64,7 @@ public class DieselPlugin extends JavaPlugin {
 
         registerEntityComponent(RisenRockComponent.class, "RisenRockComponent", RisenRockComponent.Companion.getCODEC());
         registerEntityComponent(DieselPlayerComponent.class, "DieselPlayerComponent", DieselPlayerComponent.Companion.getCODEC());
+        registerEntityComponent(DieselProjectileComponent.class, "DieselProjectileComponent", DieselProjectileComponent.Companion.getCODEC());
         registerEntityComponent(SimulatedTransformComponent.class, "SimulatedInAir", SimulatedTransformComponent.Companion.getCODEC());
         registerEntityComponent(CloudComponent.class, "Cloud", CloudComponent.Companion.getCODEC());        registerEntityResource(DieselPlayersResource.class, "DieselPlayersResource", DieselPlayersResource.Companion.getCODEC());
         registerEntityResource(AirSimulator.class, "AirSimulator", AirSimulator.Companion.getCODEC());
@@ -89,6 +92,7 @@ public class DieselPlugin extends JavaPlugin {
         getEntityStoreRegistry().registerSystem(SimulationSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(RisenRockTickSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(RisenRockRefSystem.INSTANCE);
+        getEntityStoreRegistry().registerSystem(DieselProjectileSystem.INSTANCE);
 
 
         getChunkStoreRegistry().registerSystem(StateReaderSystem.INSTANCE);

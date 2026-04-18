@@ -16,6 +16,7 @@ object SimulationSystem : TickingSystem<EntityStore?>() {
         store: Store<EntityStore?>
     ) {
         val sim = store.getResource(AirSimulator.TYPE)
+        if (!sim.flying) return
         val (velocity, omega) = doPathing(sim)
 
         val traveled = velocity * dt.toDouble() * sim.velocityModifier

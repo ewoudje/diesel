@@ -33,7 +33,7 @@
       "Interactions": [
         {
           "Type": "DieselShoot",
-          "Config": "Projectile_Config_Arrow_Crossbow"
+          "ProjectileType": "ScoutGun"
         }
       ]
     }

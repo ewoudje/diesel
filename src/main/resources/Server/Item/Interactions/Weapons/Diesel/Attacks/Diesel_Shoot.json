@@ -1,9 +1,0 @@
-{
-  "Type": "DieselShoot",
-  "Config": "Projectile_Config_AA",
-  "Effects": {
-    "CameraEffect": "Impact"
-  },
-  "ProjectileCount": 5,
-  "SpreadAmount": 1000
-}
