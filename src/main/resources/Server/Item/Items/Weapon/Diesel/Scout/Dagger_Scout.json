@@ -28,10 +28,12 @@
   "Utility": {
     "Compatible": false
   },
+  "$Comment": "TO-DO: Remove SwapTo, probably, since we can change movement with the eventual class system",
   "Interactions": {
     "Primary": "Root_Weapon_Daggers_Primary",
     "Secondary": "Root_Weapon_Daggers_Secondary_Guard",
-    "Ability1": "Root_Diesel_Dodge_Scout"
+    "Ability1": "Root_Diesel_Dodge_Scout",
+    "SwapTo": "Root_SetMovement_Scout"
   },
   "Tags": {
     "Type": [
