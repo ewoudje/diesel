@@ -2,7 +2,7 @@
   "Model": "Bullet_Blunderbuss",
   "Config": "Projectile_Config_Empty",
   "ProjectileCount": 10,
-  "SpreadAmount": 7.0,
+  "SpreadAmount": 7,
   "BulletDamage": 2,
   "BulletSpeed": 50,
   "BulletDistance": 8,
@@ -15,12 +15,21 @@
   "DamageEffects": {
     "Knockback": {
       "Type": "Directional",
-      "Force": -30
+      "Force": -50
     },
     "WorldParticles": [
       {
-        "SystemId": "Firework_GS"
+        "SystemId": "Gun_Impact"
       }
     ]
-  }
+  },
+  "BlockHitParticles": [
+    {
+      "SystemId": "Gun_Impact",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0
+      }
+    }
+  ]
 }

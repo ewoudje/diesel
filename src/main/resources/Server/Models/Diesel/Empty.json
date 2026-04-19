@@ -1,5 +1,5 @@
 {
-  "Model": "NPC/empty.blockymodel",
+  "Model": "NPC/Diesel/empty.blockymodel",
   "Texture": "NPC/Undead/Cow_Undead/Models/Texture.png",
   "HitBox": {
     "Max": {

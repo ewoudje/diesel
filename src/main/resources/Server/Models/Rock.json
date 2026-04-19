@@ -1,6 +1,6 @@
 {
-  "Model": "NPC/Models/rock.blockymodel",
-  "Texture": "NPC/Models/Rock.png",
+  "Model": "NPC/Diesel/Models/rock.blockymodel",
+  "Texture": "NPC/Diesel/Models/Rock.png",
   "HitBox": {
     "Min": {
       "X": 0.05,
