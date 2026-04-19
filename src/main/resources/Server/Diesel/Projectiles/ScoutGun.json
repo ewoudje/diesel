@@ -6,9 +6,6 @@
   "BulletDamage": 2,
   "BulletSpeed": 50,
   "BulletDistance": 8,
-  "HitParticle": {
-    "SystemId": "IceBall"
-  },
   "DamageCalculator": {
     "Class": "Light",
     "BaseDamage": {
