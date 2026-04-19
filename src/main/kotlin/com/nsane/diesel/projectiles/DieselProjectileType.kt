@@ -4,20 +4,16 @@ import com.hypixel.hytale.assetstore.AssetExtraInfo
 import com.hypixel.hytale.assetstore.AssetKeyValidator
 import com.hypixel.hytale.assetstore.AssetRegistry
 import com.hypixel.hytale.assetstore.codec.AssetBuilderCodec
-import com.hypixel.hytale.assetstore.codec.AssetCodecMapCodec
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap
-import com.hypixel.hytale.assetstore.map.IndexedLookupTableAssetMap
 import com.hypixel.hytale.assetstore.map.JsonAssetWithMap
 import com.hypixel.hytale.codec.Codec
+import com.hypixel.hytale.codec.codecs.array.ArrayCodec
 import com.hypixel.hytale.codec.validation.ValidatorCache
 import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset
-import com.hypixel.hytale.server.core.asset.type.particle.config.ParticleSystem
 import com.hypixel.hytale.server.core.asset.type.particle.config.WorldParticle
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.server.combat.DamageCalculator
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.server.combat.DamageEffects
-import com.hypixel.hytale.server.core.modules.interaction.interaction.config.server.combat.Knockback
 import com.hypixel.hytale.server.core.modules.projectile.config.ProjectileConfig
-import com.hypixel.hytale.server.npc.asset.builder.validators.AssetValidator
 import io.github.hytalekt.kytale.codec.buildCodec
 
 data class DieselProjectileType(
@@ -27,6 +23,7 @@ data class DieselProjectileType(
     var configKey: String? = null,
     var damageEffects: DamageEffects? = null,
     var damageCalculator: DamageCalculator? = null,
+    var blockHitParticles: Array<WorldParticle>? = null,
     var projectileCount: Int = 1,
     var spreadAmount: Double = 1.0,
     var bulletSpeed: Double = 25.0,
@@ -59,6 +56,11 @@ data class DieselProjectileType(
             addField("DamageCalculator", DamageCalculator.CODEC) {
                 getter { damageCalculator }
                 setter { damageCalculator = it }
+            }
+
+            addField("BlockHitParticles", ArrayCodec(WorldParticle.CODEC, { Array<WorldParticle?>(it) { null } })) {
+                getter { blockHitParticles }
+                setter { blockHitParticles = it }
             }
 
             addField("ProjectileCount", Codec.INTEGER) {

@@ -19,6 +19,11 @@
     "Knockback": {
       "Type": "Directional",
       "Force": -30
-    }
+    },
+    "WorldParticles": [
+      {
+        "SystemId": "Firework_GS"
+      }
+    ]
   }
 }

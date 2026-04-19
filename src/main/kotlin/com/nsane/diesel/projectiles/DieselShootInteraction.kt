@@ -38,6 +38,7 @@ import kotlin.random.Random
 
 class DieselShootInteraction: ProjectileInteraction() {
     var projectileType: String? = null
+    var offset: Vector3d = Vector3d(0.0, 0.0, 0.0)
 
     override fun getConfig(): ProjectileConfig? {
         config = DieselProjectileType.ASSET_STORE.assetMap.getAsset(projectileType)!!.configKey
@@ -93,13 +94,13 @@ class DieselShootInteraction: ProjectileInteraction() {
 
         PhysicsMath.vectorFromAngles(rotation.yaw, rotation.pitch, direction)
         val newPosition = position.clone()
-            .addScaled(direction, 0.3)
+            .addScaled(direction, offset.z)
 
         val xzDir = direction.clone()
         xzDir.y = 0.0
         xzDir.normalize().cross(Vector3d.POS_Y, xzDir)
-        newPosition.addScaled(xzDir, 0.05)
-        newPosition.addScaled(xzDir.cross(direction, xzDir), -0.03)
+        newPosition.addScaled(xzDir, offset.x)
+        newPosition.addScaled(xzDir.cross(direction, xzDir), offset.y)
 
         holder.addComponent(TransformComponent.getComponentType(), TransformComponent(newPosition, rotation))
         holder.addComponent(SimulatedTransformComponent.TYPE, SimulatedTransformComponent().apply {
@@ -161,6 +162,13 @@ class DieselShootInteraction: ProjectileInteraction() {
                 { o, p -> o.projectileType = p.projectileType }
             )
             .addValidator(DieselProjectileType.VALIDATOR.validator)
+            .add()
+            .appendInherited(
+                KeyedCodec<Vector3d>("Offset", Vector3d.CODEC),
+                { self: DieselShootInteraction, i: Vector3d -> self.offset = i },
+                { self: DieselShootInteraction -> self.offset },
+                { o, p -> o.offset = p.offset }
+            )
             .add()
             .build()
     }

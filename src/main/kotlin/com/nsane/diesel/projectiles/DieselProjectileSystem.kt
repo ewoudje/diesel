@@ -32,6 +32,7 @@ import com.hypixel.hytale.server.core.modules.interaction.interaction.config.ser
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.server.combat.DamageClass
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.server.combat.DamageEffects
 import com.hypixel.hytale.server.core.modules.physics.util.PhysicsMath
+import com.hypixel.hytale.server.core.universe.world.ParticleUtil
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.flying.SimulatedTransformComponent
 import com.nsane.diesel.flying.SimulatedTransformationSystem
@@ -61,6 +62,7 @@ object DieselProjectileSystem: EntityTickingSystem<EntityStore?>() {
         val collisions = CollisionResult(true, true)
         val entities = mutableListOf<Ref<EntityStore?>>()
         val velocity = SimulatedTransformationSystem.getWorldVelocity(commands, simulated).scale(dt.toDouble())
+        val type = DieselProjectileType.ASSET_MAP.getAsset(projectile.type)!!
         spatial.spatialStructure.collect(pos, 3.0, entities)
         collisions.collisionEntities = entities.mapNotNull { EntityUtils.getEntity(it, commands) }
 
@@ -75,8 +77,13 @@ object DieselProjectileSystem: EntityTickingSystem<EntityStore?>() {
         val firstBlock = collisions.firstBlockCollision
         if (firstChar != null) {
             attemptEntityDamage(commands, projectile, ref, firstChar, velocity.clone().normalize())
+            type.damageEffects?.worldParticles?.let {
+                ParticleUtil.spawnParticleEffects(it, firstChar.collisionPoint, null, commands.externalData.world.playerRefs.map { it.reference }, commands)
+            }
         } else if (firstBlock != null) {
-
+            type.blockHitParticles?.let {
+                ParticleUtil.spawnParticleEffects(it, firstBlock.collisionPoint, null, commands.externalData.world.playerRefs.map { it.reference }, commands)
+            }
         } else return
 
 
