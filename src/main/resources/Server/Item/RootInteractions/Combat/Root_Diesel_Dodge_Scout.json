@@ -1,0 +1,19 @@
+{
+  "Parent": "Root_Diesel_Dodge",
+  "RequireNewClick": true,
+  "ClickQueuingTimeout": 0.15,
+  "Cooldown": {
+    "Cooldown": 0.25,
+    "Charges": [
+      2.5,
+      1.5,
+      1.0,
+      0.7
+    ],
+    "InterruptRecharge": true,
+    "ClickBypass": false
+  },
+  "Interactions": [
+    "Dodge_Scout"
+  ]
+}

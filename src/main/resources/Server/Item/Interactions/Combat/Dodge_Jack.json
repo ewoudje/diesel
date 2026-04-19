@@ -1,0 +1,7 @@
+{
+  "Parent": "Template_Dodge",
+  "Interactions": [
+    "Dodge_Big",
+    "Dodge_FX_Scout"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "TranslationProperties": {
+    "Name": "Boss Weapon"
+  },
+  "Quality": "Common",
+  "ItemLevel": 40,
+  "IconProperties": {
+    "Scale": 0.46,
+    "Translation": [
+      1.29,
+      1.29
+    ],
+    "Rotation": [
+      45,
+      90,
+      0
+    ]
+  },
+  "Model": "NPC/Intelligent/Klops/Models/Weapons/Staff/Cane.blockymodel",
+  "Texture": "NPC/Intelligent/Klops/Models/Weapons/Staff/Cane_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Weapon_Staff_Cane_Klops.png",
+  "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
+  "ItemSoundSetId": "ISS_Weapons_Wood",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "RiseRock"
+        }
+      ]
+    }
+  },
+  "PlayerAnimationsId": "Staff",
+  "UsePlayerAnimations": true,
+  "InteractionConfig": {
+    "UseDistance": {
+      "Creative": 256
+    },
+    "DisplayOutlines": true,
+    "DebugOutlines": false
+  }
+}

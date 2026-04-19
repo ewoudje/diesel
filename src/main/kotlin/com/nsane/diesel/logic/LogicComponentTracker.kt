@@ -9,6 +9,7 @@ import com.hypixel.hytale.component.Store
 import com.hypixel.hytale.component.query.Query
 import com.hypixel.hytale.component.system.RefSystem
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
+import com.nsane.diesel.logic.bool_computer.BoolComputer
 
 object LogicComponentTracker: RefSystem<ChunkStore?>() {
     private val refs = HashMap<String, Ref<ChunkStore?>>()
@@ -40,9 +41,18 @@ object LogicComponentTracker: RefSystem<ChunkStore?>() {
 
     private fun find(ref: Ref<ChunkStore?>, buffer: CommandBuffer<ChunkStore?>): List<LogicComponent<*>> {
         val found = mutableListOf<LogicComponent<*>>()
+
         buffer.getComponent(ref, StateReader.TYPE)?.let(found::add)
+        buffer.getComponent(ref, BoolComputer.TYPE)?.let(found::add)
 
         return found
+    }
+
+    fun getComponentWithId(buffer: CommandBuffer<ChunkStore?>, id: String): LogicComponent<*>? {
+        if (id.isEmpty()) return null
+        val ref = getRef(id) ?: return null
+
+        return find(ref, buffer).find { it.id == id }
     }
 
     fun getRef(id: String): Ref<ChunkStore?>? = refs[id]

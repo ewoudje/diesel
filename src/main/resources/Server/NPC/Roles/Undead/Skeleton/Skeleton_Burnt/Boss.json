@@ -1,0 +1,45 @@
+{
+  "Type": "Variant",
+  "Reference": "Template_Intelligent",
+  "Parameters": {
+    "WanderRadius": {
+      "Value": 3,
+      "Description": "General wander radius for idle wander and wander on the break."
+    },
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Skeleton_Burnt_Praetorian.name",
+      "Description": "Translation key for NPC name display"
+    }
+  },
+  "Modify": {
+    "MaxHealth": 226,
+    "MaxSpeed": 3,
+    "RunThreshold": 1,
+    "HearingRange": 8,
+    "ViewSector": 270,
+    "WakingPeriod": [
+      0,
+      24
+    ],
+    "DropList": "Drop_Skeleton_Burnt_Praetorian",
+    "Appearance": "Skeleton_Burnt_Praetorian",
+    "Weapons": [
+      "Weapon_Longsword_Praetorian_NPC"
+    ],
+    "OffHand": [
+      "Weapon_Shield_Praetorian"
+    ],
+    "LeashMinPlayerDistance": 4,
+    "DefaultOffHandSlot": 0,
+    "WanderRadius": {
+      "Compute": "WanderRadius"
+    },
+    "WakingIdleBehaviorComponent": "Component_Instruction_Stationary_Idle",
+    "UseCombatActionEvaluator": true,
+    "_CombatConfig": "CAE_Boss",
+    "BreathesInWater": true,
+    "NameTranslationKey": {
+      "Compute": "NameTranslationKey"
+    }
+  }
+}
