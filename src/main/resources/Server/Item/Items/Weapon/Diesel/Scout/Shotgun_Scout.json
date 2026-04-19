@@ -4,17 +4,6 @@
     "Name": "server.items.Shotgun_Scout.name"
   },
   "Interactions": {
-    "Primary": {
-      "Cooldown": {
-        "Cooldown":0.1
-      },
-      "Interactions": [
-        {
-          "Type": "DieselShoot",
-          "ProjectileType": "TurretAa"
-        }
-      ]
-    },
     "Secondary": "Gun_Attack"
   }
 }

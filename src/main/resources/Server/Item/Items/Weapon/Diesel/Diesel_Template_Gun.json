@@ -28,13 +28,9 @@
         "Cooldown": 0.2
       },
       "Interactions": [
-          {
-            "Type": "DieselShoot",
-            "ProjectileType": "ShotgunScout"
-          },
         {
-          "Type": "Projectile",
-          "Config": "Projectile_Config_Shotgun_Scout_Empty",
+          "Type": "DieselShoot",
+          "ProjectileType": "ScoutGun",
           "Effects": {
             "ItemAnimationId": "Shoot",
             "CameraEffect": "Handgun_Shoot",

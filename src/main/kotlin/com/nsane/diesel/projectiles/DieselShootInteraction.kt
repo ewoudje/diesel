@@ -1,62 +1,90 @@
 package com.nsane.diesel.projectiles
 
+import com.hypixel.hytale.codec.Codec
+import com.hypixel.hytale.codec.KeyedCodec
+import com.hypixel.hytale.codec.builder.BuilderCodec
 import com.hypixel.hytale.component.AddReason
 import com.hypixel.hytale.component.CommandBuffer
 import com.hypixel.hytale.component.Ref
 import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.math.vector.Vector3f
-import com.hypixel.hytale.protocol.InteractionState
-import com.hypixel.hytale.protocol.InteractionType
+import com.hypixel.hytale.protocol.*
 import com.hypixel.hytale.server.core.asset.type.model.config.Model
 import com.hypixel.hytale.server.core.entity.InteractionContext
 import com.hypixel.hytale.server.core.entity.UUIDComponent
 import com.hypixel.hytale.server.core.modules.entity.DespawnComponent
-import com.hypixel.hytale.server.core.modules.entity.component.*
+import com.hypixel.hytale.server.core.modules.entity.component.BoundingBox
+import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent
+import com.hypixel.hytale.server.core.modules.entity.component.PersistentModel
+import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent
 import com.hypixel.hytale.server.core.modules.entity.tracker.NetworkId
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.SimpleInstantInteraction
-import com.hypixel.hytale.server.core.modules.physics.component.Velocity
 import com.hypixel.hytale.server.core.modules.physics.util.PhysicsMath
+import com.hypixel.hytale.server.core.modules.projectile.config.ProjectileConfig
+import com.hypixel.hytale.server.core.modules.projectile.interaction.ProjectileInteraction
 import com.hypixel.hytale.server.core.modules.time.TimeResource
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
+import com.hypixel.hytale.server.core.util.PositionUtil
 import com.hypixel.hytale.server.core.util.TargetUtil
 import com.nsane.diesel.flying.SimulatedTransformComponent
-import io.github.hytalekt.kytale.codec.buildCodec
-import io.github.hytalekt.kytale.ext.plus
 import java.time.Duration
+import java.util.*
+import java.util.function.BiConsumer
+import java.util.function.Function
 import kotlin.math.asin
 import kotlin.math.atan2
 import kotlin.random.Random
 
-class DieselShootInteraction: SimpleInstantInteraction() {
-    var projectileType: DieselProjectileType? = null
+class DieselShootInteraction: ProjectileInteraction() {
+    var projectileType: String? = null
+
+    override fun getConfig(): ProjectileConfig? {
+        config = DieselProjectileType.ASSET_STORE.assetMap.getAsset(projectileType)!!.configKey
+        return super.getConfig()
+    }
 
     override fun firstRun(
         type: InteractionType,
         ctx: InteractionContext,
         cooldown: CooldownHandler
     ) {
-        val type = projectileType ?: return
+        val type = DieselProjectileType.ASSET_STORE.assetMap.getAsset(projectileType) ?: return
         val buffer = ctx.commandBuffer ?: return
-        val lookVec = TargetUtil.getLook(ctx.owningEntity, buffer)
-        repeat(type.projectileCount) {
-            val yaw = (atan2(-lookVec.direction.x, -lookVec.direction.z) + (Random.nextDouble() - 0.5) * Math.toRadians(type.spreadAmount)).toFloat()
-            val pitch = (asin(lookVec.direction.y) + (Random.nextDouble() - 0.5) * Math.toRadians(type.spreadAmount)).toFloat()
+        val clientState = ctx.clientState
 
-            spawnProjectile(buffer, type, lookVec.position, Vector3d(yaw, pitch))
+        val position: Vector3d
+        val direction: Vector3d
+        val generatedUUID: UUID?
+        if (clientState != null && clientState.attackerPos != null && clientState.attackerRot != null) {
+            position = PositionUtil.toVector3d(clientState.attackerPos!!)
+            val lookVec = PositionUtil.toRotation(clientState.attackerRot!!)
+            direction = Vector3d(lookVec.yaw, lookVec.pitch)
+            generatedUUID = clientState.generatedUUID
+        } else {
+            val lookVec = TargetUtil.getLook(ctx.owningEntity, buffer)
+            position = lookVec.position
+            direction = lookVec.direction
+            generatedUUID = null
+        }
+
+        repeat(type.projectileCount) {
+            val yaw = (atan2(-direction.x, -direction.z) + (Random.nextDouble() - 0.5) * Math.toRadians(type.spreadAmount)).toFloat()
+            val pitch = (asin(direction.y) + (Random.nextDouble() - 0.5) * Math.toRadians(type.spreadAmount)).toFloat()
+
+            spawnProjectile(buffer, position, Vector3d(yaw, pitch), if (it == 0) generatedUUID else null)
         }
 
         ctx.state.state = InteractionState.Finished
     }
 
-
     fun spawnProjectile(
         commandBuffer: CommandBuffer<EntityStore?>,
-        type: DieselProjectileType,
         position: Vector3d,
-        direction: Vector3d
+        direction: Vector3d,
+        uuid: UUID?
     ): Ref<EntityStore?> {
-        val type = projectileType ?: throw IllegalArgumentException()
+        val type = DieselProjectileType.ASSET_STORE.assetMap.getAsset(projectileType) ?: throw IllegalArgumentException()
         val holder = EntityStore.REGISTRY.newHolder()
 
         val rotation = Vector3f()
@@ -64,9 +92,14 @@ class DieselShootInteraction: SimpleInstantInteraction() {
         rotation.pitch = PhysicsMath.pitchFromDirection(direction.x, direction.y, direction.z)
 
         PhysicsMath.vectorFromAngles(rotation.yaw, rotation.pitch, direction)
-        val newPosition = direction.clone()
-            .scale(0.8)
-            .add(position)
+        val newPosition = position.clone()
+            .addScaled(direction, 0.3)
+
+        val xzDir = direction.clone()
+        xzDir.y = 0.0
+        xzDir.normalize().cross(Vector3d.POS_Y, xzDir)
+        newPosition.addScaled(xzDir, 0.05)
+        newPosition.addScaled(xzDir.cross(direction, xzDir), -0.03)
 
         holder.addComponent(TransformComponent.getComponentType(), TransformComponent(newPosition, rotation))
         holder.addComponent(SimulatedTransformComponent.TYPE, SimulatedTransformComponent().apply {
@@ -74,7 +107,7 @@ class DieselShootInteraction: SimpleInstantInteraction() {
             this.rotation.assign(rotation)
             this.velocity.assign(direction.clone().scale(type.bulletSpeed))
         })
-        holder.addComponent(DieselProjectileComponent.TYPE, DieselProjectileComponent().apply { this.type = type })
+        holder.addComponent(DieselProjectileComponent.TYPE, DieselProjectileComponent().apply { this.type = projectileType })
 
         val model = Model.createScaledModel(type.model, 0.5f)
         holder.addComponent(ModelComponent.getComponentType(), ModelComponent(model))
@@ -82,7 +115,9 @@ class DieselShootInteraction: SimpleInstantInteraction() {
         holder.addComponent(BoundingBox.getComponentType(), BoundingBox(model.boundingBox!!))
         holder.addComponent(NetworkId.getComponentType(), NetworkId(commandBuffer.getExternalData().takeNextNetworkId()))
 
-        holder.ensureComponent(UUIDComponent.getComponentType())
+        if (uuid != null) {
+            holder.addComponent(UUIDComponent.getComponentType(), UUIDComponent(uuid))
+        } else holder.ensureComponent(UUIDComponent.getComponentType())
         holder.ensureComponent(EntityStore.REGISTRY.getNonSerializedComponentType())
 
         holder.addComponent(
@@ -118,10 +153,15 @@ class DieselShootInteraction: SimpleInstantInteraction() {
 
 
     companion object {
-        val CODEC = buildCodec(::DieselShootInteraction) {
-            addField("ProjectileType", DieselProjectileType.CODEC) {
-                getter { projectileType }
-                setter { projectileType = it } }
-        }
+        val CODEC = BuilderCodec.builder(DieselShootInteraction::class.java, ::DieselShootInteraction, SimpleInstantInteraction.CODEC)
+            .appendInherited(
+                KeyedCodec<String>("ProjectileType", Codec.STRING),
+                { self: DieselShootInteraction, i: String -> self.projectileType = i },
+                { self: DieselShootInteraction -> self.projectileType },
+                { o, p -> o.projectileType = p.projectileType }
+            )
+            .addValidator(DieselProjectileType.VALIDATOR.validator)
+            .add()
+            .build()
     }
 }
