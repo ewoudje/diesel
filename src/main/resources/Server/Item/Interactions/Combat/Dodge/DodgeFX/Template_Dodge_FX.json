@@ -22,6 +22,14 @@
       "DisableLeft": false,
       "DisableRight": false,
       "DisableAll": false
-    }
+    },
+    "FirstPersonParticles": [
+      {
+        "SystemId": "Explosion_Big",
+        "PositionOffset": {
+          "Y": 0
+        }
+      }
+    ]
   }
 }

@@ -1,13 +1,11 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.Diesel_Turret.name"
+    "Name": "server.items.Weapon_Assault_Rifle.name"
   },
   "Categories": [
     "Items.Weapons"
   ],
-  "Icon": "Icons/ItemsGenerated/Weapon_Gun_Blunderbuss.png",
-  "Texture": "Items/Weapons/Gun/Blunderbuss_Rusty_Texture.png",
-  "Model": "Items/Weapons/Gun/Blunderbuss.blockymodel",
+  "Model": "Items/Hypixel/Minigames/GunPvP/Weapons/Assault_Rifles/Assault_Rifle.blockymodel",
   "PlayerAnimationsId": {
     "Parent": "Rifle",
     "Animations": {
@@ -23,10 +21,27 @@
   },
   "Interactions": {
     "Primary": {
+      "Cooldown": {
+        "Id": "Shoot",
+        "Cooldown": 0.05
+      },
       "Interactions": [
         {
-          "Type": "DieselShoot",
-          "Config": "Projectile_Config_Arrow_Crossbow"
+          "Type": "ModifyInventory",
+          "RequiredGameMode": "Adventure",
+          "ItemToRemove": {
+            "Id": "Weapon_Arrow_Crude",
+            "Quantity": 1
+          },
+          "Next": {
+            "Parent": "Gun_Shoot",
+            "RunTime": 0,
+            "Effects": {
+              "LocalSoundEventId": "SFX_Rifle_Fire_Local",
+              "WorldSoundEventId": "SFX_Rifle_Fire"
+            }
+          },
+          "Failed": "Gun_Shoot_Fail"
         }
       ]
     },
@@ -80,15 +95,18 @@
   "IconProperties": {
     "Scale": 0.37,
     "Translation": [
-      -13.8,
-      -15.6
+      -3.6,
+      -20.4
     ],
     "Rotation": [
-      327.375,
+      315,
       90,
       0
     ]
   },
+  "Texture": "Items/Hypixel/Minigames/GunPvP/Weapons/Assault_Rifles/Assault_Rifle_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Weapon_Assault_Rifle.png",
+  "Quality": "Technical",
   "Tags": {
     "Type": [
       "Weapon"

@@ -1,10 +1,7 @@
 {
+  "Parent": "Template_Diesel_Gun",
   "TranslationProperties": {
-    "Name": "server.items.Diesel_Turret_AA.name"
-  },
-  "Parent": "Diesel_Turret",
-  "Weapon": {
-    "RenderDualWielded": false
+    "Name": "server.items.Shotgun_Scout.name"
   },
   "Interactions": {
     "Primary": {
@@ -14,7 +11,7 @@
       "Interactions": [
         {
           "Type": "DieselShoot",
-          "ProjectileType": "Aa"
+          "ProjectileType": "TurretAa"
         }
       ]
     },

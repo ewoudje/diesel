@@ -33,7 +33,7 @@
       "Interactions": [
         {
           "Type": "DieselShoot",
-          "ProjectileType": "ScoutGun"
+          "ProjectileType": "TurretAa"
         }
       ]
     }

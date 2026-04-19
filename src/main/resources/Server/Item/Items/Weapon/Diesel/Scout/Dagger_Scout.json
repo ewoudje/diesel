@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "Szarabande"
+    "Name": "server.items.Dagger_Scout.name"
   },
   "Model": "Items/Weapons/Dagger/Iron.blockymodel",
   "Texture": "Items/Weapons/Dagger/Iron_Texture.png",
@@ -30,7 +30,7 @@
   },
   "$Comment": "TO-DO: Remove SwapTo, probably, since we can change movement with the eventual class system",
   "Interactions": {
-    "Primary": "Root_Weapon_Daggers_Primary",
+    "Primary": "Root_Diesel_Dodge_Scout",
     "Secondary": "Root_Weapon_Daggers_Secondary_Guard",
     "Ability1": "Root_Diesel_Dodge_Scout",
     "SwapTo": "Root_SetMovement_Scout"

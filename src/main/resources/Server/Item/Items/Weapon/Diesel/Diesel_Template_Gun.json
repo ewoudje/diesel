@@ -1,13 +1,13 @@
 {
   "TranslationProperties": {
-    "Name": "diesel gun"
+    "Name": "server.items.Diesel_Template_Gun.name"
   },
   "Categories": [
     "Items.Weapons"
   ],
-  "Icon": "Icons/ItemsGenerated/Weapon_Gun_Blunderbuss.png",
-  "Texture": "Items/Weapons/Gun/Blunderbuss_Rusty_Texture.png",
   "Model": "Items/Weapons/Gun/Blunderbuss.blockymodel",
+  "Icon": "Icons/ItemsGenerated/Weapon_Gun_Blunderbuss_Rusty.png",
+  "Texture": "Items/Weapons/Gun/Blunderbuss_Rusty_Texture.png",
   "PlayerAnimationsId": {
     "Parent": "Rifle",
     "Animations": {
@@ -23,14 +23,39 @@
   },
   "Interactions": {
     "Primary": {
+      "Cooldown": {
+        "Id": "Shoot",
+        "Cooldown": 0.2
+      },
       "Interactions": [
+          {
+            "Type": "DieselShoot",
+            "ProjectileType": "ShotgunScout"
+          },
         {
-          "Parent": "Diesel_Shoot",
-          "RunTime": 0.05
+          "Type": "Projectile",
+          "Config": "Projectile_Config_Shotgun_Scout_Empty",
+          "Effects": {
+            "ItemAnimationId": "Shoot",
+            "CameraEffect": "Handgun_Shoot",
+            "Particles": [
+              {
+                "SystemId": "RifleShooting",
+                "PositionOffset": {
+                  "Z": 0.85,
+                  "Y": 0.15
+                },
+                "RotationOffset": {
+                  "Pitch": 90
+                }
+              }
+            ]
+          }
         }
       ]
     },
-    "Secondary": "Gun_Attack"
+    "Secondary": "Gun_Attack",
+    "Ability1": "Root_Diesel_Dodge_Scout"
   },
   "InteractionVars": {
     "Gun_Swing_Left_Effect": {
@@ -80,11 +105,11 @@
   "IconProperties": {
     "Scale": 0.37,
     "Translation": [
-      -13.8,
-      -15.6
+      -3.6,
+      -20.4
     ],
     "Rotation": [
-      327.375,
+      315,
       90,
       0
     ]
