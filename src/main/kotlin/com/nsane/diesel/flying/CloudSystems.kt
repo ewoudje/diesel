@@ -60,7 +60,7 @@ object CloudTickSystem : EntityTickingSystem<EntityStore?>() {
         val modelAsset = ModelAsset.getAssetMap().getAsset("Cloud") ?: throw NullPointerException("Cloud asset not found")
         val model = Model.createScaledModel(modelAsset, Random.nextFloat() * 5 + 2)
         val holder = EntityStore.REGISTRY.newHolder()
-        holder.addComponent(TransformComponent.getComponentType(), TransformComponent().apply { position.assign(0.0, 0.0, MAX_DISTANCE) })
+        holder.addComponent(TransformComponent.getComponentType(), TransformComponent().apply { position.assign(direction) })
         holder.addComponent(PersistentModel.getComponentType(), PersistentModel(model.toReference()))
         holder.addComponent(ModelComponent.getComponentType(), ModelComponent(model))
         holder.addComponent(SimulatedTransformComponent.TYPE, SimulatedTransformComponent().apply {

@@ -16,7 +16,7 @@ object SimulationSystem : TickingSystem<EntityStore?>() {
         store: Store<EntityStore?>
     ) {
         val sim = store.getResource(AirSimulator.TYPE)
-        val (velocity, omega) = doPathing(sim)
+        val (velocity, omega) = Vector3d(0.0, 0.0, 1.0) to Vector3f()//doPathing(sim)
 
         val traveled = velocity * dt.toDouble() * sim.velocityModifier
         sim.distanceTraveled += traveled.length()
@@ -48,7 +48,7 @@ object SimulationSystem : TickingSystem<EntityStore?>() {
         val diff = targetRotation - sim.shipRotation
         val l = diff.length()
         if (l > speed) diff.scale(speed.toFloat() / l)
-        if (l < 0.0001) return Vector3f.ZERO
+        if (l < 0.001) return Vector3f.ZERO
         return diff
     }
 }

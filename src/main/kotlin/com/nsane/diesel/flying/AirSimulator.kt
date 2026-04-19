@@ -9,6 +9,7 @@ import io.github.hytalekt.kytale.codec.buildCodec
 
 class AirSimulator: Resource<EntityStore?> {
     var flying: Boolean = false
+    var worldInShipPosition: Vector3d = Vector3d(0.0, 80.0, 0.0)
     var shipPosition: Vector3d = Vector3d(0.0, 0.0, 0.0)
     var shipRotation: Vector3f = Vector3f(0.0f, 0.0f, 0.0f)
 

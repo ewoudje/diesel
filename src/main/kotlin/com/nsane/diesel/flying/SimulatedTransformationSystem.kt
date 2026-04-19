@@ -8,6 +8,7 @@ import com.hypixel.hytale.component.system.tick.EntityTickingSystem
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import io.github.hytalekt.kytale.ext.minus
+import io.github.hytalekt.kytale.ext.plus
 import io.github.hytalekt.kytale.ext.plusAssign
 import java.rmi.UnexpectedException
 
@@ -33,7 +34,7 @@ object SimulatedTransformationSystem : EntityTickingSystem<EntityStore?>() {
         diffPos.rotateY(-sim.shipRotation.y)
         diffPos.rotateZ(-sim.shipRotation.z)
         transform.rotation = simulatedPos.rotation - sim.shipRotation
-        transform.position = diffPos
+        transform.position = diffPos + sim.worldInShipPosition
     }
 
     override fun getQuery(): Query<EntityStore?>? = Query.and(SimulatedTransformComponent.TYPE, TransformComponent.getComponentType())
