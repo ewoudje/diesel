@@ -62,11 +62,10 @@ public class DieselPlugin extends JavaPlugin {
 
         registerEntityComponent(RisenRockComponent.class, "RisenRockComponent", RisenRockComponent.Companion.getCODEC());
         registerEntityComponent(DieselPlayerComponent.class, "DieselPlayerComponent", DieselPlayerComponent.Companion.getCODEC());
-        registerEntityComponent(SimulatedPositionComponent.class, "SimulatedInAir", SimulatedPositionComponent.Companion.getCODEC());
+        registerEntityComponent(SimulatedTransformComponent.class, "SimulatedTransformComponent", SimulatedTransformComponent.Companion.getCODEC());
         registerEntityComponent(CloudComponent.class, "Cloud", CloudComponent.Companion.getCODEC());
         registerEntityResource(DieselPlayersResource.class, "DieselPlayersResource", DieselPlayersResource.Companion.getCODEC());
         registerEntityResource(AirSimulator.class, "AirSimulator", AirSimulator.Companion.getCODEC());
-
 
         getCodecRegistry(Interaction.CODEC)
                 .register("OpenLogicUI", OpenLogicUIInteraction.class, OpenLogicUIInteraction.Companion.getCODEC())
