@@ -2,7 +2,7 @@
   "Interactions": [
     {
       "Type":"ApplyMovementConfig",
-      "MovementConfig": "Default"
+      "MovementConfig": "Diesel_Movement_Scout"
     }
   ]
 }

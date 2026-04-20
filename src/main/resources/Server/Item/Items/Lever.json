@@ -38,7 +38,7 @@
   "ItemSoundSetId": "ISS_Blocks_Wood",
   "BlockType": {
     "BlockSoundSetId": "Metal",
-    "CustomModel": "Blocks/lever.blockymodel",
+    "CustomModel": "Blocks/Diesel/lever.blockymodel",
     "CustomModelScale": 1,
     "CustomModelTexture": [
       {
@@ -79,13 +79,13 @@
       "Definitions": {
         "On": {
           "Looping": false,
-          "CustomModelAnimation": "Blocks/leverup.blockyanim"
+          "CustomModelAnimation": "Blocks/Diesel/leverup.blockyanim"
         },
         "Off": {
           "InteractionHint": "server.interactionHints.turnon",
           "AmbientSoundEventId": null,
           "Looping": false,
-          "CustomModelAnimation": "Blocks/leverdown.blockyanim"
+          "CustomModelAnimation": "Blocks/Diesel/leverdown.blockyanim"
         }
       }
     },

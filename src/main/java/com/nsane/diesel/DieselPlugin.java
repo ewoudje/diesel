@@ -1,13 +1,27 @@
 package com.nsane.diesel;
 
+import com.hypixel.hytale.assetstore.AssetRegistry;
+import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
+import com.hypixel.hytale.assetstore.map.IndexedLookupTableAssetMap;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Resource;
 import com.hypixel.hytale.component.ResourceType;
 import com.hypixel.hytale.logger.HytaleLogger;
+import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
+import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect;
+import com.hypixel.hytale.server.core.asset.type.itemanimation.config.ItemPlayerAnimations;
+import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset;
+import com.hypixel.hytale.server.core.asset.type.particle.config.ParticleSystem;
+import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent;
+import com.hypixel.hytale.server.core.asset.type.trail.config.Trail;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
+import com.hypixel.hytale.server.core.modules.entity.hitboxcollision.HitboxCollisionConfig;
+import com.hypixel.hytale.server.core.modules.entitystats.asset.EntityStatType;
+import com.hypixel.hytale.server.core.modules.interaction.interaction.InteractionPacketGenerator;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
+import com.hypixel.hytale.server.core.modules.projectile.config.ProjectileConfig;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
@@ -55,6 +69,15 @@ public class DieselPlugin extends JavaPlugin {
     @Override
     protected void setup() {
         instance = this;
+        HytaleAssetStore.Builder<String, DieselProjectileType, DefaultAssetMap<String, DieselProjectileType>> builder =
+                HytaleAssetStore.builder(DieselProjectileType.class, new DefaultAssetMap<>());
+        builder.setCodec(DieselProjectileType.Companion.getCODEC());
+        builder.setPath("Diesel/Projectiles");
+        builder.setKeyFunction(DieselProjectileType::getId);
+        builder.setReplaceOnRemove(i -> new DieselProjectileType());
+        builder.loadsAfter(SoundEvent.class, ParticleSystem.class, ModelAsset.class, ProjectileConfig.class);
+
+        AssetRegistry.register(builder.build());
 
         registerChunkComponent(StateReader.class, "StateReader", StateReader.Companion.getCODEC());
         registerChunkComponent(StateWriter.class, "StateWriter", StateWriter.Companion.getCODEC());
@@ -62,7 +85,8 @@ public class DieselPlugin extends JavaPlugin {
 
         registerEntityComponent(RisenRockComponent.class, "RisenRockComponent", RisenRockComponent.Companion.getCODEC());
         registerEntityComponent(DieselPlayerComponent.class, "DieselPlayerComponent", DieselPlayerComponent.Companion.getCODEC());
-        registerEntityComponent(SimulatedTransformComponent.class, "SimulatedTransformComponent", SimulatedTransformComponent.Companion.getCODEC());
+        registerEntityComponent(DieselProjectileComponent.class, "DieselProjectileComponent", DieselProjectileComponent.Companion.getCODEC());
+        registerEntityComponent(SimulatedTransformComponent.class, "SimulatedInAir", SimulatedTransformComponent.Companion.getCODEC());
         registerEntityComponent(CloudComponent.class, "Cloud", CloudComponent.Companion.getCODEC());
         registerEntityResource(DieselPlayersResource.class, "DieselPlayersResource", DieselPlayersResource.Companion.getCODEC());
         registerEntityResource(AirSimulator.class, "AirSimulator", AirSimulator.Companion.getCODEC());
@@ -70,6 +94,7 @@ public class DieselPlugin extends JavaPlugin {
         getCodecRegistry(Interaction.CODEC)
                 .register("OpenLogicUI", OpenLogicUIInteraction.class, OpenLogicUIInteraction.Companion.getCODEC())
                 .register("RiseRock", RiseRockInteraction.class, RiseRockInteraction.Companion.getCODEC())
+                .register("DieselShoot", DieselShootInteraction.class, DieselShootInteraction.Companion.getCODEC())
                 .register("ApplyMovementConfig", ApplyMovementConfigInteraction.class,ApplyMovementConfigInteraction.CODEC);
 
         getCommandRegistry().registerCommand(new ExampleCommand("example", "An example command"));
@@ -77,7 +102,6 @@ public class DieselPlugin extends JavaPlugin {
         getCommandRegistry().registerCommand(new CloudCommand());
 
         getEventRegistry().registerGlobal(PlayerReadyEvent.class, ExampleEvent::onPlayerReady);
-        // Disabled for now getEventRegistry().registerGlobal(PlayerReadyEvent.class, DieselPlayerSystem::playerReadyEvent);
 
         LOGGER.atInfo().log("Setup complete!!!");
     }
@@ -90,6 +114,7 @@ public class DieselPlugin extends JavaPlugin {
         getEntityStoreRegistry().registerSystem(SimulationSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(RisenRockTickSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(RisenRockRefSystem.INSTANCE);
+        getEntityStoreRegistry().registerSystem(DieselProjectileSystem.INSTANCE);
 
 
         getChunkStoreRegistry().registerSystem(StateReaderSystem.INSTANCE);

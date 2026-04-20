@@ -46,3 +46,4 @@ devserver
 /hyassets/
 /myassets/
 /.idea/
+gradle.properties

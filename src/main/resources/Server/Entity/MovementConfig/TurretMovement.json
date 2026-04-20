@@ -1,0 +1,9 @@
+{
+  "MaxHorizontalSpeed": 0,
+  "MaxSinkSpeed": 0,
+  "MaxClimbSpeed": 0,
+  "MinAirSpeed": 0,
+  "Acceleration": 0,
+  "AirDragMinSpeed": 0,
+  "AirDragMaxSpeed": 0
+}

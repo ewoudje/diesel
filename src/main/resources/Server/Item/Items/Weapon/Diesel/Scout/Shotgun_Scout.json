@@ -1,0 +1,9 @@
+{
+  "Parent": "Template_Diesel_Gun",
+  "TranslationProperties": {
+    "Name": "server.items.Shotgun_Scout.name"
+  },
+  "Interactions": {
+    "Secondary": "Gun_Attack"
+  }
+}

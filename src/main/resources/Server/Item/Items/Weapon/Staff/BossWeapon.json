@@ -28,6 +28,14 @@
           "Type": "RiseRock"
         }
       ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "DieselShoot",
+          "ProjectileType": "ScoutGun"
+        }
+      ]
     }
   },
   "PlayerAnimationsId": "Staff",
