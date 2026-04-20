@@ -6,17 +6,17 @@
     "Items.Weapons"
   ],
   "Reticle": "DefaultMelee",
-  "Model": "Items/Diesel/flintlock_blunderbuss/flintlock_blunderbuss.blockymodel",
+  "Model": "Items/Diesel/shotgun/shotgun.blockymodel",
   "Icon": "Icons/ItemsGenerated/Weapon_Gun_Blunderbuss_Rusty.png",
-  "Texture": "Items/Diesel/flintlock_blunderbuss/flintlock_blunderbuss.png",
+  "Texture": "Items/Diesel/shotgun/shotgun.png",
   "PlayerAnimationsId": {
     "Parent": "Rifle",
     "Animations": {
       "Shoot": {
-        "ThirdPerson": "Characters/Animations/Items/Dual_Handed/Rifle/Attacks/Shoot/Shoot.blockyanim",
-        "ThirdPersonMoving": "Characters/Animations/Items/Dual_Handed/Rifle/Attacks/Shoot/Shoot_Moving.blockyanim",
+        "ThirdPerson": "Characters/Diesel/Animations/Items/Shotgun/flute_fire.blockyanim",
+        "ThirdPersonMoving": "Characters/Diesel/Animations/Items/Shotgun/flute_fire.blockyanim",
         "FirstPerson": "Characters/Animations/Items/Dual_Handed/Rifle/Attacks/Shoot/Shoot_FPS.blockyanim",
-        "Speed": 3,
+        "Speed": 1,
         "BlendingDuration": 0,
         "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim"
       }
@@ -44,7 +44,8 @@
                 },
                 "RotationOffset": {
                   "Pitch": 90
-                }
+                },
+                "TargetEntityPart": "Self"
               }
             ]
           },
