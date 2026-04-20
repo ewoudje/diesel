@@ -16,6 +16,7 @@ import kotlin.collections.set
 class DieselReloadInteraction: SimpleInteraction() {
     var magazineId: String? = null
     var magazineSize: Int = 1
+    var duration: Float = 1.0f
 
     override fun tick0(
         firstRun: Boolean,
@@ -32,7 +33,7 @@ class DieselReloadInteraction: SimpleInteraction() {
             return
         }
 
-        ctx.state.progress += dt / runTime
+        ctx.state.progress += dt / duration
         if (ctx.state.progress >= 1.0) {
             playerComp.ammo[magazineId!!] = magazineSize
             ctx.heldItem = ItemStack(ctx.heldItem!!.item.getItemIdForState("Loaded")!!)
@@ -50,7 +51,7 @@ class DieselReloadInteraction: SimpleInteraction() {
         ctx: InteractionContext,
         cooldownHandler: CooldownHandler
     ) {
-        ctx.state.progress += dt / runTime
+        ctx.state.progress += dt / duration
         if (ctx.state.progress >= 1.0) {
             ctx.heldItem = ItemStack(ctx.heldItem!!.item.getItemIdForState("Loaded")!!)
             ctx.state.state = InteractionState.ItemChanged
@@ -76,6 +77,13 @@ class DieselReloadInteraction: SimpleInteraction() {
                 { self: DieselReloadInteraction, i: String -> self.magazineId = i },
                 { self: DieselReloadInteraction -> self.magazineId },
                 { o, p -> o.magazineId = p.magazineId }
+            )
+            .add()
+            .appendInherited(
+                KeyedCodec<Float>("Duration", Codec.FLOAT),
+                { self: DieselReloadInteraction, i: Float -> self.duration = i },
+                { self: DieselReloadInteraction -> self.duration },
+                { o, p -> o.duration = p.duration }
             )
             .add()
             .build()
