@@ -5,6 +5,7 @@
   "Categories": [
     "Items.Weapons"
   ],
+  "Reticle": "DefaultMelee",
   "Model": "Items/Diesel/flintlock_blunderbuss/flintlock_blunderbuss.blockymodel",
   "Icon": "Icons/ItemsGenerated/Weapon_Gun_Blunderbuss_Rusty.png",
   "Texture": "Items/Diesel/flintlock_blunderbuss/flintlock_blunderbuss.png",
@@ -14,7 +15,7 @@
       "Shoot": {
         "ThirdPerson": "Characters/Animations/Items/Dual_Handed/Rifle/Attacks/Shoot/Shoot.blockyanim",
         "ThirdPersonMoving": "Characters/Animations/Items/Dual_Handed/Rifle/Attacks/Shoot/Shoot_Moving.blockyanim",
-        "FirstPerson": "Characters/Diesel/Animations/Items/Weapon/animation.model.reload.blockyanim",
+        "FirstPerson": "Characters/Animations/Items/Dual_Handed/Rifle/Attacks/Shoot/Shoot_FPS.blockyanim",
         "Speed": 3,
         "BlendingDuration": 0,
         "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim"
@@ -30,16 +31,16 @@
       "Interactions": [
         {
           "Type": "DieselShoot",
-          "ProjectileType": "ScoutGun",
+          "ProjectileType": "Projectile_Shotgun",
           "Effects": {
             "ItemAnimationId": "Shoot",
             "CameraEffect": "Handgun_Shoot",
             "Particles": [
               {
-                "SystemId": "RifleShooting",
+                "SystemId": "Muzzle_Flash",
                 "PositionOffset": {
-                  "Z": 0.85,
-                  "Y": 0.15
+                  "Z": 0.7,
+                  "Y": 0.1
                 },
                 "RotationOffset": {
                   "Pitch": 90
@@ -121,6 +122,21 @@
       "Weapon"
     ]
   },
-  "Weapon": {},
+  "Weapon": {
+    "EntityStatsToClear": [
+      "Ammo"
+    ],
+    "StatModifiers": {
+      "Ammo": [
+        {
+          "Amount": 6,
+          "CalculationType": "Additive"
+        }
+      ]
+    }
+  },
+  "DisplayEntityStatsHUD": [
+    "Ammo"
+  ],
   "Scale": 2
 }
