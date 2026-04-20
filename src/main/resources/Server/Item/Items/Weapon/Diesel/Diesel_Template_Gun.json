@@ -16,7 +16,7 @@
         "ThirdPerson": "Characters/Animations/Items/Main_Handed/Crossbow/Reload/Reload.blockyanim",
         "FirstPerson": "Characters/Animations/Items/Main_Handed/Crossbow/Reload/Reload_FPS.blockyanim",
         "ThirdPersonMoving": "Characters/Animations/Items/Main_Handed/Crossbow/Reload/Reload.blockyanim",
-        "Speed": 0.5,
+        "Speed": 2,
         "Looping": false,
         "BlendingDuration": 0.1
       },
@@ -34,6 +34,11 @@
     "Secondary": "Gun_Attack",
     "Ability1": "Root_Diesel_Dodge_Scout",
     "Primary": {
+      "Interactions": [
+        "Reload_Scout_Shotgun"
+      ]
+    },
+    "Ability3": {
       "Interactions": [
         "Reload_Scout_Shotgun"
       ]

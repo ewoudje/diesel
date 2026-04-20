@@ -5,7 +5,7 @@ import com.hypixel.hytale.codec.codecs.EnumCodec
 enum class PlayerClass {
     SCOUT,
     MEDIC,
-    SOLDIER,
+    JACK,
     HEAVY;
 
     companion object {
