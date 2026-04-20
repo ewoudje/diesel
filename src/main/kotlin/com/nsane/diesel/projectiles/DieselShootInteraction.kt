@@ -8,7 +8,8 @@ import com.hypixel.hytale.component.CommandBuffer
 import com.hypixel.hytale.component.Ref
 import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.math.vector.Vector3f
-import com.hypixel.hytale.protocol.*
+import com.hypixel.hytale.protocol.InteractionState
+import com.hypixel.hytale.protocol.InteractionType
 import com.hypixel.hytale.server.core.asset.type.model.config.Model
 import com.hypixel.hytale.server.core.entity.InteractionContext
 import com.hypixel.hytale.server.core.entity.UUIDComponent
@@ -28,10 +29,9 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.hypixel.hytale.server.core.util.PositionUtil
 import com.hypixel.hytale.server.core.util.TargetUtil
 import com.nsane.diesel.flying.SimulatedTransformComponent
+import com.nsane.diesel.player.DieselPlayerComponent
 import java.time.Duration
 import java.util.*
-import java.util.function.BiConsumer
-import java.util.function.Function
 import kotlin.math.asin
 import kotlin.math.atan2
 import kotlin.random.Random
@@ -39,6 +39,7 @@ import kotlin.random.Random
 class DieselShootInteraction: ProjectileInteraction() {
     var projectileType: String? = null
     var offset: Vector3d = Vector3d(0.0, 0.0, 0.0)
+    var magazineId: String? = null
 
     override fun getConfig(): ProjectileConfig? {
         config = DieselProjectileType.ASSET_STORE.assetMap.getAsset(projectileType)!!.configKey
@@ -50,9 +51,20 @@ class DieselShootInteraction: ProjectileInteraction() {
         ctx: InteractionContext,
         cooldown: CooldownHandler
     ) {
-        val type = DieselProjectileType.ASSET_STORE.assetMap.getAsset(projectileType) ?: return
-        val buffer = ctx.commandBuffer ?: return
+        val type = DieselProjectileType.ASSET_STORE.assetMap.getAsset(projectileType)!!
+        val buffer = ctx.commandBuffer!!
         val clientState = ctx.clientState
+        val playerComp = buffer.getComponent(ctx.entity, DieselPlayerComponent.TYPE)
+
+        if (magazineId != null && playerComp != null) {
+            val ammo = playerComp.ammo[magazineId] ?: 0
+            if (ammo <= 0) {
+                ctx.state.state = InteractionState.Failed
+                return
+            }
+
+            playerComp.ammo[magazineId!!] = ammo - 1
+        }
 
         val position: Vector3d
         val direction: Vector3d
@@ -168,6 +180,13 @@ class DieselShootInteraction: ProjectileInteraction() {
                 { self: DieselShootInteraction, i: Vector3d -> self.offset = i },
                 { self: DieselShootInteraction -> self.offset },
                 { o, p -> o.offset = p.offset }
+            )
+            .add()
+            .appendInherited(
+                KeyedCodec<String>("MagazineId", Codec.STRING),
+                { self: DieselShootInteraction, i: String -> self.magazineId = i },
+                { self: DieselShootInteraction -> self.magazineId },
+                { o, p -> o.magazineId = p.magazineId }
             )
             .add()
             .build()

@@ -26,6 +26,9 @@ object DieselPlayerSystem {
         val hudManager = event.player.hudManager
         val hud = DieselUIHud(ref)
 
+        playerComponent.playerClass = PlayerClass.SCOUT
+        return
+
         hudManager.setVisibleHudComponents(ref) // Clears it
         hudManager.setCustomHud(ref, hud)
 
