@@ -12,6 +12,14 @@
   "PlayerAnimationsId": {
     "Parent": "Rifle",
     "Animations": {
+      "Reload": {
+        "ThirdPerson": "Characters/Animations/Items/Main_Handed/Crossbow/Reload/Reload.blockyanim",
+        "FirstPerson": "Characters/Animations/Items/Main_Handed/Crossbow/Reload/Reload_FPS.blockyanim",
+        "ThirdPersonMoving": "Characters/Animations/Items/Main_Handed/Crossbow/Reload/Reload.blockyanim",
+        "Speed": 0.5,
+        "Looping": false,
+        "BlendingDuration": 0.1
+      },
       "Shoot": {
         "ThirdPerson": "Characters/Diesel/Animations/Items/Shotgun/flute_fire.blockyanim",
         "ThirdPersonMoving": "Characters/Diesel/Animations/Items/Shotgun/flute_fire.blockyanim",
@@ -50,16 +58,13 @@
             ]
           },
           "MagazineId": "Scout",
-          "Failed": {
-            "Type": "DieselReload",
-            "MagazineId": "Scout",
-            "MagazineSize": 10
-          },
+          "Failed": "Reload_Scout_Shotgun",
           "Offset": {
             "X": 0.05,
             "Y": -0.03,
             "Z": -0.8
-          }
+          },
+          "Rules": {}
         }
       ]
     },
