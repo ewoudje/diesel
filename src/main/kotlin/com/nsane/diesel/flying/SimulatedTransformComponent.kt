@@ -31,6 +31,16 @@ class SimulatedTransformComponent : Component<EntityStore?> {
                 getter { rotation }
                 setter { rotation.assign(it) }
             }
+
+            addField("Velocity", Vector3d.CODEC) {
+                getter { velocity }
+                setter { velocity.assign(it) }
+            }
+
+            addField("Omega", Vector3f.CODEC) {
+                getter { omega }
+                setter { omega.assign(it) }
+            }
         }
 
         val TYPE by lazy { DieselPlugin.getComponent(SimulatedTransformComponent::class.java) }

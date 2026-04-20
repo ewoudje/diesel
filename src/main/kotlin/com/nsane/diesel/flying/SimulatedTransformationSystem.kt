@@ -2,9 +2,11 @@ package com.nsane.diesel.flying
 
 import com.hypixel.hytale.component.ArchetypeChunk
 import com.hypixel.hytale.component.CommandBuffer
+import com.hypixel.hytale.component.ComponentAccessor
 import com.hypixel.hytale.component.Store
 import com.hypixel.hytale.component.query.Query
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem
+import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import io.github.hytalekt.kytale.ext.minus
@@ -13,6 +15,25 @@ import io.github.hytalekt.kytale.ext.plusAssign
 import java.rmi.UnexpectedException
 
 object SimulatedTransformationSystem : EntityTickingSystem<EntityStore?>() {
+    fun getWorldVelocity(store: ComponentAccessor<EntityStore?>, simulated: SimulatedTransformComponent) =
+        getWorldVelocity(store.getResource(AirSimulator.TYPE), simulated)
+
+    fun getWorldPosition(store: ComponentAccessor<EntityStore?>, simulated: SimulatedTransformComponent) =
+        getWorldPosition(store.getResource(AirSimulator.TYPE), simulated)
+
+    fun getWorldVelocity(sim: AirSimulator, simulated: SimulatedTransformComponent) =
+        simulated.velocity.clone()
+            .rotateX(-sim.shipRotation.x)
+            .rotateY(-sim.shipRotation.y)
+            .rotateZ(-sim.shipRotation.z)
+
+    fun getWorldPosition(sim: AirSimulator, simulated: SimulatedTransformComponent): Vector3d =
+        (simulated.position - sim.shipPosition)
+            .rotateX(-sim.shipRotation.x)
+            .rotateY(-sim.shipRotation.y)
+            .rotateZ(-sim.shipRotation.z)
+            .add(sim.worldInShipPosition)
+
     override fun tick(
         dt: Float,
         idx: Int,
@@ -26,16 +47,11 @@ object SimulatedTransformationSystem : EntityTickingSystem<EntityStore?>() {
         val simulatedPos = archTypes.getComponent(idx, SimulatedTransformComponent.TYPE)
             ?: throw UnexpectedException("SimulatedPositionComponent is null")
 
+        transform.rotation = simulatedPos.rotation - sim.shipRotation
+        transform.position = getWorldPosition(sim, simulatedPos)
+
         simulatedPos.position += simulatedPos.velocity.clone().scale(dt.toDouble())
         simulatedPos.rotation += simulatedPos.omega.clone().scale(dt)
-
-        val diffPos = simulatedPos.position - sim.shipPosition
-        diffPos.rotateX(-sim.shipRotation.x)
-        diffPos.rotateY(-sim.shipRotation.y)
-        diffPos.rotateZ(-sim.shipRotation.z)
-        transform.rotation = simulatedPos.rotation - sim.shipRotation
-        transform.position = diffPos + sim.worldInShipPosition
     }
-
     override fun getQuery(): Query<EntityStore?>? = Query.and(SimulatedTransformComponent.TYPE, TransformComponent.getComponentType())
 }

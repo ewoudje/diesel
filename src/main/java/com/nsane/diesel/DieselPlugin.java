@@ -52,6 +52,10 @@ import com.nsane.diesel.logic.state_writer.StateWriter;
 import com.nsane.diesel.logic.state_writer.StateWriterSystem;
 import com.nsane.diesel.player.DieselPlayerComponent;
 import com.nsane.diesel.player.DieselPlayersResource;
+import com.nsane.diesel.projectiles.DieselProjectileComponent;
+import com.nsane.diesel.projectiles.DieselProjectileSystem;
+import com.nsane.diesel.projectiles.DieselProjectileType;
+import com.nsane.diesel.projectiles.DieselShootInteraction;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
