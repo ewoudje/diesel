@@ -6,12 +6,11 @@
     "ItemAnimationId": "Reload",
     "WaitForAnimationToFinish": true
   },
+  "RunTime": 2,
   "Rules": {
     "Blocking": [
       "Primary"
-    ],
-    "InterruptedBy": [
-      "Secondary"
     ]
-  }
+  },
+  "CancelOnItemChange": true
 }
