@@ -8,6 +8,7 @@ import com.hypixel.hytale.protocol.InteractionType
 import com.hypixel.hytale.server.core.entity.InteractionContext
 import com.hypixel.hytale.server.core.inventory.ItemStack
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler
+import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.SimpleInstantInteraction
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.SimpleInteraction
 import com.nsane.diesel.player.DieselPlayerComponent
@@ -33,8 +34,10 @@ class DieselReloadInteraction: SimpleInteraction() {
             return
         }
 
-        ctx.state.progress += dt / duration
-        if (ctx.state.progress >= 1.0) {
+        val progress = ctx.metaStore.getMetaObject(HELP) + (dt / duration)
+        ctx.metaStore.putMetaObject(HELP, progress)
+
+        if (progress >= 1.0) {
             playerComp.ammo[magazineId!!] = magazineSize
             ctx.heldItem = ItemStack(ctx.heldItem!!.item.getItemIdForState("Loaded")!!)
             ctx.heldItemContainer!!.setItemStackForSlot(ctx.heldItemSlot.toShort(), ctx.heldItem!!)
@@ -51,8 +54,9 @@ class DieselReloadInteraction: SimpleInteraction() {
         ctx: InteractionContext,
         cooldownHandler: CooldownHandler
     ) {
-        ctx.state.progress += dt / duration
-        if (ctx.state.progress >= 1.0) {
+        val progress = ctx.metaStore.getMetaObject(HELP) + (dt / duration)
+        ctx.metaStore.putMetaObject(HELP, progress)
+        if (progress >= 1.0) {
             ctx.heldItem = ItemStack(ctx.heldItem!!.item.getItemIdForState("Loaded")!!)
             ctx.state.state = InteractionState.ItemChanged
         } else ctx.state.state = InteractionState.NotFinished
@@ -60,6 +64,8 @@ class DieselReloadInteraction: SimpleInteraction() {
     }
 
     companion object {
+        val HELP = CONTEXT_META_REGISTRY.registerMetaObject { 0f }
+
         val CODEC = BuilderCodec.builder(
             DieselReloadInteraction::class.java,
             ::DieselReloadInteraction,
