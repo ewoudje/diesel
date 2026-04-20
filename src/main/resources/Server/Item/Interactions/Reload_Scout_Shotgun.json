@@ -1,0 +1,17 @@
+{
+  "Type": "DieselReload",
+  "MagazineId": "Scout",
+  "MagazineSize": 2,
+  "Effects": {
+    "ItemAnimationId": "Reload",
+    "WaitForAnimationToFinish": true
+  },
+  "Rules": {
+    "Blocking": [
+      "Primary"
+    ],
+    "InterruptedBy": [
+      "Secondary"
+    ]
+  }
+}
