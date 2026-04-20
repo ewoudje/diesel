@@ -13,17 +13,17 @@
     "Parent": "Rifle",
     "Animations": {
       "Reload": {
-        "ThirdPerson": "Characters/Animations/Items/Main_Handed/Crossbow/Reload/Reload.blockyanim",
-        "FirstPerson": "Characters/Animations/Items/Main_Handed/Crossbow/Reload/Reload_FPS.blockyanim",
-        "ThirdPersonMoving": "Characters/Animations/Items/Main_Handed/Crossbow/Reload/Reload.blockyanim",
-        "Speed": 2,
+        "ThirdPerson": "Characters/Diesel/Animations/Items/Shotgun/flute_reload.blockyanim",
+        "FirstPerson": "Characters/Diesel/Animations/Items/Shotgun/flute_reload.blockyanim",
+        "ThirdPersonMoving": "Characters/Diesel/Animations/Items/Shotgun/flute_reload.blockyanim",
+        "Speed": 0.5,
         "Looping": false,
         "BlendingDuration": 0.1
       },
       "Shoot": {
         "ThirdPerson": "Characters/Diesel/Animations/Items/Shotgun/flute_fire.blockyanim",
         "ThirdPersonMoving": "Characters/Diesel/Animations/Items/Shotgun/flute_fire.blockyanim",
-        "FirstPerson": "Characters/Animations/Items/Dual_Handed/Rifle/Attacks/Shoot/Shoot_FPS.blockyanim",
+        "FirstPerson": "Characters/Diesel/Animations/Items/Dual_Handed/Rifle/Attacks/Shoot_FPS.blockyanim",
         "Speed": 1,
         "BlendingDuration": 0,
         "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim"
