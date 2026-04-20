@@ -118,6 +118,7 @@ public class DieselPlugin extends JavaPlugin {
 
     @Override
     protected void start() {
+        getEntityStoreRegistry().registerSystem(DieselPlayerSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(SimulatedTransformationSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(CloudTickSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(CloudRefSystem.INSTANCE);

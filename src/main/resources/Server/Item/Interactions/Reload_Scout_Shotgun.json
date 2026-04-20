@@ -1,6 +1,6 @@
 {
   "Type": "DieselReload",
-  "MagazineId": "Scout",
+  "MagazineId": "Shotgun_Scout_Ammo",
   "MagazineSize": 2,
   "Effects": {
     "ItemAnimationId": "Reload",

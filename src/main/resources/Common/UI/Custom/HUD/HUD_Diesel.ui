@@ -1,0 +1,42 @@
+$C = "../Common.ui";
+@DefaultLabelStyle = (FontSize: 50, TextColor: #96a9be);
+
+Group #HealthGroup {
+    Anchor: (Top: 10, Left: 10);
+
+    @ProgressBar #Health {  }
+
+    Label #HealthLabel {
+        Style: LabelStyle(...@DefaultLabelStyle, FontName: "Mono");
+        Text: "0";
+    }
+
+} // More concise version
+
+Group #AmmoGroup {
+    Anchor: (Bottom: 10, Right: 10, Width: 300, Height: 300);
+    Label #AmmoLabel {
+        Style: LabelStyle(...@DefaultLabelStyle, FontName: "Mono");
+        Text: "Test";
+    }
+}
+// Declaration of a Label with a name
+// (can be used to access the element from game code)
+
+
+
+@ProgressBar = ProgressBar {
+  @Anchor = (Top: 10, Left: 10);
+  Anchor: (...@Anchor, Width: 400, Height: 500);
+  Background: "Img/progress_back.png";
+  BarTexturePath: "Img/progress_front.png";
+  EffectTexturePath: "Img/progress_effect.png";
+  EffectWidth: 100;
+  EffectHeight: 100;
+  EffectOffset: 1;
+  Value: 0.5;
+  Alignment: (Vertical);
+  Direction: Start;
+};
+
+

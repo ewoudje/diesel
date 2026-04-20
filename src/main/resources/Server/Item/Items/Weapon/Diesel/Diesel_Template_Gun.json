@@ -37,7 +37,8 @@
       "Interactions": [
         "Reload_Scout_Shotgun"
       ]
-    }
+    },
+    "SwapTo": "Root_SetMovement_Scout"
   },
   "InteractionVars": {
     "Gun_Swing_Left_Effect": {
@@ -115,7 +116,7 @@
             {
               "Type": "DieselShoot",
               "ProjectileType": "Projectile_Shotgun",
-              "MagazineId": "Scout",
+              "MagazineId": "Shotgun_Scout_Ammo",
               "Effects": {
                 "ItemAnimationId": "Shoot",
                 "CameraEffect": "Handgun_Shoot",
