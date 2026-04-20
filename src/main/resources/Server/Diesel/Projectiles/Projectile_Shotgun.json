@@ -1,15 +1,14 @@
 {
-  "Model": "Bullet_Blunderbuss",
+  "Model": "Empty",
   "Config": "Projectile_Config_Empty",
   "ProjectileCount": 10,
   "SpreadAmount": 7,
-  "BulletDamage": 2,
   "BulletSpeed": 50,
   "BulletDistance": 8,
   "DamageCalculator": {
     "Class": "Light",
     "BaseDamage": {
-      "Projectile": 2
+      "Projectile":7
     }
   },
   "DamageEffects": {

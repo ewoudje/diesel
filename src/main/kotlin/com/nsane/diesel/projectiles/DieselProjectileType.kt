@@ -27,8 +27,8 @@ data class DieselProjectileType(
     var projectileCount: Int = 1,
     var spreadAmount: Double = 1.0,
     var bulletSpeed: Double = 25.0,
-    var bulletDistance: Double = 100.0,
-    ) : JsonAssetWithMap<String, DefaultAssetMap<String, DieselProjectileType>> {
+    var bulletDistance: Double = 100.0
+) : JsonAssetWithMap<String, DefaultAssetMap<String, DieselProjectileType>> {
     val model get() = ModelAsset.getAssetMap().getAsset(modelKey) ?: throw Exception("Model $modelKey not found")
 
     override fun getId(): String? = id_

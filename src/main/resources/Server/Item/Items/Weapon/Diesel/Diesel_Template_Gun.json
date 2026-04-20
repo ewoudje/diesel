@@ -5,58 +5,39 @@
   "Categories": [
     "Items.Weapons"
   ],
-  "Model": "Items/Diesel/flintlock_blunderbuss/flintlock_blunderbuss.blockymodel",
+  "Reticle": "DefaultMelee",
+  "Model": "Items/Diesel/shotgun/shotgun.blockymodel",
   "Icon": "Icons/ItemsGenerated/Weapon_Gun_Blunderbuss_Rusty.png",
-  "Texture": "Items/Diesel/flintlock_blunderbuss/flintlock_blunderbuss.png",
+  "Texture": "Items/Diesel/shotgun/shotgun.png",
   "PlayerAnimationsId": {
     "Parent": "Rifle",
     "Animations": {
+      "Reload": {
+        "ThirdPerson": "Characters/Animations/Items/Main_Handed/Crossbow/Reload/Reload.blockyanim",
+        "FirstPerson": "Characters/Animations/Items/Main_Handed/Crossbow/Reload/Reload_FPS.blockyanim",
+        "ThirdPersonMoving": "Characters/Animations/Items/Main_Handed/Crossbow/Reload/Reload.blockyanim",
+        "Speed": 0.5,
+        "Looping": false,
+        "BlendingDuration": 0.1
+      },
       "Shoot": {
-        "ThirdPerson": "Characters/Animations/Items/Dual_Handed/Rifle/Attacks/Shoot/Shoot.blockyanim",
-        "ThirdPersonMoving": "Characters/Animations/Items/Dual_Handed/Rifle/Attacks/Shoot/Shoot_Moving.blockyanim",
-        "FirstPerson": "Characters/Diesel/Animations/Items/Weapon/animation.model.reload.blockyanim",
-        "Speed": 3,
+        "ThirdPerson": "Characters/Diesel/Animations/Items/Shotgun/flute_fire.blockyanim",
+        "ThirdPersonMoving": "Characters/Diesel/Animations/Items/Shotgun/flute_fire.blockyanim",
+        "FirstPerson": "Characters/Animations/Items/Dual_Handed/Rifle/Attacks/Shoot/Shoot_FPS.blockyanim",
+        "Speed": 1,
         "BlendingDuration": 0,
         "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim"
       }
     }
   },
   "Interactions": {
-    "Primary": {
-      "Cooldown": {
-        "Id": "Shoot",
-        "Cooldown": 0.2
-      },
-      "Interactions": [
-        {
-          "Type": "DieselShoot",
-          "ProjectileType": "ScoutGun",
-          "Effects": {
-            "ItemAnimationId": "Shoot",
-            "CameraEffect": "Handgun_Shoot",
-            "Particles": [
-              {
-                "SystemId": "RifleShooting",
-                "PositionOffset": {
-                  "Z": 0.85,
-                  "Y": 0.15
-                },
-                "RotationOffset": {
-                  "Pitch": 90
-                }
-              }
-            ]
-          },
-          "Offset": {
-            "X": 0.05,
-            "Y": -0.03,
-            "Z": -0.8
-          }
-        }
-      ]
-    },
     "Secondary": "Gun_Attack",
-    "Ability1": "Root_Diesel_Dodge_Scout"
+    "Ability1": "Root_Diesel_Dodge_Scout",
+    "Primary": {
+      "Interactions": [
+        "Reload_Scout_Shotgun"
+      ]
+    }
   },
   "InteractionVars": {
     "Gun_Swing_Left_Effect": {
@@ -121,6 +102,47 @@
       "Weapon"
     ]
   },
-  "Weapon": {},
-  "Scale": 2
+  "Scale": 2,
+  "State": {
+    "Loaded": {
+      "Interactions": {
+        "Primary": {
+          "Cooldown": {
+            "Id": "Shoot",
+            "Cooldown": 0.2
+          },
+          "Interactions": [
+            {
+              "Type": "DieselShoot",
+              "ProjectileType": "Projectile_Shotgun",
+              "MagazineId": "Scout",
+              "Effects": {
+                "ItemAnimationId": "Shoot",
+                "CameraEffect": "Handgun_Shoot",
+                "Particles": [
+                  {
+                    "SystemId": "Muzzle_Flash",
+                    "PositionOffset": {
+                      "Z": 0.7,
+                      "Y": 0.1
+                    },
+                    "RotationOffset": {
+                      "Pitch": 90
+                    },
+                    "TargetEntityPart": "Self"
+                  }
+                ]
+              },
+              "Offset": {
+                "X": 0.05,
+                "Y": -0.03,
+                "Z": -0.8
+              }
+            }
+          ]
+        }
+      }
+    },
+    "Empty": {}
+  }
 }

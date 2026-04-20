@@ -26,7 +26,7 @@ public class ApplyMovementConfigInteraction extends SimpleInstantInteraction {
             (interaction, s) -> interaction.movementConfig = s,
             interaction -> interaction.movementConfig,
             (interaction, parent) -> interaction.movementConfig = parent.movementConfig)
-            .documentation("The interaction to run if on-ground is apparent.")
+            .documentation("Set the player's movement config.")
             .addValidatorLate(() -> VALIDATOR_CACHE.getValidator().late())
             .add()
             .build();
@@ -34,24 +34,17 @@ public class ApplyMovementConfigInteraction extends SimpleInstantInteraction {
     @Override
     protected void firstRun(@NotNull InteractionType interactionType, @NotNull InteractionContext interactionContext, @NotNull CooldownHandler cooldownHandler) {
         System.out.println("Applying movement config " +this.movementConfig);
-
             CommandBuffer<EntityStore> store = interactionContext.getCommandBuffer();
-
             Ref<EntityStore> playerReference = interactionContext.getOwningEntity();
+            PlayerRef playerRefComponent = store.getComponent(playerReference, PlayerRef.getComponentType());
+            assert playerRefComponent != null;
+            Player playerComponent = store.getComponent(playerReference, Player.getComponentType());
+            assert playerComponent != null;
+            PhysicsValues playerPhysicsValues = store.getComponent(playerReference, PhysicsValues.getComponentType());
+            MovementConfig movementConfig = MovementConfig.getAssetMap().getAsset(this.movementConfig);
 
-                PlayerRef playerRefComponent = store.getComponent(playerReference, PlayerRef.getComponentType());
-
-                assert playerRefComponent != null;
-
-                Player playerComponent = store.getComponent(playerReference, Player.getComponentType());
-
-                assert playerComponent != null;
-
-                PhysicsValues playerPhysicsValues = store.getComponent(playerReference, PhysicsValues.getComponentType());
-                MovementConfig movementConfig = MovementConfig.getAssetMap().getAsset(this.movementConfig);
                 if (movementConfig != null) {
                     MovementManager movementManagerComponent = store.getComponent(playerReference, MovementManager.getComponentType());
-
                     assert movementManagerComponent != null;
 
                     movementManagerComponent.setDefaultSettings(movementConfig.toPacket(), playerPhysicsValues, playerComponent.getGameMode());
