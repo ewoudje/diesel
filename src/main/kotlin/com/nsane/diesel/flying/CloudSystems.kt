@@ -37,11 +37,8 @@ object CloudTickSystem : EntityTickingSystem<EntityStore?>() {
         buffer: CommandBuffer<EntityStore?>
     ) {
         val sim = buffer.getResource(AirSimulator.TYPE)
-        val cloud = archTypes.getComponent(idx, CloudComponent.TYPE)
-            ?: throw UnexpectedException("CloudComponent is null")
-        val simulatedPos = archTypes.getComponent(idx, SimulatedTransformComponent.TYPE)
-            ?: throw UnexpectedException("SimulatedPositionComponent is null")
-
+        val cloud = archTypes.getComponent(idx, CloudComponent.TYPE)!!
+        val simulatedPos = archTypes.getComponent(idx, SimulatedTransformComponent.TYPE)!!
 
         cloud.lifetime++
         if (cloud.lifetime > 100000 || simulatedPos.position.distanceSquaredTo(sim.shipPosition) > MAX_DISTANCE * MAX_DISTANCE) {
@@ -73,7 +70,7 @@ object CloudTickSystem : EntityTickingSystem<EntityStore?>() {
         return holder
     }
 
-    override fun getQuery(): Query<EntityStore?>? = CloudComponent.TYPE
+    override fun getQuery(): Query<EntityStore?>? = Query.and(SimulatedTransformComponent.TYPE, CloudComponent.TYPE)
 }
 
 object CloudRefSystem : RefSystem<EntityStore?>() {

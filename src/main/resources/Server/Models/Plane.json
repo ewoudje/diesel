@@ -1,0 +1,29 @@
+{
+  "Model": "NPC/Diesel/Models/plane.blockymodel",
+  "Texture": "NPC/Diesel/Models/Chalk.png",
+  "HitBox": {
+    "Max": {
+      "X": 1,
+      "Y": 1,
+      "Z": 2
+    },
+    "Min": {
+      "X": 0,
+      "Y": 0,
+      "Z": -1
+    }
+  },
+  "Icon": "Icons/ModelsGenerated/Cloud.png",
+  "IconProperties": {
+    "Scale": 0.25,
+    "Rotation": [
+      58,
+      40,
+      87
+    ],
+    "Translation": [
+      24,
+      -79
+    ]
+  }
+}

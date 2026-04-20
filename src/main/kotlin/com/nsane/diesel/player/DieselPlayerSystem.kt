@@ -1,11 +1,18 @@
 package com.nsane.diesel.player
 
+import com.hypixel.hytale.component.ArchetypeChunk
+import com.hypixel.hytale.component.CommandBuffer
+import com.hypixel.hytale.component.Store
+import com.hypixel.hytale.component.query.Query
+import com.hypixel.hytale.component.system.tick.EntityTickingSystem
 import com.hypixel.hytale.server.core.Message
+import com.hypixel.hytale.server.core.entity.entities.Player
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent
 import com.hypixel.hytale.server.core.inventory.InventoryComponent
 import com.hypixel.hytale.server.core.universe.PlayerRef
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 
-object DieselPlayerSystem {
+object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
 
     @JvmStatic
     fun playerReadyEvent(event: PlayerReadyEvent) {
@@ -38,5 +45,17 @@ object DieselPlayerSystem {
             event.player.pageManager.openCustomPage(event.playerRef, store, ClassSelectPage(ref))
         }
     }
+
+    override fun tick(
+        dt: Float,
+        idx: Int,
+        chunk: ArchetypeChunk<EntityStore?>,
+        store: Store<EntityStore?>,
+        commands: CommandBuffer<EntityStore?>
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getQuery(): Query<EntityStore?>? = Player.getComponentType()
 
 }

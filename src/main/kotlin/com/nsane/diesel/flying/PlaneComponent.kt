@@ -9,11 +9,14 @@ import com.nsane.diesel.DieselPlugin
 import io.github.hytalekt.kytale.codec.buildCodec
 
 class PlaneComponent : Component<EntityStore?> {
-    var health = 0
+    var health = 100
+    var timeSinceLastBullet = 0f
+    var flyAway: Boolean = false
 
     override fun clone(): Component<EntityStore?>? = PlaneComponent().also {
         it.health = health
     }
+
     companion object {
         val CODEC = buildCodec(::PlaneComponent) {
             addField("Health", Codec.INTEGER) {

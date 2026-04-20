@@ -30,6 +30,7 @@ class CloudCommand: AbstractPlayerCommand("cloud", "") {
         world: World
     ) {
         val sim = store.getResource(AirSimulator.TYPE)
+        store.addEntity(PlaneTickSystem.buildPlane(sim), AddReason.SPAWN)
         repeat(30) {
             store.addEntity(CloudTickSystem.buildCloud(sim), AddReason.SPAWN)
         }
