@@ -2,7 +2,7 @@
     "Group": "nsane",
     "Name": "DieselPlugin",
     "Version": "1.0-SNAPSHOT",
-    "Description": "Epic robot adventure play now free",
+    "Description": "Wacky robot adventure play now free",
     "Authors": [
         {
             "Name": "ewoudje",
@@ -19,8 +19,8 @@
             "Email": "https://github.com/ComicalSomber"
         },
         {
-            "Name": "octofoss",
-            "Email": "https://metaphorical.monster/octofoss/"
+            "Name": "Noisyrejects",
+            "Email": "https://sola.nekoweb.org/"
         }
     ],
     "DisabledByDefault": false,

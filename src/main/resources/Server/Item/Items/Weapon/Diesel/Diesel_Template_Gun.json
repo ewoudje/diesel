@@ -5,17 +5,18 @@
   "Categories": [
     "Items.Weapons"
   ],
-  "Model": "Items/Weapons/Gun/Blunderbuss.blockymodel",
+  "Reticle": "DefaultMelee",
+  "Model": "Items/Diesel/shotgun/shotgun.blockymodel",
   "Icon": "Icons/ItemsGenerated/Weapon_Gun_Blunderbuss_Rusty.png",
-  "Texture": "Items/Weapons/Gun/Blunderbuss_Rusty_Texture.png",
+  "Texture": "Items/Diesel/shotgun/shotgun.png",
   "PlayerAnimationsId": {
     "Parent": "Rifle",
     "Animations": {
       "Shoot": {
-        "ThirdPerson": "Characters/Animations/Items/Dual_Handed/Rifle/Attacks/Shoot/Shoot.blockyanim",
-        "ThirdPersonMoving": "Characters/Animations/Items/Dual_Handed/Rifle/Attacks/Shoot/Shoot_Moving.blockyanim",
+        "ThirdPerson": "Characters/Diesel/Animations/Items/Shotgun/flute_fire.blockyanim",
+        "ThirdPersonMoving": "Characters/Diesel/Animations/Items/Shotgun/flute_fire.blockyanim",
         "FirstPerson": "Characters/Animations/Items/Dual_Handed/Rifle/Attacks/Shoot/Shoot_FPS.blockyanim",
-        "Speed": 3,
+        "Speed": 1,
         "BlendingDuration": 0,
         "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim"
       }
@@ -30,12 +31,34 @@
       "Interactions": [
         {
           "Type": "DieselShoot",
-          "ProjectileType": "ScoutGun",
+          "ProjectileType": "Projectile_Shotgun",
+          "Effects": {
+            "ItemAnimationId": "Shoot",
+            "CameraEffect": "Handgun_Shoot",
+            "Particles": [
+              {
+                "SystemId": "Muzzle_Flash",
+                "PositionOffset": {
+                  "Z": 0.7,
+                  "Y": 0.1
+                },
+                "RotationOffset": {
+                  "Pitch": 90
+                },
+                "TargetEntityPart": "Self"
+              }
+            ]
+          },
           "MagazineId": "Scout",
           "Failed": {
             "Type": "DieselReload",
             "MagazineId": "Scout",
             "MagazineSize": 10
+          },
+          "Offset": {
+            "X": 0.05,
+            "Y": -0.03,
+            "Z": -0.8
           }
         }
       ]
@@ -106,5 +129,21 @@
       "Weapon"
     ]
   },
-  "Weapon": {}
+  "Weapon": {
+    "EntityStatsToClear": [
+      "Ammo"
+    ],
+    "StatModifiers": {
+      "Ammo": [
+        {
+          "Amount": 6,
+          "CalculationType": "Additive"
+        }
+      ]
+    }
+  },
+  "DisplayEntityStatsHUD": [
+    "Ammo"
+  ],
+  "Scale": 2
 }

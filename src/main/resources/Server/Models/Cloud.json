@@ -1,6 +1,6 @@
 {
-  "Model": "NPC/Models/cloud.blockymodel",
-  "Texture": "NPC/Models/Chalk.png",
+  "Model": "NPC/Diesel/Models/cloud.blockymodel",
+  "Texture": "NPC/Diesel/Models/Chalk.png",
   "HitBox": {
     "Max": {
       "X": 1,

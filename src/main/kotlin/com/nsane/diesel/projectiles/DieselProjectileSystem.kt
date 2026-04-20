@@ -63,7 +63,7 @@ object DieselProjectileSystem: EntityTickingSystem<EntityStore?>() {
         val entities = mutableListOf<Ref<EntityStore?>>()
         val velocity = SimulatedTransformationSystem.getWorldVelocity(commands, simulated).scale(dt.toDouble())
         val type = DieselProjectileType.ASSET_MAP.getAsset(projectile.type)!!
-        spatial.spatialStructure.collect(pos, 3.0, entities)
+        spatial.spatialStructure.collect(pos, 5.0, entities)
         collisions.collisionEntities = entities.mapNotNull { EntityUtils.getEntity(it, commands) }
 
         CollisionModule.findCollisions(

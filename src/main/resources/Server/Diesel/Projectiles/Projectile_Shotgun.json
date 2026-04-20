@@ -1,25 +1,34 @@
 {
-  "Model": "Bullet_Blunderbuss",
+  "Model": "Empty",
   "Config": "Projectile_Config_Empty",
   "ProjectileCount": 10,
-  "SpreadAmount": 7.0,
+  "SpreadAmount": 7,
   "BulletSpeed": 50,
   "BulletDistance": 8,
   "DamageCalculator": {
     "Class": "Light",
     "BaseDamage": {
-      "Projectile": 2
+      "Projectile":7
     }
   },
   "DamageEffects": {
     "Knockback": {
       "Type": "Directional",
-      "Force": -30
+      "Force": -50
     },
     "WorldParticles": [
       {
-        "SystemId": "Firework_GS"
+        "SystemId": "Gun_Impact"
       }
     ]
-  }
+  },
+  "BlockHitParticles": [
+    {
+      "SystemId": "Gun_Impact",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0
+      }
+    }
+  ]
 }
