@@ -16,6 +16,10 @@
       0
     ]
   },
+  "Categories": [
+    "Items.Weapons",
+    "DieselCategory.Weapons"
+  ],
   "Model": "NPC/Intelligent/Klops/Models/Weapons/Staff/Cane.blockymodel",
   "Texture": "NPC/Intelligent/Klops/Models/Weapons/Staff/Cane_Texture.png",
   "Icon": "Icons/ItemsGenerated/Weapon_Staff_Cane_Klops.png",
@@ -26,14 +30,6 @@
       "Interactions": [
         {
           "Type": "RiseRock"
-        }
-      ]
-    },
-    "Secondary": {
-      "Interactions": [
-        {
-          "Type": "DieselShoot",
-          "ProjectileType": "ScoutGun"
         }
       ]
     }

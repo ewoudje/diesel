@@ -4,7 +4,8 @@
   },
   "PlayerAnimationsId": "Torch",
   "Categories": [
-    "Furniture.Lighting"
+    "Furniture.Lighting",
+    "DieselCategory.Blocks"
   ],
   "Icon": "Icons/ItemsGenerated/Lever.png",
   "IconProperties": {

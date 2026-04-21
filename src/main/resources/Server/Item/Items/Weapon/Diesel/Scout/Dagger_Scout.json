@@ -11,7 +11,8 @@
   "ItemSoundSetId": "ISS_Weapon_Blade_Small",
   "ItemLevel": 30,
   "Categories": [
-    "Items.Weapons"
+    "Items.Weapons",
+    "DieselCategory.Weapons"
   ],
   "IconProperties": {
     "Rotation": [

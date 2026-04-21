@@ -5,7 +5,8 @@
   },
   "Icon": "Icons/Items/EditorTools/Hitbox.png",
   "Categories": [
-    "Tool.BuilderToolSecondPage"
+    "Tool.BuilderToolSecondPage",
+    "DieselCategory.Tools"
   ],
   "SubCategory": "MiscTools",
   "Model": "Items/Tools/Brush/Brush.blockymodel",

@@ -9,7 +9,8 @@
   "Reticle": "DefaultMelee",
   "Quality": "Technical",
   "Categories": [
-    "Items.Weapons"
+    "Items.Weapons",
+    "DieselCategory.Weapons"
   ],
   "Utility": {
     "Compatible": true

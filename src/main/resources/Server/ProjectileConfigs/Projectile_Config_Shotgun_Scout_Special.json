@@ -1,5 +1,5 @@
 {
-  "Model": "Projectile_AA_Asset",
+  "Model": "Empty",
   "LaunchLocalSoundEventId": "SFX_Shotgun_Fire_Local",
   "LaunchWorldSoundEventId": "SFX_Shotgun_Fire_World",
   "Physics": {

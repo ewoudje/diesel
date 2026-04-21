@@ -3,7 +3,8 @@
     "Name": "server.items.Diesel_Template_Gun.name"
   },
   "Categories": [
-    "Items.Weapons"
+    "Items.Weapons",
+    "DieselCategory.Weapons"
   ],
   "$Comment": "Loading order means that shooting and ammo usage should be inline",
   "Reticle": "DefaultMelee",

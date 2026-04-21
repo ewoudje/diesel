@@ -1,3 +1,5 @@
+ui.dieselcategory.name = "Diesel"
+
 Lever.name = Lever
 Diesel_Template_Gun.name = "Template Diesel Gun"
 Diesel_Turret.name = "Template Turret Gun"

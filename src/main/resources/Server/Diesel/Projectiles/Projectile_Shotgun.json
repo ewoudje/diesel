@@ -1,6 +1,6 @@
 {
   "Model": "Empty",
-  "Config": "Projectile_Config_Shotgun_Scout_Special",
+  "Config": "Projectile_Config_Shotgun_Scout_Empty",
   "ProjectileCount": 10,
   "SpreadAmount": 7,
   "BulletSpeed": 50,

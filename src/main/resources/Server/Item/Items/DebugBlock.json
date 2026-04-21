@@ -8,7 +8,8 @@
   "MaxStack": 100,
   "Icon": "Icons/ItemsGenerated/Deco_Moving_Box.png",
   "Categories": [
-    "Blocks.Deco"
+    "Blocks.Deco",
+    "DieselCategory.Blocks"
   ],
   "PlayerAnimationsId": "Block",
   "BlockType": {

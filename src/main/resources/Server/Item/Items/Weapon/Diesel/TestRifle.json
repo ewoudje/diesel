@@ -3,7 +3,8 @@
     "Name": "server.items.Weapon_Assault_Rifle.name"
   },
   "Categories": [
-    "Items.Weapons"
+    "Items.Weapons",
+    "DieselCategory.Weapons"
   ],
   "Model": "Items/Hypixel/Minigames/GunPvP/Weapons/Assault_Rifles/Assault_Rifle.blockymodel",
   "PlayerAnimationsId": {
