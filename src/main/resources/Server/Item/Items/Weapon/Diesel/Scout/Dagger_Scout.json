@@ -2,8 +2,8 @@
   "TranslationProperties": {
     "Name": "server.items.Dagger_Scout.name"
   },
-  "Model": "Items/Weapons/Dagger/Iron.blockymodel",
-  "Texture": "Items/Weapons/Dagger/Iron_Texture.png",
+  "Model": "Items/Diesel/scout_knife/Stabbing_Knife.blockymodel",
+  "Texture": "Items/Diesel/scout_knife/Stabbing_Knife.png",
   "Icon": "Icons/ItemsGenerated/Weapon_Daggers_Iron.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "PlayerAnimationsId": "Daggers",
@@ -11,7 +11,8 @@
   "ItemSoundSetId": "ISS_Weapon_Blade_Small",
   "ItemLevel": 30,
   "Categories": [
-    "Items.Weapons"
+    "Items.Weapons",
+    "DieselCategory.Weapons"
   ],
   "IconProperties": {
     "Rotation": [

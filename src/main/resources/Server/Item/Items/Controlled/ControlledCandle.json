@@ -116,5 +116,8 @@
       22.5
     ]
   },
-  "ItemSoundSetId": "ISS_Blocks_Wood"
+  "ItemSoundSetId": "ISS_Blocks_Wood",
+  "Categories": [
+    "DieselCategory.Blocks"
+  ]
 }

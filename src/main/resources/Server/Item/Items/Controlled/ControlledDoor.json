@@ -4,7 +4,8 @@
   },
   "PlayerAnimationsId": "Block",
   "Categories": [
-    "Furniture.Doors"
+    "Furniture.Doors",
+    "DieselCategory.Blocks"
   ],
   "Set": "Furniture_Tavern",
   "Icon": "Icons/ItemsGenerated/Furniture_Tavern_Door.png",
