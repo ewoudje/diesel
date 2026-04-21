@@ -15,5 +15,9 @@
     "X": -5,
     "Y": 1,
     "Z": 5
+  },
+  "Effects": {
+    "CameraEffect": "Daggers_Dash",
+    "ItemAnimationId": "DodgeBackward"
   }
 }
