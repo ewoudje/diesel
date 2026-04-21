@@ -1,7 +1,7 @@
 Lever.name = Lever
 Diesel_Template_Gun.name = "Template Diesel Gun"
 Diesel_Turret.name = "Template Turret Gun"
-Diesel_Turret_AA.name = "Jeczalik AON89 Precision Cannon"
-Diesel_Turret_Flak.name = "Wagner-3 Shrapnel Endowment Facilitator"
+Turret_AA.name = "Jeczalik AON89 Precision Cannon"
+Turret_Flak.name = "Wagner-3 Shrapnel Endowment Facilitator"
 Dagger_Scout.name = "Szarabande"
 Shotgun_Scout.name = "Haydn Co. ESharp 'Destroya'"
