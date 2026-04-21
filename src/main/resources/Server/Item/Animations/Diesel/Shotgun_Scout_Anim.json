@@ -3,7 +3,7 @@
   "Animations": {
     "Reload": {
       "ThirdPerson": "Characters/Diesel/Animations/Items/Shotgun/flute_reload.blockyanim",
-      "FirstPerson": "Characters/Diesel/Animations/Items/Shotgun/flute_reload.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Crossbow/Reload/Reload_FPS.blockyanim",
       "ThirdPersonMoving": "Characters/Diesel/Animations/Items/Shotgun/flute_reload.blockyanim",
       "Speed": 0.5,
       "Looping": false,
