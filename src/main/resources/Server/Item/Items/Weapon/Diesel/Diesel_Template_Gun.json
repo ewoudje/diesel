@@ -6,88 +6,23 @@
     "Items.Weapons"
   ],
   "Reticle": "DefaultMelee",
-  "Model": "Items/Diesel/shotgun/shotgun.blockymodel",
+  "Model": "Items/Weapons/Gun/Blunderbuss.blockymodel",
   "Icon": "Icons/ItemsGenerated/Weapon_Gun_Blunderbuss_Rusty.png",
-  "Texture": "Items/Diesel/shotgun/shotgun.png",
-  "PlayerAnimationsId": {
-    "Parent": "Rifle",
-    "Animations": {
-      "Reload": {
-        "ThirdPerson": "Characters/Diesel/Animations/Items/Shotgun/flute_reload.blockyanim",
-        "FirstPerson": "Characters/Diesel/Animations/Items/Shotgun/flute_reload.blockyanim",
-        "ThirdPersonMoving": "Characters/Diesel/Animations/Items/Shotgun/flute_reload.blockyanim",
-        "Speed": 0.5,
-        "Looping": false,
-        "BlendingDuration": 0.1
-      },
-      "Shoot": {
-        "ThirdPerson": "Characters/Diesel/Animations/Items/Shotgun/flute_fire.blockyanim",
-        "ThirdPersonMoving": "Characters/Diesel/Animations/Items/Shotgun/flute_fire.blockyanim",
-        "FirstPerson": "Characters/Diesel/Animations/Items/Dual_Handed/Rifle/Attacks/Shoot_FPS.blockyanim",
-        "Speed": 1,
-        "BlendingDuration": 0,
-        "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim"
-      }
-    }
-  },
+  "Texture": "Items/Weapons/Gun/Blunderbuss_Rusty_Texture.png",
+  "PlayerAnimationsId": "Rifle",
   "Interactions": {
-    "Secondary": "Gun_Attack",
     "Ability1": "Root_Diesel_Dodge_Scout",
     "Primary": {
       "Interactions": [
-        "Reload_Scout_Shotgun"
+        "HolyPrimary"
       ]
     },
     "Ability3": {
       "Interactions": [
         "Reload_Scout_Shotgun"
       ]
-    }
-  },
-  "InteractionVars": {
-    "Gun_Swing_Left_Effect": {
-      "Interactions": [
-        {
-          "Parent": "Gun_Swing_Left_Effect",
-          "Effects": {
-            "Trails": [
-              {
-                "TrailId": "Small_Default",
-                "TargetNodeName": "Handle",
-                "TargetEntityPart": "PrimaryItem",
-                "PositionOffset": {
-                  "X": 0.4,
-                  "Y": -0.05,
-                  "Z": 0
-                },
-                "RotationOffset": {
-                  "Yaw": 0,
-                  "Pitch": 0,
-                  "Roll": -45
-                }
-              }
-            ]
-          }
-        }
-      ]
     },
-    "Gun_Swing_Left_Damage": {
-      "Interactions": [
-        {
-          "Parent": "Gun_Swing_Left_Damage",
-          "DamageCalculator": {
-            "Type": "Dps",
-            "BaseDamage": {
-              "Physical": 5
-            },
-            "RandomPercentageModifier": 0.1
-          },
-          "DamageEffects": {
-            "WorldSoundEventId": "SFX_Unarmed_Impact"
-          }
-        }
-      ]
-    }
+    "SwapTo": "Root_SetMovement_Scout"
   },
   "IconProperties": {
     "Scale": 0.37,
@@ -102,52 +37,5 @@
     ]
   },
   "Quality": "Technical",
-  "Tags": {
-    "Type": [
-      "Weapon"
-    ]
-  },
-  "Scale": 2,
-  "State": {
-    "Loaded": {
-      "Interactions": {
-        "Primary": {
-          "Cooldown": {
-            "Id": "Shoot",
-            "Cooldown": 0.2
-          },
-          "Interactions": [
-            {
-              "Type": "DieselShoot",
-              "ProjectileType": "Projectile_Shotgun",
-              "MagazineId": "Scout",
-              "Effects": {
-                "ItemAnimationId": "Shoot",
-                "CameraEffect": "Handgun_Shoot",
-                "Particles": [
-                  {
-                    "SystemId": "Muzzle_Flash",
-                    "PositionOffset": {
-                      "Z": 0.7,
-                      "Y": 0.1
-                    },
-                    "RotationOffset": {
-                      "Pitch": 90
-                    },
-                    "TargetEntityPart": "Self"
-                  }
-                ]
-              },
-              "Offset": {
-                "X": 0.05,
-                "Y": -0.03,
-                "Z": -0.8
-              }
-            }
-          ]
-        }
-      }
-    },
-    "Empty": {}
-  }
+  "Scale": 2
 }

@@ -1,0 +1,10 @@
+{
+  "Type": "ChangeStat",
+  "StatModifiers": {
+    "HolyAmmo": 6
+  },
+  "Behaviour": "Set",
+  "Effects": {
+    "ItemAnimationId": "Reload"
+  }
+}

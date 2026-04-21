@@ -1,0 +1,15 @@
+{
+  "Type": "DieselShoot",
+  "RunTime": 0.2,
+  "Effects": {
+    "ItemAnimationId": "ShootCharged",
+    "ClearAnimationOnFinish": true
+  },
+  "ProjectileType": "Projectile_Shotgun",
+  "Next": {
+    "Type": "ChangeStat",
+    "StatModifiers": {
+      "HolyAmmo": -1
+    }
+  }
+}
