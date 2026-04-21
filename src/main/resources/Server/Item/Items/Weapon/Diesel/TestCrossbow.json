@@ -35,11 +35,6 @@
     ]
   },
   "Interactions": {
-    "Primary": {
-      "Interactions": [
-        "HolyPrimary"
-      ]
-    },
     "Secondary": "Root_Weapon_Crossbow_Secondary_Guard",
     "Ability1": "Root_Weapon_Crossbow_Signature_BigArrow"
   },
