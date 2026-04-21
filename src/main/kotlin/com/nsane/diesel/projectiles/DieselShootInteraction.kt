@@ -55,16 +55,6 @@ class DieselShootInteraction: ProjectileInteraction() {
         val type = DieselProjectileType.ASSET_STORE.assetMap.getAsset(projectileType)!!
         val buffer = ctx.commandBuffer!!
         val clientState = ctx.clientState
-        val playerComp = buffer.getComponent(ctx.entity, DieselPlayerComponent.TYPE)!!
-        val ammo = magazineId?.let { playerComp.ammo[it] } ?: 1
-        if (ammo <= 0) {
-            ctx.heldItem = ItemStack(ctx.heldItem!!.item.getItemIdForState("Empty")!!)
-            ctx.heldItemContainer!!.setItemStackForSlot(ctx.heldItemSlot.toShort(), ctx.heldItem!!)
-            ctx.state.state = InteractionState.ItemChanged
-            return
-        } else {
-            magazineId?.let { playerComp.ammo[it] = ammo - 1 }
-        }
 
         val position: Vector3d
         val direction: Vector3d
@@ -87,12 +77,6 @@ class DieselShootInteraction: ProjectileInteraction() {
 
             spawnProjectile(buffer, position, Vector3d(yaw, pitch), if (it == 0) generatedUUID else null)
         }
-
-        if (ammo <= 1) {
-            ctx.heldItem = ItemStack(ctx.heldItem!!.item.getItemIdForState("Empty")!!)
-            ctx.heldItemContainer!!.setItemStackForSlot(ctx.heldItemSlot.toShort(), ctx.heldItem!!)
-            ctx.state.state = InteractionState.ItemChanged
-        } else ctx.state.state = InteractionState.Finished
     }
 
     fun spawnProjectile(
