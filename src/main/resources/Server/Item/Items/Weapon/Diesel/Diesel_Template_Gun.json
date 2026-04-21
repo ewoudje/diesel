@@ -6,10 +6,10 @@
     "Items.Weapons"
   ],
   "Reticle": "DefaultMelee",
-  "Model": "Items/Weapons/Gun/Blunderbuss.blockymodel",
+  "Model": "Items/Diesel/shotgun/shotgun.blockymodel",
   "Icon": "Icons/ItemsGenerated/Weapon_Gun_Blunderbuss_Rusty.png",
-  "Texture": "Items/Weapons/Gun/Blunderbuss_Rusty_Texture.png",
-  "PlayerAnimationsId": "Rifle",
+  "Texture": "Items/Diesel/shotgun/shotgun.png",
+  "PlayerAnimationsId": "Shotgun_Scout_Anim",
   "Interactions": {
     "Ability1": "Root_Diesel_Dodge_Scout",
     "Primary": {

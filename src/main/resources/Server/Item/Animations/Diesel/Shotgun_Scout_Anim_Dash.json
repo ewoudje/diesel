@@ -1,0 +1,53 @@
+{
+  "Parent": "Rifle",
+  "Animations": {
+    "Reload": {
+      "ThirdPerson": "Characters/Diesel/Animations/Items/Shotgun/flute_reload.blockyanim",
+      "FirstPerson": "Characters/Diesel/Animations/Items/Shotgun/flute_reload.blockyanim",
+      "ThirdPersonMoving": "Characters/Diesel/Animations/Items/Shotgun/flute_reload.blockyanim",
+      "Speed": 0.5,
+      "Looping": false,
+      "BlendingDuration": 0.1
+    },
+    "Shoot": {
+      "ThirdPerson": "Characters/Diesel/Animations/Items/Shotgun/flute_fire.blockyanim",
+      "ThirdPersonMoving": "Characters/Diesel/Animations/Items/Shotgun/flute_fire.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Dual_Handed/Rifle/Attacks/Shoot/Shoot_FPS.blockyanim",
+      "Speed": 1,
+      "BlendingDuration": 0,
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim"
+    },
+    "DodgeForward": {
+      "ThirdPerson": "Characters/Animations/Items/Dual_Handed/Daggers/Dash/Dash_Forward.blockyanim",
+      "Speed": 1,
+      "BlendingDuration": 0.1,
+      "Looping": false,
+      "KeepPreviousFirstPersonAnimation": true,
+      "FirstPerson": "Characters/Animations/Items/Dual_Handed/Daggers/Dash/Dash_Forward_FPS.blockyanim"
+    },
+    "DodgeBackward": {
+      "ThirdPerson": "Characters/Animations/Items/Dual_Handed/Daggers/Dash/Dash_Backward.blockyanim",
+      "Speed": 1,
+      "BlendingDuration": 0.1,
+      "KeepPreviousFirstPersonAnimation": true,
+      "Looping": false,
+      "FirstPerson": "Characters/Animations/Items/Dual_Handed/Daggers/Dash/Dash_Backward_FPS.blockyanim"
+    },
+    "DodgeLeft": {
+      "ThirdPerson": "Characters/Animations/Items/Dual_Handed/Daggers/Dash/Dash_Left.blockyanim",
+      "Speed": 1,
+      "BlendingDuration": 0.1,
+      "KeepPreviousFirstPersonAnimation": true,
+      "Looping": false,
+      "FirstPerson": "Characters/Animations/Items/Dual_Handed/Daggers/Dash/Dash_Left_FPS.blockyanim"
+    },
+    "DodgeRight": {
+      "ThirdPerson": "Characters/Animations/Items/Dual_Handed/Daggers/Dash/Dash_Right.blockyanim",
+      "Speed": 1,
+      "BlendingDuration": 0.1,
+      "KeepPreviousFirstPersonAnimation": true,
+      "Looping": false,
+      "FirstPerson": "Characters/Animations/Items/Dual_Handed/Daggers/Dash/Dash_Right_FPS.blockyanim"
+    }
+  }
+}

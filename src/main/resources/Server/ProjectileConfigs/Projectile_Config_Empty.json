@@ -1,6 +1,6 @@
 {
   "Model": "Empty",
-  "LaunchLocalSoundEventId": "SFX_Rifle_Fire_Local",
+  "LaunchLocalSoundEventId": "SFX_Shotgun_Fire_Local",
   "LaunchWorldSoundEventId": "SFX_Rifle_Fire",
   "Physics": {
     "Type": "Standard",
