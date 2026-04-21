@@ -6,5 +6,6 @@
   "Behaviour": "Set",
   "Effects": {
     "ItemAnimationId": "Reload"
-  }
+  },
+  "RunTime": 4.5
 }

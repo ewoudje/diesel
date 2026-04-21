@@ -1,9 +1,27 @@
 {
   "Type": "DieselShoot",
-  "RunTime": 0.2,
+  "RunTime": 0.6,
   "Effects": {
-    "ItemAnimationId": "ShootCharged",
-    "ClearAnimationOnFinish": true
+    "ItemAnimationId": "Shoot",
+    "CameraEffect": "Handgun_Shoot",
+    "Particles": [
+      {
+        "SystemId": "Muzzle_Flash",
+        "PositionOffset": {
+          "Z": 0.7,
+          "Y": 0.1
+        },
+        "RotationOffset": {
+          "Pitch": 90
+        },
+        "TargetEntityPart": "Self"
+      }
+    ]
+  },
+  "Offset": {
+    "X": 0.05,
+    "Y": -0.03,
+    "Z": -0.8
   },
   "ProjectileType": "Projectile_Shotgun",
   "Next": {
