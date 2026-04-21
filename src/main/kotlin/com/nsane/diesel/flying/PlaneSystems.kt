@@ -29,6 +29,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.projectiles.DieselProjectileComponent
 import com.nsane.diesel.projectiles.DieselProjectileType
+import com.nsane.diesel.projectiles.DieselShootInteraction
 import io.github.hytalekt.kytale.ext.minus
 import io.github.hytalekt.kytale.ext.plus
 import java.time.Duration
@@ -116,40 +117,7 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
 
     fun fire(commands: CommandBuffer<EntityStore?>, position: Vector3d, direction: Vector3d) {
         val type = DieselProjectileType.ASSET_STORE.assetMap.getAsset("Plane") ?: throw IllegalArgumentException()
-        val yaw = (atan2(-direction.x, -direction.z) + (Random.nextDouble() - 0.5) * Math.toRadians(type.spreadAmount)).toFloat()
-        val pitch = (asin(direction.y) + (Random.nextDouble() - 0.5) * Math.toRadians(type.spreadAmount)).toFloat()
-        val holder = EntityStore.REGISTRY.newHolder()
-        val direction = Vector3d(yaw, pitch)
-        val rotation = Vector3f()
-        rotation.yaw = PhysicsMath.normalizeTurnAngle(PhysicsMath.headingFromDirection(direction.x, direction.z))
-        rotation.pitch = PhysicsMath.pitchFromDirection(direction.x, direction.y, direction.z)
-
-        holder.addComponent(TransformComponent.getComponentType(), TransformComponent(position, rotation))
-        holder.addComponent(SimulatedTransformComponent.TYPE, SimulatedTransformComponent().apply {
-            this.position.assign(position)
-            this.rotation.assign(rotation)
-            this.velocity.assign(direction.clone().scale(type.bulletSpeed))
-        })
-        holder.addComponent(DieselProjectileComponent.TYPE, DieselProjectileComponent().apply { this.type = "Plane" })
-
-        val model = Model.createScaledModel(type.model, 0.3f)
-        holder.addComponent(ModelComponent.getComponentType(), ModelComponent(model))
-        holder.addComponent(PersistentModel.getComponentType(), PersistentModel(model.toReference()))
-        holder.addComponent(BoundingBox.getComponentType(), BoundingBox(model.boundingBox!!))
-        holder.addComponent(NetworkId.getComponentType(), NetworkId(commands.getExternalData().takeNextNetworkId()))
-        holder.ensureComponent(UUIDComponent.getComponentType())
-        holder.ensureComponent(EntityStore.REGISTRY.getNonSerializedComponentType())
-
-        holder.addComponent(
-            DespawnComponent.getComponentType(),
-            DespawnComponent(
-                commands.getResource<TimeResource?>(TimeResource.getResourceType()).now
-                    .plus(Duration.ofMillis(((type.bulletDistance / type.bulletSpeed) * 1000).toLong()))
-            )
-        )
-
-
-        commands.addEntity(holder, AddReason.SPAWN)
+        DieselShootInteraction.shootProjectiles(commands, position, direction, Vector3d(), type, null)
     }
 
     override fun getQuery(): Query<EntityStore?>? = PlaneComponent.TYPE

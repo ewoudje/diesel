@@ -30,7 +30,7 @@ object SimulationSystem : TickingSystem<EntityStore?>() {
         store: Store<EntityStore?>
     ) {
         val sim = store.getResource(AirSimulator.TYPE)
-        val (velocity, omega) = Vector3d(0.0, 0.0, 1.0) to Vector3f()//doPathing(sim)
+        val (velocity, omega) = forward(sim, 0.2) to Vector3f()//doPathing(sim)
 
         val traveled = velocity * dt.toDouble() * sim.velocityModifier
         sim.distanceTraveled += traveled.length()

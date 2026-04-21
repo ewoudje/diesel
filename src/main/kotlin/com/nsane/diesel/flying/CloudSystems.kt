@@ -62,7 +62,7 @@ object CloudTickSystem : EntityTickingSystem<EntityStore?>() {
         holder.addComponent(ModelComponent.getComponentType(), ModelComponent(model))
         holder.addComponent(SimulatedTransformComponent.TYPE, SimulatedTransformComponent().apply {
             position.assign(sim.shipPosition + direction)
-            rotation.assign(sim.shipRotation.clone())
+            velocity.assign(Vector3d(-1.0, 0.0, 0.0))
         })
         holder.ensureComponent(EntityStore.REGISTRY.nonSerializedComponentType)
         holder.ensureComponent(UUIDComponent.getComponentType())

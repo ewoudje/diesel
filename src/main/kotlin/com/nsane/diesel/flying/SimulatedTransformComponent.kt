@@ -6,6 +6,7 @@ import com.hypixel.hytale.math.vector.Vector3f
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselPlugin
 import io.github.hytalekt.kytale.codec.buildCodec
+import io.github.hytalekt.kytale.ext.minus
 
 class SimulatedTransformComponent : Component<EntityStore?> {
     val position: Vector3d = Vector3d()
@@ -19,6 +20,13 @@ class SimulatedTransformComponent : Component<EntityStore?> {
         it.velocity.assign(this.velocity)
         it.omega.assign(this.omega)
     }
+
+    fun setWithWorldPosition(sim: AirSimulator, vector: Vector3d) =
+        position.assign((vector - sim.worldInShipPosition)
+            .rotateZ(sim.shipRotation.z)
+            .rotateY(sim.shipRotation.y)
+            .rotateX(sim.shipRotation.x)
+            .add(sim.shipPosition))
 
     companion object {
         val CODEC = buildCodec(::SimulatedTransformComponent) {

@@ -29,6 +29,7 @@ import com.hypixel.hytale.server.core.modules.time.TimeResource
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.hypixel.hytale.server.core.util.PositionUtil
 import com.hypixel.hytale.server.core.util.TargetUtil
+import com.nsane.diesel.flying.AirSimulator
 import com.nsane.diesel.flying.SimulatedTransformComponent
 import com.nsane.diesel.player.DieselPlayerComponent
 import java.time.Duration
@@ -52,7 +53,6 @@ class DieselShootInteraction: ProjectileInteraction() {
         ctx: InteractionContext,
         cooldown: CooldownHandler
     ) {
-        val type = DieselProjectileType.ASSET_STORE.assetMap.getAsset(projectileType)!!
         val buffer = ctx.commandBuffer!!
         val clientState = ctx.clientState
 
@@ -71,89 +71,108 @@ class DieselShootInteraction: ProjectileInteraction() {
             generatedUUID = null
         }
 
-        repeat(type.projectileCount) {
-            val yaw = (atan2(-direction.x, -direction.z) + (Random.nextDouble() - 0.5) * Math.toRadians(type.spreadAmount)).toFloat()
-            val pitch = (asin(direction.y) + (Random.nextDouble() - 0.5) * Math.toRadians(type.spreadAmount)).toFloat()
-
-            spawnProjectile(buffer, position, Vector3d(yaw, pitch), if (it == 0) generatedUUID else null)
-        }
-    }
-
-    fun spawnProjectile(
-        commandBuffer: CommandBuffer<EntityStore?>,
-        position: Vector3d,
-        direction: Vector3d,
-        uuid: UUID?
-    ): Ref<EntityStore?> {
-        val type = DieselProjectileType.ASSET_STORE.assetMap.getAsset(projectileType) ?: throw IllegalArgumentException()
-        val holder = EntityStore.REGISTRY.newHolder()
-
-        val rotation = Vector3f()
-        rotation.yaw = PhysicsMath.normalizeTurnAngle(PhysicsMath.headingFromDirection(direction.x, direction.z))
-        rotation.pitch = PhysicsMath.pitchFromDirection(direction.x, direction.y, direction.z)
-
-        PhysicsMath.vectorFromAngles(rotation.yaw, rotation.pitch, direction)
-        val newPosition = position.clone()
-            .addScaled(direction, offset.z)
-
-        val xzDir = direction.clone()
-        xzDir.y = 0.0
-        xzDir.normalize().cross(Vector3d.POS_Y, xzDir)
-        newPosition.addScaled(xzDir, offset.x)
-        newPosition.addScaled(xzDir.cross(direction, xzDir), offset.y)
-
-        holder.addComponent(TransformComponent.getComponentType(), TransformComponent(newPosition, rotation))
-        holder.addComponent(SimulatedTransformComponent.TYPE, SimulatedTransformComponent().apply {
-            this.position.assign(newPosition)
-            this.rotation.assign(rotation)
-            this.velocity.assign(direction.clone().scale(type.bulletSpeed))
-        })
-        holder.addComponent(DieselProjectileComponent.TYPE, DieselProjectileComponent().apply { this.type = projectileType })
-
-        val model = Model.createScaledModel(type.model, 0.5f)
-        holder.addComponent(ModelComponent.getComponentType(), ModelComponent(model))
-        holder.addComponent(PersistentModel.getComponentType(), PersistentModel(model.toReference()))
-        holder.addComponent(BoundingBox.getComponentType(), BoundingBox(model.boundingBox!!))
-        holder.addComponent(NetworkId.getComponentType(), NetworkId(commandBuffer.getExternalData().takeNextNetworkId()))
-
-        if (uuid != null) {
-            holder.addComponent(UUIDComponent.getComponentType(), UUIDComponent(uuid))
-        } else holder.ensureComponent(UUIDComponent.getComponentType())
-        holder.ensureComponent(EntityStore.REGISTRY.getNonSerializedComponentType())
-
-        holder.addComponent(
-            DespawnComponent.getComponentType(),
-            DespawnComponent(
-                commandBuffer.getResource<TimeResource?>(TimeResource.getResourceType()).now
-                    .plus(Duration.ofMillis(((type.bulletDistance / type.bulletSpeed) * 1000).toLong()))
-            )
+        shootProjectiles(
+            buffer,
+            position,
+            direction,
+            offset,
+            DieselProjectileType.ASSET_STORE.assetMap.getAsset(projectileType)!!,
+            generatedUUID
         )
-
-        //val launchWorldSoundEventIndex = config.getLaunchWorldSoundEventIndex()
-        //if (launchWorldSoundEventIndex != 0) {
-        //    SoundUtil.playSoundEvent3d(
-        //        launchWorldSoundEventIndex,
-        //        SoundCategory.SFX,
-        //        position.x,
-        //        position.y,
-        //        position.z,
-        //        Predicate { targetRef: Ref<EntityStore?>? -> targetRef != creatorRef },
-        //        commandBuffer
-        //    )
-        //}
-
-        //val projectileSoundEventIndex = config.getProjectileSoundEventIndex()
-        //if (projectileSoundEventIndex != 0) {
-        //    val audioComponent = AudioComponent()
-        //    audioComponent.addSound(projectileSoundEventIndex)
-        //    holder.addComponent(AudioComponent.getComponentType(), audioComponent)
-        //}
-
-        return commandBuffer.addEntity(holder, AddReason.SPAWN)
     }
-
 
     companion object {
+        fun shootProjectiles(
+            buffer: CommandBuffer<EntityStore?>,
+            position: Vector3d,
+            direction: Vector3d,
+            offset: Vector3d,
+            type: DieselProjectileType,
+            uuid: UUID? = null
+        ) {
+            repeat(type.projectileCount) {
+                val yaw = (atan2(-direction.x, -direction.z) + (Random.nextDouble() - 0.5) * Math.toRadians(type.spreadAmount)).toFloat()
+                val pitch = (asin(direction.y) + (Random.nextDouble() - 0.5) * Math.toRadians(type.spreadAmount)).toFloat()
+
+                shootProjectile(buffer, type, position, Vector3d(yaw, pitch), offset, if (it == 0) uuid else null)
+            }
+        }
+
+        private fun shootProjectile(
+            commandBuffer: CommandBuffer<EntityStore?>,
+            type: DieselProjectileType,
+            position: Vector3d,
+            direction: Vector3d,
+            offset: Vector3d,
+            uuid: UUID?
+        ): Ref<EntityStore?> {
+            val sim = commandBuffer.getResource(AirSimulator.TYPE)
+            val holder = EntityStore.REGISTRY.newHolder()
+
+            val rotation = Vector3f()
+            rotation.yaw = PhysicsMath.normalizeTurnAngle(PhysicsMath.headingFromDirection(direction.x, direction.z))
+            rotation.pitch = PhysicsMath.pitchFromDirection(direction.x, direction.y, direction.z)
+
+            PhysicsMath.vectorFromAngles(rotation.yaw, rotation.pitch, direction)
+            val newPosition = position.clone()
+                .addScaled(direction, offset.z)
+
+            val xzDir = direction.clone()
+            xzDir.y = 0.0
+            xzDir.normalize().cross(Vector3d.POS_Y, xzDir)
+            newPosition.addScaled(xzDir, offset.x)
+            newPosition.addScaled(xzDir.cross(direction, xzDir), offset.y)
+
+            holder.addComponent(TransformComponent.getComponentType(), TransformComponent(newPosition, rotation))
+            holder.addComponent(SimulatedTransformComponent.TYPE, SimulatedTransformComponent().apply {
+                setWithWorldPosition(sim, newPosition)
+                this.rotation.assign(rotation)
+                this.velocity.assign(direction.clone().scale(type.bulletSpeed))
+            })
+            holder.addComponent(DieselProjectileComponent.TYPE, DieselProjectileComponent().apply { this.type = type.id })
+
+            val model = Model.createScaledModel(type.model, 0.5f)
+            holder.addComponent(ModelComponent.getComponentType(), ModelComponent(model))
+            holder.addComponent(PersistentModel.getComponentType(), PersistentModel(model.toReference()))
+            holder.addComponent(BoundingBox.getComponentType(), BoundingBox(model.boundingBox!!))
+            holder.addComponent(NetworkId.getComponentType(), NetworkId(commandBuffer.getExternalData().takeNextNetworkId()))
+
+            if (uuid != null) {
+                holder.addComponent(UUIDComponent.getComponentType(), UUIDComponent(uuid))
+            } else holder.ensureComponent(UUIDComponent.getComponentType())
+            holder.ensureComponent(EntityStore.REGISTRY.getNonSerializedComponentType())
+
+            holder.addComponent(
+                DespawnComponent.getComponentType(),
+                DespawnComponent(
+                    commandBuffer.getResource<TimeResource?>(TimeResource.getResourceType()).now
+                        .plus(Duration.ofMillis(((type.bulletDistance / type.bulletSpeed) * 1000).toLong()))
+                )
+            )
+
+            //val launchWorldSoundEventIndex = config.getLaunchWorldSoundEventIndex()
+            //if (launchWorldSoundEventIndex != 0) {
+            //    SoundUtil.playSoundEvent3d(
+            //        launchWorldSoundEventIndex,
+            //        SoundCategory.SFX,
+            //        position.x,
+            //        position.y,
+            //        position.z,
+            //        Predicate { targetRef: Ref<EntityStore?>? -> targetRef != creatorRef },
+            //        commandBuffer
+            //    )
+            //}
+
+            //val projectileSoundEventIndex = config.getProjectileSoundEventIndex()
+            //if (projectileSoundEventIndex != 0) {
+            //    val audioComponent = AudioComponent()
+            //    audioComponent.addSound(projectileSoundEventIndex)
+            //    holder.addComponent(AudioComponent.getComponentType(), audioComponent)
+            //}
+
+            return commandBuffer.addEntity(holder, AddReason.SPAWN)
+        }
+
         val CODEC = BuilderCodec.builder(DieselShootInteraction::class.java, ::DieselShootInteraction, SimpleInstantInteraction.CODEC)
             .appendInherited(
                 KeyedCodec<String>("ProjectileType", Codec.STRING),
