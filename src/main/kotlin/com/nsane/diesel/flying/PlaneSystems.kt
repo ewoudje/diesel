@@ -33,18 +33,20 @@ import io.github.hytalekt.kytale.ext.minus
 import io.github.hytalekt.kytale.ext.plus
 import java.time.Duration
 import kotlin.math.PI
+import kotlin.math.abs
 import kotlin.math.asin
 import kotlin.math.atan
 import kotlin.math.atan2
+import kotlin.math.max
 import kotlin.math.min
 import kotlin.random.Random
 
 object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
     const val MAX_DISTANCE = 150.0
-    const val TURN_SPEED = 0.06f
-    const val SPEED = 25.0
-    const val PULL_UP = 40.0
-    const val FIRE_SPEED = 0.4f
+    const val TURN_SPEED = 0.6f
+    const val SPEED = 30.0
+    const val PULL_UP = 30.0
+    const val FIRE_SPEED = 0.2f
 
     override fun tick(
         dt: Float,
@@ -62,40 +64,50 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
             return
         }
 
+        plane.timeSinceLastBullet += dt
+
         PhysicsMath.vectorFromAngles(simulatedPos.rotation.y, simulatedPos.rotation.x, simulatedPos.velocity)
         simulatedPos.velocity.scale(SPEED)
 
-        val diff = sim.shipPosition - simulatedPos.position
+        val diff = sim.shipPosition - simulatedPos.position + plane.target
         val distance = diff.length()
         val direction = diff.clone().scale(1.0/distance)
         val dot = direction.dot(simulatedPos.velocity.clone().normalize())
         val yaw = PhysicsMath.headingFromDirection(direction.x, direction.z) - simulatedPos.rotation.y
         val pitch = PhysicsMath.pitchFromDirection(direction.x, direction.y, direction.z) - simulatedPos.rotation.x
 
-        simulatedPos.omega.x = min(PhysicsMath.normalizeTurnAngle(pitch), TURN_SPEED)
-        if (distance < PULL_UP) {
-            simulatedPos.omega.x = 0.24f
-            plane.flyAway = true
+        if (dot > 0.7 && plane.timeSinceLastBullet > FIRE_SPEED) {
+            plane.timeSinceLastBullet = 0.0f
+            fire(buffer, simulatedPos.position, simulatedPos.velocity.clone().normalize())
         }
 
-        if (plane.flyAway) {
-            simulatedPos.omega.y = min(PhysicsMath.normalizeTurnAngle(yaw + Math.PI.toFloat() - 0.5f), TURN_SPEED)
-            if (distance > MAX_DISTANCE) {
-                plane.flyAway = false
+
+        if (distance < PULL_UP) {
+            simulatedPos.omega.x = 0.3f
+            simulatedPos.omega.y = 0.0f
+            plane.flyingAway = -0.1f
+        }
+
+        if (plane.flyingAway < 1.0f) {
+            if (plane.flyingAway < 0.0 && distance >= PULL_UP) {
+                simulatedPos.omega.y = Random.nextFloat() * TURN_SPEED
+                plane.flyingAway = 0.0f
             }
 
+            plane.flyingAway += dt
             return
         }
 
 
-        simulatedPos.omega.y = min(PhysicsMath.normalizeTurnAngle(yaw), TURN_SPEED)
-        simulatedPos.rotation.z += (atan(simulatedPos.omega.y * 9) - simulatedPos.rotation.z) * dt
+        //if (abs(yaw) > Math.PI) {
+        //    plane.flyingAway = 2.0f
+        //    simulatedPos.omega.y = TURN_SPEED
+        //} else {
+        simulatedPos.omega.x = max(min(PhysicsMath.normalizeTurnAngle(pitch), TURN_SPEED), -TURN_SPEED)
+        simulatedPos.omega.y = max(min(PhysicsMath.normalizeTurnAngle(yaw), TURN_SPEED), -TURN_SPEED)
+        //}
 
-        plane.timeSinceLastBullet += dt
-        if (dot > 0.9 && plane.timeSinceLastBullet > FIRE_SPEED) {
-            plane.timeSinceLastBullet = 0.0f
-            fire(buffer, simulatedPos.position, simulatedPos.velocity.clone().normalize())
-        }
+        simulatedPos.rotation.z += (atan(simulatedPos.omega.y * 9) - simulatedPos.rotation.z) * dt
     }
 
     fun crashdown() {

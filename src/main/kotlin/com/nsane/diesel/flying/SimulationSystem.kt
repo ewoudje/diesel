@@ -1,15 +1,29 @@
 package com.nsane.diesel.flying
 
+import com.hypixel.hytale.component.Ref
 import com.hypixel.hytale.component.Store
 import com.hypixel.hytale.component.system.tick.TickingSystem
+import com.hypixel.hytale.math.util.ChunkUtil
 import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.math.vector.Vector3f
+import com.hypixel.hytale.server.core.universe.world.chunk.ChunkFlag
+import com.hypixel.hytale.server.core.universe.world.chunk.WorldChunk
+import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import io.github.hytalekt.kytale.ext.minus
 import io.github.hytalekt.kytale.ext.plusAssign
 import io.github.hytalekt.kytale.ext.times
+import kotlin.concurrent.atomics.AtomicBoolean
+import kotlin.concurrent.atomics.AtomicInt
+import kotlin.concurrent.atomics.ExperimentalAtomicApi
 
+@ExperimentalAtomicApi
 object SimulationSystem : TickingSystem<EntityStore?>() {
+    const val LOAD_RADI = 64
+
+    private val chunks = mutableListOf<WorldChunk>()
+    private val chunksReady = AtomicInt(0)
+
     override fun tick(
         dt: Float,
         idx: Int,
@@ -22,6 +36,25 @@ object SimulationSystem : TickingSystem<EntityStore?>() {
         sim.distanceTraveled += traveled.length()
         sim.shipPosition += traveled
         sim.shipRotation += omega * dt * sim.velocityModifier.toFloat()
+
+        /*
+        if (chunksReady.load() == 2) {
+            chunks.forEach {
+                it.resetActiveTimer()
+                it.resetKeepAlive()
+                it.setFlag(ChunkFlag.TICKING, true)
+            }
+        } else if (chunksReady.compareAndExchange(0, 1) == 0) {
+            repeat(LOAD_RADI * 2) { x ->
+                repeat(LOAD_RADI * 2) { z ->
+                    val chunk = store.externalData.world.getChunk(ChunkUtil.indexChunk(x - LOAD_RADI, z - LOAD_RADI))
+                    chunk!!.addKeepLoaded()
+                    chunks.add(chunk!!)
+                }
+            }
+
+            chunksReady.store(2)
+        }*/
     }
 
     private fun doPathing(sim: AirSimulator): Pair<Vector3d, Vector3f> = when (sim.distanceTraveled) {

@@ -1,6 +1,6 @@
 {
-  "Model": "NPC/Diesel/Models/plane.blockymodel",
-  "Texture": "NPC/Diesel/Models/Chalk.png",
+  "Model": "NPC/Diesel/Models/Biplane.blockymodel",
+  "Texture": "NPC/Diesel/Models/Biplane.png",
   "HitBox": {
     "Max": {
       "X": 1,
@@ -25,5 +25,17 @@
       24,
       -79
     ]
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Characters/Diesel/Animations/Items/Shotgun/Propeller_Spin.blockyanim",
+          "Looping": true,
+          "BlendingDuration": 0.6,
+          "Weight": 0.3
+        }
+      ]
+    }
   }
 }

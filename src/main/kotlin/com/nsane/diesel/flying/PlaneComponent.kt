@@ -7,11 +7,13 @@ import com.hypixel.hytale.math.vector.Vector3f
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselPlugin
 import io.github.hytalekt.kytale.codec.buildCodec
+import kotlin.random.Random
 
 class PlaneComponent : Component<EntityStore?> {
     var health = 100
     var timeSinceLastBullet = 0f
-    var flyAway: Boolean = false
+    var flyingAway: Float = 10000.0f
+    var target: Vector3d = Vector3d(Random.nextDouble() * 5 - 2.5, 0.0, Random.nextDouble() * 5 - 2.5)
 
     override fun clone(): Component<EntityStore?>? = PlaneComponent().also {
         it.health = health
