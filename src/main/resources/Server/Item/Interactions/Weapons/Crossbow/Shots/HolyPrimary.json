@@ -1,0 +1,8 @@
+{
+  "Type": "StatsCondition",
+  "Costs": {
+    "HolyAmmo": 1
+  },
+  "Next": "HolyShoot",
+  "Failed": "HolyReload"
+}

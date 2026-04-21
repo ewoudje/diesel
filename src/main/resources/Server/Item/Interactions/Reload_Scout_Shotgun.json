@@ -1,12 +1,14 @@
 {
   "Type": "DieselReload",
   "MagazineId": "Scout",
-  "MagazineSize": 2,
+  "MagazineSize": 4,
   "Effects": {
+    "WorldSoundEventId": "SFX_Door_Crude_Open",
+    "LocalSoundEventId": "SFX_Door_Crude_Open",
     "ItemAnimationId": "Reload",
     "WaitForAnimationToFinish": true
   },
-  "RunTime": 2,
+  "RunTime": 5,
   "Rules": {
     "Blocking": [
       "Primary"

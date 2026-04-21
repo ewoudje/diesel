@@ -35,10 +35,13 @@
     ]
   },
   "Interactions": {
-    "Primary": "Root_Weapon_Crossbow_Primary_Signature",
+    "Primary": {
+      "Interactions": [
+        "HolyPrimary"
+      ]
+    },
     "Secondary": "Root_Weapon_Crossbow_Secondary_Guard",
-    "Ability1": "Root_Weapon_Crossbow_Signature_BigArrow",
-    "Ability3": "Root_Common_StatAmmoReload_Entry"
+    "Ability1": "Root_Weapon_Crossbow_Signature_BigArrow"
   },
   "InteractionVars": {
     "Arrow_Inventory_Condition": {
@@ -313,85 +316,18 @@
     }
   },
   "Weapon": {
-    "EntityStatsToClear": [
-      "SignatureEnergy",
-      "SignatureCharges"
-    ],
     "StatModifiers": {
-      "Ammo": [
+      "HolyAmmo": [
         {
           "Amount": 6,
-          "CalculationType": "Additive"
-        }
-      ],
-      "SignatureEnergy": [
-        {
-          "Amount": 5,
-          "CalculationType": "Additive"
-        }
-      ],
-      "SignatureCharges": [
-        {
-          "Amount": 1,
           "CalculationType": "Additive"
         }
       ]
     }
   },
   "DisplayEntityStatsHUD": [
-    "Ammo"
+    "HolyAmmo"
   ],
-  "ItemAppearanceConditions": {
-    "SignatureEnergy": [
-      {
-        "Condition": [
-          100,
-          100
-        ],
-        "ConditionValueType": "Percent",
-        "Particles": [
-          {
-            "SystemId": "Sword_Signature_Ready",
-            "TargetNodeName": "Main",
-            "PositionOffset": {
-              "X": 0
-            },
-            "TargetEntityPart": "PrimaryItem"
-          }
-        ]
-      }
-    ],
-    "SignatureCharges": [
-      {
-        "Condition": [
-          1,
-          100
-        ],
-        "ConditionValueType": "Percent",
-        "LocalSoundEventId": "SFX_Bow_T2_Signature_Loop_Local",
-        "WorldSoundEventId": "SFX_Bow_T2_Signature_Loop",
-        "Particles": [
-          {
-            "SystemId": "Crossbow_Signature_Status",
-            "TargetNodeName": "Main",
-            "PositionOffset": {
-              "X": 0,
-              "Y": 0,
-              "Z": 0
-            },
-            "Scale": 1,
-            "TargetEntityPart": "PrimaryItem"
-          }
-        ],
-        "ModelVFXId": "Crossbow_Signature_Status",
-        "FirstPersonParticles": [
-          {
-            "SystemId": "Crossbow_Signature_Status_FP"
-          }
-        ]
-      }
-    ]
-  },
   "ClipsGeometry": false,
   "Consumable": false,
   "ItemSoundSetId": "ISS_Weapons_Wood",

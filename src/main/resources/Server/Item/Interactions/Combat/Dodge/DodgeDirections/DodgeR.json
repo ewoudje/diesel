@@ -15,5 +15,9 @@
     "X": 5,
     "Y": 1,
     "Z": 0
+  },
+  "Effects": {
+    "ItemAnimationId": "DodgeRight",
+    "CameraEffect": "Daggers_Dash_Side"
   }
 }
