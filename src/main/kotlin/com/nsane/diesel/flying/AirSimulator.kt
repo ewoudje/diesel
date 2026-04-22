@@ -15,6 +15,7 @@ class AirSimulator: Resource<EntityStore?> {
 
     var velocityModifier = 1.0
     var distanceTraveled = 0.0
+    var planesKilled = 0
 
     override fun clone(): Resource<EntityStore?>? = AirSimulator()
 

@@ -51,7 +51,11 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
         if (plane.health <= 0) {
             simulatedPos.omega.x = -0.4f
             simulatedPos.omega.y = 0f
-            crashingDown(buffer, archTypes.getReferenceTo(idx))
+            if (plane.flyingAway <= 0) {
+                crashingDown(buffer, archTypes.getReferenceTo(idx))
+                plane.flyingAway = -1.0f
+                sim.planesKilled++
+            }
             return
         }
 
@@ -106,6 +110,8 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
         val model = Model.createScaledModel(modelAsset, 5.0f)
         buffer.replaceComponent(ref, PersistentModel.getComponentType(), PersistentModel(model.toReference()))
         buffer.replaceComponent(ref, ModelComponent.getComponentType(), ModelComponent(model))
+
+        //TODO explosion
     }
 
     fun fire(commands: CommandBuffer<EntityStore?>, position: Vector3d, direction: Vector3d) {
