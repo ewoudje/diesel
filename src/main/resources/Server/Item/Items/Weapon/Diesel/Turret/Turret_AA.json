@@ -66,6 +66,7 @@
   },
   "InteractionVars": {
     "Shoot_Weapon": {
+      "RequireNewClick": true,
       "Interactions": [
         {
           "Type": "StatsCondition",

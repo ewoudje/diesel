@@ -47,6 +47,6 @@
     "MemoriesNameOverride": "Skeleton_Burnt_Gunner",
     "BreathesInWater": true,
     "NameTranslationKey": { "Compute": "NameTranslationKey" },
-    "Attack": "Root_TurretAA_Shoot"
+    "Attack": "Root_Fred"
   }
 }
