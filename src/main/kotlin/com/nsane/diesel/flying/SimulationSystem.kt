@@ -1,5 +1,6 @@
 package com.nsane.diesel.flying
 
+import com.hypixel.hytale.builtin.weather.resources.WeatherResource
 import com.hypixel.hytale.component.Ref
 import com.hypixel.hytale.component.Store
 import com.hypixel.hytale.component.system.tick.TickingSystem
@@ -30,7 +31,16 @@ object SimulationSystem : TickingSystem<EntityStore?>() {
         store: Store<EntityStore?>
     ) {
         val sim = store.getResource(AirSimulator.TYPE)
-        if (!sim.flying) return
+        val weather = store.getResource(WeatherResource.getResourceType())
+        if (!sim.flying) {
+            if (weather.forcedWeatherIndex != 0)
+                weather.setForcedWeather(null)
+            return
+        }
+
+        if (weather.forcedWeatherIndex == 0)
+            weather.setForcedWeather("Ship")
+
         val (velocity, omega) = forward(sim, 0.2) to Vector3f()//doPathing(sim)
         val traveled = velocity * sim.velocityModifier
         sim.shipVelocity.assign(traveled)

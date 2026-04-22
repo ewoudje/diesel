@@ -125,7 +125,7 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
         val shotSound = SoundEvent.getAssetMap().getIndex("SFX_AA_Fire")
 
         SoundUtil.playSoundEvent3d(shotSound, SoundCategory.SFX, position, commands)
-        DieselShootInteraction.shootProjectiles(commands, direction.clone().scale(2.0).add(position), direction, Vector3d(), type, null)
+        DieselShootInteraction.shootProjectiles(commands, direction.clone().scale(2.0).add(position), direction, Vector3d(), type, null, false)
     }
 
     override fun getQuery(): Query<EntityStore?>? = PlaneComponent.TYPE
