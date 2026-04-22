@@ -1,0 +1,52 @@
+{
+  "Tags": {
+    "Attack": [
+      "Ranged"
+    ]
+  },
+  "Cooldown": {
+    "Cooldown": 0.6
+  },
+  "Interactions": [
+    {
+      "Type": "StatsCondition",
+      "Costs": {
+        "Shotgun_Scout_Ammo": 1
+      },
+      "Next": {
+        "Type": "DieselShoot",
+        "RunTime": 0.6,
+        "Effects": {
+          "ItemAnimationId": "Shoot",
+          "CameraEffect": "Handgun_Shoot",
+          "Particles": [
+            {
+              "SystemId": "Muzzle_Flash",
+              "PositionOffset": {
+                "Z": 0.7,
+                "Y": 0.11
+              },
+              "RotationOffset": {
+                "Pitch": 90
+              },
+              "TargetEntityPart": "Self"
+            }
+          ]
+        },
+        "Offset": {
+          "X": 0.05,
+          "Y": -0.03,
+          "Z": -0.8
+        },
+        "ProjectileType": "Projectile_Shotgun",
+        "Next": {
+          "Type": "ChangeStat",
+          "StatModifiers": {
+            "Shotgun_Scout_Ammo": -1
+          }
+        }
+      },
+      "Failed": "Shotgun_Scout_Reload"
+    }
+  ]
+}

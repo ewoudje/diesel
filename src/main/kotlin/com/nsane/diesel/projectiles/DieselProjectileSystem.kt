@@ -64,7 +64,9 @@ object DieselProjectileSystem: EntityTickingSystem<EntityStore?>() {
         val velocity = SimulatedTransformationSystem.getWorldVelocity(commands, simulated).scale(dt.toDouble())
         val type = DieselProjectileType.ASSET_MAP.getAsset(projectile.type)!!
         spatial.spatialStructure.collect(pos, 5.0, entities)
-        collisions.collisionEntities = entities.mapNotNull { EntityUtils.getEntity(it, commands) }
+        entities.addAll(commands.externalData.world.playerRefs.map { it.reference!! })
+
+        collisions.collisionEntities = entities.distinct().filter { it != projectile.owner }.mapNotNull { EntityUtils.getEntity(it, commands) }
 
         CollisionModule.findCollisions(
                 boundingBox.boundingBox,
