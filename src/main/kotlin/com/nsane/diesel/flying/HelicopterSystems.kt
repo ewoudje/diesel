@@ -11,6 +11,7 @@ import com.hypixel.hytale.component.query.Query
 import com.hypixel.hytale.component.system.RefSystem
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem
 import com.hypixel.hytale.math.vector.Vector3d
+import com.hypixel.hytale.math.vector.Vector3f
 import com.hypixel.hytale.server.core.asset.type.model.config.Model
 import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset
 import com.hypixel.hytale.server.core.entity.UUIDComponent
@@ -30,11 +31,13 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.random.Random
 
-object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
-    const val MAX_DISTANCE = 150.0
-    const val TURN_SPEED = 0.6f
-    const val SPEED = 32.0
-    const val PULL_UP = 30.0
+object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
+    const val HANGING_DISTANCE = 10.0
+    const val HOVER_DISTANCE = 15.0
+    const val FIRING_DISTANCE = 40.0
+    const val TURN_SPEED = 0.3
+    const val HANG_SPEED = 22.0
+    const val FOLLOW_SPEED = 30.0
     const val FIRE_SPEED = 0.2f
 
     override fun tick(
@@ -45,69 +48,71 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
         buffer: CommandBuffer<EntityStore?>
     ) {
         val sim = buffer.getResource(AirSimulator.TYPE)
-        val plane = archTypes.getComponent(idx, PlaneComponent.TYPE)!!
+        val heli = archTypes.getComponent(idx, HelicopterComponent.TYPE)!!
         val simulatedPos = archTypes.getComponent(idx, SimulatedTransformComponent.TYPE)!!
 
-        if (plane.health <= 0) {
-            simulatedPos.omega.x = -0.4f
-            simulatedPos.omega.y = 0f
-            if (plane.flyingAway >= 0) {
+        if (heli.health <= 0) {
+            if (heli.flyingAway >= 0) {
                 crashingDown(buffer, archTypes.getReferenceTo(idx))
-                plane.flyingAway = -1.0f
-                sim.planesKilled++
+                heli.flyingAway = -1.0f
+                sim.helisKilled++
             }
             return
         }
 
-        plane.timeSinceLastBullet += dt
+        val diff = sim.shipPosition - simulatedPos.position
+        diff.y += heli.hoverHeight
+        heli.hoverHeight = max(min(heli.hoverHeight + (Random.nextDouble() * 5.0 * dt), 13.0), 8.0)
 
-        PhysicsMath.vectorFromAngles(simulatedPos.rotation.y, simulatedPos.rotation.x, simulatedPos.velocity)
-        simulatedPos.velocity.scale(SPEED)
+        if (Random.nextDouble() / dt < 0.05) heli.hoverLeft = !heli.hoverLeft
 
-        val diff = sim.shipPosition - simulatedPos.position + plane.target
         val distance = diff.length()
         val direction = diff.clone().scale(1.0/distance)
-        val dot = direction.dot(simulatedPos.velocity.clone().normalize())
-        val yaw = PhysicsMath.headingFromDirection(direction.x, direction.z) - simulatedPos.rotation.y
-        val pitch = PhysicsMath.pitchFromDirection(direction.x, direction.y, direction.z) - simulatedPos.rotation.x
+        val dir2 = (sim.shipPosition - simulatedPos.position).normalize()
 
-        if (dot > 0.7 && plane.timeSinceLastBullet > FIRE_SPEED) {
-            plane.timeSinceLastBullet = 0.0f
-            val pos = simulatedPos.position.clone().add(0.0, 0.3, 0.0)
-            fire(
-                buffer,
-                SimulatedTransformationSystem.getWorldPosition(sim, pos),
-                SimulatedTransformationSystem.getWorldVelocity(sim, simulatedPos).clone().normalize()
-            )
+        var targetVelocity = simulatedPos.velocity.clone()
+        if (distance < HANGING_DISTANCE) {
+            targetVelocity
+                .scale(0.93)
+                .add(direction.clone().cross(Vector3d.POS_Y).scale(if (heli.hoverLeft) TURN_SPEED else -TURN_SPEED))
+        } else if ((distance < FIRING_DISTANCE && heli.hovering) || distance < HOVER_DISTANCE) {
+            heli.hovering = true
+            targetVelocity.scale(1.1)
+        } else {
+            heli.hovering = false
+            targetVelocity = direction.clone().scale(FOLLOW_SPEED)
         }
+        targetVelocity.add(direction.clone().scale((distance - HOVER_DISTANCE) * 0.006 * heli.hoverHeight))
 
+        val length = targetVelocity.length()
+        val maxSpeed = if (heli.hovering) HANG_SPEED else FOLLOW_SPEED
+        if (length > maxSpeed)
+            targetVelocity.scale(maxSpeed/length)
 
-        if (distance < PULL_UP) {
-            simulatedPos.omega.x = 0.3f
-            simulatedPos.omega.y = 0.0f
-            plane.flyingAway = -0.1f
-        }
+        targetVelocity.add(direction.clone().cross(Vector3d.POS_Y).scale(if (heli.hoverLeft) TURN_SPEED else -TURN_SPEED))
+        simulatedPos.velocity.assign(targetVelocity)
 
-        if (plane.flyingAway < 2.0f) {
-            if (plane.flyingAway < 0.0 && distance >= PULL_UP) {
-                simulatedPos.omega.y = (Random.nextFloat() - 0.5f) * TURN_SPEED
-                simulatedPos.omega.x = -0.03f
-                plane.flyingAway = 0.0f
-            }
+        val yaw = PhysicsMath.normalizeAngle(PhysicsMath.headingFromDirection(direction.x, direction.z))
+        targetVelocity.rotateY(-yaw)
 
-            plane.flyingAway += dt
-            return
-        }
+        val pitch = if (distance < FIRING_DISTANCE)
+            PhysicsMath.pitchFromDirection(dir2.x, dir2.y, dir2.z)
+        else
+                (targetVelocity.z / maxSpeed) * Math.PI * 0.04
 
-        simulatedPos.omega.x = max(min(PhysicsMath.normalizeTurnAngle(pitch), TURN_SPEED), -TURN_SPEED)
-        simulatedPos.omega.y = max(min(PhysicsMath.normalizeTurnAngle(yaw), TURN_SPEED), -TURN_SPEED)
+        val roll = (targetVelocity.x  / -maxSpeed)* Math.PI * 0.04
+        simulatedPos.rotation.assign(Vector3f.lerp(
+            simulatedPos.rotation,
+            Vector3f(pitch.toFloat(), yaw, roll.toFloat()),
+            dt
+        ))
 
-        simulatedPos.rotation.z += (atan(simulatedPos.omega.y * 9) - simulatedPos.rotation.z) * dt
+        heli.timeSinceLastBullet += dt
     }
 
     fun crashingDown(buffer: CommandBuffer<EntityStore?>, ref: Ref<EntityStore?>) {
-        val modelAsset = ModelAsset.getAssetMap().getAsset("CrashingPlane") ?: throw NullPointerException("Plane asset not found")
-        val model = Model.createScaledModel(modelAsset, 5.0f)
+        val modelAsset = ModelAsset.getAssetMap().getAsset("CrashingHelicopter") ?: throw NullPointerException("CrashingHelicopter asset not found")
+        val model = Model.createScaledModel(modelAsset, 1.0f)
         buffer.replaceComponent(ref, PersistentModel.getComponentType(), PersistentModel(model.toReference()))
         buffer.replaceComponent(ref, ModelComponent.getComponentType(), ModelComponent(model))
 
@@ -115,21 +120,19 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
     }
 
     fun fire(commands: CommandBuffer<EntityStore?>, position: Vector3d, direction: Vector3d) {
-        val type = DieselProjectileType.ASSET_STORE.assetMap.getAsset("Plane") ?: throw IllegalArgumentException()
+        val type = DieselProjectileType.ASSET_STORE.assetMap.getAsset("Helicopter") ?: throw IllegalArgumentException()
         DieselShootInteraction.shootProjectiles(commands, direction.clone().scale(2.0).add(position), direction, Vector3d(), type, null)
     }
 
-    override fun getQuery(): Query<EntityStore?>? = PlaneComponent.TYPE
-
-    fun buildPlane(sim: AirSimulator): Holder<EntityStore?> {
+    fun buildHelicopter(sim: AirSimulator): Holder<EntityStore?> {
         val direction = Vector3d(
-            (Random.nextDouble() * MAX_DISTANCE * 2) - MAX_DISTANCE,
+            (Random.nextDouble() * 150 * 2) - 150,
             0.0,
-            MAX_DISTANCE - (Random.nextDouble() * 20)
+            150 - (Random.nextDouble() * 20)
         ).rotateX(sim.shipRotation.x).rotateY(sim.shipRotation.y).rotateZ(sim.shipRotation.z)
 
-        val modelAsset = ModelAsset.getAssetMap().getAsset("Plane") ?: throw NullPointerException("Plane asset not found")
-        val model = Model.createScaledModel(modelAsset, 5.0f)
+        val modelAsset = ModelAsset.getAssetMap().getAsset("Helicopter") ?: throw NullPointerException("Helicopter asset not found")
+        val model = Model.createScaledModel(modelAsset, 1.0f)
         val holder = EntityStore.REGISTRY.newHolder()
         holder.addComponent(TransformComponent.getComponentType(), TransformComponent().apply { position.assign(direction) })
         holder.addComponent(PersistentModel.getComponentType(), PersistentModel(model.toReference()))
@@ -140,12 +143,14 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
         })
         holder.ensureComponent(EntityStore.REGISTRY.nonSerializedComponentType)
         holder.ensureComponent(UUIDComponent.getComponentType())
-        holder.ensureComponent(PlaneComponent.TYPE)
+        holder.ensureComponent(HelicopterComponent.TYPE)
         return holder
     }
+
+    override fun getQuery(): Query<EntityStore?>? = HelicopterComponent.TYPE
 }
 
-object PlaneRefSystem : RefSystem<EntityStore?>() {
+object HelicopterRefSystem : RefSystem<EntityStore?>() {
     override fun onEntityAdded(
         ref: Ref<EntityStore?>,
         reason: AddReason,
@@ -165,9 +170,9 @@ object PlaneRefSystem : RefSystem<EntityStore?>() {
     ) {
         val sim = buffer.getResource(AirSimulator.TYPE)
         if (reason == RemoveReason.UNLOAD && sim.flying) {
-            DieselPlugin.LOGGER.atWarning().log("Despawned a plane???")
+            DieselPlugin.LOGGER.atWarning().log("Despawned a helicopter???")
         }
     }
 
-    override fun getQuery(): Query<EntityStore?>? = PlaneComponent.TYPE
+    override fun getQuery(): Query<EntityStore?>? = HelicopterComponent.TYPE
 }

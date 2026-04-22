@@ -30,9 +30,12 @@ object SimulationSystem : TickingSystem<EntityStore?>() {
         store: Store<EntityStore?>
     ) {
         val sim = store.getResource(AirSimulator.TYPE)
+        if (!sim.flying) return
         val (velocity, omega) = forward(sim, 0.2) to Vector3f()//doPathing(sim)
+        val traveled = velocity * sim.velocityModifier
+        sim.shipVelocity.assign(traveled)
+        traveled.scale(dt.toDouble())
 
-        val traveled = velocity * dt.toDouble() * sim.velocityModifier
         sim.distanceTraveled += traveled.length()
         sim.shipPosition += traveled
         sim.shipRotation += omega * dt * sim.velocityModifier.toFloat()
