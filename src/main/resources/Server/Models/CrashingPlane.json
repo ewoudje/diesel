@@ -1,6 +1,6 @@
 {
   "Model": "NPC/Diesel/Models/Biplane.blockymodel",
-  "Texture": "NPC/Diesel/Models/Biplane.png",
+  "Texture": "NPC/Diesel/Models/BiplaneCrashing.png",
   "HitBox": {
     "Max": {
       "X": 0.5,
@@ -37,5 +37,15 @@
         }
       ]
     }
-  }
+  },
+  "Particles": [
+    {
+      "SystemId": "PlaneFire",
+      "Scale": 0.2
+    },
+    {
+      "SystemId": "PlaneSmoke",
+      "Scale": 1.0
+    }
+  ]
 }

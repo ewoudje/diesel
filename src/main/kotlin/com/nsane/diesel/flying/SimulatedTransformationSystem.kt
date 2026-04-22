@@ -34,6 +34,14 @@ object SimulatedTransformationSystem : EntityTickingSystem<EntityStore?>() {
             .rotateZ(-sim.shipRotation.z)
             .add(sim.worldInShipPosition)
 
+    fun getWorldPosition(sim: AirSimulator, pos: Vector3d): Vector3d =
+        (pos - sim.shipPosition)
+            .rotateX(-sim.shipRotation.x)
+            .rotateY(-sim.shipRotation.y)
+            .rotateZ(-sim.shipRotation.z)
+            .add(sim.worldInShipPosition)
+
+
     override fun tick(
         dt: Float,
         idx: Int,

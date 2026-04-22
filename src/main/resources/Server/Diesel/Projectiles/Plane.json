@@ -3,8 +3,8 @@
   "Config": "Projectile_Config_Empty",
   "ProjectileCount": 1,
   "SpreadAmount": 1.0,
-  "BulletSpeed": 70,
-  "BulletDistance": 100,
+  "BulletSpeed": 90,
+  "BulletDistance": 200,
   "DamageCalculator": {
     "Class": "Light",
     "BaseDamage": {
