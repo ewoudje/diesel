@@ -1,0 +1,34 @@
+{
+  "Model": "Chaff_Asset",
+  "Config": "Projectile_Config_AA_Empty",
+  "ProjectileCount": 40,
+  "SpreadAmount": 20,
+  "BulletSpeed": 50,
+  "BulletDistance": 100,
+  "DamageCalculator": {
+    "Class": "Light",
+    "BaseDamage": {
+      "Projectile": 5
+    }
+  },
+  "DamageEffects": {
+    "Knockback": {
+      "Type": "Directional",
+      "Force": -60
+    },
+    "WorldParticles": [
+      {
+        "SystemId": "Gun_Impact"
+      }
+    ]
+  },
+  "BlockHitParticles": [
+    {
+      "SystemId": "Gun_Impact",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "ChaffBitsSpawner",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    {
+      "SpawnerId": "BigSmokeSpawner",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "TotalSpawners": 1
+    }
+  ]
+}

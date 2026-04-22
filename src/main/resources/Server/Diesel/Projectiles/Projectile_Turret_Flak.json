@@ -1,14 +1,14 @@
 {
   "Model": "Bullet_Blunderbuss",
   "Config": "Projectile_Config_AA_Empty",
-  "ProjectileCount": 30,
-  "SpreadAmount": 30,
-  "BulletSpeed": 50,
-  "BulletDistance": 100,
+  "ProjectileCount": 1,
+  "SpreadAmount": 0,
+  "BulletSpeed": 60,
+  "BulletDistance": 600,
   "DamageCalculator": {
     "Class": "Light",
     "BaseDamage": {
-      "Projectile":5
+      "Projectile": 5
     }
   },
   "DamageEffects": {
@@ -18,17 +18,30 @@
     },
     "WorldParticles": [
       {
-        "SystemId": "Gun_Impact"
+        "SystemId": "ChaffSmoke"
+      },
+      {
+        "SystemId": "Explosion_Big",
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0
+        }
       }
-    ]
+    ],
+    "LocalSoundEventId": "SFX_Flak_Explosion",
+    "WorldSoundEventId": "SFX_Flak_Explosion",
+    "ViewDistance": 600
   },
   "BlockHitParticles": [
     {
-      "SystemId": "Gun_Impact",
+      "SystemId": "ChaffSmoke",
       "PositionOffset": {
         "X": 0,
         "Y": 0
       }
+    },
+    {
+      "SystemId": "Explosion_Big"
     }
   ]
 }

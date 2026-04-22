@@ -9,5 +9,5 @@
     "WorldSoundEventId": "SFX_Shotgun_Reload",
     "LocalSoundEventId": "SFX_Shotgun_Reload"
   },
-  "RunTime": 2.5
+  "RunTime": 0.1
 }
