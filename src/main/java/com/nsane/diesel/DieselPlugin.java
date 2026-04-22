@@ -22,6 +22,7 @@ import com.hypixel.hytale.server.core.modules.entity.hitboxcollision.HitboxColli
 import com.hypixel.hytale.server.core.modules.entitystats.asset.EntityStatType;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.InteractionPacketGenerator;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
+import com.hypixel.hytale.server.core.modules.interaction.interaction.config.RootInteraction;
 import com.hypixel.hytale.server.core.modules.projectile.config.ProjectileConfig;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
@@ -82,7 +83,7 @@ public class DieselPlugin extends JavaPlugin {
         builder.setKeyFunction(DieselProjectileType::getId);
         builder.setReplaceOnRemove(i -> new DieselProjectileType());
         builder.loadsAfter(SoundEvent.class, ParticleSystem.class, ModelAsset.class, ProjectileConfig.class);
-        builder.loadsBefore(Item.class);
+        builder.loadsBefore(RootInteraction.class);
 
         AssetRegistry.register(builder.build());
 
