@@ -30,7 +30,6 @@ import com.nsane.diesel.projectiles.DieselShootInteraction
 import io.github.hytalekt.kytale.ext.minus
 import io.github.hytalekt.kytale.ext.plus
 import it.unimi.dsi.fastutil.ints.IntArrayList
-import it.unimi.dsi.fastutil.ints.IntLists
 import kotlin.math.atan
 import kotlin.math.max
 import kotlin.math.min
@@ -82,6 +81,7 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
             val pos = simulatedPos.position.clone().add(0.0, 0.3, 0.0)
             fire(
                 buffer,
+                archTypes.getReferenceTo(idx),
                 SimulatedTransformationSystem.getWorldPosition(sim, pos),
                 SimulatedTransformationSystem.getWorldVelocity(sim, simulatedPos).clone().normalize()
             )
@@ -120,12 +120,17 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
         //TODO explosion
     }
 
-    fun fire(commands: CommandBuffer<EntityStore?>, position: Vector3d, direction: Vector3d) {
+    fun fire(
+        commands: CommandBuffer<EntityStore?>,
+        owner: Ref<EntityStore?>,
+        position: Vector3d,
+        direction: Vector3d
+    ) {
         val type = DieselProjectileType.ASSET_STORE.assetMap.getAsset("Plane") ?: throw IllegalArgumentException()
         val shotSound = SoundEvent.getAssetMap().getIndex("SFX_AA_Fire")
 
         SoundUtil.playSoundEvent3d(shotSound, SoundCategory.SFX, position, commands)
-        DieselShootInteraction.shootProjectiles(commands, direction.clone().scale(2.0).add(position), direction, Vector3d(), type, null, false)
+        DieselShootInteraction.shootProjectiles(commands, owner, direction.clone().scale(2.0).add(position), direction, Vector3d(), type, null, false)
     }
 
     override fun getQuery(): Query<EntityStore?>? = PlaneComponent.TYPE

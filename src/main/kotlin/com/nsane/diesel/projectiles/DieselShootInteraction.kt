@@ -73,6 +73,7 @@ class DieselShootInteraction: ProjectileInteraction() {
 
         shootProjectiles(
             buffer,
+            ctx.owningEntity,
             position,
             direction,
             offset,
@@ -84,24 +85,27 @@ class DieselShootInteraction: ProjectileInteraction() {
     companion object {
         fun shootProjectiles(
             buffer: CommandBuffer<EntityStore?>,
+            owner: Ref<EntityStore?>,
             position: Vector3d,
             direction: Vector3d,
             offset: Vector3d,
             type: DieselProjectileType,
             uuid: UUID? = null,
-            onShip: Boolean = true
+            onShip: Boolean? = null
         ) {
+            val sim = buffer.getResource(AirSimulator.TYPE)
             repeat(type.projectileCount) {
                 val yaw = (atan2(-direction.x, -direction.z) + (Random.nextDouble() - 0.5) * Math.toRadians(type.spreadAmount)).toFloat()
                 val pitch = (asin(direction.y) + (Random.nextDouble() - 0.5) * Math.toRadians(type.spreadAmount)).toFloat()
 
-                shootProjectile(buffer, type, position, Vector3d(yaw, pitch), offset, if (it == 0) uuid else null, onShip)
+                shootProjectile(buffer, type, owner, position, Vector3d(yaw, pitch), offset, if (it == 0) uuid else null, onShip ?: sim.flying)
             }
         }
 
         private fun shootProjectile(
             commandBuffer: CommandBuffer<EntityStore?>,
             type: DieselProjectileType,
+            owner: Ref<EntityStore?>,
             position: Vector3d,
             direction: Vector3d,
             offset: Vector3d,
@@ -134,7 +138,10 @@ class DieselShootInteraction: ProjectileInteraction() {
                     velocity.assign(direction.clone().scale(type.bulletSpeed))
                 this.rotation.assign(rotation)
             })
-            holder.addComponent(DieselProjectileComponent.TYPE, DieselProjectileComponent().apply { this.type = type.id })
+            holder.addComponent(DieselProjectileComponent.TYPE, DieselProjectileComponent().apply {
+                this.type = type.id
+                this.owner = owner
+            })
 
             val model = Model.createScaledModel(type.model, 0.5f)
             holder.addComponent(ModelComponent.getComponentType(), ModelComponent(model))

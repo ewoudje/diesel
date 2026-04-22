@@ -6,103 +6,32 @@
   },
   "Interactions": [
     {
-      "Type": "Serial",
-      "Interactions": [
-        {
-          "Type": "StatsCondition",
-          "Costs": {
-            "Turret_AA_Ammo": 1
-          },
-          "Next": {
-            "Type": "DieselShoot",
-            "RunTime": 0.1,
-            "Effects": {
-              "ItemAnimationId": "Shoot",
-              "CameraEffect": "Handgun_Shoot",
-              "Particles": [
-                {
-                  "SystemId": "Muzzle_Flash",
-                  "PositionOffset": {
-                    "Z": 0.7,
-                    "Y": 0.11
-                  },
-                  "RotationOffset": {
-                    "Pitch": 90
-                  },
-                  "TargetEntityPart": "Self"
-                }
-              ]
+      "Type": "DieselShoot",
+      "RunTime": 0.1,
+      "Effects": {
+        "WorldSoundEventId": "SFX_AA_Fire",
+        "LocalSoundEventId": "SFX_AA_Fire",
+        "ItemAnimationId": "Shoot",
+        "Particles": [
+          {
+            "SystemId": "Muzzle_Flash",
+            "PositionOffset": {
+              "Z": -0.1,
+              "Y": -0.5
             },
-            "Offset": {
-              "X": 0.05,
-              "Y": -0.03,
-              "Z": -0.8
+            "RotationOffset": {
+              "Pitch": 90
             },
-            "ProjectileType": "Projectile_Turret_AA",
-            "Next": {
-              "Type": "DieselShoot",
-              "RunTime": 0.1,
-              "Effects": {
-                "ItemAnimationId": "Shoot",
-                "CameraEffect": "Handgun_Shoot",
-                "Particles": [
-                  {
-                    "SystemId": "Muzzle_Flash",
-                    "PositionOffset": {
-                      "Z": 0.7,
-                      "Y": 0.11
-                    },
-                    "RotationOffset": {
-                      "Pitch": 90
-                    },
-                    "TargetEntityPart": "Self"
-                  }
-                ]
-              },
-              "Offset": {
-                "X": 0.05,
-                "Y": -0.03,
-                "Z": -0.8
-              },
-              "ProjectileType": "Projectile_Turret_AA",
-              "Next": {
-                "Type": "DieselShoot",
-                "RunTime": 0.1,
-                "Effects": {
-                  "ItemAnimationId": "Shoot",
-                  "CameraEffect": "Handgun_Shoot",
-                  "Particles": [
-                    {
-                      "SystemId": "Muzzle_Flash",
-                      "PositionOffset": {
-                        "Z": 0.7,
-                        "Y": 0.11
-                      },
-                      "RotationOffset": {
-                        "Pitch": 90
-                      },
-                      "TargetEntityPart": "Self"
-                    }
-                  ]
-                },
-                "Offset": {
-                  "X": 0.05,
-                  "Y": -0.03,
-                  "Z": -0.8
-                },
-                "ProjectileType": "Projectile_Turret_AA",
-                "Next": {
-                  "Type": "ChangeStat",
-                  "StatModifiers": {
-                    "Turret_AA_Ammo": -1
-                  }
-                }
-              }
-            }
-          },
-          "Failed": "Turret_AA_Reload"
-        }
-      ]
+            "TargetEntityPart": "Self"
+          }
+        ]
+      },
+      "Offset": {
+        "X": 0.05,
+        "Y": -0.03,
+        "Z": -0.8
+      },
+      "ProjectileType": "Projectile_Turret_AA"
     }
   ]
 }

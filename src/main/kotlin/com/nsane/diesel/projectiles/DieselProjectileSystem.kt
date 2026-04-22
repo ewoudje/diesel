@@ -66,7 +66,9 @@ object DieselProjectileSystem: EntityTickingSystem<EntityStore?>() {
         spatial.spatialStructure.collect(pos, 5.0, entities)
         entities.addAll(commands.externalData.world.playerRefs.map { it.reference!! })
 
-        collisions.collisionEntities = entities.distinct().filter { it != projectile.owner }.mapNotNull { EntityUtils.getEntity(it, commands) }
+        collisions.collisionEntities = entities.distinct()
+            .filter { it != projectile.owner }
+            .mapNotNull { EntityUtils.getEntity(it, commands) }
 
         CollisionModule.findCollisions(
                 boundingBox.boundingBox,
@@ -99,7 +101,7 @@ object DieselProjectileSystem: EntityTickingSystem<EntityStore?>() {
         target: CharacterCollisionData,
         direction: Vector3d
     ) {
-        val source = Damage.EnvironmentSource("Bullet")
+        val source = Damage.ProjectileSource(projectile.owner!!, bullet)
         val type = DieselProjectileType.ASSET_MAP.getAsset(projectile.type)!!
         val targetRef = target.entityReference
         val yaw = PhysicsMath.normalizeTurnAngle(PhysicsMath.headingFromDirection(direction.x, direction.z))

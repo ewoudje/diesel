@@ -14,7 +14,9 @@ import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.math.vector.Vector3f
 import com.hypixel.hytale.server.core.asset.type.model.config.Model
 import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset
+import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent
 import com.hypixel.hytale.server.core.entity.UUIDComponent
+import com.hypixel.hytale.server.core.modules.entity.component.AudioComponent
 import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent
 import com.hypixel.hytale.server.core.modules.entity.component.PersistentModel
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent
@@ -26,6 +28,7 @@ import com.nsane.diesel.projectiles.DieselProjectileType
 import com.nsane.diesel.projectiles.DieselShootInteraction
 import io.github.hytalekt.kytale.ext.minus
 import io.github.hytalekt.kytale.ext.plus
+import it.unimi.dsi.fastutil.ints.IntArrayList
 import kotlin.math.atan
 import kotlin.math.max
 import kotlin.math.min
@@ -121,7 +124,7 @@ object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
 
     fun fire(commands: CommandBuffer<EntityStore?>, position: Vector3d, direction: Vector3d) {
         val type = DieselProjectileType.ASSET_STORE.assetMap.getAsset("Helicopter") ?: throw IllegalArgumentException()
-        DieselShootInteraction.shootProjectiles(commands, direction.clone().scale(2.0).add(position), direction, Vector3d(), type, null)
+        //DieselShootInteraction.shootProjectiles(commands, direction.clone().scale(2.0).add(position), direction, Vector3d(), type, null)
     }
 
     fun buildHelicopter(sim: AirSimulator): Holder<EntityStore?> {
@@ -131,9 +134,12 @@ object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
             150 - (Random.nextDouble() * 20)
         ).rotateX(sim.shipRotation.x).rotateY(sim.shipRotation.y).rotateZ(sim.shipRotation.z)
 
+        val sounds = IntArrayList()
+        sounds.add(SoundEvent.getAssetMap().getIndex("GyroMotor"))
         val modelAsset = ModelAsset.getAssetMap().getAsset("Helicopter") ?: throw NullPointerException("Helicopter asset not found")
-        val model = Model.createScaledModel(modelAsset, 1.0f)
+        val model = Model.createScaledModel(modelAsset, 4.0f)
         val holder = EntityStore.REGISTRY.newHolder()
+        holder.addComponent(AudioComponent.getComponentType(), AudioComponent(sounds))
         holder.addComponent(TransformComponent.getComponentType(), TransformComponent().apply { position.assign(direction) })
         holder.addComponent(PersistentModel.getComponentType(), PersistentModel(model.toReference()))
         holder.addComponent(ModelComponent.getComponentType(), ModelComponent(model))

@@ -23,6 +23,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.flying.CloudTickSystem.buildCloud
 import io.github.hytalekt.kytale.ext.plus
 import java.rmi.UnexpectedException
+import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.random.Random
 
@@ -54,7 +55,8 @@ object CloudTickSystem : EntityTickingSystem<EntityStore?>() {
             MAX_DISTANCE - (Random.nextDouble() * 20)
         ).rotateX(sim.shipRotation.x).rotateY(sim.shipRotation.y).rotateZ(sim.shipRotation.z)
 
-        val modelAsset = ModelAsset.getAssetMap().getAsset("Cloud") ?: throw NullPointerException("Cloud asset not found")
+        val rand = Random.nextInt(1, 5)
+        val modelAsset = ModelAsset.getAssetMap().getAsset("Cloud$rand") ?: throw NullPointerException("Cloud$rand asset not found")
         val model = Model.createScaledModel(modelAsset, Random.nextFloat() * 5 + 2)
         val holder = EntityStore.REGISTRY.newHolder()
         holder.addComponent(TransformComponent.getComponentType(), TransformComponent().apply { position.assign(direction) })
@@ -62,6 +64,7 @@ object CloudTickSystem : EntityTickingSystem<EntityStore?>() {
         holder.addComponent(ModelComponent.getComponentType(), ModelComponent(model))
         holder.addComponent(SimulatedTransformComponent.TYPE, SimulatedTransformComponent().apply {
             position.assign(sim.shipPosition + direction)
+            rotation.assign(0f, PI.toFloat() / 2f, 0.0f)
             velocity.assign(Vector3d(-1.0, 0.0, 0.0))
         })
         holder.ensureComponent(EntityStore.REGISTRY.nonSerializedComponentType)
