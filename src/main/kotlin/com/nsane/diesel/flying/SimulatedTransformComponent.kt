@@ -28,6 +28,14 @@ class SimulatedTransformComponent : Component<EntityStore?> {
             .rotateX(sim.shipRotation.x)
             .add(sim.shipPosition))
 
+    fun setWithWorldVelocity(sim: AirSimulator, vector: Vector3d) =
+        velocity.assign(vector
+            .rotateZ(sim.shipRotation.z)
+            .rotateY(sim.shipRotation.y)
+            .rotateX(sim.shipRotation.x)
+            .add(sim.shipVelocity))
+
+
     companion object {
         val CODEC = buildCodec(::SimulatedTransformComponent) {
             addField("Position", Vector3d.CODEC) {

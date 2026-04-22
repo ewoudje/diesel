@@ -126,8 +126,9 @@ class DieselShootInteraction: ProjectileInteraction() {
             holder.addComponent(TransformComponent.getComponentType(), TransformComponent(newPosition, rotation))
             holder.addComponent(SimulatedTransformComponent.TYPE, SimulatedTransformComponent().apply {
                 setWithWorldPosition(sim, newPosition)
+                setWithWorldVelocity(sim, direction.clone().scale(type.bulletSpeed))
                 this.rotation.assign(rotation)
-                this.velocity.assign(direction.clone().scale(type.bulletSpeed))
+
             })
             holder.addComponent(DieselProjectileComponent.TYPE, DieselProjectileComponent().apply { this.type = type.id })
 

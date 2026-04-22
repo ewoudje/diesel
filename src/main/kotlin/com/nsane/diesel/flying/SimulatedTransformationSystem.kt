@@ -22,7 +22,7 @@ object SimulatedTransformationSystem : EntityTickingSystem<EntityStore?>() {
         getWorldPosition(store.getResource(AirSimulator.TYPE), simulated)
 
     fun getWorldVelocity(sim: AirSimulator, simulated: SimulatedTransformComponent) =
-        simulated.velocity.clone()
+        (simulated.velocity - sim.shipVelocity)
             .rotateX(-sim.shipRotation.x)
             .rotateY(-sim.shipRotation.y)
             .rotateZ(-sim.shipRotation.z)

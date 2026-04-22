@@ -11,20 +11,26 @@ import com.hypixel.hytale.component.query.Query
 import com.hypixel.hytale.component.system.RefSystem
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem
 import com.hypixel.hytale.math.vector.Vector3d
+import com.hypixel.hytale.protocol.SoundCategory
 import com.hypixel.hytale.server.core.asset.type.model.config.Model
 import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset
+import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent
 import com.hypixel.hytale.server.core.entity.UUIDComponent
+import com.hypixel.hytale.server.core.modules.entity.component.AudioComponent
 import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent
 import com.hypixel.hytale.server.core.modules.entity.component.PersistentModel
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent
 import com.hypixel.hytale.server.core.modules.entity.tracker.NetworkId
 import com.hypixel.hytale.server.core.modules.physics.util.PhysicsMath
+import com.hypixel.hytale.server.core.universe.world.SoundUtil
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.projectiles.DieselProjectileType
 import com.nsane.diesel.projectiles.DieselShootInteraction
 import io.github.hytalekt.kytale.ext.minus
 import io.github.hytalekt.kytale.ext.plus
+import it.unimi.dsi.fastutil.ints.IntArrayList
+import it.unimi.dsi.fastutil.ints.IntLists
 import kotlin.math.atan
 import kotlin.math.max
 import kotlin.math.min
@@ -35,7 +41,7 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
     const val TURN_SPEED = 0.6f
     const val SPEED = 32.0
     const val PULL_UP = 30.0
-    const val FIRE_SPEED = 0.2f
+    const val FIRE_SPEED = 0.1f
 
     override fun tick(
         dt: Float,
@@ -116,6 +122,9 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
 
     fun fire(commands: CommandBuffer<EntityStore?>, position: Vector3d, direction: Vector3d) {
         val type = DieselProjectileType.ASSET_STORE.assetMap.getAsset("Plane") ?: throw IllegalArgumentException()
+        val shotSound = SoundEvent.getAssetMap().getIndex("SFX_AA_Fire")
+
+        SoundUtil.playSoundEvent3d(shotSound, SoundCategory.SFX, position, commands)
         DieselShootInteraction.shootProjectiles(commands, direction.clone().scale(2.0).add(position), direction, Vector3d(), type, null)
     }
 
@@ -129,8 +138,12 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
         ).rotateX(sim.shipRotation.x).rotateY(sim.shipRotation.y).rotateZ(sim.shipRotation.z)
 
         val modelAsset = ModelAsset.getAssetMap().getAsset("Plane") ?: throw NullPointerException("Plane asset not found")
+        val sounds = IntArrayList()
+        sounds.add(SoundEvent.getAssetMap().getIndex("PlaneDive"))
+        sounds.add(SoundEvent.getAssetMap().getIndex("PlaneMotor"))
         val model = Model.createScaledModel(modelAsset, 5.0f)
         val holder = EntityStore.REGISTRY.newHolder()
+        holder.addComponent(AudioComponent.getComponentType(), AudioComponent(sounds))
         holder.addComponent(TransformComponent.getComponentType(), TransformComponent().apply { position.assign(direction) })
         holder.addComponent(PersistentModel.getComponentType(), PersistentModel(model.toReference()))
         holder.addComponent(ModelComponent.getComponentType(), ModelComponent(model))

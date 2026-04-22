@@ -27,26 +27,44 @@
     "MaxHealth": 81,
     "HearingRange": 8,
     "ViewSector": 270,
-    "WakingPeriod": [ 0, 24 ],
+    "WakingPeriod": [
+      0,
+      24
+    ],
     "DropList": "Drop_Skeleton_Burnt_Gunner",
-    "Appearance": "Skeleton_Burnt_Gunner",
-    "Weapons": [ "Turret_AA" ],
-    "FollowPatrolPath": { "Compute": "FollowPatrolPath" },
-    "Patrol": { "Compute": "Patrol" },
-    "WanderRadius": { "Compute": "WanderRadius" },
+    "Appearance": "Fred",
+    "Weapons": [
+      "Turret_AA"
+    ],
+    "FollowPatrolPath": {
+      "Compute": "FollowPatrolPath"
+    },
+    "Patrol": {
+      "Compute": "Patrol"
+    },
+    "WanderRadius": {
+      "Compute": "WanderRadius"
+    },
     "CombatBackOffAfterAttack": false,
     "AttackDistance": 15,
     "CombatFleeIfTooCloseDistance": 4,
-    "DesiredAttackDistanceRange": [ 5, 14.5 ],
+    "DesiredAttackDistanceRange": [
+      5,
+      14.5
+    ],
     "CombatBehaviorDistance": 15,
     "TargetRange": 15,
     "LeashMinPlayerDistance": 18,
-    "ApplySeparation": { "Compute": "ApplySeparation" },
+    "ApplySeparation": {
+      "Compute": "ApplySeparation"
+    },
     "IsMemory": true,
     "MemoriesCategory": "Undead",
     "MemoriesNameOverride": "Skeleton_Burnt_Gunner",
     "BreathesInWater": true,
-    "NameTranslationKey": { "Compute": "NameTranslationKey" },
+    "NameTranslationKey": {
+      "Compute": "NameTranslationKey"
+    },
     "Attack": "Root_Fred"
   }
 }

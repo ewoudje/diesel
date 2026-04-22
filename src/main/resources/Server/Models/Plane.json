@@ -33,8 +33,7 @@
           "Animation": "Characters/Diesel/Animations/Propeller_Spin.blockyanim",
           "Looping": true,
           "BlendingDuration": 0.6,
-          "Weight": 0.3,
-          "SoundEventId": "Plane"
+          "Weight": 0.3
         }
       ]
     }
