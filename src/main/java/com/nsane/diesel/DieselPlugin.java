@@ -59,6 +59,8 @@ import com.nsane.diesel.projectiles.DieselProjectileComponent;
 import com.nsane.diesel.projectiles.DieselProjectileSystem;
 import com.nsane.diesel.projectiles.DieselProjectileType;
 import com.nsane.diesel.projectiles.DieselShootInteraction;
+import li.kelp.vuetale.javascript.ModuleRegistry;
+
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -111,6 +113,8 @@ public class DieselPlugin extends JavaPlugin {
 
         getEventRegistry().registerGlobal(PlayerReadyEvent.class, ExampleEvent::onPlayerReady);
         getEventRegistry().registerGlobal(PlayerReadyEvent.class, DieselPlayerSystem::playerReadyEvent);
+
+        ModuleRegistry.INSTANCE.registerModule("diesel", DieselPlugin.class,null);
 
         LOGGER.atInfo().log("Setup complete!!!");
     }
