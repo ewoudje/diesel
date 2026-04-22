@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.Shotgun_Scout.name"
+    "Name": "server.items.Turret_AA.name"
   },
   "Categories": [
     "Items.Weapons",
@@ -9,7 +9,7 @@
   "$Comment": "Loading order means that shooting and ammo usage should be inline",
   "Reticle": "DefaultMelee",
   "Model": "Items/Diesel/shotgun/shotgun.blockymodel",
-  "Icon": "Icons/ItemsGenerated/Shotgun_Scout.png",
+  "Icon": "Icons/ItemsGenerated/Weapon_Gun_Blunderbuss_Rusty.png",
   "Texture": "Items/Diesel/shotgun/shotgun.png",
   "PlayerAnimationsId": "Shotgun_Scout_Anim",
   "Interactions": {
@@ -23,7 +23,7 @@
           },
           "Next": {
             "Type": "DieselShoot",
-            "RunTime": 0.6,
+            "RunTime": 0.05,
             "Effects": {
               "ItemAnimationId": "Shoot",
               "CameraEffect": "Handgun_Shoot",
@@ -46,15 +46,15 @@
               "Y": -0.03,
               "Z": -0.8
             },
-            "ProjectileType": "Projectile_Shotgun",
+            "ProjectileType": "Projectile_Turret_AA",
             "Next": {
               "Type": "ChangeStat",
               "StatModifiers": {
-                "Shotgun_Scout_Ammo": -1
+                "Turret_AA_Ammo": -1
               }
             }
           },
-          "Failed": "Shotgun_Scout_Reload"
+          "Failed": "Turret_AA_Reload"
         }
       ]
     },
@@ -138,41 +138,23 @@
             }
           },
           "Failed": "Shotgun_Scout_Reload"
-        },
-        {
-          "Type": "StatsCondition",
-          "Costs": {
-            "Shotgun_Scout_Ammo": 1
-          },
-          "Next": {
-            "Type": "ChangeStat",
-            "StatModifiers": {
-              "Health": 10
-            }
-          }
         }
       ]
-    },
-    "Ability3": {
-      "Interactions": [
-        "Shotgun_Scout_Reload"
-      ]
-    },
-    "SwapTo": "Root_SetMovement_Scout"
+    }
   },
   "IconProperties": {
-    "Scale": 0.6,
-    "Rotation": [
-      321,
-      100,
-      0
-    ],
+    "Scale": 0.36,
     "Translation": [
-      -4,
-      -7
+      -3.6,
+      -20.4
+    ],
+    "Rotation": [
+      315,
+      90,
+      0
     ]
   },
   "Quality": "Legendary",
-  "Scale": 2,
+  "Scale": 1,
   "Weapon": {}
 }

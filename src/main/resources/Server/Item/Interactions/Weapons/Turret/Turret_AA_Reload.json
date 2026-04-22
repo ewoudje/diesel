@@ -1,0 +1,13 @@
+{
+  "Type": "ChangeStat",
+  "StatModifiers": {
+    "Turret_AA_Ammo": 120
+  },
+  "Behaviour": "Set",
+  "Effects": {
+    "ItemAnimationId": "Reload",
+    "WorldSoundEventId": "SFX_Shotgun_Reload",
+    "LocalSoundEventId": "SFX_Shotgun_Reload"
+  },
+  "RunTime": 2.5
+}

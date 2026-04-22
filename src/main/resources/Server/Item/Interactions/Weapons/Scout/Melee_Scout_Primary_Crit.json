@@ -1,0 +1,57 @@
+{
+  "Type": "Serial",
+  "Interactions": [
+    {
+      "Type": "DamageEntity",
+      "DamageCalculator": {
+        "Class": "Light",
+        "BaseDamage": {
+          "Physical": 30
+        }
+      },
+      "Effects": {
+        "ItemAnimationId": "StabLeft"
+      },
+      "DamageEffects": {
+        "Knockback": {
+          "Direction": {
+            "X": -1,
+            "Y": 1,
+            "Z": -1
+          },
+          "Type": "Force",
+          "Force": 1
+        },
+        "WorldParticles": [
+          {
+            "SystemId": "Impact_Explosion",
+            "Scale": 1,
+            "RotationOffset": {
+              "Yaw": 180,
+              "Pitch": 0,
+              "Roll": 0
+            },
+            "PositionOffset": {
+              "Y": -0.7
+            }
+          }
+        ],
+        "WorldSoundEventId": "SFX_Daggers_T2_Stab_Impact",
+        "LocalSoundEventId": "SFX_Fireball_Death"
+      }
+    },
+    {
+      "Type": "ChangeStat",
+      "StatModifiers": {
+        "Shotgun_Scout_Ammo": 4
+      },
+      "Behaviour": "Set"
+    },
+    {
+    "Type": "ChangeStat",
+    "StatModifiers": {
+      "Health" : 5
+    }
+    }
+  ]
+}

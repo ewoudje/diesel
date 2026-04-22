@@ -1,0 +1,32 @@
+{
+  "Type": "Serial",
+  "Interactions": [
+    {
+      "Type": "ApplyEffect",
+      "EffectId": "Stamina_Broken_Immune"
+    },
+    "Dodge_FX_Scout",
+    {
+      "Type": "ChangeStat",
+      "StatModifiers": {
+        "Stamina": -80
+      },
+      "Effects": {
+        "ItemAnimationId": "GuardBash",
+        "WorldSoundEventId": "SFX_Light_Melee_T1_Shove",
+        "LocalSoundEventId": "SFX_Sword_T1_Shove_Local"
+      },
+      "Next": {
+        "Type": "ChangeStat",
+        "Behaviour": "Set",
+        "StatModifiers": {
+          "StaminaRegenDelay": -1.5
+        },
+        "Next": {
+          "Parent":"DodgeB",
+          "Force": 20
+        }
+      }
+    }
+  ]
+}

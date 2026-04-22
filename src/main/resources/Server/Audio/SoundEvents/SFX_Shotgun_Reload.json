@@ -1,0 +1,80 @@
+{
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/Diesel/Weapon/mono/bolt_forward.ogg"
+      ],
+      "StartDelay": 0,
+      "RandomSettings": {
+        "MinPitch": -3
+      }
+    },
+    {
+      "Files": [
+        "Sounds/Diesel/Weapon/mono/insert.ogg"
+      ],
+      "StartDelay": 0.5,
+      "RandomSettings": {
+        "MinPitch": -1
+      }
+    },
+    {
+      "Files": [
+        "Sounds/Diesel/Weapon/mono/insert.ogg"
+      ],
+      "StartDelay": 0.7,
+      "RandomSettings": {
+        "MinPitch": -1
+      }
+    },
+    {
+      "Files": [
+        "Sounds/Diesel/Weapon/mono/insert.ogg"
+      ],
+      "StartDelay": 0.9,
+      "RandomSettings": {
+        "MinPitch": -1
+      }
+    },
+    {
+      "Files": [
+        "Sounds/Diesel/Weapon/mono/insert.ogg"
+      ],
+      "StartDelay": 1.1,
+      "RandomSettings": {
+        "MinPitch": -1
+      }
+    },
+    {
+      "Files": [
+        "Sounds/Diesel/Weapon/mono/bolt_forward.ogg"
+      ],
+      "StartDelay": 1.5,
+      "RandomSettings": {
+        "MinPitch": -3
+      }
+    },
+    {
+      "Files": [
+        "Sounds/Diesel/Weapon/mono/pump_back.ogg"
+      ],
+      "StartDelay": 1.49,
+      "RandomSettings": {
+        "MinPitch": -3
+      }
+    },
+    {
+      "Files": [
+        "Sounds/Diesel/Weapon/mono/pump_forward.ogg"
+      ],
+      "StartDelay": 1.54,
+      "RandomSettings": {
+        "MinPitch": -3
+      }
+    }
+  ],
+  "MaxInstance": 30,
+  "Volume": 1.0,
+  "PreventSoundInterruption": true,
+  "Parent": "SFX_Attn_Loud"
+}

@@ -4,26 +4,25 @@
   },
   "Model": "Items/Diesel/scout_knife/Stabbing_Knife.blockymodel",
   "Texture": "Items/Diesel/scout_knife/Stabbing_Knife.png",
-  "Icon": "Icons/ItemsGenerated/Weapon_Daggers_Iron.png",
+  "Icon": "Icons/ItemsGenerated/Dagger_Scout.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
-  "PlayerAnimationsId": "Daggers",
+  "PlayerAnimationsId": "Dagger_Scout_Anim",
   "Reticle": "DefaultMelee",
   "ItemSoundSetId": "ISS_Weapon_Blade_Small",
-  "ItemLevel": 30,
   "Categories": [
     "Items.Weapons",
     "DieselCategory.Weapons"
   ],
   "IconProperties": {
+    "Scale": 0.7,
     "Rotation": [
-      45,
-      90,
+      32,
+      88,
       0
     ],
-    "Scale": 0.4,
     "Translation": [
-      -19.2,
-      -21
+      -22,
+      -15
     ]
   },
   "Utility": {
@@ -31,8 +30,14 @@
   },
   "$Comment": "TO-DO: Remove SwapTo, probably, since we can change movement with the eventual class system",
   "Interactions": {
-    "Primary": "Root_Diesel_Dodge_Scout",
-    "Secondary": "Root_Weapon_Daggers_Secondary_Guard",
+    "Primary": {
+      "Interactions": [
+        {
+          "Parent": "Melee_Scout_Primary"
+        }
+      ]
+    },
+    "Secondary": "Root_Melee_Scout_Secondary",
     "Ability1": "Root_Diesel_Dodge_Scout",
     "SwapTo": "Root_SetMovement_Scout"
   },
@@ -45,117 +50,8 @@
     ]
   },
   "Weapon": {
-    "EntityStatsToClear": [
-      "SignatureEnergy"
-    ],
-    "StatModifiers": {
-      "SignatureEnergy": [
-        {
-          "Amount": 27,
-          "CalculationType": "Additive"
-        }
-      ]
-    },
-    "RenderDualWielded": true
+    "RenderDualWielded": false
   },
-  "ItemAppearanceConditions": {
-    "SignatureEnergy": [
-      {
-        "Condition": [
-          100,
-          100
-        ],
-        "ConditionValueType": "Percent",
-        "Particles": [
-          {
-            "SystemId": "Daggers_Signature_Ready",
-            "TargetNodeName": "Handle",
-            "PositionOffset": {
-              "X": 0.5
-            },
-            "TargetEntityPart": "PrimaryItem"
-          },
-          {
-            "SystemId": "Sword_Signature_Status_Spawn",
-            "TargetNodeName": "Handle",
-            "PositionOffset": {
-              "X": 0.4
-            },
-            "TargetEntityPart": "PrimaryItem",
-            "Scale": 0.7
-          },
-          {
-            "SystemId": "Dagger_Signature_Status",
-            "TargetNodeName": "Handle",
-            "PositionOffset": {
-              "X": 0.4
-            },
-            "TargetEntityPart": "PrimaryItem"
-          },
-          {
-            "SystemId": "Daggers_Signature_Ready",
-            "TargetNodeName": "Handle",
-            "PositionOffset": {
-              "X": 0.5
-            },
-            "TargetEntityPart": "SecondaryItem"
-          },
-          {
-            "SystemId": "Sword_Signature_Status_Spawn",
-            "TargetNodeName": "Handle",
-            "PositionOffset": {
-              "X": 0.4
-            },
-            "TargetEntityPart": "SecondaryItem",
-            "Scale": 0.7
-          },
-          {
-            "SystemId": "Dagger_Signature_Status",
-            "TargetNodeName": "Handle",
-            "PositionOffset": {
-              "X": 0.4
-            },
-            "TargetEntityPart": "SecondaryItem"
-          }
-        ],
-        "ModelVFXId": "Sword_Signature_Status",
-        "FirstPersonParticles": [
-          {
-            "SystemId": "Daggers_Signature_Ready",
-            "TargetNodeName": "Handle",
-            "PositionOffset": {
-              "X": 0.5
-            },
-            "TargetEntityPart": "PrimaryItem"
-          },
-          {
-            "SystemId": "Dagger_Signature_Status",
-            "TargetNodeName": "Handle",
-            "PositionOffset": {
-              "X": 0.4
-            },
-            "TargetEntityPart": "PrimaryItem"
-          },
-          {
-            "SystemId": "Daggers_Signature_Ready",
-            "TargetNodeName": "Handle",
-            "PositionOffset": {
-              "X": 0.5
-            },
-            "TargetEntityPart": "SecondaryItem"
-          },
-          {
-            "SystemId": "Dagger_Signature_Status",
-            "TargetNodeName": "Handle",
-            "PositionOffset": {
-              "X": 0.4
-            },
-            "TargetEntityPart": "SecondaryItem"
-          }
-        ]
-      }
-    ]
-  },
-  "MaxDurability": 80,
-  "DurabilityLossOnHit": 0.1
+  "ItemAppearanceConditions": {},
+  "Quality": "Legendary"
 }
