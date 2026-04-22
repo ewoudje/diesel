@@ -15,6 +15,9 @@
   "Interactions": {
     "Ability1": "Root_Diesel_Dodge_Scout",
     "Primary": {
+      "Cooldown": {
+        "Cooldown": 0.6
+      },
       "Interactions": [
         {
           "Type": "StatsCondition",

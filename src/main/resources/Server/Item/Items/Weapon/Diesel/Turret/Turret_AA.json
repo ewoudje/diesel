@@ -7,7 +7,6 @@
     "DieselCategory.Weapons"
   ],
   "$Comment": "Loading order means that shooting and ammo usage should be inline",
-  "Reticle": "DefaultMelee",
   "Model": "Items/Diesel/shotgun/shotgun.blockymodel",
   "Icon": "Icons/ItemsGenerated/Weapon_Gun_Blunderbuss_Rusty.png",
   "Texture": "Items/Diesel/shotgun/shotgun.png",
@@ -17,111 +16,22 @@
     "Primary": {
       "Interactions": [
         {
-          "Type": "StatsCondition",
-          "Costs": {
-            "Shotgun_Scout_Ammo": 1
-          },
-          "Next": {
-            "Type": "DieselShoot",
-            "RunTime": 0.05,
-            "Effects": {
-              "ItemAnimationId": "Shoot",
-              "CameraEffect": "Handgun_Shoot",
-              "Particles": [
-                {
-                  "SystemId": "Muzzle_Flash",
-                  "PositionOffset": {
-                    "Z": 0.7,
-                    "Y": 0.11
-                  },
-                  "RotationOffset": {
-                    "Pitch": 90
-                  },
-                  "TargetEntityPart": "Self"
-                }
-              ]
-            },
-            "Offset": {
-              "X": 0.05,
-              "Y": -0.03,
-              "Z": -0.8
-            },
-            "ProjectileType": "Projectile_Turret_AA",
-            "Next": {
-              "Type": "ChangeStat",
-              "StatModifiers": {
-                "Turret_AA_Ammo": -1
-              }
-            }
-          },
-          "Failed": "Turret_AA_Reload"
-        }
-      ]
-    },
-    "Secondary": {
-      "Interactions": [
-        {
-          "Type": "StatsCondition",
-          "Costs": {
-            "Shotgun_Scout_Ammo": 1
-          },
-          "Next": {
-            "Type": "DieselShoot",
-            "RunTime": 0,
-            "Effects": {
-              "ItemAnimationId": "Shoot",
-              "CameraEffect": "Handgun_Shoot",
-              "Particles": [
-                {
-                  "SystemId": "RifleShooting",
-                  "PositionOffset": {
-                    "Z": 0.7,
-                    "Y": 0.11
-                  },
-                  "RotationOffset": {
-                    "Pitch": 90
-                  },
-                  "TargetEntityPart": "Self"
-                }
-              ]
-            },
-            "Offset": {
-              "X": 0.05,
-              "Y": -0.03,
-              "Z": -0.8
-            },
-            "ProjectileType": "Projectile_Shotgun_Special",
-            "Next": {
-              "Type": "ChangeStat",
-              "StatModifiers": {
-                "Shotgun_Scout_Ammo": 0
+          "Type": "Serial",
+          "Interactions": [
+            {
+              "Type": "StatsCondition",
+              "Costs": {
+                "Turret_AA_Ammo": 1
               },
-              "Behaviour": "Set",
               "Next": {
-                "Type": "ApplyForce",
-                "Force": 22,
-                "AdjustVertical": false,
-                "WaitForGround": false,
-                "ChangeVelocityType": "Set",
-                "VelocityConfig": {
-                  "AirResistance": 0.97,
-                  "AirResistanceMax": 0.96,
-                  "GroundResistance": 0.94,
-                  "GroundResistanceMax": 0.82,
-                  "Threshold": 5.0,
-                  "Style": "Exp"
-                },
-                "Direction": {
-                  "X": 0,
-                  "Y": 4,
-                  "Z": 5
-                },
+                "Type": "DieselShoot",
+                "RunTime": 0.1,
                 "Effects": {
-                  "CameraEffect": "Daggers_Dash",
-                  "ItemAnimationId": "DodgeBackward",
+                  "ItemAnimationId": "Shoot",
+                  "CameraEffect": "Handgun_Shoot",
                   "Particles": [
                     {
-                      "SystemId": "Explosion_Small",
+                      "SystemId": "Muzzle_Flash",
                       "PositionOffset": {
                         "Z": 0.7,
                         "Y": 0.11
@@ -131,13 +41,91 @@
                       },
                       "TargetEntityPart": "Self"
                     }
-                  ],
-                  "WorldSoundEventId": "SFX_Staff_Flame_Fireball_Launch"
+                  ]
+                },
+                "Offset": {
+                  "X": 0.05,
+                  "Y": -0.03,
+                  "Z": -0.8
+                },
+                "ProjectileType": "Projectile_Turret_AA",
+                "Next": {
+                  "Type": "DieselShoot",
+                  "RunTime": 0.1,
+                  "Effects": {
+                    "ItemAnimationId": "Shoot",
+                    "CameraEffect": "Handgun_Shoot",
+                    "Particles": [
+                      {
+                        "SystemId": "Muzzle_Flash",
+                        "PositionOffset": {
+                          "Z": 0.7,
+                          "Y": 0.11
+                        },
+                        "RotationOffset": {
+                          "Pitch": 90
+                        },
+                        "TargetEntityPart": "Self"
+                      }
+                    ]
+                  },
+                  "Offset": {
+                    "X": 0.05,
+                    "Y": -0.03,
+                    "Z": -0.8
+                  },
+                  "ProjectileType": "Projectile_Turret_AA",
+                  "Next": {
+                    "Type": "DieselShoot",
+                    "RunTime": 0.1,
+                    "Effects": {
+                      "ItemAnimationId": "Shoot",
+                      "CameraEffect": "Handgun_Shoot",
+                      "Particles": [
+                        {
+                          "SystemId": "Muzzle_Flash",
+                          "PositionOffset": {
+                            "Z": 0.7,
+                            "Y": 0.11
+                          },
+                          "RotationOffset": {
+                            "Pitch": 90
+                          },
+                          "TargetEntityPart": "Self"
+                        }
+                      ]
+                    },
+                    "Offset": {
+                      "X": 0.05,
+                      "Y": -0.03,
+                      "Z": -0.8
+                    },
+                    "ProjectileType": "Projectile_Turret_AA",
+                    "Next": {
+                      "Type": "ChangeStat",
+                      "StatModifiers": {
+                        "Turret_AA_Ammo": -1
+                      }
+                    }
+                  }
                 }
-              }
+              },
+              "Failed": "Turret_AA_Reload"
             }
+          ]
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "StatsCondition",
+          "Costs": {
+            "Turret_AA_Ammo": 1
           },
-          "Failed": "Shotgun_Scout_Reload"
+          "Next": {
+          },
+          "Failed": "Turret_AA_Reload"
         }
       ]
     }
