@@ -1,0 +1,34 @@
+{
+  "Model": "Projectile_AA_Asset",
+  "Config": "Projectile_Config_Empty_Silent",
+  "ProjectileCount": 1,
+  "SpreadAmount": 1.2,
+  "BulletSpeed": 40,
+  "BulletDistance": 500,
+  "DamageCalculator": {
+    "Class": "Light",
+    "BaseDamage": {
+      "Projectile": 10
+    }
+  },
+  "DamageEffects": {
+    "WorldParticles": [
+      {
+        "SystemId": "Explosion_Small",
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0
+        }
+      }
+    ]
+  },
+  "BlockHitParticles": [
+    {
+      "SystemId": "Explosion_Small",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0
+      }
+    }
+  ]
+}

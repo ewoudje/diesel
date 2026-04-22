@@ -1,0 +1,16 @@
+{
+  "RequireNewClick": true,
+  "Rules": {
+    "Interrupting": [
+      "Primary"
+    ]
+  },
+  "Interactions": [
+    "Melee_Scout_Secondary"
+  ],
+  "Tags": {
+    "Attack": [
+      "Melee"
+    ]
+  }
+}

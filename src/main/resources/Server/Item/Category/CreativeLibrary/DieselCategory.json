@@ -3,11 +3,6 @@
   "Order": 2,
   "Children": [
     {
-      "Id": "Tools",
-      "Name": "server.ui.itemcategory.tools",
-      "Icon": "Icons/ItemCategories/Items-Tools.png"
-    },
-    {
       "Id": "Weapons",
       "Name": "server.ui.itemcategory.weapons",
       "Icon": "Icons/ItemCategories/Items-Weapons.png"
@@ -16,6 +11,11 @@
       "Id": "Blocks",
       "Name": "server.ui.itemcategory.blocks",
       "Icon": "Icons/ItemCategories/Blocks.png"
+    },
+    {
+      "Id": "Tools",
+      "Name": "server.ui.itemcategory.tools",
+      "Icon": "Icons/ItemCategories/Items-Tools.png"
     }
   ],
   "Name": "ui.dieselcategory.name"

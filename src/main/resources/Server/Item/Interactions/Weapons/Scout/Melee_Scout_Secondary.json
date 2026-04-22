@@ -1,0 +1,64 @@
+{
+  "Type": "Wielding",
+  "Effects": {
+    "ItemAnimationId": "Guard",
+    "ClearAnimationOnFinish": true,
+    "WorldSoundEventId": "SFX_Daggers_T2_Guard",
+    "LocalSoundEventId": "SFX_Daggers_T2_Guard_Local"
+  },
+  "Forks": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "StatsCondition",
+          "Costs": {
+            "Stamina": 4
+          },
+          "Next": {
+            "Parent": "Melee_Scout_Secondary_Backstep"
+          }
+        }
+      ]
+    }
+  },
+  "AngledWielding": {
+    "Angle": 0,
+    "AngleDistance": 90,
+    "DamageModifiers": {
+      "Physical": 0,
+      "Projectile": 0,
+      "Poison": 0
+    },
+    "KnockbackModifiers": {
+      "Physical": 0.25,
+      "Projectile": 0.25
+    }
+  },
+  "StaminaCost": {
+    "Value": 6,
+    "CostType": "Damage"
+  },
+  "CancelOnOtherClick": false,
+  "Failed": {
+  "Type": "Simple",
+  "Effects": {
+    "WorldSoundEventId": "SFX_Light_Melee_T2_Guard_Break",
+    "LocalSoundEventId": "SFX_Light_Melee_T2_Guard_Break"
+  }
+},
+  "BlockedEffects": {
+    "WorldParticles": [
+      {
+        "SystemId": "Shield_Block"
+      }
+    ]
+  },
+  "Next": {
+    "$Comment": "Standard regen delay upon ending guarding on all weapons",
+    "Type": "ChangeStat",
+    "Behaviour": "Set",
+    "StatModifiers": {
+      "StaminaRegenDelay": -1
+    }
+  }
+}

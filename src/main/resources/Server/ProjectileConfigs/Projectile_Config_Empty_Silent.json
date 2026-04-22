@@ -1,0 +1,31 @@
+{
+  "Model": "Empty",
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 30,
+    "TerminalVelocityAir": 50,
+    "TerminalVelocityWater": 15,
+    "RotationMode": "VelocityDamped",
+    "Bounciness": 0.0,
+    "SticksVertically": true,
+    "SwimmingDampingFactor": 0
+  },
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        "Common_Projectile_Despawn"
+      ]
+    },
+    "ProjectileMiss": {
+      "Interactions": [
+        "Common_Projectile_Despawn"
+      ]
+    }
+  },
+  "SpawnOffset": {
+    "Z": 0.3,
+    "Y": 0,
+    "X": 0.1
+  },
+  "LaunchForce": 80
+}

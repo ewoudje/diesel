@@ -1,0 +1,302 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Turret_AA.name"
+  },
+  "Categories": [
+    "Items.Weapons",
+    "DieselCategory.Weapons"
+  ],
+  "$Comment": "Loading order means that shooting and ammo usage should be inline",
+  "Model": "Items/Diesel/shotgun/shotgun.blockymodel",
+  "Icon": "Icons/ItemsGenerated/Weapon_Gun_Blunderbuss_Rusty.png",
+  "Texture": "Items/Diesel/shotgun/shotgun.png",
+  "PlayerAnimationsId": "Shotgun_Scout_Anim",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "Serial",
+          "Interactions": [
+            {
+              "Type": "Replace",
+              "Var": "Shoot_Weapon"
+            },
+            {
+              "Type": "Replace",
+              "Var": "Shoot_Weapon"
+            },
+            {
+              "Type": "Replace",
+              "Var": "Shoot_Weapon"
+            }
+          ]
+        }
+      ]
+    },
+    "Secondary": {
+      "Cooldown": {
+        "Cooldown": 1
+      },
+      "Interactions": [
+        {
+          "Type": "Replace",
+          "Var": "Shoot_Weapon_Secondary"
+        }
+      ]
+    },
+    "Ability1": {
+      "Cooldown": {
+        "Cooldown": 1
+      },
+      "Interactions": [
+        {
+          "Type": "Replace",
+          "Var": "Shoot_Weapon_Ability1"
+        }
+      ]
+    },
+    "Ability3": {
+      "$Comment": "TO-DO Remove me when reload box is implemented",
+      "Interactions": [
+        "Turret_AA_Reload",
+        "Turret_Flak_Reload",
+        "Turret_Chaff_Reload"
+      ]
+    }
+  },
+  "InteractionVars": {
+    "Shoot_Weapon": {
+      "RequireNewClick": true,
+      "Interactions": [
+        {
+          "Type": "StatsCondition",
+          "Costs": {
+            "Turret_AA_Ammo": 1
+          },
+          "Next": {
+            "Type": "DieselShoot",
+            "RunTime": 0.1,
+            "Effects": {
+              "WorldSoundEventId": "SFX_AA_Fire",
+              "LocalSoundEventId": "SFX_AA_Fire",
+              "ItemAnimationId": "Shoot",
+              "CameraEffect": "Handgun_Shoot",
+              "FirstPersonParticles": [
+                {
+                  "SystemId": "Muzzle_Flash",
+                  "PositionOffset": {
+                    "Z": 0.7,
+                    "Y": 0.11
+                  },
+                  "RotationOffset": {
+                    "Pitch": 90
+                  },
+                  "TargetEntityPart": "Self"
+                }
+              ],
+              "Particles": [
+                {
+                  "SystemId": "Muzzle_Flash",
+                  "PositionOffset": {
+                    "Z": -0.1,
+                    "Y": -0.5
+                  },
+                  "RotationOffset": {
+                    "Pitch": 90
+                  },
+                  "TargetEntityPart": "Self"
+                }
+              ]
+            },
+            "Offset": {
+              "X": 0.05,
+              "Y": -0.03,
+              "Z": -0.8
+            },
+            "ProjectileType": "Projectile_Turret_AA",
+            "Next": {
+              "Type": "ChangeStat",
+              "StatModifiers": {
+                "Turret_AA_Ammo": -1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Shoot_Weapon_Secondary": {
+      "Interactions": [
+        {
+          "Type": "StatsCondition",
+          "Costs": {
+            "Turret_Chaff_Ammo": 1
+          },
+          "Next": {
+            "Type": "DieselShoot",
+            "RunTime": 0.1,
+            "Effects": {
+              "WorldSoundEventId": "SFX_Chaff_Fire",
+              "LocalSoundEventId": "SFX_Chaff_Fire",
+              "CameraEffect": "Shield_Bash",
+              "FirstPersonParticles": [
+                {
+                  "SystemId": "Muzzle_Flash",
+                  "PositionOffset": {
+                    "Z": 0.7,
+                    "Y": 0.11
+                  },
+                  "RotationOffset": {
+                    "Pitch": 90
+                  },
+                  "TargetEntityPart": "Self"
+                },
+                {
+                  "SystemId": "Block_Break_Dust",
+                  "Color": "#0f0f0f",
+                  "PositionOffset": {
+                    "Y": 0.2,
+                    "Z": 0.5
+                  },
+                  "RotationOffset": {
+                    "Pitch": 0
+                  }
+                },
+                {
+                  "SystemId": "Explosion_Small",
+                  "PositionOffset": {
+                    "Z": 0.2,
+                    "Y": 0.5
+                  },
+                  "RotationOffset": {
+                    "Pitch": 90
+                  },
+                  "TargetEntityPart": "Self"
+                }
+              ],
+              "Particles": [
+                {
+                  "SystemId": "Muzzle_Flash",
+                  "PositionOffset": {
+                    "Z": -0.1,
+                    "Y": -0.5
+                  },
+                  "RotationOffset": {
+                    "Pitch": 90
+                  },
+                  "TargetEntityPart": "Self"
+                },
+                {
+                  "SystemId": "Block_Break_Dust",
+                  "Color": "#0f0f0f",
+                  "PositionOffset": {
+                    "Y": 0.2,
+                    "Z": 0.5
+                  },
+                  "RotationOffset": {
+                    "Pitch": 0
+                  }
+                },
+                {
+                  "SystemId": "Explosion_Small",
+                  "PositionOffset": {
+                    "Z": 0.7,
+                    "Y": 0.11
+                  },
+                  "RotationOffset": {
+                    "Pitch": 90
+                  },
+                  "TargetEntityPart": "Self"
+                }
+              ]
+            },
+            "Offset": {
+              "X": 0.05,
+              "Y": -0.03,
+              "Z": -0.8
+            },
+            "ProjectileType": "Projectile_Turret_Chaff",
+            "Next": {
+              "Type": "ChangeStat",
+              "StatModifiers": {
+                "Turret_Chaff_Ammo": -1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Shoot_Weapon_Ability1": {
+      "Interactions": [
+        {
+          "Type": "StatsCondition",
+          "Costs": {
+            "Turret_AA_Ammo": 1
+          },
+          "Next": {
+            "Type": "DieselShoot",
+            "RunTime": 0.1,
+            "Effects": {
+              "WorldSoundEventId": "SFX_Flak_Fire",
+              "LocalSoundEventId": "SFX_Flak_Fire",
+              "ItemAnimationId": "Shoot",
+              "CameraEffect": "Handgun_Shoot",
+              "FirstPersonParticles": [
+                {
+                  "SystemId": "Muzzle_Flash",
+                  "PositionOffset": {
+                    "Z": 0.7,
+                    "Y": 0.11
+                  },
+                  "RotationOffset": {
+                    "Pitch": 90
+                  },
+                  "TargetEntityPart": "Self"
+                }
+              ],
+              "Particles": [
+                {
+                  "SystemId": "Muzzle_Flash",
+                  "PositionOffset": {
+                    "Z": -0.1,
+                    "Y": -0.5
+                  },
+                  "RotationOffset": {
+                    "Pitch": 90
+                  },
+                  "TargetEntityPart": "Self"
+                }
+              ]
+            },
+            "Offset": {
+              "X": 0.05,
+              "Y": -0.03,
+              "Z": -0.8
+            },
+            "ProjectileType": "Projectile_Turret_Flak",
+            "Next": {
+              "Type": "ChangeStat",
+              "StatModifiers": {
+                "Turret_AA_Ammo": -1
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "IconProperties": {
+    "Scale": 0.36,
+    "Translation": [
+      -3.6,
+      -20.4
+    ],
+    "Rotation": [
+      315,
+      90,
+      0
+    ]
+  },
+  "Quality": "Legendary",
+  "Scale": 1,
+  "Weapon": {}
+}
