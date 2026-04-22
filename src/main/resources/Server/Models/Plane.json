@@ -30,10 +30,11 @@
     "Idle": {
       "Animations": [
         {
-          "Animation": "Characters/Diesel/Animations/Items/Shotgun/Propeller_Spin.blockyanim",
+          "Animation": "Characters/Diesel/Animations/Propeller_Spin.blockyanim",
           "Looping": true,
           "BlendingDuration": 0.6,
-          "Weight": 0.3
+          "Weight": 0.3,
+          "SoundEventId": "Plane"
         }
       ]
     }

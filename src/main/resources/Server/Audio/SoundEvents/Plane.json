@@ -1,0 +1,39 @@
+{
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/Diesel/Enviroment/PlaneLoop.ogg"
+      ],
+      "Volume": 10,
+      "Looping": true
+    },
+    {
+      "Files": [
+        "Sounds/Diesel/Enviroment/PlaneLoop.ogg"
+      ],
+      "Volume": 10,
+      "Looping": true
+    },
+    {
+      "Files": [
+        "Sounds/Diesel/Enviroment/PlaneLoop.ogg"
+      ],
+      "Volume": 10,
+      "Looping": true
+    },
+    {
+      "Files": [
+        "Sounds/Diesel/Enviroment/PlaneLoop.ogg"
+      ],
+      "Volume": 10,
+      "Looping": true
+    }
+  ],
+  "MaxInstance": 1,
+  "Volume": 10,
+  "PreventSoundInterruption": false,
+  "Parent": "SFX_Attn_Loud",
+  "StartAttenuationDistance": 100,
+  "MaxDistance": 100,
+  "SpatialBlend": 0.9
+}
