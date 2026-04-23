@@ -1,0 +1,10 @@
+{
+  "Tags": {
+    "Attack": [
+      "Melee"
+    ]
+  },
+  "Interactions": [
+    "Bomb_Explode"
+  ]
+}
