@@ -20,7 +20,7 @@ dependencies {
     implementation("io.github.hytalekt:kytale:+")
     implementation("io.github.hytalekt:kytale-serialization:+")
     implementation("io.github.hytalekt:kytale-coroutines:+")
-    compileOnly(files("libs/Vuetale-1.0.3-preview-all.jar"))
+    implementation(files("libs/Vuetale-1.0.4-preview-all.jar"))
 }
 
 kotlin {

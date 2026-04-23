@@ -4,6 +4,7 @@ import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.assetstore.map.IndexedLookupTableAssetMap;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
+import com.hypixel.hytale.common.plugin.PluginIdentifier;
 import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Resource;
@@ -26,6 +27,8 @@ import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Roo
 import com.hypixel.hytale.server.core.modules.projectile.config.ProjectileConfig;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
+import com.hypixel.hytale.server.core.plugin.PluginBase;
+import com.hypixel.hytale.server.core.plugin.PluginManager;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.nsane.diesel.boss.RiseRockInteraction;
@@ -33,6 +36,7 @@ import com.nsane.diesel.boss.RisenRockComponent;
 import com.nsane.diesel.boss.RisenRockRefSystem;
 import com.nsane.diesel.boss.RisenRockTickSystem;
 import com.nsane.diesel.commands.ExampleCommand;
+import com.nsane.diesel.commands.OpenMyUiCommand;
 import com.nsane.diesel.events.ExampleEvent;
 import com.nsane.diesel.flying.AirSimulator;
 import com.nsane.diesel.flying.CloudCommand;
@@ -78,6 +82,18 @@ public class DieselPlugin extends JavaPlugin {
     @Override
     protected void setup() {
         instance = this;
+
+        // in setup
+        try {
+            PluginBase vuetale = PluginManager.get().getPlugin(PluginIdentifier.fromString("kelp.li:Vuetale"));
+            ClassLoader cl = vuetale.getClass().getClassLoader();
+            Class<?> reg = Class.forName("li.kelp.vuetale.javascript.ModuleRegistry", true, cl);
+            Object instance = reg.getField("INSTANCE").get(null);
+            reg.getMethod("registerModule", String.class, Class.class)
+                    .invoke(instance, "diesel", DieselPlugin.class);
+        } catch (Exception e) {}
+
+
         HytaleAssetStore.Builder<String, DieselProjectileType, DefaultAssetMap<String, DieselProjectileType>> builder =
                 HytaleAssetStore.builder(DieselProjectileType.class, new DefaultAssetMap<>());
         builder.setCodec(DieselProjectileType.Companion.getCODEC());
@@ -110,6 +126,7 @@ public class DieselPlugin extends JavaPlugin {
         getCommandRegistry().registerCommand(new ExampleCommand("example", "An example command"));
         getCommandRegistry().registerCommand(new FlyingCommand());
         getCommandRegistry().registerCommand(new CloudCommand());
+        getCommandRegistry().registerCommand(new OpenMyUiCommand());
 
         getEventRegistry().registerGlobal(PlayerReadyEvent.class, ExampleEvent::onPlayerReady);
         getEventRegistry().registerGlobal(PlayerReadyEvent.class, DieselPlayerSystem::playerReadyEvent);
