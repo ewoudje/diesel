@@ -93,12 +93,11 @@ class DieselShootInteraction: ProjectileInteraction() {
             uuid: UUID? = null,
             onShip: Boolean? = null
         ) {
-            val sim = buffer.getResource(AirSimulator.TYPE)
             repeat(type.projectileCount) {
                 val yaw = (atan2(-direction.x, -direction.z) + (Random.nextDouble() - 0.5) * Math.toRadians(type.spreadAmount)).toFloat()
                 val pitch = (asin(direction.y) + (Random.nextDouble() - 0.5) * Math.toRadians(type.spreadAmount)).toFloat()
 
-                shootProjectile(buffer, type, owner, position, Vector3d(yaw, pitch), offset, if (it == 0) uuid else null, onShip ?: sim.flying)
+                shootProjectile(buffer, type, owner, position, Vector3d(yaw, pitch), offset, if (it == 0) uuid else null, onShip)
             }
         }
 
@@ -110,7 +109,7 @@ class DieselShootInteraction: ProjectileInteraction() {
             direction: Vector3d,
             offset: Vector3d,
             uuid: UUID?,
-            onShip: Boolean
+            onShip: Boolean?
         ): Ref<EntityStore?> {
             val sim = commandBuffer.getResource(AirSimulator.TYPE)
             val holder = EntityStore.REGISTRY.newHolder()
@@ -132,11 +131,8 @@ class DieselShootInteraction: ProjectileInteraction() {
             holder.addComponent(TransformComponent.getComponentType(), TransformComponent(newPosition, rotation))
             holder.addComponent(SimulatedTransformComponent.TYPE, SimulatedTransformComponent().apply {
                 setWithWorldPosition(sim, newPosition)
-                if (onShip)
-                    setWithWorldVelocity(sim, direction.clone().scale(type.bulletSpeed))
-                else
-                    velocity.assign(direction.clone().scale(type.bulletSpeed))
-                this.rotation.assign(rotation)
+                setWithWorldVelocity(sim, direction.clone().scale(type.bulletSpeed), onShip ?: sim.flying)
+                setWithWorldRotation(sim, rotation)
             })
             holder.addComponent(DieselProjectileComponent.TYPE, DieselProjectileComponent().apply {
                 this.type = type.id

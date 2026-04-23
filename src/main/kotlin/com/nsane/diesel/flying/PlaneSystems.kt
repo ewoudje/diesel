@@ -78,7 +78,7 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
 
         if (dot > 0.7 && plane.timeSinceLastBullet > FIRE_SPEED) {
             plane.timeSinceLastBullet = 0.0f
-            val pos = simulatedPos.position.clone().add(0.0, 0.3, 0.0)
+            val pos = simulatedPos.position.clone().add(0.0, 0.4, 0.0)
             fire(
                 buffer,
                 archTypes.getReferenceTo(idx),

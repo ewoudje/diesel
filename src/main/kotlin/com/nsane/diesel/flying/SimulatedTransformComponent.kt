@@ -28,13 +28,15 @@ class SimulatedTransformComponent : Component<EntityStore?> {
             .rotateX(sim.shipRotation.x)
             .add(sim.shipPosition))
 
-    fun setWithWorldVelocity(sim: AirSimulator, vector: Vector3d) =
+    fun setWithWorldVelocity(sim: AirSimulator, vector: Vector3d, onShip: Boolean) =
         velocity.assign(vector
             .rotateZ(sim.shipRotation.z)
             .rotateY(sim.shipRotation.y)
             .rotateX(sim.shipRotation.x)
-            .add(sim.shipVelocity))
+            .let { if (onShip) it.add(sim.shipVelocity) else it })
 
+    fun setWithWorldRotation(sim: AirSimulator, vector: Vector3f) =
+        rotation.assign(vector.x + sim.shipRotation.x, vector.y + sim.shipRotation.y, vector.z + sim.shipRotation.z)
 
     companion object {
         val CODEC = buildCodec(::SimulatedTransformComponent) {
