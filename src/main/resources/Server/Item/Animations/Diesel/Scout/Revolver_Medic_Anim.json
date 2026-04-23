@@ -1,0 +1,37 @@
+{
+  "Parent": "Handgun",
+  "Animations": {
+    "DodgeForward": {
+      "ThirdPerson": "Characters/Diesel/Animations/Dodge/Dodge_Forward.blockyanim",
+      "Speed": 1,
+      "BlendingDuration": 0.1,
+      "Looping": false,
+      "KeepPreviousFirstPersonAnimation": true,
+      "FirstPerson": "Characters/Diesel/Animations/Dodge/Dodge_Forward.blockyanim"
+    },
+    "DodgeBackward": {
+      "ThirdPerson": "Characters/Diesel/Animations/Dodge/Dodge_Backward.blockyanim",
+      "Speed": 1,
+      "BlendingDuration": 0.1,
+      "KeepPreviousFirstPersonAnimation": true,
+      "Looping": false,
+      "FirstPerson": "Characters/Animations/Items/Dual_Handed/Daggers/Dash/Dash_Backward_FPS.blockyanim"
+    },
+    "DodgeLeft": {
+      "ThirdPerson": "Characters/Diesel/Animations/Dodge/Dodge_Left.blockyanim",
+      "Speed": 1,
+      "BlendingDuration": 0.1,
+      "KeepPreviousFirstPersonAnimation": true,
+      "Looping": false,
+      "FirstPerson": "Characters/Diesel/Animations/Dodge/Dodge_Left.blockyanim"
+    },
+    "DodgeRight": {
+      "ThirdPerson": "Characters/Diesel/Animations/Dodge/Dodge_Right.blockyanim",
+      "Speed": 1,
+      "BlendingDuration": 0.1,
+      "KeepPreviousFirstPersonAnimation": true,
+      "Looping": false,
+      "FirstPerson": "Characters/Diesel/Animations/Dodge/Dodge_Right.blockyanim"
+    }
+  }
+}

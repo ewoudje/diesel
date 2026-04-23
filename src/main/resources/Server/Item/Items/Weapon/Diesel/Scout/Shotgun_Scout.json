@@ -162,23 +162,17 @@
                     }
                   ],
                   "WorldSoundEventId": "SFX_Staff_Flame_Fireball_Launch"
+                },
+                "Next": {
+                  "Type": "ChangeStat",
+                  "StatModifiers": {
+                    "Health": 15
+                  }
                 }
               }
             }
           },
           "Failed": "Shotgun_Scout_Reload"
-        },
-        {
-          "Type": "StatsCondition",
-          "Costs": {
-            "Shotgun_Scout_Ammo": 1
-          },
-          "Next": {
-            "Type": "ChangeStat",
-            "StatModifiers": {
-              "Health": 10
-            }
-          }
         }
       ]
     },
