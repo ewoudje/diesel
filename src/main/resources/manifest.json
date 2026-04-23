@@ -16,11 +16,15 @@
         },
         {
             "Name": "ComicalSomber",
-            "Email": "https://github.com/ComicalSomber"
+            "Url": "https://github.com/ComicalSomber"
         },
         {
-            "Name": "octofoss",
-            "Email": "https://metaphorical.monster/octofoss/"
+            "Name": "Noisyrejects",
+            "Url": "https://sola.nekoweb.org/"
+        },
+        {
+            "Name": "Nahu Pyrope",
+            "Url": "https://www.youtube.com/nahupyrope"
         }
     ],
     "DisabledByDefault": false,
