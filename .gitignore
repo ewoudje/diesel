@@ -49,6 +49,9 @@ devserver
 gradle.properties
 
 ##### VUE PROJECT #####
+#temp
+/src/vue/*
+
 # Logs
 /src/vuelogs
 /src/vue*.log
