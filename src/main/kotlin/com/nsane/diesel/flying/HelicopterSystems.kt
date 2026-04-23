@@ -3,6 +3,7 @@ package com.nsane.diesel.flying
 import com.hypixel.hytale.component.AddReason
 import com.hypixel.hytale.component.ArchetypeChunk
 import com.hypixel.hytale.component.CommandBuffer
+import com.hypixel.hytale.component.ComponentAccessor
 import com.hypixel.hytale.component.Holder
 import com.hypixel.hytale.component.Ref
 import com.hypixel.hytale.component.RemoveReason
@@ -16,11 +17,16 @@ import com.hypixel.hytale.server.core.asset.type.model.config.Model
 import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset
 import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent
 import com.hypixel.hytale.server.core.entity.UUIDComponent
+import com.hypixel.hytale.server.core.entity.movement.MovementStatesComponent
 import com.hypixel.hytale.server.core.modules.entity.component.AudioComponent
 import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent
 import com.hypixel.hytale.server.core.modules.entity.component.PersistentModel
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent
+import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent
+import com.hypixel.hytale.server.core.modules.entity.damage.DeferredCorpseRemoval
 import com.hypixel.hytale.server.core.modules.entity.tracker.NetworkId
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap
+import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes
 import com.hypixel.hytale.server.core.modules.physics.util.PhysicsMath
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselPlugin
@@ -54,12 +60,15 @@ object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
         val heli = archTypes.getComponent(idx, HelicopterComponent.TYPE)!!
         val simulatedPos = archTypes.getComponent(idx, SimulatedTransformComponent.TYPE)!!
 
-        if (heli.health <= 0) {
+        if (archTypes.archetype.contains(DeathComponent.getComponentType())) {
             if (heli.flyingAway >= 0) {
                 crashingDown(buffer, archTypes.getReferenceTo(idx))
                 heli.flyingAway = -1.0f
                 sim.helisKilled++
             }
+
+            simulatedPos.velocity.y = 20.0
+            simulatedPos.omega.y = 6.0f
             return
         }
 
@@ -115,8 +124,7 @@ object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
 
     fun crashingDown(buffer: CommandBuffer<EntityStore?>, ref: Ref<EntityStore?>) {
         val modelAsset = ModelAsset.getAssetMap().getAsset("CrashingHelicopter") ?: throw NullPointerException("CrashingHelicopter asset not found")
-        val model = Model.createScaledModel(modelAsset, 1.0f)
-        buffer.replaceComponent(ref, PersistentModel.getComponentType(), PersistentModel(model.toReference()))
+        val model = Model.createScaledModel(modelAsset, 4.0f)
         buffer.replaceComponent(ref, ModelComponent.getComponentType(), ModelComponent(model))
 
         //TODO explosion
@@ -127,17 +135,22 @@ object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
         //DieselShootInteraction.shootProjectiles(commands, direction.clone().scale(2.0).add(position), direction, Vector3d(), type, null)
     }
 
-    fun buildHelicopter(sim: AirSimulator): Holder<EntityStore?> {
+    fun buildHelicopter(sim: AirSimulator, accessor: ComponentAccessor<EntityStore?>): Holder<EntityStore?> {
         val direction = Vector3d(
             (Random.nextDouble() * 150 * 2) - 150,
             0.0,
             150 - (Random.nextDouble() * 20)
         ).rotateX(sim.shipRotation.x).rotateY(sim.shipRotation.y).rotateZ(sim.shipRotation.z)
 
-        val sounds = IntArrayList()
-        sounds.add(SoundEvent.getAssetMap().getIndex("GyroMotor"))
         val modelAsset = ModelAsset.getAssetMap().getAsset("Helicopter") ?: throw NullPointerException("Helicopter asset not found")
         val model = Model.createScaledModel(modelAsset, 4.0f)
+        val sounds = IntArrayList()
+        val stats = EntityStatMap()
+
+        stats.update()
+        stats.setStatValue(DefaultEntityStatTypes.getHealth(), 100f)
+        sounds.add(SoundEvent.getAssetMap().getIndex("GyroMotor"))
+
         val holder = EntityStore.REGISTRY.newHolder()
         holder.addComponent(AudioComponent.getComponentType(), AudioComponent(sounds))
         holder.addComponent(TransformComponent.getComponentType(), TransformComponent().apply { position.assign(direction) })
@@ -147,9 +160,13 @@ object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
             position.assign(sim.shipPosition + direction)
             rotation.assign(sim.shipRotation.clone())
         })
+        holder.addComponent(DeferredCorpseRemoval.getComponentType(), DeferredCorpseRemoval(20.0, null))
+        holder.addComponent(NetworkId.getComponentType(), NetworkId(accessor.externalData.takeNextNetworkId()))
+        holder.addComponent(EntityStatMap.getComponentType(), stats)
         holder.ensureComponent(EntityStore.REGISTRY.nonSerializedComponentType)
         holder.ensureComponent(UUIDComponent.getComponentType())
         holder.ensureComponent(HelicopterComponent.TYPE)
+        holder.ensureComponent(MovementStatesComponent.getComponentType())
         return holder
     }
 

@@ -1,12 +1,6 @@
 package com.nsane.diesel.flying
 
-import com.hypixel.hytale.component.AddReason
-import com.hypixel.hytale.component.ArchetypeChunk
-import com.hypixel.hytale.component.CommandBuffer
-import com.hypixel.hytale.component.Holder
-import com.hypixel.hytale.component.Ref
-import com.hypixel.hytale.component.RemoveReason
-import com.hypixel.hytale.component.Store
+import com.hypixel.hytale.component.*
 import com.hypixel.hytale.component.query.Query
 import com.hypixel.hytale.component.system.RefSystem
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem
@@ -16,11 +10,13 @@ import com.hypixel.hytale.server.core.asset.type.model.config.Model
 import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset
 import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent
 import com.hypixel.hytale.server.core.entity.UUIDComponent
-import com.hypixel.hytale.server.core.modules.entity.component.AudioComponent
-import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent
-import com.hypixel.hytale.server.core.modules.entity.component.PersistentModel
-import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent
+import com.hypixel.hytale.server.core.entity.movement.MovementStatesComponent
+import com.hypixel.hytale.server.core.modules.entity.component.*
+import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent
+import com.hypixel.hytale.server.core.modules.entity.damage.DeferredCorpseRemoval
 import com.hypixel.hytale.server.core.modules.entity.tracker.NetworkId
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap
+import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes
 import com.hypixel.hytale.server.core.modules.physics.util.PhysicsMath
 import com.hypixel.hytale.server.core.universe.world.SoundUtil
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
@@ -53,21 +49,23 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
         val plane = archTypes.getComponent(idx, PlaneComponent.TYPE)!!
         val simulatedPos = archTypes.getComponent(idx, SimulatedTransformComponent.TYPE)!!
 
-        if (plane.health <= 0) {
+        plane.timeSinceLastBullet += dt
+
+        PhysicsMath.vectorFromAngles(simulatedPos.rotation.y, simulatedPos.rotation.x, simulatedPos.velocity)
+        simulatedPos.velocity.scale(SPEED)
+
+        if (archTypes.archetype.contains(DeathComponent.getComponentType())) {
             simulatedPos.omega.x = -0.4f
             simulatedPos.omega.y = 0f
+
             if (plane.flyingAway >= 0) {
                 crashingDown(buffer, archTypes.getReferenceTo(idx))
                 plane.flyingAway = -1.0f
                 sim.planesKilled++
             }
+
             return
         }
-
-        plane.timeSinceLastBullet += dt
-
-        PhysicsMath.vectorFromAngles(simulatedPos.rotation.y, simulatedPos.rotation.x, simulatedPos.velocity)
-        simulatedPos.velocity.scale(SPEED)
 
         val diff = sim.shipPosition - simulatedPos.position + plane.target
         val distance = diff.length()
@@ -114,7 +112,6 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
     fun crashingDown(buffer: CommandBuffer<EntityStore?>, ref: Ref<EntityStore?>) {
         val modelAsset = ModelAsset.getAssetMap().getAsset("CrashingPlane") ?: throw NullPointerException("Plane asset not found")
         val model = Model.createScaledModel(modelAsset, 5.0f)
-        buffer.replaceComponent(ref, PersistentModel.getComponentType(), PersistentModel(model.toReference()))
         buffer.replaceComponent(ref, ModelComponent.getComponentType(), ModelComponent(model))
 
         //TODO explosion
@@ -135,7 +132,7 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
 
     override fun getQuery(): Query<EntityStore?>? = PlaneComponent.TYPE
 
-    fun buildPlane(sim: AirSimulator): Holder<EntityStore?> {
+    fun buildPlane(sim: AirSimulator, accessor: ComponentAccessor<EntityStore?>): Holder<EntityStore?> {
         val direction = Vector3d(
             (Random.nextDouble() * MAX_DISTANCE * 2) - MAX_DISTANCE,
             0.0,
@@ -143,22 +140,35 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
         ).rotateX(sim.shipRotation.x).rotateY(sim.shipRotation.y).rotateZ(sim.shipRotation.z)
 
         val modelAsset = ModelAsset.getAssetMap().getAsset("Plane") ?: throw NullPointerException("Plane asset not found")
+        val model = Model.createScaledModel(modelAsset, 5.0f)
         val sounds = IntArrayList()
+        val stats = EntityStatMap()
         sounds.add(SoundEvent.getAssetMap().getIndex("PlaneDive"))
         sounds.add(SoundEvent.getAssetMap().getIndex("PlaneMotor"))
-        val model = Model.createScaledModel(modelAsset, 5.0f)
+
+        stats.update()
+        stats.setStatValue(DefaultEntityStatTypes.getHealth(), 100f)
+
+
         val holder = EntityStore.REGISTRY.newHolder()
         holder.addComponent(AudioComponent.getComponentType(), AudioComponent(sounds))
         holder.addComponent(TransformComponent.getComponentType(), TransformComponent().apply { position.assign(direction) })
         holder.addComponent(PersistentModel.getComponentType(), PersistentModel(model.toReference()))
+        holder.addComponent(BoundingBox.getComponentType(), BoundingBox().apply {
+            boundingBox = model.boundingBox!!
+        })
         holder.addComponent(ModelComponent.getComponentType(), ModelComponent(model))
         holder.addComponent(SimulatedTransformComponent.TYPE, SimulatedTransformComponent().apply {
             position.assign(sim.shipPosition + direction)
             rotation.assign(sim.shipRotation.clone())
         })
+        holder.addComponent(NetworkId.getComponentType(), NetworkId(accessor.externalData.takeNextNetworkId()))
+        holder.addComponent(EntityStatMap.getComponentType(), stats)
+        holder.addComponent(DeferredCorpseRemoval.getComponentType(), DeferredCorpseRemoval(20.0, null))
         holder.ensureComponent(EntityStore.REGISTRY.nonSerializedComponentType)
         holder.ensureComponent(UUIDComponent.getComponentType())
         holder.ensureComponent(PlaneComponent.TYPE)
+        holder.ensureComponent(MovementStatesComponent.getComponentType())
         return holder
     }
 }
