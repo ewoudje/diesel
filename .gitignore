@@ -47,3 +47,6 @@ devserver
 /myassets/
 /.idea/
 gradle.properties
+
+#temp
+vue
