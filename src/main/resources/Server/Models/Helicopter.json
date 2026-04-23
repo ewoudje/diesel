@@ -1,0 +1,28 @@
+{
+  "Model": "NPC/Diesel/Models/Gyrocopter.blockymodel",
+  "Texture": "NPC/Diesel/Models/Gyrocopter.png",
+  "HitBox": {
+    "Max": {
+      "X": 0.5,
+      "Y": 0.5,
+      "Z": 0.5
+    },
+    "Min": {
+      "X": -0.5,
+      "Y": 0,
+      "Z": -0.5
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Characters/Diesel/Animations/Propeller_Spin_Heli.blockyanim",
+          "Looping": true,
+          "BlendingDuration": 0.6,
+          "Weight": 0.3
+        }
+      ]
+    }
+  }
+}

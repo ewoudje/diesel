@@ -8,10 +8,10 @@
       "FixedRotation": true,
       "RotationOffset": {
         "Pitch": 270,
-        "Yaw": 180
+        "Yaw": 0
       }
     }
   ],
   "CullDistance": 30.0,
-  "IsImportant": false
+  "IsImportant": true
 }

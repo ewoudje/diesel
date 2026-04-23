@@ -1,0 +1,51 @@
+{
+  "Model": "NPC/Diesel/Models/Biplane.blockymodel",
+  "Texture": "NPC/Diesel/Models/BiplaneCrashing.png",
+  "HitBox": {
+    "Max": {
+      "X": 0.5,
+      "Y": 0.5,
+      "Z": 1
+    },
+    "Min": {
+      "X": -0.5,
+      "Y": 0,
+      "Z": -0.5
+    }
+  },
+  "Icon": "Icons/ModelsGenerated/Cloud.png",
+  "IconProperties": {
+    "Scale": 0.25,
+    "Rotation": [
+      58,
+      40,
+      87
+    ],
+    "Translation": [
+      24,
+      -79
+    ]
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Characters/Diesel/Animations/Propeller_Spin.blockyanim",
+          "Looping": true,
+          "BlendingDuration": 0.6,
+          "Weight": 0.3
+        }
+      ]
+    }
+  },
+  "Particles": [
+    {
+      "SystemId": "PlaneFire",
+      "Scale": 0.2
+    },
+    {
+      "SystemId": "PlaneSmoke",
+      "Scale": 1.0
+    }
+  ]
+}

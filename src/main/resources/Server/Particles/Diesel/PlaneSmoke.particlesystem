@@ -1,0 +1,8 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "PlaneSmoke"
+    }
+  ],
+  "CullDistance": 200
+}

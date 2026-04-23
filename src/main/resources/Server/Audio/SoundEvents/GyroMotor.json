@@ -1,0 +1,17 @@
+{
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/Diesel/Enviroment/PlaneBackground.ogg"
+      ],
+      "Volume": 10,
+      "Looping": true
+    }
+  ],
+  "MaxInstance": 20,
+  "Volume": 10,
+  "Parent": "SFX_Attn_Loud",
+  "StartAttenuationDistance": 100,
+  "MaxDistance": 170,
+  "SpatialBlend": 0.9
+}

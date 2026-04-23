@@ -1,41 +1,7 @@
 {
   "Stars": "Sky/Stars.png",
-  "Tags": {
-  },
-  "Moons": [
-  ],
-  "Clouds": [
-    {
-      "Texture": "Sky/Clouds/Light_Base.png",
-      "Colors": [
-        {
-          "Hour": 17,
-          "Color": "#ffffffe6"
-        }
-      ],
-      "Speeds": [
-        {
-          "Hour": 0,
-          "Value": 0.7
-        }
-      ]
-    },
-    {
-      "Texture": "Sky/Clouds/Light_Highlights.png",
-      "Colors": [
-        {
-          "Hour": 17,
-          "Color": "#ffffffe6"
-        }
-      ],
-      "Speeds": [
-        {
-          "Hour": 0,
-          "Value": 0.7
-        }
-      ]
-    }
-  ],
+  "Tags": {},
+  "Moons": [],
   "SkyTopColors": [
     {
       "Hour": 17,
@@ -329,10 +295,13 @@
     }
   ],
   "FogDistance": [
-    -96,
-    1024
+    -30,
+    150
   ],
   "Particle": {
     "SystemId": "OurWind"
+  },
+  "FogOptions": {
+    "EffectiveViewDistanceMultiplier": 0.3
   }
 }

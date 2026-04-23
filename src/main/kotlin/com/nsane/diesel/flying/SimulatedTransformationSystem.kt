@@ -10,6 +10,7 @@ import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import io.github.hytalekt.kytale.ext.minus
+import io.github.hytalekt.kytale.ext.plus
 import io.github.hytalekt.kytale.ext.plusAssign
 import java.rmi.UnexpectedException
 
@@ -21,7 +22,7 @@ object SimulatedTransformationSystem : EntityTickingSystem<EntityStore?>() {
         getWorldPosition(store.getResource(AirSimulator.TYPE), simulated)
 
     fun getWorldVelocity(sim: AirSimulator, simulated: SimulatedTransformComponent) =
-        simulated.velocity.clone()
+        (simulated.velocity - sim.shipVelocity)
             .rotateX(-sim.shipRotation.x)
             .rotateY(-sim.shipRotation.y)
             .rotateZ(-sim.shipRotation.z)
@@ -31,6 +32,15 @@ object SimulatedTransformationSystem : EntityTickingSystem<EntityStore?>() {
             .rotateX(-sim.shipRotation.x)
             .rotateY(-sim.shipRotation.y)
             .rotateZ(-sim.shipRotation.z)
+            .add(sim.worldInShipPosition)
+
+    fun getWorldPosition(sim: AirSimulator, pos: Vector3d): Vector3d =
+        (pos - sim.shipPosition)
+            .rotateX(-sim.shipRotation.x)
+            .rotateY(-sim.shipRotation.y)
+            .rotateZ(-sim.shipRotation.z)
+            .add(sim.worldInShipPosition)
+
 
     override fun tick(
         dt: Float,
@@ -51,6 +61,5 @@ object SimulatedTransformationSystem : EntityTickingSystem<EntityStore?>() {
         simulatedPos.position += simulatedPos.velocity.clone().scale(dt.toDouble())
         simulatedPos.rotation += simulatedPos.omega.clone().scale(dt)
     }
-
     override fun getQuery(): Query<EntityStore?>? = Query.and(SimulatedTransformComponent.TYPE, TransformComponent.getComponentType())
 }

@@ -69,6 +69,8 @@
   ],
   "MaxInstance": 30,
   "Volume": 1.0,
+  "StartAttenuationDistance": 30,
+  "MaxDistance": 170,
   "PreventSoundInterruption": true,
   "Parent": "SFX_Attn_Loud"
 }

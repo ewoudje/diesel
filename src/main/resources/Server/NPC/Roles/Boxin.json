@@ -1,0 +1,33 @@
+{
+  "Type": "Variant",
+  "Reference": "Template_Intelligent",
+  "Parameters": {
+    "WanderRadius": {
+      "Value": 5,
+      "Description": "General wander radius for idle wander and wander on the break."
+    }
+  },
+  "Modify": {
+    "Appearance": "Boxin",
+    "MaxHealth": 36,
+    "MaxSpeed": 17,
+    "ChaseRelativeSpeed": 1,
+    "HearingRange": 40,
+    "ViewRange": 15,
+    "ViewSector": 270,
+    "AlertedRange": 30,
+    "Weapons": [],
+    "AlertedTime": [
+      0.1,
+      0.4
+    ],
+    "WakingPeriod": [
+      0,
+      24
+    ],
+    "AttackDistance": 2.5,
+    "BreathesInWater": true,
+    "NameTranslationKey": "Boxin",
+    "Attack": "Root_Suicide"
+  }
+}

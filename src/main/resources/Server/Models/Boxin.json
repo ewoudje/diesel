@@ -1,0 +1,60 @@
+{
+  "Parent": "Snail_Magma",
+  "Model": "NPC/Diesel/Models/Character/Boxin.blockymodel",
+  "Texture": "NPC/Diesel/Models/Character/Boxin.png",
+  "EyeHeight": 0.6,
+  "CrouchOffset": -0.4,
+  "HitBox": {
+    "Max": {
+      "X": 0.3,
+      "Y": 0.7,
+      "Z": 0.3
+    },
+    "Min": {
+      "X": -0.3,
+      "Y": 0,
+      "Z": -0.3
+    }
+  },
+  "AnimationSets": {
+    "Walk": {
+      "Animations": [
+        {
+          "Animation": "Characters/Diesel/Animations/Character/BoxinWalk.blockyanim",
+          "Speed": 1.1
+        }
+      ]
+    },
+    "Run": {
+      "Animations": [
+        {
+          "Animation": "Characters/Diesel/Animations/Character/BoxinWalk.blockyanim",
+          "Speed": 3.5
+        }
+      ]
+    },
+    "Spawn": {
+      "Animations": [
+        {
+          "Animation": "Characters/Diesel/Animations/Empty.blockyanim"
+        }
+      ]
+    },
+    "Death": {
+      "Animations": [
+        {
+          "Animation": "Characters/Diesel/Animations/Empty.blockyanim"
+        }
+      ]
+    }
+  },
+  "Particles": [
+    {
+      "SystemId": "Fuse_Bomb",
+      "PositionOffset": {
+        "Y": 0.92,
+        "Z": -0.42
+      }
+    }
+  ]
+}

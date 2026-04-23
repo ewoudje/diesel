@@ -3,10 +3,12 @@ package com.nsane.diesel.flying
 import com.hypixel.hytale.component.AddReason
 import com.hypixel.hytale.component.Ref
 import com.hypixel.hytale.component.Store
+import com.hypixel.hytale.protocol.AnimationSlot
 import com.hypixel.hytale.server.core.asset.type.model.config.Model
 import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset
 import com.hypixel.hytale.server.core.command.system.CommandContext
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand
+import com.hypixel.hytale.server.core.entity.AnimationUtils
 import com.hypixel.hytale.server.core.entity.UUIDComponent
 import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent
 import com.hypixel.hytale.server.core.modules.entity.component.PersistentModel
@@ -30,6 +32,8 @@ class CloudCommand: AbstractPlayerCommand("cloud", "") {
         world: World
     ) {
         val sim = store.getResource(AirSimulator.TYPE)
+        store.addEntity(PlaneTickSystem.buildPlane(sim), AddReason.SPAWN)
+        store.addEntity(HelicopterTickSystem.buildHelicopter(sim), AddReason.SPAWN)
         repeat(30) {
             store.addEntity(CloudTickSystem.buildCloud(sim), AddReason.SPAWN)
         }

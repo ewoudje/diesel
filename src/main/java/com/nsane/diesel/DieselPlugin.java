@@ -44,6 +44,12 @@ import com.nsane.diesel.flying.CloudComponent;
 import com.nsane.diesel.flying.CloudRefSystem;
 import com.nsane.diesel.flying.CloudTickSystem;
 import com.nsane.diesel.flying.FlyingCommand;
+import com.nsane.diesel.flying.HelicopterComponent;
+import com.nsane.diesel.flying.HelicopterRefSystem;
+import com.nsane.diesel.flying.HelicopterTickSystem;
+import com.nsane.diesel.flying.PlaneComponent;
+import com.nsane.diesel.flying.PlaneRefSystem;
+import com.nsane.diesel.flying.PlaneTickSystem;
 import com.nsane.diesel.flying.SimulatedTransformationSystem;
 import com.nsane.diesel.flying.SimulatedTransformComponent;
 import com.nsane.diesel.flying.SimulationSystem;
@@ -114,6 +120,8 @@ public class DieselPlugin extends JavaPlugin {
         registerEntityComponent(DieselProjectileComponent.class, "DieselProjectileComponent", DieselProjectileComponent.Companion.getCODEC());
         registerEntityComponent(SimulatedTransformComponent.class, "SimulatedInAir", SimulatedTransformComponent.Companion.getCODEC());
         registerEntityComponent(CloudComponent.class, "Cloud", CloudComponent.Companion.getCODEC());
+        registerEntityComponent(PlaneComponent.class, "Plane", PlaneComponent.Companion.getCODEC());
+        registerEntityComponent(HelicopterComponent.class, "Helicopter", HelicopterComponent.Companion.getCODEC());
         registerEntityResource(DieselPlayersResource.class, "DieselPlayersResource", DieselPlayersResource.Companion.getCODEC());
         registerEntityResource(AirSimulator.class, "AirSimulator", AirSimulator.Companion.getCODEC());
 
@@ -141,6 +149,10 @@ public class DieselPlugin extends JavaPlugin {
         getEntityStoreRegistry().registerSystem(SimulatedTransformationSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(CloudTickSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(CloudRefSystem.INSTANCE);
+        getEntityStoreRegistry().registerSystem(PlaneTickSystem.INSTANCE);
+        getEntityStoreRegistry().registerSystem(PlaneRefSystem.INSTANCE);
+        getEntityStoreRegistry().registerSystem(HelicopterTickSystem.INSTANCE);
+        getEntityStoreRegistry().registerSystem(HelicopterRefSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(SimulationSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(RisenRockTickSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(RisenRockRefSystem.INSTANCE);
