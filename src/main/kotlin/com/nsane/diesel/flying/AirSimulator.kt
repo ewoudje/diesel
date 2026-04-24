@@ -53,7 +53,15 @@ class AirSimulator: Resource<EntityStore?> {
                 (stage as WaveStage).helicopters--
     }
 
-    override fun clone(): Resource<EntityStore?>? = AirSimulator()
+    override fun clone(): Resource<EntityStore?>? = AirSimulator().also {
+        it.stage = stage
+        it.velocityModifier = velocityModifier
+        it.distanceTraveled = distanceTraveled
+        it.worldInShipPosition.assign(worldInShipPosition)
+        it.shipPosition.assign(shipPosition)
+        it.shipVelocity.assign(shipVelocity)
+        it.shipRotation.assign(shipRotation)
+    }
 
     companion object {
         val CODEC = buildCodec(::AirSimulator) {

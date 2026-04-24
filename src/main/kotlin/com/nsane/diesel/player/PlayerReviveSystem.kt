@@ -22,10 +22,12 @@ object PlayerReviveSystem: RefChangeSystem<EntityStore?, DeathComponent>() {
         store: Store<EntityStore?>,
         buffer: CommandBuffer<EntityStore?>
     ) {
+        val players = buffer.getResource( DieselResource.TYPE)
         val interactions = Interactions()
         interactions.setInteractionId(InteractionType.Use, "Revive")
         buffer.addComponent(ref, Interactable.getComponentType(), Interactable.INSTANCE)
         buffer.addComponent(ref, Interactions.getComponentType(), interactions)
+        players.deadPlayers++
     }
 
     override fun onComponentSet(
@@ -44,8 +46,10 @@ object PlayerReviveSystem: RefChangeSystem<EntityStore?, DeathComponent>() {
         var3: Store<EntityStore?>,
         buffer: CommandBuffer<EntityStore?>
     ) {
+        val players = buffer.getResource( DieselResource.TYPE)
         buffer.removeComponent(ref, Interactable.getComponentType())
         buffer.removeComponent(ref, Interactions.getComponentType())
+        players.deadPlayers--
     }
 
     override fun getQuery(): Query<EntityStore?>? = Query.and(

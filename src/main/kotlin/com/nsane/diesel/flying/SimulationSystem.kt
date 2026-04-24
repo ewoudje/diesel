@@ -35,7 +35,6 @@ object SimulationSystem : TickingSystem<EntityStore?>() {
             buffer: CommandBuffer<EntityStore?>,
             event: ChangeLevelEvent
         ) {
-
             if (event.newLevel is Stage) {
                 val sim = store.getResource(AirSimulator.TYPE)
                 val oldStage = event.oldLevel as? Stage

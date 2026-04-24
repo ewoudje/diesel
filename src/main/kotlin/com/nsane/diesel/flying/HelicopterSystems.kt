@@ -196,7 +196,7 @@ object HelicopterRefSystem : RefSystem<EntityStore?>() {
         val sim = buffer.getResource(AirSimulator.TYPE)
         if (reason == RemoveReason.UNLOAD && sim.flying) {
             DieselPlugin.LOGGER.atWarning().log("Despawned a helicopter??? Spawning new one")
-            store.addEntity(buildHelicopter(sim, store), AddReason.SPAWN)
+            buffer.addEntity(buildHelicopter(sim, store), AddReason.SPAWN)
         }
     }
 
