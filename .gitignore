@@ -48,5 +48,6 @@ devserver
 /.idea/
 gradle.properties
 
-#temp
+##### VUE PROJECT #####
+/src/vue/*
 vue

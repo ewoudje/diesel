@@ -50,7 +50,7 @@
     {
     "Type": "ChangeStat",
     "StatModifiers": {
-      "Health" : 5
+      "Health" : 15
     }
     }
   ]
