@@ -53,7 +53,7 @@ class BossStage : Stage() {
     }
 
     private fun spawnBoss(store: Store<EntityStore?>) {
-        val modelAsset = ModelAsset.getAssetMap().getAsset("Fred") ?: throw NullPointerException("Skyboss asset not found")
+        val modelAsset = ModelAsset.getAssetMap().getAsset("Mech") ?: throw NullPointerException("Skyboss asset not found")
         val model = Model.createScaledModel(modelAsset, 10f)
         val holder = EntityStore.REGISTRY.newHolder()
 

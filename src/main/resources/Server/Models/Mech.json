@@ -1,0 +1,16 @@
+{
+  "Model": "NPC/Diesel/Models/Mech_Temporary.blockymodel",
+  "Texture": "NPC/Diesel/Models/Mech_Temporary.png",
+  "HitBox": {
+    "Max": {
+      "X": 0.2,
+      "Y": 1.4,
+      "Z": 0.2
+    },
+    "Min": {
+      "X": -0.2,
+      "Y": 0,
+      "Z": -0.2
+    }
+  }
+}
