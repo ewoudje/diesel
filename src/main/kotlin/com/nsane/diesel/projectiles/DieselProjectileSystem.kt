@@ -4,18 +4,19 @@ import com.hypixel.hytale.assetstore.map.IndexedLookupTableAssetMap
 import com.hypixel.hytale.component.*
 import com.hypixel.hytale.component.query.Query
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem
-import com.hypixel.hytale.math.util.MathUtil
-import com.hypixel.hytale.math.util.TrigMathUtil
+import com.hypixel.hytale.math.shape.Box
+import com.hypixel.hytale.math.vector.Vector2d
 import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.math.vector.Vector4d
-import com.hypixel.hytale.protocol.InteractionState
 import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect
 import com.hypixel.hytale.server.core.entity.EntityUtils
-import com.hypixel.hytale.server.core.entity.InteractionContext
 import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent
+import com.hypixel.hytale.server.core.entity.entities.Player
+import com.hypixel.hytale.server.core.entity.entities.ProjectileComponent
 import com.hypixel.hytale.server.core.entity.knockback.KnockbackComponent
 import com.hypixel.hytale.server.core.inventory.InventoryComponent.Armor
 import com.hypixel.hytale.server.core.modules.collision.CharacterCollisionData
+import com.hypixel.hytale.server.core.modules.collision.CollisionMath
 import com.hypixel.hytale.server.core.modules.collision.CollisionModule
 import com.hypixel.hytale.server.core.modules.collision.CollisionResult
 import com.hypixel.hytale.server.core.modules.entity.EntityModule
@@ -25,15 +26,17 @@ import com.hypixel.hytale.server.core.modules.entity.damage.Damage
 import com.hypixel.hytale.server.core.modules.entity.damage.DamageCalculatorSystems
 import com.hypixel.hytale.server.core.modules.entity.damage.DamageCalculatorSystems.DamageSequence
 import com.hypixel.hytale.server.core.modules.entity.damage.DamageCause
-import com.hypixel.hytale.server.core.modules.entity.damage.DamageSystems
+import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent
 import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier
-import com.hypixel.hytale.server.core.modules.interaction.interaction.config.server.DamageEntityInteraction
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.server.combat.DamageCalculator
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.server.combat.DamageClass
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.server.combat.DamageEffects
 import com.hypixel.hytale.server.core.modules.physics.util.PhysicsMath
+import com.hypixel.hytale.server.core.modules.projectile.component.Projectile
 import com.hypixel.hytale.server.core.universe.world.ParticleUtil
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
+import com.nsane.diesel.flying.HelicopterComponent
+import com.nsane.diesel.flying.PlaneComponent
 import com.nsane.diesel.flying.SimulatedTransformComponent
 import com.nsane.diesel.flying.SimulatedTransformationSystem
 import it.unimi.dsi.fastutil.objects.Object2FloatMap
@@ -77,6 +80,20 @@ object DieselProjectileSystem: EntityTickingSystem<EntityStore?>() {
                 collisions,
                 commands)
 
+        for (entity in entities) {
+            if (entity == projectile.owner) continue
+            if (commands.getComponent(entity, PlaneComponent.TYPE) != null ||
+                commands.getComponent(entity, HelicopterComponent.TYPE) != null) {
+                additiveCollision(
+                    entity,
+                    pos,
+                    velocity.clone(),
+                    collisions,
+                    commands
+                )
+            }
+        }
+
         val firstChar = collisions.firstCharacterCollision
         val firstBlock = collisions.firstBlockCollision
         if (firstChar != null) {
@@ -92,6 +109,48 @@ object DieselProjectileSystem: EntityTickingSystem<EntityStore?>() {
 
 
         commands.removeEntity(ref, RemoveReason.REMOVE)
+    }
+
+    private fun additiveCollision(
+        ref: Ref<EntityStore?>,
+        pos: Vector3d,
+        v: Vector3d,
+        result: CollisionResult,
+        componentAccessor: ComponentAccessor<EntityStore?>
+    ) {
+        val coll = Vector3d()
+        val minMax = Vector2d()
+        val archetype: Archetype<EntityStore?> = componentAccessor.getArchetype(ref)
+        val isProjectile =
+            archetype.contains(Projectile.getComponentType()) || archetype.contains(ProjectileComponent.getComponentType())
+        if (!isProjectile) {
+            if (archetype.contains(DeathComponent.getComponentType())) {
+                return
+            }
+
+            val entityTransformComponent: TransformComponent? =
+                componentAccessor.getComponent<TransformComponent?>(ref, TransformComponent.getComponentType())
+            if (entityTransformComponent != null) {
+                val entityBoundingBoxComponent: BoundingBox? =
+                    componentAccessor.getComponent<BoundingBox?>(ref, BoundingBox.getComponentType())
+                if (entityBoundingBoxComponent != null) {
+                    val position = entityTransformComponent.position
+                    val boundingBox = entityBoundingBoxComponent.boundingBox
+                    if (CollisionMath.intersectVectorAABB(
+                        pos,
+                        v,
+                        position.getX(),
+                        position.getY(),
+                        position.getZ(),
+                        boundingBox,
+                        minMax
+                    )) {
+                        coll.assign(pos).addScaled(v, minMax.x)
+                        result.allocCharacterCollision().assign(coll, minMax.x, ref, false)
+                    }
+                }
+            }
+        }
     }
 
     private fun attemptEntityDamage(

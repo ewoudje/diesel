@@ -43,7 +43,7 @@
     "Death": {
       "Animations": [
         {
-          "Animation": "Characters/Diesel/Animations/Empty.blockyanim"
+          "Animation": "Characters/Diesel/Animations/Character/Explode.blockyanim"
         }
       ]
     }

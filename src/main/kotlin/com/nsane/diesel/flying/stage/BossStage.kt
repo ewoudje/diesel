@@ -23,7 +23,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.random.Random
 
-class BossStage : Stage() {
+class BossStage : Stage("BossStage") {
     val bossPosition = Vector3d(0.0, -20.0, 0.0)
     lateinit var boss: Ref<EntityStore?>
 
@@ -53,7 +53,7 @@ class BossStage : Stage() {
     }
 
     private fun spawnBoss(store: Store<EntityStore?>) {
-        val modelAsset = ModelAsset.getAssetMap().getAsset("Fred") ?: throw NullPointerException("Skyboss asset not found")
+        val modelAsset = ModelAsset.getAssetMap().getAsset("Mech") ?: throw NullPointerException("Skyboss asset not found")
         val model = Model.createScaledModel(modelAsset, 10f)
         val holder = EntityStore.REGISTRY.newHolder()
 
