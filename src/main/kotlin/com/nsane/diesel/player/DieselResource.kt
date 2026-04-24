@@ -1,0 +1,36 @@
+package com.nsane.diesel.player
+
+import com.hypixel.hytale.codec.Codec
+import com.hypixel.hytale.component.ComponentAccessor
+import com.hypixel.hytale.component.Resource
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
+import com.nsane.diesel.DieselActor
+import com.nsane.diesel.DieselPlugin
+import io.github.hytalekt.kytale.codec.buildCodec
+
+class DieselResource: Resource<EntityStore?> {
+    var deadPlayers = 0
+
+    fun broadcastMessage(accessor: ComponentAccessor<EntityStore?>, actor: DieselActor, text: String, duration: Float = 4f) {
+        val world = accessor.externalData.world
+        world.execute {
+            world.playerRefs.forEach {
+                val player = accessor.getComponent(it.reference!!, DieselPlayerComponent.TYPE)
+                player?.showMessage(actor, text, duration)
+            }
+        }
+    }
+
+    override fun clone(): Resource<EntityStore?>? = DieselResource()
+
+    companion object {
+        val CODEC = buildCodec(::DieselResource) {
+            addField("DeadPlayers", Codec.INTEGER) {
+                setter { deadPlayers = it}
+                getter { deadPlayers }
+            }
+        }
+
+        val TYPE by lazy { DieselPlugin.getResource(DieselResource::class.java) }
+    }
+}

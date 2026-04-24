@@ -5,11 +5,12 @@ import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.math.vector.Vector3f
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.flying.AirSimulator
+import com.nsane.diesel.level.Level
 import io.github.hytalekt.kytale.ext.minus
 import io.github.hytalekt.kytale.ext.plusAssign
 import io.github.hytalekt.kytale.ext.times
 
-abstract class Stage {
+abstract class Stage(name: String): Level(name) {
 
     open fun tick(store: Store<EntityStore?>, sim: AirSimulator, dt: Float) {
         val traveled = forward(sim, 10.0) * sim.velocityModifier

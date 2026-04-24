@@ -1,0 +1,14 @@
+{
+  "name": "myMod",
+  "version": "1.0.0",
+  "description": "Vuetale starter UI library",
+  "components": [
+    "Example",
+    "Example.vue?vue&type=script&setup=true&lang"
+  ],
+  "pages": [
+    "TestPage",
+    "TestPage.vue?vue&type=script&setup=true&lang"
+  ],
+  "huds": []
+}
