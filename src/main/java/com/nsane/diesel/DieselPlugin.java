@@ -171,6 +171,7 @@ public class DieselPlugin extends JavaPlugin {
         getEntityStoreRegistry().registerSystem(RisenRockTickSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(RisenRockRefSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(DieselProjectileSystem.INSTANCE);
+        getEntityStoreRegistry().registerSystem(DieselPlayerSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(LevelSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(LevelSystem.RemoveLevelEntities.INSTANCE);
         getEntityStoreRegistry().registerSystem(LevelSystem.TrackLevelEntities.INSTANCE);

@@ -50,9 +50,10 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
         store: Store<EntityStore?>,
         commands: CommandBuffer<EntityStore?>
     ) {
-        TODO("Not yet implemented")
+        val player = chunk.getComponent(idx, DieselPlayerComponent.TYPE)!!
+        player.hud?.onTick(commands, chunk.getReferenceTo(idx))
     }
 
-    override fun getQuery(): Query<EntityStore?>? = Player.getComponentType()
+    override fun getQuery(): Query<EntityStore?>? = DieselPlayerComponent.TYPE
 
 }
