@@ -1,8 +1,8 @@
 import { defineComponent as _, ref as n, openBlock as u, createElementBlock as g, Fragment as p, createElementVNode as t, toDisplayString as a, renderList as b } from "vue";
 import "vt:@core/components/Common";
 import "vt:@core/components/core";
-import { useData as k } from "vt:@core/composables/useData";
-const f = { anchor: { Left: 0, Top: 0 } }, v = ["background"], G = ["background"], I = ["background"], T = { anchor: { Left: -20, Bottom: -50 } }, y = { anchor: { Left: -30, Bottom: 0, Width: 1e3, Height: 440 } }, H = ["background"], x = ["background"], W = ["el-style"], L = { anchor: { Top: 0, Right: -35 } }, R = ["background"], B = ["el-style"], F = { anchor: { Right: 0 } }, E = ["background"], C = ["background"], N = ["background"], P = ["background"], S = { anchor: { Right: -20, Bottom: -52 } }, U = ["background"], A = ["background"], D = ["background"], M = { anchor: { Top: 10, Left: 40 } }, V = ["el-style"], z = ["el-style"], i = /* @__PURE__ */ _({
+import { useData as f } from "vt:@core/composables/useData";
+const k = { anchor: { Left: 0, Top: 0 } }, v = ["background"], G = ["background"], I = ["background"], T = { anchor: { Left: -20, Bottom: -50 } }, y = { anchor: { Left: -30, Bottom: 0, Width: 1e3, Height: 440 } }, H = ["background"], x = ["background"], W = ["el-style"], L = { anchor: { Top: 0, Right: -35 } }, R = ["background"], B = ["el-style"], F = { anchor: { Right: 0 } }, E = ["background"], C = ["background"], N = ["background"], P = ["background"], S = { anchor: { Right: -20, Bottom: -52 } }, U = ["background"], A = ["background"], D = ["background"], M = { anchor: { Top: 10, Left: 40 } }, V = ["el-style"], z = ["el-style"], i = /* @__PURE__ */ _({
   __name: "DieselHud",
   setup(h) {
     console.log("[DIESELGAME] INIT VUE HUD");
@@ -19,11 +19,11 @@ const f = { anchor: { Left: 0, Top: 0 } }, v = ["background"], G = ["background"
     const d = {
       ammo: 6,
       maxAmmo: 120
-    }, s = n({
+    }, c = n({
       text: "breach the palais"
     });
     n("");
-    const c = n([
+    const s = n([
       {
         name: "1",
         active: !0,
@@ -53,14 +53,14 @@ const f = { anchor: { Left: 0, Top: 0 } }, v = ["background"], G = ["background"
         color: null
       }
     ]);
-    return k("test", "default value"), setTimeout(() => {
+    return f("test", "default value"), setTimeout(() => {
     }, 500), setInterval(() => {
     }), (w, o) => (u(), g(p, null, [
       o[9] || (o[9] = t("Group", {
         anchor: { Left: -50, Bottom: -35, Top: -25, Width: 200, Height: 440 },
         background: "Img/left.png"
       }, null, -1)),
-      t("Group", f, [
+      t("Group", k, [
         o[0] || (o[0] = t("Group", { anchor: { Left: -100, Top: -90, Width: 640, Height: 500 } }, [
           t("Group", { background: "Img/top_left.png" })
         ], -1)),
@@ -127,7 +127,7 @@ const f = { anchor: { Left: 0, Top: 0 } }, v = ["background"], G = ["background"
               Wrap: !0,
               TextColor: e.value.activeTextPrimary
             }
-          }, a(s.value.text), 9, B)
+          }, a(c.value.text), 9, B)
         ], 8, R),
         o[5] || (o[5] = t("Group", {
           anchor: { Top: 0, Right: 80, Width: 700, Height: 220 },
@@ -144,7 +144,7 @@ const f = { anchor: { Left: 0, Top: 0 } }, v = ["background"], G = ["background"
           background: r.value,
           "layout-mode": "Top"
         }, [
-          (u(!0), g(p, null, b(c.value, (l) => (u(), g("Group", {
+          (u(!0), g(p, null, b(s.value, (l) => (u(), g("Group", {
             anchor: { Left: 0, Top: 22, Width: 100, Height: 100 },
             background: l.active ? "Img/button_on_overlay.png" : "Img/button_off_overlay.png",
             "mask-texture-path": "Img/masks/button.png"
@@ -170,7 +170,7 @@ const f = { anchor: { Left: 0, Top: 0 } }, v = ["background"], G = ["background"
           t("Group", {
             anchor: { Left: -20, Bottom: 62, Width: 400, Height: 130 },
             background: { Color: e.value.activeTextPrimary },
-            "mask-texture-path": "Img/masks/bottom_right_mask.png"
+            "mask-texture-path": "Img/item/knife.png"
           }, null, 8, A)
         ], 8, U),
         t("Group", {

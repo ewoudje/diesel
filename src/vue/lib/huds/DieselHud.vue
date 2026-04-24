@@ -222,7 +222,7 @@ function damageFlicker(){
 
         <!--Weapon graphic-->
         <Group :anchor="{ Right:250, Bottom:0,Width: 400, Height: 150 }" :background="contentBg">
-        <Group :anchor="{Left:-20, Bottom:62, Width: 400, Height: 130 }" :background="{Color:colors.activeTextPrimary}" :mask-texture-path="'Img/masks/bottom_right_mask.png'"></Group>
+        <Group :anchor="{Left:-20, Bottom:62, Width: 400, Height: 130 }" :background="{Color:colors.activeTextPrimary}" :mask-texture-path="'Img/item/knife.png'"></Group>
 
         </Group>
         <!--Ammo counter-->
