@@ -1,0 +1,22 @@
+{
+  "name": "diesel",
+  "version": "1.0.0",
+  "description": "Vuetale starter UI library",
+  "components": [
+    "Example",
+    "MessageBox",
+    "Example.vue?vue&type=script&setup=true&lang",
+    "MessageBox.vue?vue&type=script&setup=true&lang"
+  ],
+  "pages": [
+    "TestPage",
+    "TestPage.vue?vue&type=script&setup=true&lang"
+  ],
+  "huds": [
+    "core",
+    "diesel",
+    "DieselHud",
+    "gsap.min",
+    "DieselHud.vue?vue&type=script&setup=true&lang"
+  ]
+}

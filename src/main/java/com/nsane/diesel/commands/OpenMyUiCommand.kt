@@ -19,18 +19,17 @@ class OpenMyUiCommand : AbstractPlayerCommand("openmyui", "Vuetale! yippie!") {
         @Nonnull playerRef: PlayerRef,
         @Nonnull world: World
     ) {
-        val ui = PlayerUiManager.openPage(
+        val ui = PlayerUiManager.openHud(
             playerRef,
             ref as Ref<EntityStore>,
             store as Store<EntityStore>,
             "diesel",
-            "TestPage"
+            "DieselHud"
         )
 
         class Abc(val a: String, val b: Int)
-
-        ui.setData("test", "Hello this is a test!")
-        ui.setData("test2", Abc("abc", 123))
+        ui.setHudData("test", "Hello this is a test!")
+        //ui.setHudData("test2", Abc("abc", 123))
 
     }
 }

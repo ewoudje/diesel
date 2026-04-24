@@ -67,6 +67,17 @@ function getPageEntries() {
       return entries
     }, {} as Record<string, string>)
 }
+function getHudEntries() {
+  const hudsDir = resolve(__dirname, 'lib/huds')
+  return readdirSync(hudsDir)
+    .filter(file => file.endsWith('.vue'))
+    .reduce((entries, file) => {
+      const name = file.replace('.vue', '')
+      entries[name] = resolve(hudsDir, file)
+      return entries
+    }, {} as Record<string, string>)
+}
+
 
 function getComposableEntries() {
   const composablesDir = resolve(__dirname, 'lib/composables')
@@ -120,6 +131,7 @@ export default defineConfig(({ mode }): UserConfig => ({
         // you can still have a main barrel if you want
         // index: resolve(__dirname, 'src/index.ts'),
         ...getPageEntries(),   // Button, Card, Modal, ...
+        ...getHudEntries(),
         ...getComponentEntries(),
         ...getScriptEntries(mode),
         ...getComposableEntries()

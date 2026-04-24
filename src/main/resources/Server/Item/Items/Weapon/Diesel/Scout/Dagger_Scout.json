@@ -10,7 +10,6 @@
   "Reticle": "DefaultMelee",
   "ItemSoundSetId": "ISS_Weapon_Blade_Small",
   "Categories": [
-    "Items.Weapons",
     "DieselCategory.Weapons"
   ],
   "IconProperties": {

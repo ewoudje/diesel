@@ -3,7 +3,6 @@
     "Name": "server.items.Shotgun_Scout.name"
   },
   "Categories": [
-    "Items.Weapons",
     "DieselCategory.Weapons"
   ],
   "$Comment": "Loading order means that shooting and ammo usage should be inline",
@@ -202,6 +201,5 @@
     ]
   },
   "Quality": "Legendary",
-  "Scale": 2,
-  "Weapon": {}
+  "Scale": 2
 }

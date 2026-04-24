@@ -31,13 +31,12 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
         val playerComponent = store.getComponent(event.playerRef, DieselPlayerComponent.TYPE) ?: throw IllegalArgumentException()
         val hotbar = store.getComponent(event.playerRef, InventoryComponent.HOTBAR_FIRST[0]) ?: throw IllegalArgumentException()
         val hudManager = event.player.hudManager
-        val hud = DieselUIHud(ref)
+        val hud = DieselHud(ref)
 
         playerComponent.playerClass = PlayerClass.SCOUT
-        return
 
         hudManager.setVisibleHudComponents(ref) // Clears it
-        hudManager.setCustomHud(ref, hud)
+        //hudManager.setCustomHud(ref, hud)
 
         hotbar.inventory.registerChangeEvent(hud::onHotbarChange)
 
