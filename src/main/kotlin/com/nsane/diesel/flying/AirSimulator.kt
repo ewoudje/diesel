@@ -26,7 +26,6 @@ class AirSimulator: Resource<EntityStore?> {
     var velocityModifier = 1.0
     var distanceTraveled = 0.0
     var stage: Stage? = null
-    var oldStage : Stage? = null
 
     fun killedPlane(accessor: ComponentAccessor<EntityStore?>) {
         if (Random.nextDouble() < 0.4) {

@@ -147,6 +147,7 @@ public class DieselPlugin extends JavaPlugin {
         getEntityStoreRegistry().registerSystem(HelicopterTickSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(HelicopterRefSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(SimulationSystem.INSTANCE);
+        getEntityStoreRegistry().registerSystem(SimulationSystem.OnLevelChange.INSTANCE);
         getEntityStoreRegistry().registerSystem(RisenRockTickSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(RisenRockRefSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(DieselProjectileSystem.INSTANCE);
