@@ -8,12 +8,13 @@ import com.nsane.diesel.flying.HelicopterTickSystem
 import com.nsane.diesel.flying.PlaneTickSystem
 
 open class WaveStage(
+    name: String,
     var planes: Int,
     var helicopters: Int,
     var boarders: Int,
     var zoomies: Int,
     val nextStage : Stage?
-): Stage() {
+): Stage(name) {
     override fun setup(
         store: Store<EntityStore?>,
         sim: AirSimulator,

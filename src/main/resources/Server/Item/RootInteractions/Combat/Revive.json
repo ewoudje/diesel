@@ -1,0 +1,12 @@
+{
+  "Interactions": [
+    {
+      "Type": "Revive",
+      "Effects": {
+        "ItemPlayerAnimationsId": "Spellbook"
+      },
+      "StartingHealth": 30,
+      "RevivingTime": 2
+    }
+  ]
+}

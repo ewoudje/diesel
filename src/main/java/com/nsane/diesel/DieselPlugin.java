@@ -7,6 +7,9 @@ import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Resource;
 import com.hypixel.hytale.component.ResourceType;
+import com.hypixel.hytale.component.event.EntityEventType;
+import com.hypixel.hytale.component.event.WorldEventType;
+import com.hypixel.hytale.component.system.EcsEvent;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
 import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset;
@@ -42,6 +45,14 @@ import com.nsane.diesel.flying.SimulatedTransformationSystem;
 import com.nsane.diesel.flying.SimulatedTransformComponent;
 import com.nsane.diesel.flying.SimulationSystem;
 import com.nsane.diesel.interactions.ApplyMovementConfigInteraction;
+import com.nsane.diesel.level.ChangeLevelEvent;
+import com.nsane.diesel.level.LevelCommand;
+import com.nsane.diesel.level.LevelManager;
+import com.nsane.diesel.level.LevelSystem;
+import com.nsane.diesel.level.PartOfLevelComponent;
+import com.nsane.diesel.level.spawner.NPCSpawner;
+import com.nsane.diesel.level.spawner.NPCSpawnerRefSystem;
+import com.nsane.diesel.level.spawner.NPCSpawnerSpawnSystem;
 import com.nsane.diesel.logic.LogicComponentTracker;
 import com.nsane.diesel.logic.OpenLogicUIInteraction;
 import com.nsane.diesel.logic.bool_computer.BoolComputer;
@@ -53,10 +64,14 @@ import com.nsane.diesel.logic.state_writer.StateWriterSystem;
 import com.nsane.diesel.player.DieselPlayerComponent;
 import com.nsane.diesel.player.DieselPlayerSystem;
 import com.nsane.diesel.player.DieselResource;
+import com.nsane.diesel.player.PlayerReviveSystem;
+import com.nsane.diesel.player.ReviveInteraction;
 import com.nsane.diesel.projectiles.DieselProjectileComponent;
 import com.nsane.diesel.projectiles.DieselProjectileSystem;
 import com.nsane.diesel.projectiles.DieselProjectileType;
 import com.nsane.diesel.projectiles.DieselShootInteraction;
+import kotlin.Pair;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -88,6 +103,7 @@ public class DieselPlugin extends JavaPlugin {
         registerChunkComponent(StateReader.class, "StateReader", StateReader.Companion.getCODEC());
         registerChunkComponent(StateWriter.class, "StateWriter", StateWriter.Companion.getCODEC());
         registerChunkComponent(BoolComputer.class, "BoolComputer", BoolComputer.Companion.getCODEC());
+        registerChunkComponent(NPCSpawner.class, "NPCSpawner", NPCSpawner.Companion.getCODEC());
 
         registerEntityComponent(RisenRockComponent.class, "RisenRockComponent", RisenRockComponent.Companion.getCODEC());
         registerEntityComponent(DieselPlayerComponent.class, "DieselPlayerComponent", DieselPlayerComponent.Companion.getCODEC());
@@ -96,18 +112,24 @@ public class DieselPlugin extends JavaPlugin {
         registerEntityComponent(CloudComponent.class, "Cloud", CloudComponent.Companion.getCODEC());
         registerEntityComponent(PlaneComponent.class, "Plane", PlaneComponent.Companion.getCODEC());
         registerEntityComponent(HelicopterComponent.class, "Helicopter", HelicopterComponent.Companion.getCODEC());
+        registerEntityComponent(PartOfLevelComponent.class, "PartOfLevel", PartOfLevelComponent.INSTANCE.getCODEC());
         registerEntityResource(DieselResource.class, "DieselPlayersResource", DieselResource.Companion.getCODEC());
         registerEntityResource(AirSimulator.class, "AirSimulator", AirSimulator.Companion.getCODEC());
+        registerEntityResource(LevelManager.class, "LevelManager", LevelManager.Companion.getCODEC());
+
+        registerWorldEvent(ChangeLevelEvent.class);
 
         getCodecRegistry(Interaction.CODEC)
                 .register("OpenLogicUI", OpenLogicUIInteraction.class, OpenLogicUIInteraction.Companion.getCODEC())
                 .register("RiseRock", RiseRockInteraction.class, RiseRockInteraction.Companion.getCODEC())
                 .register("DieselShoot", DieselShootInteraction.class, DieselShootInteraction.Companion.getCODEC())
-                .register("ApplyMovementConfig", ApplyMovementConfigInteraction.class,ApplyMovementConfigInteraction.CODEC);
+                .register("ApplyMovementConfig", ApplyMovementConfigInteraction.class,ApplyMovementConfigInteraction.CODEC)
+                .register("Revive", ReviveInteraction.class, ReviveInteraction.Companion.getCODEC());
 
         getCommandRegistry().registerCommand(new ExampleCommand("example", "An example command"));
         getCommandRegistry().registerCommand(new FlyingCommand());
         getCommandRegistry().registerCommand(new CloudCommand());
+        getCommandRegistry().registerCommand(new LevelCommand());
 
         getEventRegistry().registerGlobal(PlayerReadyEvent.class, ExampleEvent::onPlayerReady);
         getEventRegistry().registerGlobal(PlayerReadyEvent.class, DieselPlayerSystem::playerReadyEvent);
@@ -128,8 +150,13 @@ public class DieselPlugin extends JavaPlugin {
         getEntityStoreRegistry().registerSystem(RisenRockTickSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(RisenRockRefSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(DieselProjectileSystem.INSTANCE);
+        getEntityStoreRegistry().registerSystem(LevelSystem.INSTANCE);
+        getEntityStoreRegistry().registerSystem(LevelSystem.RemoveLevelEntities.INSTANCE);
+        getEntityStoreRegistry().registerSystem(LevelSystem.TrackLevelEntities.INSTANCE);
+        getEntityStoreRegistry().registerSystem(PlayerReviveSystem.INSTANCE);
 
-
+        getChunkStoreRegistry().registerSystem(NPCSpawnerRefSystem.INSTANCE);
+        getChunkStoreRegistry().registerSystem(NPCSpawnerSpawnSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(StateReaderSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(StateWriterSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(BoolComputerSystem.INSTANCE);
@@ -144,6 +171,9 @@ public class DieselPlugin extends JavaPlugin {
         return (ResourceType<STORE, C>) instance.registeredTypes.get(resourceClass);
     }
 
+    public static  <C extends EcsEvent> Pair<WorldEventType<EntityStore, C>, WorldEventType<ChunkStore, C>> getEvent(@NotNull Class<C> clazz) {
+        return (Pair<WorldEventType<EntityStore, C>, WorldEventType<ChunkStore, C>>) instance.registeredTypes.get(clazz);
+    }
 
     @Override
     protected void shutdown() {
@@ -172,5 +202,13 @@ public class DieselPlugin extends JavaPlugin {
             BuilderCodec<R> codec
     ) {
         registeredTypes.put(clazz, getEntityStoreRegistry().registerResource(clazz, name, codec));
+    }
+
+    private <R extends EcsEvent> void registerWorldEvent(
+            Class<? super R> clazz
+    ) {
+        var entityEvent = getEntityStoreRegistry().registerWorldEventType(clazz);
+        var chunkEvent = getChunkStoreRegistry().registerWorldEventType(clazz);
+        registeredTypes.put(clazz, new Pair<>(entityEvent, chunkEvent));
     }
 }

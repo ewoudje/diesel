@@ -16,7 +16,7 @@ import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.flying.AirSimulator
 
-class StartStage : Stage() {
+class StartStage : Stage("StartStage") {
     override fun setup(
         store: Store<EntityStore?>,
         sim: AirSimulator,

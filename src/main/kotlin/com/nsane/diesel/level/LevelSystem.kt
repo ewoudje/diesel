@@ -1,0 +1,77 @@
+package com.nsane.diesel.level
+
+import com.hypixel.hytale.component.AddReason
+import com.hypixel.hytale.component.ArchetypeChunk
+import com.hypixel.hytale.component.CommandBuffer
+import com.hypixel.hytale.component.Ref
+import com.hypixel.hytale.component.RemoveReason
+import com.hypixel.hytale.component.Store
+import com.hypixel.hytale.component.query.Query
+import com.hypixel.hytale.component.system.RefSystem
+import com.hypixel.hytale.component.system.tick.TickingSystem
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
+import com.hypixel.hytale.server.npc.entities.NPCEntity
+import com.nsane.diesel.WorldEventEntitySystem
+import com.nsane.diesel.flying.HelicopterComponent
+import com.nsane.diesel.flying.PlaneComponent
+
+object LevelSystem: TickingSystem<EntityStore?>()  {
+    override fun tick(
+        dt: Float,
+        idx: Int,
+        store: Store<EntityStore?>
+    ) {
+        val levelManager = store.getResource(LevelManager.TYPE)
+        if (levelManager.currentLevel != null && levelManager.oldLevel != levelManager.currentLevel) {
+            val event = ChangeLevelEvent(levelManager.oldLevel, levelManager.currentLevel!!)
+            store.invoke(event)
+            if (!event.isCancelled)
+                store.externalData.world.chunkStore.store.invoke(event)
+
+            if (!event.isCancelled)
+                levelManager.oldLevel = levelManager.currentLevel
+        }
+    }
+
+    object RemoveLevelEntities: WorldEventEntitySystem<EntityStore?, ChangeLevelEvent>(ChangeLevelEvent::class.java) {
+        override fun getQuery(): Query<EntityStore?>? = PartOfLevelComponent.TYPE
+        override fun handle(
+            buffer: CommandBuffer<EntityStore?>,
+            idx: Int,
+            chunk: ArchetypeChunk<EntityStore?>,
+            event: ChangeLevelEvent
+        ) {
+            buffer.removeEntity(chunk.getReferenceTo(idx), RemoveReason.REMOVE)
+        }
+    }
+
+    object TrackLevelEntities: RefSystem<EntityStore?>() {
+        override fun getQuery(): Query<EntityStore?>? = Query.and(
+            Query.or(
+                NPCEntity.getComponentType(),
+                PlaneComponent.TYPE,
+                HelicopterComponent.TYPE
+            ),
+            Query.not(PartOfLevelComponent.TYPE)
+        )
+
+        override fun onEntityAdded(
+            ref: Ref<EntityStore?>,
+            reason: AddReason,
+            store: Store<EntityStore?>,
+            buffer: CommandBuffer<EntityStore?>
+        ) {
+            val levelManager = buffer.getResource(LevelManager.TYPE)
+            if (levelManager.currentLevel != null)
+                buffer.addComponent(ref, PartOfLevelComponent.TYPE)
+        }
+
+        override fun onEntityRemove(
+            var1: Ref<EntityStore?>,
+            var2: RemoveReason,
+            var3: Store<EntityStore?>,
+            var4: CommandBuffer<EntityStore?>
+        ) {
+        }
+    }
+}

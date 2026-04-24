@@ -23,7 +23,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.random.Random
 
-class BossStage : Stage() {
+class BossStage : Stage("BossStage") {
     val bossPosition = Vector3d(0.0, -20.0, 0.0)
     lateinit var boss: Ref<EntityStore?>
 
