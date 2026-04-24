@@ -1,15 +1,19 @@
 package com.nsane.diesel.flying
 
+import com.hypixel.hytale.component.ComponentAccessor
 import com.hypixel.hytale.component.Resource
 import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.math.vector.Vector3f
 import com.hypixel.hytale.protocol.MovementType
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
+import com.nsane.diesel.DieselActor
 import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.flying.stage.Stage
 import com.nsane.diesel.flying.stage.StartStage
 import com.nsane.diesel.flying.stage.WaveStage
+import com.nsane.diesel.player.DieselResource
 import io.github.hytalekt.kytale.codec.buildCodec
+import kotlin.random.Random
 
 class AirSimulator: Resource<EntityStore?> {
 
@@ -24,14 +28,30 @@ class AirSimulator: Resource<EntityStore?> {
     var stage: Stage? = null
     var oldStage : Stage? = null
 
-    fun killedPlane() = when(stage) {
-        is WaveStage -> (stage as WaveStage).planes--
-        else -> {}
+    fun killedPlane(accessor: ComponentAccessor<EntityStore?>) {
+        if (Random.nextDouble() < 0.4) {
+            val resource = accessor.getResource(DieselResource.TYPE)
+            if (Random.nextDouble() < 0.3)
+                resource.broadcastMessage(accessor, DieselActor.SOD, "planeDown")
+            else
+                resource.broadcastMessage(accessor, DieselActor.FRED, "planeDown")
+        }
+
+        if (stage is WaveStage)
+            (stage as WaveStage).planes--
     }
 
-    fun killedHeli() = when(stage) {
-        is WaveStage -> (stage as WaveStage).helicopters--
-        else -> {}
+    fun killedHeli(accessor: ComponentAccessor<EntityStore?>) {
+        if (Random.nextDouble() < 0.3) {
+            val resource = accessor.getResource(DieselResource.TYPE)
+            if (Random.nextDouble() < 0.3)
+                resource.broadcastMessage(accessor, DieselActor.SOD, "heliDown")
+            else
+                resource.broadcastMessage(accessor, DieselActor.FRED, "heliDown")
+        }
+
+        if (stage is WaveStage)
+                (stage as WaveStage).helicopters--
     }
 
     override fun clone(): Resource<EntityStore?>? = AirSimulator()

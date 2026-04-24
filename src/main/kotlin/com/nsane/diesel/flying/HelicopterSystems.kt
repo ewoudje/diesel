@@ -66,7 +66,7 @@ object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
             if (heli.flyingAway >= 0) {
                 crashingDown(buffer, archTypes.getReferenceTo(idx))
                 heli.flyingAway = -1.0f
-                sim.killedHeli()
+                sim.killedHeli(buffer)
             }
 
             simulatedPos.velocity.y = 20.0

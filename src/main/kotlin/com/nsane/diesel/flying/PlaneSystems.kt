@@ -62,7 +62,7 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
             if (plane.flyingAway >= 0) {
                 crashingDown(buffer, archTypes.getReferenceTo(idx))
                 plane.flyingAway = -1.0f
-                sim.killedPlane()
+                sim.killedPlane(buffer)
             }
 
             return

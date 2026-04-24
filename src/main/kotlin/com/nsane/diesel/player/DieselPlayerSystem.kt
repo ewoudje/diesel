@@ -27,13 +27,14 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
 
         store.ensureComponent(event.playerRef, DieselPlayerComponent.TYPE)
 
-        val playersResource = store.getResource(DieselPlayersResource.TYPE)
+        val playersResource = store.getResource(DieselResource.TYPE)
         val playerComponent = store.getComponent(event.playerRef, DieselPlayerComponent.TYPE) ?: throw IllegalArgumentException()
         val hotbar = store.getComponent(event.playerRef, InventoryComponent.HOTBAR_FIRST[0]) ?: throw IllegalArgumentException()
         val hudManager = event.player.hudManager
         val hud = DieselUIHud(ref)
 
         playerComponent.playerClass = PlayerClass.SCOUT
+        playerComponent.hud = hud
         return
 
         hudManager.setVisibleHudComponents(ref) // Clears it
