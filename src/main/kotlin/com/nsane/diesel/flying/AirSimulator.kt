@@ -8,6 +8,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.flying.stage.Stage
 import com.nsane.diesel.flying.stage.StartStage
+import com.nsane.diesel.flying.stage.WaveStage
 import io.github.hytalekt.kytale.codec.buildCodec
 
 class AirSimulator: Resource<EntityStore?> {
@@ -20,10 +21,18 @@ class AirSimulator: Resource<EntityStore?> {
 
     var velocityModifier = 1.0
     var distanceTraveled = 0.0
-    var planesKilled = 0
-    var helisKilled = 0
     var stage: Stage? = null
     var oldStage : Stage? = null
+
+    fun killedPlane() = when(stage) {
+        is WaveStage -> (stage as WaveStage).planes--
+        else -> {}
+    }
+
+    fun killedHeli() = when(stage) {
+        is WaveStage -> (stage as WaveStage).helicopters--
+        else -> {}
+    }
 
     override fun clone(): Resource<EntityStore?>? = AirSimulator()
 

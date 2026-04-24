@@ -21,6 +21,7 @@ import com.hypixel.hytale.server.core.modules.physics.util.PhysicsMath
 import com.hypixel.hytale.server.core.universe.world.SoundUtil
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselPlugin
+import com.nsane.diesel.flying.PlaneTickSystem.buildPlane
 import com.nsane.diesel.projectiles.DieselProjectileType
 import com.nsane.diesel.projectiles.DieselShootInteraction
 import io.github.hytalekt.kytale.ext.minus
@@ -61,7 +62,7 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
             if (plane.flyingAway >= 0) {
                 crashingDown(buffer, archTypes.getReferenceTo(idx))
                 plane.flyingAway = -1.0f
-                sim.planesKilled++
+                sim.killedPlane()
             }
 
             return
@@ -193,7 +194,8 @@ object PlaneRefSystem : RefSystem<EntityStore?>() {
     ) {
         val sim = buffer.getResource(AirSimulator.TYPE)
         if (reason == RemoveReason.UNLOAD && sim.flying) {
-            DieselPlugin.LOGGER.atWarning().log("Despawned a plane???")
+            DieselPlugin.LOGGER.atWarning().log("Despawned a plane??? Spawning new one!")
+            store.addEntity(buildPlane(sim, store), AddReason.SPAWN)
         }
     }
 

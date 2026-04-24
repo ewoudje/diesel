@@ -30,6 +30,8 @@ import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntitySta
 import com.hypixel.hytale.server.core.modules.physics.util.PhysicsMath
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselPlugin
+import com.nsane.diesel.flying.HelicopterTickSystem.buildHelicopter
+import com.nsane.diesel.flying.PlaneTickSystem.buildPlane
 import com.nsane.diesel.projectiles.DieselProjectileType
 import com.nsane.diesel.projectiles.DieselShootInteraction
 import io.github.hytalekt.kytale.ext.minus
@@ -64,7 +66,7 @@ object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
             if (heli.flyingAway >= 0) {
                 crashingDown(buffer, archTypes.getReferenceTo(idx))
                 heli.flyingAway = -1.0f
-                sim.helisKilled++
+                sim.killedHeli()
             }
 
             simulatedPos.velocity.y = 20.0
@@ -193,7 +195,8 @@ object HelicopterRefSystem : RefSystem<EntityStore?>() {
     ) {
         val sim = buffer.getResource(AirSimulator.TYPE)
         if (reason == RemoveReason.UNLOAD && sim.flying) {
-            DieselPlugin.LOGGER.atWarning().log("Despawned a helicopter???")
+            DieselPlugin.LOGGER.atWarning().log("Despawned a helicopter??? Spawning new one")
+            store.addEntity(buildHelicopter(sim, store), AddReason.SPAWN)
         }
     }
 

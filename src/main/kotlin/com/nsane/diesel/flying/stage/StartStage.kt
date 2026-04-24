@@ -23,7 +23,7 @@ class StartStage : Stage() {
         oldStage: Stage?
     ) {
         if (oldStage == null) {
-            //TODO populate clouds
+            //TODO populate clouds? or not
 
             cache(store, "CrashingPlane")
             cache(store, "CrashingHelicopter")
