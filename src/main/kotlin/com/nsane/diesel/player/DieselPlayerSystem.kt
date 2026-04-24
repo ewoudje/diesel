@@ -38,7 +38,7 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
         playerComponent.hud = hud
 
         hudManager.setVisibleHudComponents(ref) // Clears it
-        //hudManager.setCustomHud(ref, hud)
+        hudManager.setCustomHud(ref, hud)
 
         hotbar.inventory.registerChangeEvent(hud::onHotbarChange)
 

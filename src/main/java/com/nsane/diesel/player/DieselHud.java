@@ -10,6 +10,7 @@ import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntitySta
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.nsane.diesel.DieselActor;
 import com.nsane.diesel.player.DieselPlayerComponent;
 import com.nsane.diesel.player.DieselPlayerSystem;
 import org.jetbrains.annotations.NotNull;
@@ -56,4 +57,7 @@ public class DieselHud extends CustomUIHud {
     }
 
 
+    public void showMessage(@NotNull DieselActor actor, @NotNull String text, float duration) {
+
+    }
 }
