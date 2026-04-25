@@ -30,10 +30,13 @@ const weapon = {
 }
 //Current objective
 const objective = ref({
-    text: 'breach the palais'
+    text: 'board the avrocar'
 });
 //Player class
-const playerClass = ref<string>('');
+const playerClass = ref({
+    name: 'scout',
+    dashes: [true, true, false, false]
+});
 //Hotbar
 const hotbar = ref([
     {
@@ -66,16 +69,13 @@ const hotbar = ref([
     }
 ])
 
+const messageString = useData<string>("test", "default value")
 
-const test = useData<string>("test", "default value")
 setTimeout(()=>{
     //damageFlicker();
 },500)
 let a = 0
-setInterval(()=>{
-    //
-    a++;
-})
+
 let flickering = false;
 function damageFlicker(){
     flickering = true;
@@ -113,26 +113,19 @@ function damageFlicker(){
         <Group :anchor="{ Left:-100,Top:-90,Width: 640, Height: 500 }">
             <Group :background="'Img/top_left.png'"/>
         </Group>
-            <Group :anchor="{Left:0, Top:0, Width: 340, Height: 380 }" :background="{Color:colors.activeTextPrimary}" :mask-texture-path="'Img/health/scout1.png'"></Group>
-
-        <Group :anchor="{  Left: -20, Top: -20, Width: 350, Height: 500 }" :background="contentBg">
-            <!--Underlying progress bar
-            <ProgressBar
-                :anchor="{Top:0, Left:0, Width: 350, Height: 500}"
-                :background="'Img/progress_back.png'"
-                :bar-texture-path="'Img/progress_front.png'"
-                :effect-texture-path="'Img/progress_effect.png'"
-                :effect-height="100"
+        
+        <!--Health-->
+            <ProgressBar 
+            :anchor="{Left:0, Top:0, Width: 340, Height: 380 }" 
+            :background="{Color:colors.activeTextPrimary}" 
+            :mask-texture-path="'Img/health/scout1.png'"
+            :bar-texture-path="'Img/solid.png'"
+x            :effect-height="100"
                 :effect-width="100"
                 :value="0.5"
                 :alignment="'Vertical'"
-                :direction="'Start'"
-            ></ProgressBar>-->
-            <!--3d model-->
-            <!--Class-based overlay image-->
-            <Group :background="contentBg">
-            </Group>
-        </Group>
+                :direction="'End'"
+            />
 
         <!--Shine overlay-->
         <Group :anchor="{ Left:-100,Top:-90,Width: 640, Height: 500 }" :background="'Img/top_left_shine.png'"/>
@@ -146,7 +139,7 @@ function damageFlicker(){
         <Group :anchor="{ Left:-30,Bottom:0,Width: 1000, Height: 440 }">
             <Group :background="'Img/bottom_left_wide.png'"/>    
             <!--portrait-->
-            <Group :anchor="{Left:60, Bottom:22, Width: 320, Height: 320 }" :background="{Color:colors.activeTextPrimary}" :mask-texture-path="'Img/portrait/prole1.png'"></Group>
+            <Group :anchor="{Left:60, Bottom:22, Width: 320, Height: 320 }" :background="{Color:colors.activeTextPrimary}" :mask-texture-path="'Img/portrait/partner3.png'"></Group>
         </Group> 
   
         <!--Text-->
@@ -154,18 +147,24 @@ function damageFlicker(){
             <Label
                 :el-style="{
                     FontSize: 35,
-                    FontName: 'Secondary',
+                    FontName: 'Mono',
                     RenderUppercase:true,
-                    RenderBold: true,
                     Wrap: true,
                     TextColor: colors.activeTextPrimary
                 }"
-            >{{ message.text }}</Label>
+            >{{ messageString }}</Label>
         </Group>
 
 
         <!--Shine overlay-->
         <Group :anchor="{ Left:-30,Bottom:0,Width: 1000, Height: 440 }" :background="'Img/bottom_left_wide_shine.png'"></Group>
+
+        <!--Dashes-->
+        <Group :anchor="{Left:350, Bottom:198, Height:100, Width:200}" :background="contentBg" :layout-mode="'Left'">
+            <Group v-for="entry in playerClass.dashes" :anchor="{Width: 48, Height: 48, Left:20 }" :background="entry ? 'Img/charge_on.png' : 'Img/charge_off.png'" :mask-texture-path="'Img/masks/button.png'">
+            </Group>
+        </Group>
+
     </Group>
 
 
@@ -177,14 +176,13 @@ function damageFlicker(){
             <Group :background="'Img/top_right.png'"/>
         </Group>
         <!--Text-->
-        <Group :anchor="{Top: 10, Right:170, Width:580, Height:90}" :background="contentBg">
+        <Group :anchor="{Top: 12, Right:180, Width:580, Height:90}" :background="contentBg">
                 <Label
-                    :padding="{Full:20}"
+                    :padding="{Full:10}"
                     :el-style="{
                         FontSize: 43,
-                        FontName: 'Secondary',
+                        FontName: 'Mono',
                         RenderUppercase:true,
-                        RenderBold: true,
                         Wrap: true,
                         TextColor: colors.activeTextPrimary
                     }"
@@ -203,7 +201,7 @@ function damageFlicker(){
 
         <!--hotbar-->
         <Group :anchor="{Right:0, Top:0, Bottom:0, Width:120}" :background="contentBg" :layout-mode="'Top'">
-            <Group v-for="entry in hotbar" :anchor="{Left:0, Top:22, Width: 100, Height: 100 }" :background="entry.active ? 'Img/button_on_overlay.png' : 'Img/button_off_overlay.png'" :mask-texture-path="'Img/masks/button.png'">
+            <Group v-for="entry in hotbar" :anchor="{Left:0, Top:22, Width: 100, Height: 100 }" :background="entry ? 'Img/button_on_overlay.png' : 'Img/button_off_overlay.png'" :mask-texture-path="'Img/masks/button.png'">
                 <Group  :background="{Color:`${colors.activeTextPrimary}(0.5)`}"/>
                 <Group :background="entry.active ? 'Img/button_on_top_overlay.png' : 'Img/empty.png'"/>
                 <Label>{{ entry.name }}</Label>
@@ -222,7 +220,7 @@ function damageFlicker(){
 
         <!--Weapon graphic-->
         <Group :anchor="{ Right:250, Bottom:0,Width: 400, Height: 150 }" :background="contentBg">
-        <Group :anchor="{Left:-20, Bottom:62, Width: 400, Height: 130 }" :background="{Color:colors.activeTextPrimary}" :mask-texture-path="'Img/item/knife.png'"></Group>
+        <Group :anchor="{Left:-20, Bottom:62, Width: 400, Height: 130 }" :background="{Color:colors.activeTextPrimary}" :mask-texture-path="'Img/item/shotgun.png'"></Group>
 
         </Group>
         <!--Ammo counter-->

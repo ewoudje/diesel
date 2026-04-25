@@ -24,6 +24,7 @@ import static java.lang.Math.round;
 
 public class DieselHud {
     private PlayerUi ui;
+    private int tick = 0;
 
     public DieselHud(Store<EntityStore> store, Ref<EntityStore> ref) {
         ui = PlayerUiManager.INSTANCE.openHud(
@@ -41,16 +42,20 @@ public class DieselHud {
         DieselPlayerComponent dieselPlayer = commands.getComponent(ref, DieselPlayerComponent.Companion.getTYPE());
         EntityStatMap entityStatMapComponent = commands.getComponent(ref, EntityStatMap.getComponentType());
         EntityStatValue healthValue = entityStatMapComponent.get(DefaultEntityStatTypes.getHealth());
-
+        tick++;
+        if(tick%1000==0){
+            System.out.println("tick");
+           // ui.setHudData("health", 0.1);
+        }
         /*if (dieselPlayer.getAmmo().get("Shotgun_Scout_Ammo") != null){
             ammo = dieselPlayer.getAmmo().get("Shotgun_Scout_Ammo");
         }*/
 
-
-        //ui.setData("health", healthValue.asPercentage());
+        //ui.setHudData("health", healthValue.asPercentage());
     }
 
     public void showMessage(@NotNull DieselActor actor, @NotNull String text, float duration) {
-
+        ui.setHudData("test", text);
+        //ui.setHudData("health", 0.1);
     }
 }
