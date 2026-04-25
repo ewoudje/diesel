@@ -1,18 +1,21 @@
 package com.nsane.diesel.flying.stage
 
+import com.hypixel.hytale.component.ComponentAccessor
 import com.hypixel.hytale.component.Store
 import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.math.vector.Vector3f
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.flying.AirSimulator
+import com.nsane.diesel.flying.enviroment.FlyingEnvironment
 import com.nsane.diesel.level.Level
 import io.github.hytalekt.kytale.ext.minus
 import io.github.hytalekt.kytale.ext.plusAssign
 import io.github.hytalekt.kytale.ext.times
 
 abstract class Stage(name: String): Level(name) {
+    abstract val env: FlyingEnvironment
 
-    open fun tick(store: Store<EntityStore?>, sim: AirSimulator, dt: Float) {
+    open fun tick(store: ComponentAccessor<EntityStore?>, sim: AirSimulator, dt: Float) {
         val traveled = forward(sim, 10.0) * sim.velocityModifier
         sim.shipVelocity.assign(traveled)
         traveled.scale(dt.toDouble())
@@ -38,5 +41,5 @@ abstract class Stage(name: String): Level(name) {
         return diff
     }
 
-    abstract fun setup(store: Store<EntityStore?>, sim: AirSimulator, oldStage: Stage?)
+    abstract fun setup(store: ComponentAccessor<EntityStore?>, sim: AirSimulator, oldStage: Stage?)
 }

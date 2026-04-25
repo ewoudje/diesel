@@ -7,7 +7,6 @@ import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Resource;
 import com.hypixel.hytale.component.ResourceType;
-import com.hypixel.hytale.component.event.EntityEventType;
 import com.hypixel.hytale.component.event.WorldEventType;
 import com.hypixel.hytale.component.system.EcsEvent;
 import com.hypixel.hytale.logger.HytaleLogger;
@@ -30,10 +29,7 @@ import com.nsane.diesel.boss.RisenRockTickSystem;
 import com.nsane.diesel.commands.ExampleCommand;
 import com.nsane.diesel.events.ExampleEvent;
 import com.nsane.diesel.flying.AirSimulator;
-import com.nsane.diesel.flying.CloudCommand;
-import com.nsane.diesel.flying.CloudComponent;
-import com.nsane.diesel.flying.CloudRefSystem;
-import com.nsane.diesel.flying.CloudTickSystem;
+import com.nsane.diesel.flying.enviroment.EnvironmentalComponent;
 import com.nsane.diesel.flying.FlyingCommand;
 import com.nsane.diesel.flying.HelicopterComponent;
 import com.nsane.diesel.flying.HelicopterRefSystem;
@@ -44,6 +40,7 @@ import com.nsane.diesel.flying.PlaneTickSystem;
 import com.nsane.diesel.flying.SimulatedTransformationSystem;
 import com.nsane.diesel.flying.SimulatedTransformComponent;
 import com.nsane.diesel.flying.SimulationSystem;
+import com.nsane.diesel.flying.enviroment.EnvironmentalRefSystem;
 import com.nsane.diesel.interactions.ApplyMovementConfigInteraction;
 import com.nsane.diesel.level.ChangeLevelEvent;
 import com.nsane.diesel.level.LevelCommand;
@@ -109,7 +106,7 @@ public class DieselPlugin extends JavaPlugin {
         registerEntityComponent(DieselPlayerComponent.class, "DieselPlayerComponent", DieselPlayerComponent.Companion.getCODEC());
         registerEntityComponent(DieselProjectileComponent.class, "DieselProjectileComponent", DieselProjectileComponent.Companion.getCODEC());
         registerEntityComponent(SimulatedTransformComponent.class, "SimulatedInAir", SimulatedTransformComponent.Companion.getCODEC());
-        registerEntityComponent(CloudComponent.class, "Cloud", CloudComponent.Companion.getCODEC());
+        registerEntityComponent(EnvironmentalComponent.class, "Cloud", EnvironmentalComponent.Companion.getCODEC());
         registerEntityComponent(PlaneComponent.class, "Plane", PlaneComponent.Companion.getCODEC());
         registerEntityComponent(HelicopterComponent.class, "Helicopter", HelicopterComponent.Companion.getCODEC());
         registerEntityComponent(PartOfLevelComponent.class, "PartOfLevel", PartOfLevelComponent.INSTANCE.getCODEC());
@@ -128,7 +125,6 @@ public class DieselPlugin extends JavaPlugin {
 
         getCommandRegistry().registerCommand(new ExampleCommand("example", "An example command"));
         getCommandRegistry().registerCommand(new FlyingCommand());
-        getCommandRegistry().registerCommand(new CloudCommand());
         getCommandRegistry().registerCommand(new LevelCommand());
 
         getEventRegistry().registerGlobal(PlayerReadyEvent.class, ExampleEvent::onPlayerReady);
@@ -140,8 +136,7 @@ public class DieselPlugin extends JavaPlugin {
     @Override
     protected void start() {
         getEntityStoreRegistry().registerSystem(SimulatedTransformationSystem.INSTANCE);
-        getEntityStoreRegistry().registerSystem(CloudTickSystem.INSTANCE);
-        getEntityStoreRegistry().registerSystem(CloudRefSystem.INSTANCE);
+        getEntityStoreRegistry().registerSystem(EnvironmentalRefSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(PlaneTickSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(PlaneRefSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(HelicopterTickSystem.INSTANCE);

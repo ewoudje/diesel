@@ -5,6 +5,7 @@ import com.hypixel.hytale.component.CommandBuffer
 import com.hypixel.hytale.component.Store
 import com.hypixel.hytale.component.system.WorldEventSystem
 import com.hypixel.hytale.component.system.tick.TickingSystem
+import com.hypixel.hytale.server.core.asset.type.weather.config.Weather
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.flying.stage.Stage
 import com.nsane.diesel.level.ChangeLevelEvent
@@ -17,16 +18,13 @@ object SimulationSystem : TickingSystem<EntityStore?>() {
     ) {
         val sim = store.getResource(AirSimulator.TYPE)
         val weather = store.getResource(WeatherResource.getResourceType())
-        if (!sim.flying) {
-            if (weather.forcedWeatherIndex != 0)
-                weather.setForcedWeather(null)
-            return
-        }
 
-        if (weather.forcedWeatherIndex == 0)
-            weather.setForcedWeather("Ship")
+        val weatherIdx = sim.stage?.env?.weather?.let { Weather.getAssetMap().getIndex(it) }
+        if (weather.forcedWeatherIndex != weatherIdx)
+            weather.setForcedWeather(sim.stage?.env?.weather)
 
         sim.stage?.tick(store, sim, dt)
+        sim.stage?.env?.tick(store, dt)
     }
 
     object OnLevelChange: WorldEventSystem<EntityStore?, ChangeLevelEvent>(ChangeLevelEvent::class.java) {
@@ -39,7 +37,7 @@ object SimulationSystem : TickingSystem<EntityStore?>() {
                 val sim = store.getResource(AirSimulator.TYPE)
                 val oldStage = event.oldLevel as? Stage
 
-                event.newLevel.setup(store, sim, oldStage)
+                event.newLevel.setup(buffer, sim, oldStage)
             }
         }
     }

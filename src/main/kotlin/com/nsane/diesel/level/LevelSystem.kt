@@ -12,8 +12,10 @@ import com.hypixel.hytale.component.system.tick.TickingSystem
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.hypixel.hytale.server.npc.entities.NPCEntity
 import com.nsane.diesel.WorldEventEntitySystem
+import com.nsane.diesel.flying.AirSimulator
 import com.nsane.diesel.flying.HelicopterComponent
 import com.nsane.diesel.flying.PlaneComponent
+import com.nsane.diesel.flying.stage.Stage
 
 object LevelSystem: TickingSystem<EntityStore?>()  {
     override fun tick(
@@ -22,7 +24,9 @@ object LevelSystem: TickingSystem<EntityStore?>()  {
         store: Store<EntityStore?>
     ) {
         val levelManager = store.getResource(LevelManager.TYPE)
-        if (levelManager.currentLevel != null && levelManager.oldLevel != levelManager.currentLevel) {
+        if (levelManager.currentLevel == null) return
+
+        if (levelManager.oldLevel != levelManager.currentLevel) {
             val event = ChangeLevelEvent(levelManager.oldLevel, levelManager.currentLevel!!)
             store.invoke(event)
             if (!event.isCancelled)
@@ -30,6 +34,11 @@ object LevelSystem: TickingSystem<EntityStore?>()  {
 
             if (!event.isCancelled)
                 levelManager.oldLevel = levelManager.currentLevel
+        }
+
+        val sim = store.getResource(AirSimulator.TYPE)
+        if (sim.stage == null && levelManager.currentLevel is Stage) {
+            sim.stage = levelManager.currentLevel as Stage
         }
     }
 

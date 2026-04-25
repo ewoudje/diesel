@@ -1,11 +1,13 @@
 package com.nsane.diesel.flying.stage
 
 import com.hypixel.hytale.component.AddReason
-import com.hypixel.hytale.component.Store
+import com.hypixel.hytale.component.ComponentAccessor
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.flying.AirSimulator
 import com.nsane.diesel.flying.HelicopterTickSystem
 import com.nsane.diesel.flying.PlaneTickSystem
+import com.nsane.diesel.flying.enviroment.SimpleEnvironment
+import com.nsane.diesel.flying.enviroment.FlyingEnvironment
 
 open class WaveStage(
     name: String,
@@ -15,8 +17,10 @@ open class WaveStage(
     var zoomies: Int,
     val nextStage : Stage?
 ): Stage(name) {
+    override val env: FlyingEnvironment = SimpleEnvironment(50)
+
     override fun setup(
-        store: Store<EntityStore?>,
+        store: ComponentAccessor<EntityStore?>,
         sim: AirSimulator,
         oldStage: Stage?
     ) {
@@ -29,7 +33,7 @@ open class WaveStage(
         }
     }
 
-    override fun tick(store: Store<EntityStore?>, sim: AirSimulator, dt: Float) {
+    override fun tick(store: ComponentAccessor<EntityStore?>, sim: AirSimulator, dt: Float) {
         super.tick(store, sim, dt)
         if (isWaveDead())
             sim.stage = nextStage
