@@ -33,7 +33,7 @@
     ],
     "Appearance": "Fred",
     "Weapons": [
-      "Turret_AA"
+      "Revolver_Medic"
     ],
     "FollowPatrolPath": {
       "Compute": "FollowPatrolPath"
@@ -57,13 +57,11 @@
     "ApplySeparation": {
       "Compute": "ApplySeparation"
     },
-    "IsMemory": true,
-    "MemoriesCategory": "Undead",
-    "MemoriesNameOverride": "Skeleton_Burnt_Gunner",
+    "IsMemory": false,
     "BreathesInWater": true,
     "NameTranslationKey": {
       "Compute": "NameTranslationKey"
     },
-    "Attack": "Root_Fred"
+    "Attack": "Root_Medic_Primary"
   }
 }

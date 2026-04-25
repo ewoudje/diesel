@@ -57,9 +57,7 @@
     "ApplySeparation": {
       "Compute": "ApplySeparation"
     },
-    "IsMemory": true,
-    "MemoriesCategory": "Undead",
-    "MemoriesNameOverride": "Skeleton_Burnt_Gunner",
+    "IsMemory": false,
     "BreathesInWater": true,
     "NameTranslationKey": {
       "Compute": "NameTranslationKey"
