@@ -3,28 +3,51 @@ package com.nsane.diesel.player;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.server.core.entity.InteractionManager;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.entity.entities.player.HotbarManager;
 import com.hypixel.hytale.server.core.entity.entities.player.hud.CustomUIHud;
 import com.hypixel.hytale.server.core.inventory.container.ItemContainer;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatValue;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
+import com.hypixel.hytale.server.core.modules.interaction.InteractionModule;
+import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.nsane.diesel.DieselActor;
+import com.nsane.diesel.DieselPlugin;
 import com.nsane.diesel.player.DieselPlayerComponent;
 import com.nsane.diesel.player.DieselPlayerSystem;
 import li.kelp.vuetale.app.PlayerUi;
 import li.kelp.vuetale.app.PlayerUiManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jline.builtins.Commands;
+
+import java.lang.reflect.Field;
+import java.util.Arrays;
 
 import static java.lang.Math.round;
 
 public class DieselHud {
-    private PlayerUi ui;
-    private int tick = 0;
+    private static final Field cooldownHandler;
+    private static final Field chargeCount;
+
+    static {
+        try {
+            cooldownHandler = InteractionManager.class.getDeclaredField("cooldownHandler");
+            cooldownHandler.setAccessible(true);
+
+            chargeCount = CooldownHandler.Cooldown.class.getDeclaredField("chargeCount");
+            chargeCount.setAccessible(true);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private final PlayerUi ui;
 
     public DieselHud(Store<EntityStore> store, Ref<EntityStore> ref) {
         ui = PlayerUiManager.INSTANCE.openHud(
@@ -42,20 +65,31 @@ public class DieselHud {
         DieselPlayerComponent dieselPlayer = commands.getComponent(ref, DieselPlayerComponent.Companion.getTYPE());
         EntityStatMap entityStatMapComponent = commands.getComponent(ref, EntityStatMap.getComponentType());
         EntityStatValue healthValue = entityStatMapComponent.get(DefaultEntityStatTypes.getHealth());
-        tick++;
-        if(tick%1000==0){
-            System.out.println("tick");
-           // ui.setHudData("health", 0.1);
-        }
-        /*if (dieselPlayer.getAmmo().get("Shotgun_Scout_Ammo") != null){
-            ammo = dieselPlayer.getAmmo().get("Shotgun_Scout_Ammo");
-        }*/
+        EntityStatValue ammo = entityStatMapComponent.get("Shotgun_Scout_Ammo");
+        HotbarManager hotbarManager = player.getHotbarManager();
+        InteractionManager interactionManager = commands.getComponent(ref, InteractionModule.get().getInteractionManagerComponent());
+        int dashCharges;
 
-        //ui.setHudData("health", healthValue.asPercentage());
+        try {
+            CooldownHandler cooldownHandler = (CooldownHandler) this.cooldownHandler.get(interactionManager);
+            CooldownHandler.Cooldown cooldown = cooldownHandler.getCooldown("Root_Diesel_Dodge_Scout");
+            dashCharges = cooldown != null ? chargeCount.getInt(cooldown) : 4;
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+        ui.setHudData("current_overlay", "WOW");
+        ui.setHudData("objective", "GO get some scrubs");
+        ui.setHudData("dashes", dashCharges);
+        ui.setHudData("class", dieselPlayer.getPlayerClass().toString());
+        ui.setHudData("hotbarIdx", hotbarManager.getCurrentHotbarIndex());
+        ui.setHudData("ammo", ammo.get());
+        ui.setHudData("health", healthValue.asPercentage());
     }
 
     public void showMessage(@NotNull DieselActor actor, @NotNull String text, float duration) {
-        ui.setHudData("test", text);
-        //ui.setHudData("health", 0.1);
+        ui.setHudData("message", text);
+        ui.setHudData("messageActor", text);
+        ui.setHudData("messageDuration", text);
     }
 }
