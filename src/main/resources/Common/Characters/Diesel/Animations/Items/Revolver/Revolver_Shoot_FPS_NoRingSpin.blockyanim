@@ -55,7 +55,7 @@
         },
         {
           "time": 10,
-          "delta": {"x": -0.34403, "y": 0.32576, "z": -0.47284, "w": 0.74294},
+          "delta": {"x": -0.34403, "y": 0.32576, "z": -0.47284, "w": 0.74293},
           "interpolationType": "smooth"
         }
       ],
@@ -112,6 +112,19 @@
         {
           "time": 9,
           "delta": {"x": 0, "y": 0, "z": 0, "w": 1},
+          "interpolationType": "linear"
+        }
+      ],
+      "shapeStretch": [],
+      "shapeVisible": [],
+      "shapeUvOffset": []
+    },
+    "Origin_Item": {
+      "position": [],
+      "orientation": [
+        {
+          "time": 0,
+          "delta": {"x": 0, "y": 0.70711, "z": 0, "w": 0.70711},
           "interpolationType": "linear"
         }
       ],
