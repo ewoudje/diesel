@@ -13,6 +13,7 @@ import com.hypixel.hytale.component.system.RefSystem
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem
 import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.math.vector.Vector3f
+import com.hypixel.hytale.protocol.SoundCategory
 import com.hypixel.hytale.server.core.asset.type.model.config.Model
 import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset
 import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent
@@ -28,6 +29,7 @@ import com.hypixel.hytale.server.core.modules.entity.tracker.NetworkId
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes
 import com.hypixel.hytale.server.core.modules.physics.util.PhysicsMath
+import com.hypixel.hytale.server.core.universe.world.SoundUtil
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.flying.HelicopterTickSystem.buildHelicopter
@@ -106,7 +108,7 @@ object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
         targetVelocity.add(direction.clone().cross(Vector3d.POS_Y).scale(if (heli.hoverLeft) TURN_SPEED else -TURN_SPEED))
         simulatedPos.velocity.assign(targetVelocity)
 
-        val yaw = PhysicsMath.normalizeAngle(PhysicsMath.headingFromDirection(direction.x, direction.z))
+        val yaw = PhysicsMath.normalizeAngle(PhysicsMath.headingFromDirection(dir2.x, dir2.z))
         targetVelocity.rotateY(-yaw)
 
         val pitch = if (distance < FIRING_DISTANCE)
@@ -118,10 +120,24 @@ object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
         simulatedPos.rotation.assign(Vector3f.lerp(
             simulatedPos.rotation,
             Vector3f(pitch.toFloat(), yaw, roll.toFloat()),
-            dt
+            dt * 4
         ))
 
         heli.timeSinceLastBullet += dt
+
+        val worldPos = SimulatedTransformationSystem.getWorldPosition(sim, simulatedPos.position.clone())
+        val shootDir = Vector3d(simulatedPos.rotation.yaw, simulatedPos.rotation.pitch)
+        val end = shootDir.clone().scale(50.0).add(worldPos)
+        if (sim.shipBox.intersectsLine(worldPos, end) && heli.timeSinceLastBullet > FIRE_SPEED) {
+            heli.timeSinceLastBullet = 0.0f
+
+            fire(
+                buffer,
+                archTypes.getReferenceTo(idx),
+                worldPos,
+                shootDir
+            )
+        }
     }
 
     fun crashingDown(buffer: CommandBuffer<EntityStore?>, ref: Ref<EntityStore?>) {
@@ -132,9 +148,17 @@ object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
         //TODO explosion
     }
 
-    fun fire(commands: CommandBuffer<EntityStore?>, position: Vector3d, direction: Vector3d) {
+    fun fire(
+        commands: CommandBuffer<EntityStore?>,
+        owner: Ref<EntityStore?>,
+        position: Vector3d,
+        direction: Vector3d
+    ) {
         val type = DieselProjectileType.ASSET_STORE.assetMap.getAsset("Helicopter") ?: throw IllegalArgumentException()
-        //DieselShootInteraction.shootProjectiles(commands, direction.clone().scale(2.0).add(position), direction, Vector3d(), type, null)
+        val shotSound = SoundEvent.getAssetMap().getIndex("SFX_AA_Fire")
+
+        SoundUtil.playSoundEvent3d(shotSound, SoundCategory.SFX, position, commands)
+        DieselShootInteraction.shootProjectiles(commands, owner, direction.clone().add(position), direction, Vector3d(), type, null)
     }
 
     fun buildHelicopter(sim: AirSimulator, accessor: ComponentAccessor<EntityStore?>): Holder<EntityStore?> {

@@ -15,20 +15,34 @@ class LevelManager : Resource<EntityStore?> {
     var currentLevel: Level? = null
         private set
 
-    fun enter(key: String) = when (key) {
-        currentLevel?.name -> {}
-        "BossStage" -> currentLevel = BossStage()
-        "StartStage" -> currentLevel = StartStage()
-        "Stage1" -> currentLevel = WaveStage(
-            "Stage1",
-            0,
-            4,
-            0,
-            0,
-            10f,
-            "StartStage"
-        )
-        else -> currentLevel = Level(key)
+    fun enter(key: String) {
+        if (key == currentLevel?.name) return
+
+        currentLevel = when (key) {
+            "BossStage" -> BossStage()
+            "StartStage" -> StartStage()
+            "Stage1" -> WaveStage(
+                "Stage1",
+                0,
+                2,
+                0,
+                0,
+                10f,
+                "Stage2"
+            )
+
+            "Stage2" -> WaveStage(
+                "Stage2",
+                1,
+                2,
+                0,
+                0,
+                10f,
+                "StartStage"
+            )
+
+            else -> Level(key)
+        }
     }
 
     override fun clone(): Resource<EntityStore?>? = LevelManager()

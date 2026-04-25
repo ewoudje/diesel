@@ -11,6 +11,7 @@ import com.hypixel.hytale.component.system.RefSystem
 import com.hypixel.hytale.component.system.tick.TickingSystem
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.hypixel.hytale.server.npc.entities.NPCEntity
+import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.WorldEventEntitySystem
 import com.nsane.diesel.flying.AirSimulator
 import com.nsane.diesel.flying.HelicopterComponent
@@ -37,8 +38,11 @@ object LevelSystem: TickingSystem<EntityStore?>()  {
         }
 
         val sim = store.getResource(AirSimulator.TYPE)
+        // should only happen on load
         if (sim.stage == null && levelManager.currentLevel is Stage) {
+            DieselPlugin.LOGGER.atInfo().log("Setuping stage from load")
             sim.stage = levelManager.currentLevel as Stage
+            //TODO wait till ship loaded? sim.stage!!.setup(store, sim, null)
         }
     }
 

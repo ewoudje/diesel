@@ -1,16 +1,16 @@
 {
   "RenderMode": "BlendAdd",
   "ParticleRotationInfluence": "BillboardVelocity",
-  "MaxConcurrentParticles": 100,
+  "MaxConcurrentParticles": 30,
   "ParticleLifeSpan": {
     "Min": 3,
-    "Max": 6
+    "Max": 5
   },
   "TrailSpawnerPositionMultiplier": 1,
   "TrailSpawnerRotationMultiplier": 1,
   "SpawnRate": {
-    "Min": 2,
-    "Max": 4
+    "Min": 1,
+    "Max": 2
   },
   "Particle": {
     "Texture": "Particles/Textures/Smoke/Smoke_Wind2.png",
@@ -106,10 +106,12 @@
   },
   "EmitOffset": {
     "Y": {
-      "Max": 5.0
+      "Max": 2.0,
+      "Min": 0.5
     },
     "X": {
-      "Max": 4.0
+      "Max": 6.0,
+      "Min": 1.5
     }
   }
 }

@@ -48,6 +48,8 @@ class BossStage : Stage("BossStage") {
         sim: AirSimulator,
         oldStage: Stage?
     ) {
+        super.setup(store, sim, oldStage)
+
         spawnBoss(store)
     }
 

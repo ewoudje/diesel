@@ -27,6 +27,8 @@ open class WaveStage(
         sim: AirSimulator,
         oldStage: Stage?
     ) {
+        super.setup(store, sim, oldStage)
+
         repeat(planes) {
             store.addEntity(PlaneTickSystem.buildPlane(sim, store), AddReason.SPAWN)
         }
@@ -44,7 +46,6 @@ open class WaveStage(
             if (delay <= 0)
                 levelManager.enter(nextLevel)
         }
-
     }
 
     protected fun isWaveDead() =

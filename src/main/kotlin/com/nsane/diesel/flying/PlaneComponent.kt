@@ -22,7 +22,6 @@ class PlaneComponent : Component<EntityStore?> {
 
     companion object {
         val CODEC = buildCodec(::PlaneComponent) {
-
         }
 
         val TYPE by lazy { DieselPlugin.getComponent(PlaneComponent::class.java) }
