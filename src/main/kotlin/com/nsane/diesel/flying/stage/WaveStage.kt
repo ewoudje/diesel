@@ -8,6 +8,7 @@ import com.nsane.diesel.flying.HelicopterTickSystem
 import com.nsane.diesel.flying.PlaneTickSystem
 import com.nsane.diesel.flying.enviroment.SimpleEnvironment
 import com.nsane.diesel.flying.enviroment.FlyingEnvironment
+import com.nsane.diesel.level.LevelManager
 
 open class WaveStage(
     name: String,
@@ -15,9 +16,11 @@ open class WaveStage(
     var helicopters: Int,
     var boarders: Int,
     var zoomies: Int,
-    val nextStage : Stage?
+    delay: Float,
+    val nextLevel: String,
 ): Stage(name) {
     override val env: FlyingEnvironment = SimpleEnvironment(50)
+    private var delay = delay
 
     override fun setup(
         store: ComponentAccessor<EntityStore?>,
@@ -35,8 +38,13 @@ open class WaveStage(
 
     override fun tick(store: ComponentAccessor<EntityStore?>, sim: AirSimulator, dt: Float) {
         super.tick(store, sim, dt)
-        if (isWaveDead())
-            sim.stage = nextStage
+        val levelManager = store.getResource(LevelManager.TYPE)
+        if (isWaveDead()) {
+            delay -= dt
+            if (delay <= 0)
+                levelManager.enter(nextLevel)
+        }
+
     }
 
     protected fun isWaveDead() =

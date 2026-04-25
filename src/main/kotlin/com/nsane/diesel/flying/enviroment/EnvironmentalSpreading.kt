@@ -9,21 +9,16 @@ class EnvironmentalSpreading(
     var expectedAmount: Int,
     val spawn: (ComponentAccessor<EntityStore?>) -> Unit,
 ) {
-    private var currentAmount = 0
     private var timeToAdd = 0f
 
     fun tick(accessor: ComponentAccessor<EntityStore?>, dt: Float) {
         val sim = accessor.getResource(AirSimulator.TYPE)
+        val currentAmount = sim.environmentalAmounts[id] ?: 0
 
         timeToAdd -= dt
         if (currentAmount < expectedAmount && timeToAdd < 0f) {
             spawn(accessor)
-            currentAmount++
             timeToAdd = 400f / sim.shipVelocity.length().toFloat() / expectedAmount
         }
-    }
-
-    fun unloaded() {
-        currentAmount--
     }
 }

@@ -33,9 +33,7 @@ abstract class AbstractFlyingEnvironment: FlyingEnvironment {
         accessor: ComponentAccessor<EntityStore?>,
         ref: Ref<EntityStore?>,
         component: EnvironmentalComponent
-    ) {
-        spreaders.find { it.id == component.id }?.unloaded()
-    }
+    ) {}
 
     protected fun spawnCloud(
         accessor: ComponentAccessor<EntityStore?>,
@@ -84,8 +82,6 @@ abstract class AbstractFlyingEnvironment: FlyingEnvironment {
             this.omega.assign(omega)
         })
         holder.addComponent(EnvironmentalComponent.TYPE, EnvironmentalComponent().apply { this.id = id })
-
-        holder.ensureComponent(EntityStore.REGISTRY.nonSerializedComponentType)
         holder.ensureComponent(UUIDComponent.getComponentType())
     }
 }

@@ -7,6 +7,7 @@ import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.flying.AirSimulator
 import com.nsane.diesel.flying.stage.BossStage
 import com.nsane.diesel.flying.stage.StartStage
+import com.nsane.diesel.flying.stage.WaveStage
 import io.github.hytalekt.kytale.codec.buildCodec
 
 class LevelManager : Resource<EntityStore?> {
@@ -18,6 +19,15 @@ class LevelManager : Resource<EntityStore?> {
         currentLevel?.name -> {}
         "BossStage" -> currentLevel = BossStage()
         "StartStage" -> currentLevel = StartStage()
+        "Stage1" -> currentLevel = WaveStage(
+            "Stage1",
+            0,
+            4,
+            0,
+            0,
+            10f,
+            "StartStage"
+        )
         else -> currentLevel = Level(key)
     }
 

@@ -4,12 +4,10 @@ import com.hypixel.hytale.component.ComponentAccessor
 import com.hypixel.hytale.component.Resource
 import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.math.vector.Vector3f
-import com.hypixel.hytale.protocol.MovementType
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselActor
 import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.flying.stage.Stage
-import com.nsane.diesel.flying.stage.StartStage
 import com.nsane.diesel.flying.stage.WaveStage
 import com.nsane.diesel.player.DieselResource
 import io.github.hytalekt.kytale.codec.buildCodec
@@ -26,6 +24,7 @@ class AirSimulator: Resource<EntityStore?> {
     var velocityModifier = 1.0
     var distanceTraveled = 0.0
     var stage: Stage? = null
+    val environmentalAmounts = mutableMapOf<String, Int>()
 
     fun killedPlane(accessor: ComponentAccessor<EntityStore?>) {
         if (Random.nextDouble() < 0.4) {

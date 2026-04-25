@@ -40,7 +40,6 @@ import com.nsane.diesel.flying.PlaneTickSystem;
 import com.nsane.diesel.flying.SimulatedTransformationSystem;
 import com.nsane.diesel.flying.SimulatedTransformComponent;
 import com.nsane.diesel.flying.SimulationSystem;
-import com.nsane.diesel.flying.enviroment.EnvironmentalRefSystem;
 import com.nsane.diesel.interactions.ApplyMovementConfigInteraction;
 import com.nsane.diesel.level.ChangeLevelEvent;
 import com.nsane.diesel.level.LevelCommand;
@@ -136,12 +135,12 @@ public class DieselPlugin extends JavaPlugin {
     @Override
     protected void start() {
         getEntityStoreRegistry().registerSystem(SimulatedTransformationSystem.INSTANCE);
-        getEntityStoreRegistry().registerSystem(EnvironmentalRefSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(PlaneTickSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(PlaneRefSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(HelicopterTickSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(HelicopterRefSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(SimulationSystem.INSTANCE);
+        getEntityStoreRegistry().registerSystem(SimulationSystem.EnvironmentalRefSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(SimulationSystem.OnLevelChange.INSTANCE);
         getEntityStoreRegistry().registerSystem(RisenRockTickSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(RisenRockRefSystem.INSTANCE);

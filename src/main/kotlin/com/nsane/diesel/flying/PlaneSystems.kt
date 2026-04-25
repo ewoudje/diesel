@@ -193,7 +193,7 @@ object PlaneRefSystem : RefSystem<EntityStore?>() {
         buffer: CommandBuffer<EntityStore?>
     ) {
         val sim = buffer.getResource(AirSimulator.TYPE)
-        if (reason == RemoveReason.UNLOAD && sim.flying) {
+        if (reason == RemoveReason.UNLOAD) {
             DieselPlugin.LOGGER.atWarning().log("Despawned a plane??? Spawning new one!")
             buffer.addEntity(buildPlane(sim, store), AddReason.SPAWN)
         }
