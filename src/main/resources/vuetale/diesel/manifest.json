@@ -13,10 +13,10 @@
     "TestPage.vue?vue&type=script&setup=true&lang"
   ],
   "huds": [
-    "core",
-    "diesel",
+    "dialogue",
     "DieselHud",
-    "gsap.min",
+    "gameplayClasses",
+    "util",
     "DieselHud.vue?vue&type=script&setup=true&lang"
   ]
 }

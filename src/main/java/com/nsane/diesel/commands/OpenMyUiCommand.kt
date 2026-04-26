@@ -9,9 +9,11 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayer
 import com.hypixel.hytale.server.core.universe.PlayerRef
 import com.hypixel.hytale.server.core.universe.world.World
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
+import com.nsane.diesel.DieselActor
 import com.nsane.diesel.player.DieselPlayerComponent
 import com.nsane.diesel.player.DieselPlayerComponent.Companion.TYPE
 import com.nsane.diesel.player.DieselResource
+import li.kelp.vuetale.app.PlayerUiManager
 import javax.annotation.Nonnull
 
 
@@ -31,18 +33,7 @@ class OpenMyUiCommand : AbstractPlayerCommand("dieselmessage", "test msg") {
 
         val diesel = store.getResource(DieselResource.TYPE)
 
-        //store.getComponent(playerRef,DieselPlayerComponent.TYPE.T)
-    //diesel.broadcastMessage(store, DieselActor.FRED,message.get(commandContext),5f)
-        /*val ui = PlayerUiManager.openHud(
-            playerRef,
-            ref as Ref<EntityStore>,
-            store as Store<EntityStore>,
-            "diesel",
-            "DieselHud"
-        )
-
-        ui.setHudData("test", message.get(commandContext))*/
-        //ui.setHudData("test2", Abc("abc", 123))
+    diesel.broadcastMessage(store, DieselActor.FRED,message.get(commandContext),5f)
 
     }
 }

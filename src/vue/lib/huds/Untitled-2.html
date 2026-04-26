@@ -1,0 +1,87 @@
+<script setup lang="ts">
+import { useData } from 'vt:@core/composables/useData';
+import { ref, computed, watch } from 'vue';
+import { getPlayerClasses } from './gameplayClasses';
+import { hueRotateHex, LightenDarkenColor } from './util';
+import { playDialogue } from './dialogue';
+console.log("[DIESELGAME] INIT VUE HUD")
+
+
+const inputMessage = useData<string>("message","");
+const inputMessageActor = useData<string>("messageActor","fred");
+const inputMessageDuration = useData<number>("messageDuration",4);
+const inputMessageSplitBy = useData<string>("splitBy",' ');
+const inputOverlay = useData("current_overlay","none");
+const inputDashes = useData("dashes",4);
+const inputObjective = useData<String>("objective","")
+const inputClass = useData<string>("class","scout");
+const inputHotbarIdx = useData<number>("hotbarIdx",0);
+const inputHealth = useData<number>("health",1);
+    
+const classKey = computed(()=>{
+    return inputClass.value.toLowerCase()
+})
+const playerClass = computed(()=>{
+    //@ts-ignore
+    return getPlayerClasses()[classKey.value]
+})
+const heldItem = computed(()=>{
+    return({
+        ammo: useData<number>("ammo",4),
+        o:playerClass.value.hotbar[inputHotbarIdx.value]
+    })
+})
+
+
+//UI Colors
+const modifiedBaseColor = ref<String | null>(null)
+const colors = computed(()=>{
+    let startcolor = modifiedBaseColor.value ?? playerClass.value.baseColor;
+    return {
+        base: startcolor,
+        light: LightenDarkenColor(startcolor,200),
+        dark: LightenDarkenColor(startcolor,-30),
+        alt: hueRotateHex(startcolor,40),
+        brass: '#c98d1c',
+        screen: `#282624`,
+    }
+})
+
+//Dialogue
+const displayMessage = ref('')
+const displayPortrait = ref('Img/portrait/none.png')
+watch(inputMessage,()=>{
+    let actor = inputMessageActor.value.toString().toLowerCase()
+    playDialogue({
+        text:inputMessage.value,
+        displayTextRef:displayMessage,
+        displayPortraitRef: displayPortrait,
+        duration:inputMessageDuration.value,
+        actor:actor,
+        splitBy:inputMessageSplitBy.value
+    })
+})
+
+//Debug background
+const contentBg = ref('Img/empty.png')
+
+//gamer mode
+
+
+</script>
+<template>
+
+
+    <!--==DIALOGUE===-->
+        <!--Image asset-->
+
+
+ 
+            ,<!--<Group  v-for="(index) of playerClass.maxDashes" :key=index :anchor="{Width: 120, Height: 120, Left:20 }" :background="index < inputDashes ? 'Img/charge_on.png' : 'Img/charge_off.png'" :mask-texture-path="'Img/mask/button.png'">
+            </Group>-->
+            <Group v-for="(index) of [0,1,2,3,4]" 
+            :background="index < inputDashes ? 'Img/charge_on.png' : 'Img/charge_off.png'">
+            </Group>
+</template>
+<!--
+-->
