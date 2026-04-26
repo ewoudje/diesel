@@ -1,0 +1,54 @@
+{
+  "TranslationProperties": {
+    "Name": "Turret Spot",
+    "Description": "server.items.Editor_Block.description"
+  },
+  "Icon": "Icons/ItemsGenerated/TurretSpot.png",
+  "Quality": "Technical",
+  "Categories": [
+    "DieselCategory.Tools"
+  ],
+  "SubCategory": "PrefabBlocks",
+  "BlockType": {
+    "DrawType": "Model",
+    "CustomModel": "Items/Diesel/turret/Turret_Mount_Point.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Items/Diesel/turret/Turret_Mount_Point.png",
+        "Weight": 1
+      }
+    ],
+    "Opacity": "Transparent",
+    "Group": "@Tech",
+    "Flags": {
+      "IsUsable": true
+    },
+    "BlockParticleSetId": "Stone",
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "Turret"
+          }
+        ]
+      }
+    },
+    "HitboxType": "Rail"
+  },
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Blocks_Stone",
+  "Model": "Items/Diesel/turret/Turret_Mount_Point.blockymodel",
+  "Texture": "Items/Diesel/turret/Turret_Mount_Point.png",
+  "IconProperties": {
+    "Scale": 0.58823,
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Translation": [
+      0,
+      -13.5
+    ]
+  }
+}
