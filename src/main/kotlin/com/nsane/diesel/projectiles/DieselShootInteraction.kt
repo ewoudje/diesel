@@ -41,7 +41,6 @@ import kotlin.random.Random
 class DieselShootInteraction: ProjectileInteraction() {
     var projectileType: String? = null
     var offset: Vector3d = Vector3d(0.0, 0.0, 0.0)
-    var magazineId: String? = null
 
     override fun getConfig(): ProjectileConfig? {
         config = DieselProjectileType.ASSET_STORE.assetMap.getAsset(projectileType)!!.configKey
