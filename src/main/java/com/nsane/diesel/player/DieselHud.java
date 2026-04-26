@@ -49,7 +49,6 @@ public class DieselHud {
 
     private final PlayerUi ui;
     private final IntList sounds = new IntArrayList();
-    private double currentTime = 0.0;
 
     public DieselHud(Store<EntityStore> store, Ref<EntityStore> ref) {
         ui = PlayerUiManager.INSTANCE.openHud(
@@ -107,9 +106,6 @@ public class DieselHud {
         ui.setHudData("hotbarIdx", slot > 1 ? slot > 6 ? 0 : 1 : slot);
         ui.setHudData("ammo", ammo.get());
         ui.setHudData("health", healthValue.asPercentage());
-        ui.setHudData("current_time", currentTime);
-
-        currentTime += dt;
     }
 
     public void showMessage(@NotNull String chain) {
