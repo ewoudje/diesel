@@ -19,10 +19,14 @@ class LevelManager : Resource<EntityStore?> {
         if (key == currentLevel?.name) return
 
         currentLevel = when (key) {
-            "BossStage" -> BossStage()
+            "StartOfGame" -> LogicBasedLevel("StartOfGame", "Get a job!", "enterOffice", "InOffice")
+            "InOffice " -> LogicBasedLevel("InOffice ", "Just listen", "talkDone", "ChaseInStreets")
+            "ChaseInStreets" -> LogicBasedLevel("ChaseInStreets", "!get OUT!", "endOfStreet", "Shipyard")
+            "Shipyard" -> AllDeadLevel("Shipyard", "Kill the guys", "StartStage")
             "StartStage" -> StartStage()
             "Stage1" -> WaveStage(
                 "Stage1",
+                "What are those?",
                 0,
                 2,
                 0,
@@ -33,15 +37,24 @@ class LevelManager : Resource<EntityStore?> {
 
             "Stage2" -> WaveStage(
                 "Stage2",
+                "What are THOSE?",
                 1,
                 2,
                 0,
                 0,
                 10f,
-                "StartStage"
+                "BossStage"
             )
+            "BossStage" -> BossStage()
+            "EnterMech" -> AllDeadLevel("EnterMech", "KILL the security!", "BreakIn")
+            "BreakIn" -> LogicBasedLevel("BreakIn", "Go deeper", "readyToBreakIn", "BrokeIn")
+            "BrokeIn" -> LogicBasedLevel("BrokeIn", "Find the keycard", "unlockedDoor", "UnlockedDoor")
+            "UnlockedDoor" -> LogicBasedLevel("UnlockedDoor", "Get back to the door", "enterKGB", "KGB")
+            "KGB" -> AllDeadLevel("KGB", "Kill the feds", "FinalStretch")
+            "FinalStretch" -> LogicBasedLevel("FinalStretch", "Go kill Big Boss", "intoBossRoom", "BossFight")
+            "BossFight" -> Level(key, "FIGHT TO DEATH")
 
-            else -> Level(key)
+            else -> Level(key, "No clue.. go kill some feds?")
         }
     }
 

@@ -20,16 +20,21 @@ import io.github.hytalekt.kytale.ext.minus
 import io.github.hytalekt.kytale.ext.plusAssign
 import io.github.hytalekt.kytale.ext.times
 
-abstract class Stage(name: String): Level(name) {
+abstract class Stage(name: String, objective: String): Level(name, objective) {
     abstract val env: FlyingEnvironment
 
-    open fun tick(store: ComponentAccessor<EntityStore?>, sim: AirSimulator, dt: Float) {
-        val traveled = forward(sim, 10.0) * sim.velocityModifier
-        sim.shipVelocity.assign(traveled)
-        traveled.scale(dt.toDouble())
-
+    override fun tick(store: ComponentAccessor<EntityStore?>, dt: Float) {
+        super.tick(store, dt)
+        val sim = store.getResource(AirSimulator.TYPE)
+        val before = sim.shipPosition.clone()
+        tickStage(store, sim, dt)
+        val traveled = sim.shipPosition - before
         sim.distanceTraveled += traveled.length()
-        sim.shipPosition += traveled
+        sim.shipVelocity.assign(traveled.scale(1.0 / dt))
+    }
+
+    open fun tickStage(store: ComponentAccessor<EntityStore?>, sim: AirSimulator, dt: Float) {
+        sim.shipPosition += forward(sim, 10.0) * sim.velocityModifier
     }
 
     protected fun cache(store: ComponentAccessor<EntityStore?>, name: String) {

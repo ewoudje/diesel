@@ -21,14 +21,14 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-class BossStage : Stage("BossStage") {
+class BossStage : Stage("BossStage", "Get in the MECH") {
     override val env: FlyingEnvironment = SimpleEnvironment(50)
     val bossPosition = Vector3d(0.0, -20.0, 0.0)
     lateinit var boss: Ref<EntityStore?>
 
     var circling = 0.0f
 
-    override fun tick(store: ComponentAccessor<EntityStore?>, sim: AirSimulator, dt: Float) {
+    override fun tickStage(store: ComponentAccessor<EntityStore?>, sim: AirSimulator, dt: Float) {
         circling = PhysicsMath.normalizeAngle((Math.PI * dt * (SHIP_RPM / 30)).toFloat() + circling)
         val newPos = Vector3d(
             bossPosition.x + (sin(circling) * BOSS_RADI),

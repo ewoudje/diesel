@@ -53,6 +53,8 @@ import com.nsane.diesel.logic.LogicComponentTracker;
 import com.nsane.diesel.logic.OpenLogicUIInteraction;
 import com.nsane.diesel.logic.bool_computer.BoolComputer;
 import com.nsane.diesel.logic.bool_computer.BoolComputerSystem;
+import com.nsane.diesel.logic.pressure_plate.PressurePlate;
+import com.nsane.diesel.logic.pressure_plate.PressurePlateSystem;
 import com.nsane.diesel.logic.state_reader.StateReader;
 import com.nsane.diesel.logic.state_reader.StateReaderSystem;
 import com.nsane.diesel.logic.state_writer.StateWriter;
@@ -99,6 +101,7 @@ public class DieselPlugin extends JavaPlugin {
         registerChunkComponent(StateReader.class, "StateReader", StateReader.Companion.getCODEC());
         registerChunkComponent(StateWriter.class, "StateWriter", StateWriter.Companion.getCODEC());
         registerChunkComponent(BoolComputer.class, "BoolComputer", BoolComputer.Companion.getCODEC());
+        registerChunkComponent(PressurePlate.class, "PressurePlate", PressurePlate.Companion.getCODEC());
         registerChunkComponent(NPCSpawner.class, "NPCSpawner", NPCSpawner.Companion.getCODEC());
 
         registerEntityComponent(RisenRockComponent.class, "RisenRockComponent", RisenRockComponent.Companion.getCODEC());
@@ -152,6 +155,7 @@ public class DieselPlugin extends JavaPlugin {
 
         getChunkStoreRegistry().registerSystem(NPCSpawnerRefSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(NPCSpawnerSpawnSystem.INSTANCE);
+        getChunkStoreRegistry().registerSystem(PressurePlateSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(StateReaderSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(StateWriterSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(BoolComputerSystem.INSTANCE);

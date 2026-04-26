@@ -44,6 +44,8 @@ object LevelSystem: TickingSystem<EntityStore?>()  {
             sim.stage = levelManager.currentLevel as Stage
             //TODO wait till ship loaded? sim.stage!!.setup(store, sim, null)
         }
+
+        levelManager.currentLevel?.tick(store, dt)
     }
 
     object RemoveLevelEntities: WorldEventEntitySystem<EntityStore?, ChangeLevelEvent>(ChangeLevelEvent::class.java) {

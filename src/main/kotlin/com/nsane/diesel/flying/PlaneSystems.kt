@@ -155,7 +155,7 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
         val direction = Vector3d(
             (Random.nextDouble() * MAX_DISTANCE * 2) - MAX_DISTANCE,
             0.0,
-            MAX_DISTANCE - (Random.nextDouble() * 20)
+            -MAX_DISTANCE + (Random.nextDouble() * 20) + 40
         ).rotateX(sim.shipRotation.x).rotateY(sim.shipRotation.y).rotateZ(sim.shipRotation.z)
 
         val modelAsset = ModelAsset.getAssetMap().getAsset("Plane") ?: throw NullPointerException("Plane asset not found")
@@ -211,7 +211,8 @@ object PlaneRefSystem : RefSystem<EntityStore?>() {
         buffer: CommandBuffer<EntityStore?>
     ) {
         val sim = buffer.getResource(AirSimulator.TYPE)
-        if (reason == RemoveReason.UNLOAD) {
+        val transform = buffer.getComponent(ref, TransformComponent.getComponentType())!!
+        if (reason == RemoveReason.UNLOAD && transform.position.squaredLength() > 200 * 200) {
             DieselPlugin.LOGGER.atWarning().log("Despawned a plane??? Spawning new one!")
             buffer.addEntity(buildPlane(sim, store), AddReason.SPAWN)
         }

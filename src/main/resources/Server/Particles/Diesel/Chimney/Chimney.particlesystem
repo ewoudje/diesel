@@ -1,0 +1,10 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "ChimneyEmberSpawner"
+    },
+    {
+      "SpawnerId": "ChimneySpawner"
+    }
+  ]
+}

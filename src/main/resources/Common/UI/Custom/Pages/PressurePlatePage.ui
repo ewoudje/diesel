@@ -1,0 +1,53 @@
+$C = "../Common.ui";
+$Sounds = "../Sounds.ui";
+
+@InputLabel = Label {
+  Anchor: (Left: 6, Right: 16, Width: 120);
+  Style: (...$C.@DefaultLabelStyle, VerticalAlignment: Center, Wrap: true);
+};
+
+$C.@Container {
+  Anchor: (Left: 50, Top: 170, Width: 450, Height: 220);
+
+  #Title {
+    Group {
+      LayoutMode: Left;
+      $C.@Title {
+        @Text = %server.customUI.stateReader.title;
+      }
+    }
+
+    $C.@HeaderSearch {}
+  }
+
+  #Content {
+    Group {
+      LayoutMode: Top;
+      Padding: (Full: 16);
+      
+      Group {
+        LayoutMode: Left;
+        Anchor: (Bottom: 16);
+
+        @InputLabel {
+          Text: %server.customUI.stateReader.logicId;
+        }
+
+        $C.@TextField #LogicId {
+          @Anchor = (Width: 200);
+          PlaceholderText: "anyString";
+        }
+      }
+
+      $C.@TextButton #ApplyButton {
+        @Sounds = $Sounds.@SaveSettings;
+        @Anchor = (Right: 4);
+        Padding: (Full: 16);
+        Text: %server.customUI.stateReader.apply;
+        FlexWeight: 1;
+      }
+    }
+  }
+}
+
+$C.@BackButton {}

@@ -14,6 +14,6 @@ import com.nsane.diesel.flying.AirSimulator
 import com.nsane.diesel.flying.enviroment.SimpleEnvironment
 import com.nsane.diesel.flying.enviroment.FlyingEnvironment
 
-class StartStage : Stage("StartStage") {
+class StartStage : Stage("StartStage", "We on our way") {
     override val env: FlyingEnvironment = SimpleEnvironment(70)
 }
