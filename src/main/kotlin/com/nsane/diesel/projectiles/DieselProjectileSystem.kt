@@ -35,6 +35,7 @@ import com.hypixel.hytale.server.core.modules.physics.util.PhysicsMath
 import com.hypixel.hytale.server.core.modules.projectile.component.Projectile
 import com.hypixel.hytale.server.core.universe.world.ParticleUtil
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
+import com.nsane.diesel.flying.AirSimulator
 import com.nsane.diesel.flying.HelicopterComponent
 import com.nsane.diesel.flying.PlaneComponent
 import com.nsane.diesel.flying.SimulatedTransformComponent
@@ -105,6 +106,10 @@ object DieselProjectileSystem: EntityTickingSystem<EntityStore?>() {
             type.blockHitParticles?.let {
                 ParticleUtil.spawnParticleEffects(it, firstBlock.collisionPoint, null, commands.externalData.world.playerRefs.map { it.reference }, commands)
             }
+
+            val sim = commands.getResource(AirSimulator.TYPE)
+            if (sim.flying)
+                sim.bulletHitBlock(commands, ref, projectile)
         } else return
 
 

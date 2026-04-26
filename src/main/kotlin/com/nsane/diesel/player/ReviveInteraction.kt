@@ -10,17 +10,16 @@ import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler
+import com.hypixel.hytale.server.core.modules.interaction.interaction.config.SimpleInstantInteraction
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.SimpleInteraction
 
-class ReviveInteraction : SimpleInteraction() {
+class ReviveInteraction : SimpleInstantInteraction() {
     var startingHealth = 25f
 
-    override fun tick0(
-        firstRun: Boolean,
-        time: Float,
-        type: InteractionType,
+    override fun firstRun(
+        var1: InteractionType,
         context: InteractionContext,
-        cooldownHandler: CooldownHandler
+        var3: CooldownHandler
     ) {
         val target = context.targetEntity
         context.state.state = InteractionState.Failed
@@ -36,8 +35,6 @@ class ReviveInteraction : SimpleInteraction() {
                 context.state.state = InteractionState.Finished
             }
         }
-
-        super.tick0(firstRun, time, type, context, cooldownHandler)
     }
 
     companion object {
