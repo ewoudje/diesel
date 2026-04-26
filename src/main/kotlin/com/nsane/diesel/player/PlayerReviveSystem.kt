@@ -9,6 +9,7 @@ import com.hypixel.hytale.component.system.RefChangeSystem
 import com.hypixel.hytale.protocol.InteractionType
 import com.hypixel.hytale.server.core.entity.entities.Player
 import com.hypixel.hytale.server.core.modules.entity.component.Interactable
+import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent
 import com.hypixel.hytale.server.core.modules.interaction.Interactions
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
@@ -28,6 +29,12 @@ object PlayerReviveSystem: RefChangeSystem<EntityStore?, DeathComponent>() {
         buffer.addComponent(ref, Interactable.getComponentType(), Interactable.INSTANCE)
         buffer.addComponent(ref, Interactions.getComponentType(), interactions)
         players.deadPlayers++
+
+
+        val transform = buffer.getComponent(ref, TransformComponent.getComponentType())!!
+        if (transform.position.y <= 1.0) {
+            transform.position.assign(0.0, 81.0, 6.0)
+        }
     }
 
     override fun onComponentSet(

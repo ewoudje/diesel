@@ -27,8 +27,9 @@ hytale {
         Authors = listOf(
             HytaleManifest.Author("ewoudje", "me@ewoudje.com", "https://ewoudje.com"),
             HytaleManifest.Author("rainyatrium", "ana@rainyatrium.net", "https://rainyatrium.net"),
-            HytaleManifest.Author("ComicalSomber", "https://github.com/ComicalSomber"),
-            HytaleManifest.Author("octofoss", "https://metaphorical.monster/octofoss/"),
+            HytaleManifest.Author(Name = "ComicalSomber", Url = "https://github.com/ComicalSomber"),
+            HytaleManifest.Author(Name = "Noisyrejects", Url = "https://sola.nekoweb.org/"),
+            HytaleManifest.Author(Name = "Nahu Pyrope", Url = "https://www.youtube.com/nahupyrope"),
         )
     }
 }

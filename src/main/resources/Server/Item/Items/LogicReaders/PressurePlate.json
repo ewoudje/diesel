@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.Deco_Moving_Box.name",
+    "Name": "Pressure Plate",
     "Description": "server.items.Deco_Moving_Box.description"
   },
   "ItemLevel": 15,
@@ -27,7 +27,7 @@
     ],
     "BlockEntity": {
       "Components": {
-        "BoolComputer": {}
+        "PressurePlate": {}
       }
     }
   },

@@ -1,24 +1,53 @@
 package com.nsane.diesel.flying.stage
 
+import com.hypixel.hytale.component.AddReason
+import com.hypixel.hytale.component.ComponentAccessor
 import com.hypixel.hytale.component.Store
 import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.math.vector.Vector3f
+import com.hypixel.hytale.server.core.asset.type.model.config.Model
+import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset
+import com.hypixel.hytale.server.core.entity.UUIDComponent
+import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent
+import com.hypixel.hytale.server.core.modules.entity.component.PersistentModel
+import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent
+import com.hypixel.hytale.server.core.modules.entity.tracker.NetworkId
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.flying.AirSimulator
+import com.nsane.diesel.flying.enviroment.FlyingEnvironment
 import com.nsane.diesel.level.Level
 import io.github.hytalekt.kytale.ext.minus
 import io.github.hytalekt.kytale.ext.plusAssign
 import io.github.hytalekt.kytale.ext.times
 
-abstract class Stage(name: String): Level(name) {
+abstract class Stage(name: String, objective: String): Level(name, objective) {
+    abstract val env: FlyingEnvironment
 
-    open fun tick(store: Store<EntityStore?>, sim: AirSimulator, dt: Float) {
-        val traveled = forward(sim, 10.0) * sim.velocityModifier
-        sim.shipVelocity.assign(traveled)
-        traveled.scale(dt.toDouble())
-
+    override fun tick(store: ComponentAccessor<EntityStore?>, dt: Float) {
+        super.tick(store, dt)
+        val sim = store.getResource(AirSimulator.TYPE)
+        val before = sim.shipPosition.clone()
+        tickStage(store, sim, dt)
+        val traveled = sim.shipPosition - before
         sim.distanceTraveled += traveled.length()
-        sim.shipPosition += traveled
+        sim.shipVelocity.assign(traveled.scale(1.0 / dt))
+    }
+
+    open fun tickStage(store: ComponentAccessor<EntityStore?>, sim: AirSimulator, dt: Float) {
+        sim.shipPosition += forward(sim, 10.0) * sim.velocityModifier
+    }
+
+    protected fun cache(store: ComponentAccessor<EntityStore?>, name: String) {
+        val modelAsset = ModelAsset.getAssetMap().getAsset(name) ?: throw NullPointerException("$name asset not found")
+        val model = Model.createScaledModel(modelAsset, 0.5f)
+        val holder = EntityStore.REGISTRY.newHolder()
+        holder.addComponent(TransformComponent.getComponentType(), TransformComponent().apply { position.assign(-155.0,0.0,-155.0) })
+        holder.addComponent(PersistentModel.getComponentType(), PersistentModel(model.toReference()))
+        holder.addComponent(ModelComponent.getComponentType(), ModelComponent(model))
+        holder.addComponent(NetworkId.getComponentType(), NetworkId(store.externalData.takeNextNetworkId()))
+        holder.ensureComponent(EntityStore.REGISTRY.nonSerializedComponentType)
+        holder.ensureComponent(UUIDComponent.getComponentType())
+        store.addEntity(holder, AddReason.SPAWN)
     }
 
     protected fun forward(sim: AirSimulator, speed: Double): Vector3d {
@@ -38,5 +67,10 @@ abstract class Stage(name: String): Level(name) {
         return diff
     }
 
-    abstract fun setup(store: Store<EntityStore?>, sim: AirSimulator, oldStage: Stage?)
+    open fun setup(store: ComponentAccessor<EntityStore?>, sim: AirSimulator, oldStage: Stage?) {
+        if (oldStage == null) {
+            cache(store, "CrashingPlane")
+            cache(store, "CrashingHelicopter")
+        }
+    }
 }

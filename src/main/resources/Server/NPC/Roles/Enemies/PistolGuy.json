@@ -33,7 +33,7 @@
     ],
     "Appearance": "Fred",
     "Weapons": [
-      "Turret_AA"
+      "Revolver_Medic"
     ],
     "FollowPatrolPath": {
       "Compute": "FollowPatrolPath"
@@ -62,6 +62,6 @@
     "NameTranslationKey": {
       "Compute": "NameTranslationKey"
     },
-    "Attack": "Root_Fred"
+    "Attack": "Root_Medic_Primary"
   }
 }

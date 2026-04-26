@@ -1,13 +1,11 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.Furniture_Tavern_Door.name"
+    "Name": "Controlled Door"
   },
   "PlayerAnimationsId": "Block",
   "Categories": [
-    "Furniture.Doors",
     "DieselCategory.Blocks"
   ],
-  "Set": "Furniture_Tavern",
   "Icon": "Icons/ItemsGenerated/Furniture_Tavern_Door.png",
   "IconProperties": {
     "Rotation": [
@@ -21,27 +19,6 @@
       -27.6
     ]
   },
-  "Interactions": {
-    "Primary": "Block_Primary",
-    "Secondary": "Block_Secondary"
-  },
-  "Recipe": {
-    "Input": [
-      {
-        "ResourceTypeId": "Wood_Darkwood",
-        "Quantity": 2
-      }
-    ],
-    "BenchRequirement": [
-      {
-        "Id": "Builders",
-        "Type": "StructuralCrafting",
-        "Categories": [
-          "Door"
-        ]
-      }
-    ]
-  },
   "BlockType": {
     "BlockParticleSetId": "Wood",
     "CustomModel": "Blocks/Decorative_Sets/Tavern/Door.blockymodel",
@@ -52,35 +29,14 @@
       }
     ],
     "DrawType": "Model",
-    "Gathering": {
-      "Breaking": {
-        "GatherType": "Woods"
-      }
-    },
     "HitboxType": "Door",
     "Material": "Solid",
     "Opacity": "Transparent",
     "ParticleColor": "#543022",
     "State": {
       "Definitions": {
-        "CloseDoorIn": {
-          "InteractionSoundEventId": "SFX_Door_Wooden_Close",
-          "CustomModelAnimation": "Blocks/Animations/Door/Door_Close_In.blockyanim"
-        },
-        "CloseDoorOut": {
-          "InteractionSoundEventId": "SFX_Door_Wooden_Close",
-          "CustomModelAnimation": "Blocks/Animations/Door/Door_Close_Out.blockyanim"
-        },
-        "DoorBlocked": {},
-        "OpenDoorIn": {
-          "HitboxType": "Door_Open_In",
-          "InteractionHitboxType": "Door_Open_In_Interaction",
-          "InteractionSoundEventId": "SFX_Door_Wooden_Open",
-          "CustomModelAnimation": "Blocks/Animations/Door/Door_Open_In.blockyanim"
-        },
-        "OpenDoorOut": {
+        "OpenDoor": {
           "HitboxType": "Door_Open_Out",
-          "InteractionHitboxType": "Door_Open_Out_Interaction",
           "InteractionSoundEventId": "SFX_Door_Wooden_Open",
           "CustomModelAnimation": "Blocks/Animations/Door/Door_Open_Out.blockyanim"
         }
@@ -88,11 +44,6 @@
     },
     "VariantRotation": "NESW",
     "BlockSoundSetId": "Wood",
-    "InteractionHint": "server.interactionHints.openDoor",
-    "IsDoor": true,
-    "Interactions": {
-      "Use": "Door"
-    },
     "ConnectedBlockRuleSet": {
       "Type": "CustomTemplate",
       "TemplateShapeAssetId": "DoorConnectedBlockTemplate",
@@ -102,21 +53,10 @@
     },
     "BlockEntity": {
       "Components": {
-        "StateWriter": {},
-        "StateReader": {
-          "LogicId": "i"
-        }
+        "StateWriter": {}
       }
     }
   },
-  "ResourceTypes": [
-    {
-      "Id": "Fuel"
-    },
-    {
-      "Id": "Charcoal"
-    }
-  ],
   "Tags": {
     "Type": [
       "Furniture"

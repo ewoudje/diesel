@@ -1,25 +1,36 @@
 package com.nsane.diesel.flying.stage
 
 import com.hypixel.hytale.component.AddReason
-import com.hypixel.hytale.component.Store
+import com.hypixel.hytale.component.ComponentAccessor
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.flying.AirSimulator
 import com.nsane.diesel.flying.HelicopterTickSystem
 import com.nsane.diesel.flying.PlaneTickSystem
+import com.nsane.diesel.flying.enviroment.SimpleEnvironment
+import com.nsane.diesel.flying.enviroment.FlyingEnvironment
+import com.nsane.diesel.level.LevelManager
 
 open class WaveStage(
     name: String,
+    objective: String,
     var planes: Int,
     var helicopters: Int,
     var boarders: Int,
     var zoomies: Int,
-    val nextStage : Stage?
-): Stage(name) {
+    delay: Float,
+    val nextLevel: String,
+): Stage(name, objective) {
+    override val objective = if (isWaveDead()) "We are safe for now.." else super.objective
+    override val env: FlyingEnvironment = SimpleEnvironment(50)
+    private var delay = delay
+
     override fun setup(
-        store: Store<EntityStore?>,
+        store: ComponentAccessor<EntityStore?>,
         sim: AirSimulator,
         oldStage: Stage?
     ) {
+        super.setup(store, sim, oldStage)
+
         repeat(planes) {
             store.addEntity(PlaneTickSystem.buildPlane(sim, store), AddReason.SPAWN)
         }
@@ -29,10 +40,14 @@ open class WaveStage(
         }
     }
 
-    override fun tick(store: Store<EntityStore?>, sim: AirSimulator, dt: Float) {
-        super.tick(store, sim, dt)
-        if (isWaveDead())
-            sim.stage = nextStage
+    override fun tickStage(store: ComponentAccessor<EntityStore?>, sim: AirSimulator, dt: Float) {
+        super.tickStage(store, sim, dt)
+        val levelManager = store.getResource(LevelManager.TYPE)
+        if (isWaveDead()) {
+            delay -= dt
+            if (delay <= 0)
+                levelManager.enter(nextLevel)
+        }
     }
 
     protected fun isWaveDead() =

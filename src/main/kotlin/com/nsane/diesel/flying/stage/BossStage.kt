@@ -1,9 +1,8 @@
 package com.nsane.diesel.flying.stage
 
 import com.hypixel.hytale.component.AddReason
-import com.hypixel.hytale.component.Holder
+import com.hypixel.hytale.component.ComponentAccessor
 import com.hypixel.hytale.component.Ref
-import com.hypixel.hytale.component.Store
 import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.server.core.asset.type.model.config.Model
 import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset
@@ -15,21 +14,21 @@ import com.hypixel.hytale.server.core.modules.entity.tracker.NetworkId
 import com.hypixel.hytale.server.core.modules.physics.util.PhysicsMath
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.flying.AirSimulator
-import com.nsane.diesel.flying.CloudComponent
 import com.nsane.diesel.flying.SimulatedTransformComponent
-import io.github.hytalekt.kytale.ext.plus
+import com.nsane.diesel.flying.enviroment.SimpleEnvironment
+import com.nsane.diesel.flying.enviroment.FlyingEnvironment
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
-import kotlin.random.Random
 
-class BossStage : Stage("BossStage") {
+class BossStage : Stage("BossStage", "Get in the MECH") {
+    override val env: FlyingEnvironment = SimpleEnvironment(50)
     val bossPosition = Vector3d(0.0, -20.0, 0.0)
     lateinit var boss: Ref<EntityStore?>
 
     var circling = 0.0f
 
-    override fun tick(store: Store<EntityStore?>, sim: AirSimulator, dt: Float) {
+    override fun tickStage(store: ComponentAccessor<EntityStore?>, sim: AirSimulator, dt: Float) {
         circling = PhysicsMath.normalizeAngle((Math.PI * dt * (SHIP_RPM / 30)).toFloat() + circling)
         val newPos = Vector3d(
             bossPosition.x + (sin(circling) * BOSS_RADI),
@@ -45,14 +44,16 @@ class BossStage : Stage("BossStage") {
     }
 
     override fun setup(
-        store: Store<EntityStore?>,
+        store: ComponentAccessor<EntityStore?>,
         sim: AirSimulator,
         oldStage: Stage?
     ) {
+        super.setup(store, sim, oldStage)
+
         spawnBoss(store)
     }
 
-    private fun spawnBoss(store: Store<EntityStore?>) {
+    private fun spawnBoss(store: ComponentAccessor<EntityStore?>) {
         val modelAsset = ModelAsset.getAssetMap().getAsset("Mech") ?: throw NullPointerException("Skyboss asset not found")
         val model = Model.createScaledModel(modelAsset, 10f)
         val holder = EntityStore.REGISTRY.newHolder()

@@ -21,7 +21,6 @@ class FlyingCommand : AbstractWorldCommand("flying", "flying") {
     private val pitch: OptionalArg<Float> = withOptionalArg("pitch", "Rotation of ship", ArgTypes.FLOAT)
     private val yaw: OptionalArg<Float> = withOptionalArg("yaw", "Rotation of ship", ArgTypes.FLOAT)
     private val roll: OptionalArg<Float> = withOptionalArg("roll", "Rotation of ship", ArgTypes.FLOAT)
-    private val circleBoss: FlagArg = withFlagArg("circleBoss", "BOSS FIGHTTT")
     private val speedModifier: OptionalArg<Double> = withOptionalArg("speedModifier", "SpeedModifier of ship", ArgTypes.DOUBLE)
 
     override fun execute(
@@ -37,11 +36,6 @@ class FlyingCommand : AbstractWorldCommand("flying", "flying") {
         yaw.get(ctx)?.let { sim.shipRotation.yaw = it }
         roll.get(ctx)?.let { sim.shipRotation.roll = it }
         speedModifier.get(ctx)?.let { sim.velocityModifier = it }
-        if (circleBoss.get(ctx) && sim.stage !is BossStage) {
-            sim.stage = BossStage()
-        } else if (!circleBoss.get(ctx) && sim.stage !is StartStage) {
-            sim.stage = StartStage()
-        }
 
         ctx.sendMessage(Message.raw("Done"))
     }

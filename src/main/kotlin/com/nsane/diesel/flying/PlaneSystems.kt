@@ -34,7 +34,8 @@ import kotlin.random.Random
 
 object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
     const val MAX_DISTANCE = 150.0
-    const val TURN_SPEED = 0.6f
+    const val TURN_SPEED = 0.66f
+    const val VERTICAL_TURN_SPEED = 1f
     const val SPEED = 32.0
     const val PULL_UP = 30.0
     const val FIRE_SPEED = 0.1f
@@ -52,8 +53,9 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
 
         plane.timeSinceLastBullet += dt
 
-        PhysicsMath.vectorFromAngles(simulatedPos.rotation.y, simulatedPos.rotation.x, simulatedPos.velocity)
-        simulatedPos.velocity.scale(SPEED)
+        val planeDir = Vector3d()
+        PhysicsMath.vectorFromAngles(simulatedPos.rotation.y, simulatedPos.rotation.x, planeDir)
+        simulatedPos.velocity.assign(planeDir.clone().scale(SPEED))
 
         if (archTypes.archetype.contains(DeathComponent.getComponentType())) {
             simulatedPos.omega.x = -0.4f
@@ -70,30 +72,46 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
 
         val diff = sim.shipPosition - simulatedPos.position + plane.target
         val distance = diff.length()
-        val direction = diff.clone().scale(1.0/distance)
-        val dot = direction.dot(simulatedPos.velocity.clone().normalize())
+
+
+        //Adjust direction with shipspeed
+        val shipTraveled = sim.shipVelocity.clone().scale((distance / SPEED) * 0.8)
+        val newDiff = if (shipTraveled.squaredLength() > 4)
+            shipTraveled + diff
+        else
+            diff
+
+        val direction = newDiff.normalize()
+
         val yaw = PhysicsMath.headingFromDirection(direction.x, direction.z) - simulatedPos.rotation.y
         val pitch = PhysicsMath.pitchFromDirection(direction.x, direction.y, direction.z) - simulatedPos.rotation.x
 
-        if (dot > 0.7 && plane.timeSinceLastBullet > FIRE_SPEED) {
+        val nozzlePos = simulatedPos.position.clone().add(0.0, 0.4, 0.0)
+        val worldPos = SimulatedTransformationSystem.getWorldPosition(sim, nozzlePos)
+        val worldDir = planeDir
+            .rotateX(-sim.shipRotation.x)
+            .rotateY(-sim.shipRotation.y)
+            .rotateZ(-sim.shipRotation.z)
+            .normalize()
+        val end = worldDir.clone().scale(150.0).add(worldPos)
+
+        if (sim.shipBox.clone().scale(1.7f).intersectsLine(worldPos, end) && plane.timeSinceLastBullet > FIRE_SPEED) {
             plane.timeSinceLastBullet = 0.0f
-            val pos = simulatedPos.position.clone().add(0.0, 0.4, 0.0)
-            fire(
+                fire(
                 buffer,
                 archTypes.getReferenceTo(idx),
-                SimulatedTransformationSystem.getWorldPosition(sim, pos),
-                SimulatedTransformationSystem.getWorldVelocity(sim, simulatedPos).clone().normalize()
+                worldPos,
+                worldDir
             )
         }
 
-
         if (distance < PULL_UP) {
-            simulatedPos.omega.x = 0.3f
+            simulatedPos.omega.x = 0.6f
             simulatedPos.omega.y = 0.0f
             plane.flyingAway = -0.1f
         }
 
-        if (plane.flyingAway < 2.0f) {
+        if (plane.flyingAway < 3.0f) {
             if (plane.flyingAway < 0.0 && distance >= PULL_UP) {
                 simulatedPos.omega.y = (Random.nextFloat() - 0.5f) * TURN_SPEED
                 simulatedPos.omega.x = -0.03f
@@ -104,7 +122,7 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
             return
         }
 
-        simulatedPos.omega.x = max(min(PhysicsMath.normalizeTurnAngle(pitch), TURN_SPEED), -TURN_SPEED)
+        simulatedPos.omega.x = max(min(PhysicsMath.normalizeTurnAngle(pitch), VERTICAL_TURN_SPEED), -VERTICAL_TURN_SPEED)
         simulatedPos.omega.y = max(min(PhysicsMath.normalizeTurnAngle(yaw), TURN_SPEED), -TURN_SPEED)
 
         simulatedPos.rotation.z += (atan(simulatedPos.omega.y * 9) - simulatedPos.rotation.z) * dt
@@ -137,7 +155,7 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
         val direction = Vector3d(
             (Random.nextDouble() * MAX_DISTANCE * 2) - MAX_DISTANCE,
             0.0,
-            MAX_DISTANCE - (Random.nextDouble() * 20)
+            -MAX_DISTANCE + (Random.nextDouble() * 20) + 40
         ).rotateX(sim.shipRotation.x).rotateY(sim.shipRotation.y).rotateZ(sim.shipRotation.z)
 
         val modelAsset = ModelAsset.getAssetMap().getAsset("Plane") ?: throw NullPointerException("Plane asset not found")
@@ -193,7 +211,8 @@ object PlaneRefSystem : RefSystem<EntityStore?>() {
         buffer: CommandBuffer<EntityStore?>
     ) {
         val sim = buffer.getResource(AirSimulator.TYPE)
-        if (reason == RemoveReason.UNLOAD && sim.flying) {
+        val transform = buffer.getComponent(ref, TransformComponent.getComponentType())!!
+        if (reason == RemoveReason.UNLOAD && transform.position.squaredLength() > 200 * 200) {
             DieselPlugin.LOGGER.atWarning().log("Despawned a plane??? Spawning new one!")
             buffer.addEntity(buildPlane(sim, store), AddReason.SPAWN)
         }
