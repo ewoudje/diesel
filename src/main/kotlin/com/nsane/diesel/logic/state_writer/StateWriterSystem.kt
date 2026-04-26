@@ -1,6 +1,5 @@
 package com.nsane.diesel.logic.state_writer
 
-import com.nsane.diesel.DieselPlugin
 import com.hypixel.hytale.component.ArchetypeChunk
 import com.hypixel.hytale.component.CommandBuffer
 import com.hypixel.hytale.component.Store
@@ -10,7 +9,9 @@ import com.hypixel.hytale.math.util.ChunkUtil
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType
 import com.hypixel.hytale.server.core.modules.block.BlockModule
 import com.hypixel.hytale.server.core.universe.world.chunk.BlockChunk
+import com.hypixel.hytale.server.core.universe.world.chunk.section.BlockSection
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
+import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.logic.LogicUtil
 
 object StateWriterSystem: EntityTickingSystem<ChunkStore>() {
@@ -44,7 +45,16 @@ object StateWriterSystem: EntityTickingSystem<ChunkStore>() {
                 val newType = type.getBlockKeyForState(targetState) ?:
                     run { DieselPlugin.LOGGER.atInfo().log("State $targetState not found?"); return }
 
-                blockChunk.setBlock(localX, localY, localZ, BlockType.getAssetMap().getIndex(newType), 0, 0)
+                val sectionIndex = ChunkUtil.indexSection(localY)
+                val section = blockChunk.getSectionAtIndex(sectionIndex)
+
+
+                blockChunk.setBlock(
+                    localX, localY, localZ,
+                    BlockType.getAssetMap().getIndex(newType),
+                    section.getRotationIndex(info.index),
+                    section.getFiller(info.index)
+                )
             }
         }
     }
