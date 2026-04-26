@@ -11,12 +11,12 @@ import io.github.hytalekt.kytale.codec.buildCodec
 class DieselResource: Resource<EntityStore?> {
     var deadPlayers = 0
 
-    fun broadcastMessage(accessor: ComponentAccessor<EntityStore?>, actor: DieselActor, text: String, duration: Float = 4f) {
+    fun broadcastMessage(accessor: ComponentAccessor<EntityStore?>, chain: String) {
         val world = accessor.externalData.world
         world.execute {
             world.playerRefs.forEach {
                 val player = accessor.getComponent(it.reference!!, DieselPlayerComponent.TYPE)
-                player?.showMessage(actor, text, duration)
+                player?.showMessage(chain)
             }
         }
     }

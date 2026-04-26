@@ -3,15 +3,13 @@ import { useData } from 'vt:@core/composables/useData';
 import { ref, computed, watch } from 'vue';
 import { getPlayerClasses } from './gameplayClasses';
 import { hueRotateHex, LightenDarkenColor } from './util';
-import { playDialogue } from './dialogue';
+import { playChain, playDialogue } from './dialogue';
 console.log("[DIESELGAME] INIT VUE HUD")
 
 
-const inputMessage = useData<string>("message","");
-const inputMessageActor = useData<string>("messageActor","fred");
-const inputMessageDuration = useData<number>("messageDuration",4);
-const inputMessageSplitBy = useData<string>("splitBy",' ');
-const inputOverlay = useData("current_overlay","none");
+
+const inputMessageChain = useData<string>("chain","");
+
 const inputDashes = useData("dashes",4);
 const inputObjective = useData<String>("objective","")
 const inputClass = useData<string>("class","scout");
@@ -50,31 +48,19 @@ const colors = computed(()=>{
 //Dialogue
 const displayMessage = ref('')
 const displayPortrait = ref('Img/portrait/none.png')
-watch(inputMessage,()=>{
-    let actor = inputMessageActor.value.toString().toLowerCase()
-    playDialogue({
-        text:inputMessage.value,
-        displayTextRef:displayMessage,
-        displayPortraitRef: displayPortrait,
-        duration:inputMessageDuration.value,
-        actor:actor,
-        splitBy:inputMessageSplitBy.value
-    })
+watch(inputMessageChain,()=>{
+    console.log("input message", inputMessageChain.value)
+    playChain(inputMessageChain.value, displayMessage, displayPortrait)
 })
 
 //Debug background
 const contentBg = ref('Img/empty.png')
 
 //gamer mode
-let i = 0;
-setInterval(()=>{
-    i++;
-    modifiedBaseColor.value = hueRotateHex(playerClass.value.baseColor,i)
-},10)
 
 </script>
 <template>
-    <!--Honestly I'm lazy and it's not like this is getting reused anywhere so who needs components really-->
+    <!--it's not like this is getting reused anywhere so who needs components really-->
 
     <!--===MISC UNDERLAYS===-->
     <Group :anchor="{ Left:-50,Bottom:-35,Top:-25,Width: 200, Height: 440 }" :background="'Img/left.png'"/>
@@ -123,6 +109,7 @@ x            :effect-height="100"
                     FontSize: 35,
                     FontName: 'Mono',
                     Wrap: true,
+                    RenderUppercase: true,
                     TextColor: colors.base
                 }"
             >

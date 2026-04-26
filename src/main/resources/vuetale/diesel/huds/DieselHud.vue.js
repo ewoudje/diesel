@@ -1,69 +1,56 @@
-import { defineComponent as M, computed as m, ref as _, watch as A, openBlock as l, createElementBlock as u, Fragment as b, createElementVNode as t, unref as p, toDisplayString as s, renderList as k } from "vue";
-import { useData as r } from "vt:@core/composables/useData";
-import { getPlayerClasses as z } from "./gameplayClasses.js";
-import { hueRotateHex as I, LightenDarkenColor as T } from "./util.js";
-import { playDialogue as D } from "./dialogue.js";
-const V = { anchor: { Left: 0, Top: 0 } }, w = ["background", "value"], U = { anchor: { Left: -20, Bottom: -50, Height: 100 } }, P = { anchor: { Left: -30, Bottom: 0, Width: 1e3, Height: 440 } }, j = ["background", "mask-texture-path"], O = ["background"], $ = ["el-style"], J = ["background"], K = ["background"], q = { anchor: { Top: 0, Right: -35 } }, Q = ["background"], X = ["el-style"], Y = ["el-style"], Z = { anchor: { Right: 0 } }, tt = ["background"], ot = ["background"], et = ["background"], nt = ["background"], at = ["background", "mask-texture-path"], rt = { anchor: { Left: 8 } }, lt = {
+import { defineComponent as B, computed as m, ref as _, watch as x, openBlock as r, createElementBlock as l, Fragment as b, createElementVNode as t, unref as g, toDisplayString as u, renderList as v } from "vue";
+import { useData as s } from "vt:@core/composables/useData";
+import { getPlayerClasses as E } from "./gameplayClasses.js";
+import { hueRotateHex as N, LightenDarkenColor as L } from "./util.js";
+import { playChain as S } from "./dialogue.js";
+const M = { anchor: { Left: 0, Top: 0 } }, z = ["background", "value"], A = { anchor: { Left: -20, Bottom: -50, Height: 100 } }, V = { anchor: { Left: -30, Bottom: 0, Width: 1e3, Height: 440 } }, U = ["background", "mask-texture-path"], D = ["background"], w = ["el-style"], P = ["background"], j = ["background"], O = { anchor: { Top: 0, Right: -35 } }, $ = ["background"], J = ["el-style"], K = ["el-style"], q = { anchor: { Right: 0 } }, Q = ["background"], X = ["background"], Y = ["background"], Z = ["background"], tt = ["background", "mask-texture-path"], ot = { anchor: { Left: 8 } }, et = {
   anchor: { Left: 2 },
   "el-style": {
     FontName: "Secondary"
   }
-}, ut = ["background"], st = ["background"], it = ["background", "mask-texture-path"], gt = { anchor: { Left: 8 } }, ht = {
+}, nt = ["background"], at = ["background"], rt = ["background", "mask-texture-path"], lt = { anchor: { Left: 8 } }, ut = {
   anchor: { Left: 2 },
   "el-style": {
     FontName: "Secondary"
   }
-}, pt = {
+}, it = {
   "el-style": {
     RenderUppercase: !0,
     FontName: "Mono"
   },
   anchor: { Top: 78 }
-}, dt = { anchor: { Right: -20, Bottom: -52 } }, ct = ["background"], mt = ["background", "mask-texture-path"], _t = ["background"], bt = ["anchor"], kt = ["el-style"], vt = ["anchor", "el-style"], ft = {
+}, st = { anchor: { Right: -20, Bottom: -52 } }, ht = ["background"], gt = ["background", "mask-texture-path"], pt = ["background"], dt = ["anchor"], ct = ["el-style"], mt = ["anchor", "el-style"], _t = {
   key: 1,
   anchor: { Top: -30 },
   "layout-mode": "Top"
-}, yt = ["el-style"], Gt = ["el-style"], d = /* @__PURE__ */ M({
+}, bt = ["el-style"], kt = ["el-style"], d = /* @__PURE__ */ B({
   __name: "DieselHud",
-  setup(C) {
+  setup(H) {
     console.log("[DIESELGAME] INIT VUE HUD");
-    const v = r("message", ""), W = r("messageActor", "fred"), R = r("messageDuration", 4), B = r("splitBy", " ");
-    r("current_overlay", "none");
-    const F = r("dashes", 4), x = r("objective", ""), E = r("class", "scout"), c = r("hotbarIdx", 0), S = r("health", 1), N = m(() => E.value.toLowerCase()), i = m(() => z()[N.value]), a = m(() => ({
-      ammo: r("ammo", 4),
-      o: i.value.hotbar[c.value]
-    })), f = _(null), e = m(() => {
-      let h = f.value ?? i.value.baseColor;
+    const k = s("chain", ""), I = s("dashes", 4), T = s("objective", ""), C = s("class", "scout"), c = s("hotbarIdx", 0), W = s("health", 1), R = m(() => C.value.toLowerCase()), h = m(() => E()[R.value]), a = m(() => ({
+      ammo: s("ammo", 4),
+      o: h.value.hotbar[c.value]
+    })), F = _(null), e = m(() => {
+      let p = F.value ?? h.value.baseColor;
       return {
-        base: h,
-        light: T(h, 200),
-        dark: T(h, -30),
-        alt: I(h, 40),
+        base: p,
+        light: L(p, 200),
+        dark: L(p, -30),
+        alt: N(p, 40),
         brass: "#c98d1c",
         screen: "#282624"
       };
-    }), y = _(""), G = _("Img/portrait/none.png");
-    A(v, () => {
-      let h = W.value.toString().toLowerCase();
-      D({
-        text: v.value,
-        displayTextRef: y,
-        displayPortraitRef: G,
-        duration: R.value,
-        actor: h,
-        splitBy: B.value
-      });
+    }), f = _(""), y = _("Img/portrait/none.png");
+    x(k, () => {
+      console.log("input message", k.value), S(k.value, f, y);
     });
-    const g = _("Img/empty.png");
-    let L = 0;
-    return setInterval(() => {
-      L++, f.value = I(i.value.baseColor, L);
-    }, 10), (h, o) => (l(), u(b, null, [
+    const i = _("Img/empty.png");
+    return (p, o) => (r(), l(b, null, [
       o[11] || (o[11] = t("Group", {
         anchor: { Left: -50, Bottom: -35, Top: -25, Width: 200, Height: 440 },
         background: "Img/left.png"
       }, null, -1)),
-      t("Group", V, [
+      t("Group", M, [
         o[0] || (o[0] = t("Group", { anchor: { Left: -100, Top: -90, Width: 640, Height: 500 } }, [
           t("Group", { background: "Img/top_left.png" })
         ], -1)),
@@ -75,37 +62,38 @@ const V = { anchor: { Left: 0, Top: 0 } }, w = ["background", "value"], U = { an
           x: "",
           "effect-height": 100,
           "effect-width": 100,
-          value: 1 - p(S),
+          value: 1 - g(W),
           alignment: "Vertical",
           direction: "End"
-        }, null, 8, w),
+        }, null, 8, z),
         o[1] || (o[1] = t("Group", {
           anchor: { Left: -100, Top: -90, Width: 640, Height: 500 },
           background: "Img/top_left_shine.png"
         }, null, -1))
       ]),
-      t("Group", U, [
-        t("Group", P, [
+      t("Group", A, [
+        t("Group", V, [
           o[2] || (o[2] = t("Group", { background: "Img/bottom_left_wide.png" }, null, -1)),
           t("Group", {
             anchor: { Left: 60, Bottom: 22, Width: 320, Height: 320 },
             background: { Color: e.value.base },
-            "mask-texture-path": G.value
-          }, null, 8, j)
+            "mask-texture-path": y.value
+          }, null, 8, U)
         ]),
         t("Group", {
           anchor: { Left: 400, Bottom: 100, Width: 530, Height: 100 },
-          background: g.value
+          background: i.value
         }, [
           t("Label", {
             "el-style": {
               FontSize: 35,
               FontName: "Mono",
               Wrap: !0,
+              RenderUppercase: !0,
               TextColor: e.value.base
             }
-          }, s(y.value), 9, $)
-        ], 8, O),
+          }, u(f.value), 9, w)
+        ], 8, D),
         o[3] || (o[3] = t("Label", { "el-style": { FontSize: 1 } }, null, -1)),
         o[4] || (o[4] = t("Group", {
           anchor: { Left: -30, Bottom: 0, Width: 1e3, Height: 440 },
@@ -113,24 +101,24 @@ const V = { anchor: { Left: 0, Top: 0 } }, w = ["background", "value"], U = { an
         }, null, -1)),
         t("Group", {
           anchor: { Left: 350, Bottom: 198, Height: 100, Width: 200 },
-          background: g.value,
+          background: i.value,
           "layout-mode": "Left"
         }, [
-          (l(!0), u(b, null, k(i.value.maxDashes, (H, n) => (l(), u("Group", {
+          (r(!0), l(b, null, v(h.value.maxDashes, (G, n) => (r(), l("Group", {
             key: n,
             anchor: { Width: 48, Height: 48, Left: 20 },
-            background: n < p(F) ? "Img/charge_on.png" : "Img/charge_off.png",
+            background: n < g(I) ? "Img/charge_on.png" : "Img/charge_off.png",
             "mask-texture-path": "Img/mask/button.png"
-          }, null, 8, K))), 128))
-        ], 8, J)
+          }, null, 8, j))), 128))
+        ], 8, P)
       ]),
-      t("Group", q, [
+      t("Group", O, [
         o[5] || (o[5] = t("Group", { anchor: { Top: 0, Right: 80, Width: 700, Height: 220 } }, [
           t("Group", { background: "Img/top_right.png" })
         ], -1)),
         t("Group", {
           anchor: { Top: 20, Right: 180, Width: 580, Height: 90 },
-          background: g.value
+          background: i.value
         }, [
           t("Label", {
             anchor: { Left: 380, Top: 10 },
@@ -139,7 +127,7 @@ const V = { anchor: { Left: 0, Top: 0 } }, w = ["background", "value"], U = { an
               FontName: "Mono",
               TextColor: e.value.base
             }
-          }, " OBJECTIVE ", 8, X),
+          }, " OBJECTIVE ", 8, J),
           t("Label", {
             padding: { Full: 10 },
             "el-style": {
@@ -149,51 +137,51 @@ const V = { anchor: { Left: 0, Top: 0 } }, w = ["background", "value"], U = { an
               TextColor: e.value.base,
               Alignment: "End"
             }
-          }, s(p(x)), 9, Y)
-        ], 8, Q),
+          }, u(g(T)), 9, K)
+        ], 8, $),
         o[6] || (o[6] = t("Group", {
           anchor: { Top: 0, Right: 80, Width: 700, Height: 220 },
           background: "Img/top_right_shine.png"
         }, null, -1))
       ]),
-      t("Group", Z, [
+      t("Group", q, [
         o[8] || (o[8] = t("Group", {
           anchor: { Right: -180, Top: -10, Bottom: 1, Width: 320 },
           background: "Img/right.png"
         }, null, -1)),
         t("Group", {
           anchor: { Right: 0, Top: 0, Bottom: 0, Width: 120 },
-          background: g.value,
+          background: i.value,
           "layout-mode": "Top"
         }, [
-          (l(!0), u(b, null, k(i.value.hotbar, (H, n) => (l(), u("Group", {
+          (r(!0), l(b, null, v(h.value.hotbar, (G, n) => (r(), l("Group", {
             key: n,
             anchor: { Left: 0, Top: 22, Width: 100, Height: 100 },
-            background: p(c) == n ? "Img/button_on_overlay.png" : "Img/button_off_overlay.png",
+            background: g(c) == n ? "Img/button_on_overlay.png" : "Img/button_off_overlay.png",
             "mask-texture-path": "Img/mask/button.png"
           }, [
             t("Group", {
               background: { Color: `${e.value.base}(0.5)` }
-            }, null, 8, et),
+            }, null, 8, Y),
             t("Group", {
-              background: p(c) == n ? "Img/button_on_top_overlay.png" : "Img/empty.png"
-            }, null, 8, nt),
+              background: g(c) == n ? "Img/button_on_top_overlay.png" : "Img/empty.png"
+            }, null, 8, Z),
             t("Group", {
               anchor: { Width: 60, Height: 60 },
-              background: p(c) == n ? { Color: e.value.dark } : { Color: e.value.light },
-              "mask-texture-path": i.value.hotbar[n]?.iconPath
-            }, null, 8, at),
-            t("Group", rt, [
-              t("Label", lt, s(n + 1) + "/" + s(i.value.hotbar[n]?.name), 1)
+              background: g(c) == n ? { Color: e.value.dark } : { Color: e.value.light },
+              "mask-texture-path": h.value.hotbar[n]?.iconPath
+            }, null, 8, tt),
+            t("Group", ot, [
+              t("Label", et, u(n + 1) + "/" + u(h.value.hotbar[n]?.name), 1)
             ])
-          ], 8, ot))), 128))
-        ], 8, tt),
+          ], 8, X))), 128))
+        ], 8, Q),
         t("Group", {
           anchor: { Right: 0, Top: 280, Bottom: 0, Width: 120 },
-          background: g.value,
+          background: i.value,
           "layout-mode": "Top"
         }, [
-          (l(!0), u(b, null, k(a.value.o?.abilities, (H, n) => (l(), u("Group", {
+          (r(!0), l(b, null, v(a.value.o?.abilities, (G, n) => (r(), l("Group", {
             key: n,
             anchor: { Left: 0, Top: 22, Width: 100, Height: 100 },
             background: "Img/button_off_overlay.png",
@@ -201,39 +189,39 @@ const V = { anchor: { Left: 0, Top: 0 } }, w = ["background", "value"], U = { an
           }, [
             t("Group", {
               background: { Color: `${e.value.alt}(0.3)` }
-            }, null, 8, st),
+            }, null, 8, at),
             o[7] || (o[7] = t("Group", { background: "Img/empty.png" }, null, -1)),
             t("Group", {
               anchor: { Width: 60, Height: 60 },
               background: { Color: e.value.light },
               "mask-texture-path": a.value.o?.abilities[n]?.iconPath
-            }, null, 8, it),
-            t("Group", gt, [
-              t("Label", ht, s(a.value.o?.abilities[n].name), 1),
-              t("Label", pt, s(a.value.o?.abilities[n].keybind), 1)
+            }, null, 8, rt),
+            t("Group", lt, [
+              t("Label", ut, u(a.value.o?.abilities[n].name), 1),
+              t("Label", it, u(a.value.o?.abilities[n].keybind), 1)
             ])
           ]))), 128))
-        ], 8, ut)
+        ], 8, nt)
       ]),
-      t("Group", dt, [
+      t("Group", st, [
         o[9] || (o[9] = t("Group", { anchor: { Bottom: 0, Right: -90, Width: 800, Height: 450 } }, [
           t("Group", { background: "Img/bottom_right.png" })
         ], -1)),
         t("Group", {
           anchor: { Right: 250, Bottom: 0, Width: 400, Height: 150 },
-          background: g.value
+          background: i.value
         }, [
           t("Group", {
             anchor: { Left: -20, Bottom: 62, Width: 400, Height: 130 },
             background: { Color: e.value.base },
             "mask-texture-path": a.value.o?.previewPath
-          }, null, 8, mt)
-        ], 8, ct),
+          }, null, 8, gt)
+        ], 8, ht),
         t("Group", {
           anchor: { Width: 600, Height: 300, Right: -90, Bottom: 30 },
-          background: g.value
+          background: i.value
         }, [
-          a.value.o?.maxAmmo ? (l(), u("Group", {
+          a.value.o?.maxAmmo ? (r(), l("Group", {
             key: 0,
             anchor: { Top: 30, Left: a.value.ammo.value < 10 ? -15 : 40 }
           }, [
@@ -248,7 +236,7 @@ const V = { anchor: { Left: 0, Top: 0 } }, w = ["background", "value"], U = { an
                 Wrap: !1,
                 TextColor: e.value.base
               }
-            }, s(a.value.ammo), 9, kt),
+            }, u(a.value.ammo), 9, ct),
             t("Label", {
               anchor: a.value.ammo.value < 10 ? { Top: -10, Right: 80, Width: 300, Height: 200 } : { Top: 60, Left: 0, Right: 0, Width: 300, Height: 200 },
               padding: { Full: 20 },
@@ -261,8 +249,8 @@ const V = { anchor: { Left: 0, Top: 0 } }, w = ["background", "value"], U = { an
                 Wrap: !1,
                 TextColor: e.value.base
               }
-            }, s(a.value.o?.maxAmmo), 9, vt)
-          ], 8, bt)) : (l(), u("Group", ft, [
+            }, u(a.value.o?.maxAmmo), 9, mt)
+          ], 8, dt)) : (r(), l("Group", _t, [
             t("Label", {
               anchor: { Top: 30, Left: 50, Right: 0, Height: 200 },
               padding: { Full: 20 },
@@ -275,7 +263,7 @@ const V = { anchor: { Left: 0, Top: 0 } }, w = ["background", "value"], U = { an
                 TextColor: e.value.base
               },
               '"': ""
-            }, "ME", 8, yt),
+            }, "ME", 8, bt),
             t("Label", {
               anchor: { Top: -30, Left: 50, Right: 0, Height: 10 },
               padding: { Full: 20 },
@@ -288,9 +276,9 @@ const V = { anchor: { Left: 0, Top: 0 } }, w = ["background", "value"], U = { an
                 TextColor: e.value.base
               },
               '"': ""
-            }, "LEE", 8, Gt)
+            }, "LEE", 8, kt)
           ]))
-        ], 8, _t),
+        ], 8, pt),
         o[10] || (o[10] = t("Group", {
           anchor: { Bottom: 0, Right: -90, Width: 800, Height: 450 },
           background: "Img/bottom_right_shine.png"
@@ -305,4 +293,4 @@ typeof __VUE_HMR_RUNTIME__ < "u" && (__VUE_HMR_RUNTIME__.createRecord(d.__hmrId,
 export {
   d as default
 };
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiRGllc2VsSHVkLnZ1ZS5qcyIsInNvdXJjZXMiOltdLCJzb3VyY2VzQ29udGVudCI6W10sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7In0=
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiRGllc2VsSHVkLnZ1ZS5qcyIsInNvdXJjZXMiOltdLCJzb3VyY2VzQ29udGVudCI6W10sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7In0=

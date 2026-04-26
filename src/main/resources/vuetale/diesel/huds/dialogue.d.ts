@@ -1,10 +1,13 @@
 import type { Ref } from "vue";
-declare function playDialogue({ text, displayTextRef, displayPortraitRef, duration, actor, splitBy }: {
+declare function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, chainObj, chainIndex, chainDelay }: {
     text: string;
     displayTextRef: Ref;
     displayPortraitRef: Ref;
-    duration: number;
+    speed: number;
     actor: string;
-    splitBy: string;
+    chainObj: (number | string)[][];
+    chainIndex: number;
+    chainDelay: number;
 }): void;
-export { playDialogue };
+declare function playChain(chainName: string, displayTextRef: Ref, displayPortraitRef: Ref): void;
+export { playChain, playDialogue };
