@@ -28,6 +28,8 @@ import org.jline.builtins.Commands;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 import static java.lang.Math.round;
 
@@ -57,6 +59,12 @@ public class DieselHud {
                 "diesel",
                 "DieselHud"
         );
+
+        //ui.setData("testFn", (Consumer<String>) (s) -> {System.out.println(s);});
+    }
+
+    private void testFn(String id){
+        System.out.println(id);
     }
 
 private int counter = 0;
@@ -89,11 +97,9 @@ private int counter = 0;
             //ui.setHudData("fn",showMessage(););
     }
 
-    public void showMessage(@NotNull DieselActor actor, @NotNull String text, float duration) {
-        ui.setHudData("message", text);
-        ui.setHudData("messageActor", actor);
-        ui.setHudData("messageDuration", duration);
-        //ui.setHudData("health", 0.8);
+    public void showMessage(@NotNull String chain) {
+        ui.setHudData("chain", chain);
+
     }
 
 

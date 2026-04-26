@@ -10,8 +10,8 @@ class DieselPlayerComponent: Component<EntityStore?> {
     var playerClass: PlayerClass? = null
     var hud: DieselHud? = null
 
-    fun showMessage(actor: DieselActor, text: String, duration: Float = 4f) {
-        hud!!.showMessage(actor, text, duration)
+    fun showMessage(chain: String) {
+        hud!!.showMessage(chain)
     }
 
     override fun clone(): Component<EntityStore?> = DieselPlayerComponent()

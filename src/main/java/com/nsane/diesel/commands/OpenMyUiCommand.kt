@@ -18,9 +18,8 @@ import javax.annotation.Nonnull
 
 
 class OpenMyUiCommand : AbstractPlayerCommand("dieselmessage", "test msg") {
-    private val message: OptionalArg<String> = withOptionalArg("message", "message", ArgTypes.STRING)
-    private val actor: OptionalArg<String> = withOptionalArg("actor", "actor", ArgTypes.STRING)
-    private val delay: OptionalArg<Int> = withOptionalArg("delay", "word delay", ArgTypes.INTEGER)
+    private val chain: OptionalArg<String> = withOptionalArg("chain", "message chain id", ArgTypes.STRING)
+
 
     protected override fun execute(
         @Nonnull commandContext: CommandContext,
@@ -29,11 +28,8 @@ class OpenMyUiCommand : AbstractPlayerCommand("dieselmessage", "test msg") {
         @Nonnull playerRef: PlayerRef,
         @Nonnull world: World
     ) {
-        System.out.println(message.get(commandContext))
-
+        System.out.println(chain.get(commandContext))
         val diesel = store.getResource(DieselResource.TYPE)
-
-    diesel.broadcastMessage(store, DieselActor.FRED,message.get(commandContext),5f)
-
+        diesel.broadcastMessage(store, chain.get(commandContext))
     }
 }

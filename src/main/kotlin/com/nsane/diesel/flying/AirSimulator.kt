@@ -33,9 +33,9 @@ class AirSimulator: Resource<EntityStore?> {
         if (Random.nextDouble() < 0.4) {
             val resource = accessor.getResource(DieselResource.TYPE)
             if (Random.nextDouble() < 0.3)
-                resource.broadcastMessage(accessor, DieselActor.SOD, "planeDown")
+                resource.broadcastMessage(accessor,  "planeDownSod")
             else
-                resource.broadcastMessage(accessor, DieselActor.FRED, "planeDown")
+                resource.broadcastMessage(accessor,  "planeDownFred")
         }
 
         if (stage is WaveStage)
@@ -46,9 +46,9 @@ class AirSimulator: Resource<EntityStore?> {
         if (Random.nextDouble() < 0.3) {
             val resource = accessor.getResource(DieselResource.TYPE)
             if (Random.nextDouble() < 0.3)
-                resource.broadcastMessage(accessor, DieselActor.SOD, "heliDown")
+                resource.broadcastMessage(accessor,  "heliDownSod")
             else
-                resource.broadcastMessage(accessor, DieselActor.FRED, "heliDown")
+                resource.broadcastMessage(accessor,  "heliDownFred")
         }
 
         if (stage is WaveStage)
