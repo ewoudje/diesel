@@ -8,10 +8,13 @@ import com.hypixel.hytale.component.system.EntityEventSystem
 import com.hypixel.hytale.component.system.EventSystem
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem
 import com.hypixel.hytale.server.core.Message
+import com.hypixel.hytale.server.core.asset.type.model.config.Model
+import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset
 import com.hypixel.hytale.server.core.entity.entities.Player
 import com.hypixel.hytale.server.core.event.events.ecs.SwitchActiveSlotEvent
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent
 import com.hypixel.hytale.server.core.inventory.InventoryComponent
+import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent
 import com.hypixel.hytale.server.core.universe.PlayerRef
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
@@ -31,10 +34,13 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
 
         store.ensureComponent(event.playerRef, DieselPlayerComponent.TYPE)
 
+        val modelAsset = ModelAsset.getAssetMap().getAsset("Prole")!!
+        val model = Model.createScaledModel(modelAsset, 1.0f)
         val playersResource = store.getResource(DieselResource.TYPE)
         val playerComponent = store.getComponent(event.playerRef, DieselPlayerComponent.TYPE) ?: throw IllegalArgumentException()
         val hudManager = event.player.hudManager
         playerComponent.playerClass = PlayerClass.SCOUT
+        store.replaceComponent(event.playerRef, ModelComponent.getComponentType(), ModelComponent(model))
 
         if (playerComponent.disable) return
 

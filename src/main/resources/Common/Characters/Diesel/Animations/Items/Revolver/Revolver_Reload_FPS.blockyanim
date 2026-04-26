@@ -586,76 +586,30 @@
       "shapeVisible": [],
       "shapeUvOffset": []
     },
-    "Cylinder": {
-      "position": [],
-      "orientation": [
+    "Slide": {
+      "position": [
         {
-          "time": 0,
-          "delta": {"x": 0, "y": 0, "z": 0, "w": 1},
-          "interpolationType": "linear"
+          "time": 105,
+          "delta": {"x": 0, "y": 0, "z": 0},
+          "interpolationType": "smooth"
         },
         {
-          "time": 8,
-          "delta": {"x": 0.70711, "y": 0, "z": 0, "w": 0.70711},
-          "interpolationType": "linear"
+          "time": 115,
+          "delta": {"x": 0, "y": -1.14805, "z": -2.77164},
+          "interpolationType": "smooth"
         },
         {
-          "time": 9,
-          "delta": {"x": 0, "y": 0, "z": 0, "w": 1},
-          "interpolationType": "linear"
+          "time": 130,
+          "delta": {"x": 0, "y": 0, "z": 0},
+          "interpolationType": "smooth"
+        },
+        {
+          "time": 135,
+          "delta": {"x": 0, "y": 0, "z": 0},
+          "interpolationType": "smooth"
         }
       ],
-      "shapeStretch": [],
-      "shapeVisible": [],
-      "shapeUvOffset": []
-    },
-    "Rings": {
-      "position": [],
-      "orientation": [
-        {
-          "time": 0,
-          "delta": {"x": 0, "y": 0, "z": 0, "w": 1},
-          "interpolationType": "linear"
-        },
-        {
-          "time": 4,
-          "delta": {"x": -0.70711, "y": 0, "z": 0, "w": 0.70711},
-          "interpolationType": "linear"
-        },
-        {
-          "time": 11,
-          "delta": {"x": 1, "y": 0, "z": 0, "w": 0},
-          "interpolationType": "linear"
-        },
-        {
-          "time": 21,
-          "delta": {"x": 0.70711, "y": 0, "z": 0, "w": 0.70711},
-          "interpolationType": "linear"
-        },
-        {
-          "time": 28,
-          "delta": {"x": 0.04362, "y": 0, "z": 0, "w": 0.99905},
-          "interpolationType": "linear"
-        },
-        {
-          "time": 29,
-          "delta": {"x": 0, "y": 0, "z": 0, "w": 1},
-          "interpolationType": "linear"
-        }
-      ],
-      "shapeStretch": [],
-      "shapeVisible": [],
-      "shapeUvOffset": []
-    },
-    "Origin_Item": {
-      "position": [],
-      "orientation": [
-        {
-          "time": 0,
-          "delta": {"x": 0, "y": 0.70711, "z": 0, "w": 0.70711},
-          "interpolationType": "linear"
-        }
-      ],
+      "orientation": [],
       "shapeStretch": [],
       "shapeVisible": [],
       "shapeUvOffset": []

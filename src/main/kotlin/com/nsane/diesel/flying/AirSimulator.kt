@@ -1,16 +1,21 @@
 package com.nsane.diesel.flying
 
+import com.hypixel.hytale.codec.Codec
+import com.hypixel.hytale.component.CommandBuffer
 import com.hypixel.hytale.component.ComponentAccessor
+import com.hypixel.hytale.component.Ref
 import com.hypixel.hytale.component.Resource
 import com.hypixel.hytale.math.shape.Box
 import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.math.vector.Vector3f
+import com.hypixel.hytale.server.core.entity.entities.Player
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselActor
 import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.flying.stage.Stage
 import com.nsane.diesel.flying.stage.WaveStage
 import com.nsane.diesel.player.DieselResource
+import com.nsane.diesel.projectiles.DieselProjectileComponent
 import io.github.hytalekt.kytale.codec.buildCodec
 import kotlin.random.Random
 
@@ -59,15 +64,54 @@ class AirSimulator: Resource<EntityStore?> {
         it.stage = stage
         it.velocityModifier = velocityModifier
         it.distanceTraveled = distanceTraveled
+        it.shipHealth = shipHealth
         it.worldInShipPosition.assign(worldInShipPosition)
         it.shipPosition.assign(shipPosition)
         it.shipVelocity.assign(shipVelocity)
         it.shipRotation.assign(shipRotation)
     }
 
+    fun bulletHitBlock(
+        commands: ComponentAccessor<EntityStore?>,
+        ref: Ref<EntityStore?>,
+        projectile: DieselProjectileComponent
+    ) {
+        if (commands.getComponent(projectile.owner!!, Player.getComponentType()) != null) return
+
+        shipHealth--
+    }
+
     companion object {
         val CODEC = buildCodec(::AirSimulator) {
+            addField("VelocityModifier", Codec.DOUBLE) {
+                getter { velocityModifier }
+                setter { velocityModifier = it}
+            }
 
+            addField("DistanceTraveled", Codec.DOUBLE) {
+                getter { distanceTraveled }
+                setter { distanceTraveled = it}
+            }
+
+            addField("ShipHealth", Codec.DOUBLE) {
+                getter { shipHealth }
+                setter { shipHealth = it}
+            }
+
+            addField("ShipPosition", Vector3d.CODEC) {
+                getter { shipPosition }
+                setter { shipPosition.assign(it) }
+            }
+
+            addField("ShipVelocity", Vector3d.CODEC) {
+                getter { shipVelocity }
+                setter { shipVelocity.assign(it) }
+            }
+
+            addField("ShipRotation", Vector3f.CODEC) {
+                getter { shipRotation }
+                setter { shipRotation.assign(it) }
+            }
         }
 
         val TYPE by lazy { DieselPlugin.getResource(AirSimulator::class.java) }

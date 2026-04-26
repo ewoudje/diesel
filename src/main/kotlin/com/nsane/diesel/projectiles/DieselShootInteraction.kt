@@ -41,7 +41,6 @@ import kotlin.random.Random
 class DieselShootInteraction: ProjectileInteraction() {
     var projectileType: String? = null
     var offset: Vector3d = Vector3d(0.0, 0.0, 0.0)
-    var magazineId: String? = null
 
     override fun getConfig(): ProjectileConfig? {
         config = DieselProjectileType.ASSET_STORE.assetMap.getAsset(projectileType)!!.configKey
@@ -188,20 +187,13 @@ class DieselShootInteraction: ProjectileInteraction() {
                 { self: DieselShootInteraction -> self.projectileType },
                 { o, p -> o.projectileType = p.projectileType }
             )
-            .addValidator(DieselProjectileType.VALIDATOR.validator)
+            .addValidatorLate { DieselProjectileType.VALIDATOR.validator.late() }
             .add()
             .appendInherited(
                 KeyedCodec<Vector3d>("Offset", Vector3d.CODEC),
                 { self: DieselShootInteraction, i: Vector3d -> self.offset = i },
                 { self: DieselShootInteraction -> self.offset },
                 { o, p -> o.offset = p.offset }
-            )
-            .add()
-            .appendInherited(
-                KeyedCodec<String>("MagazineId", Codec.STRING),
-                { self: DieselShootInteraction, i: String -> self.magazineId = i },
-                { self: DieselShootInteraction -> self.magazineId },
-                { o, p -> o.magazineId = p.magazineId }
             )
             .add()
             .build()
