@@ -68,6 +68,7 @@ public class DieselHud {
         LevelManager levelManager = commands.getResource(LevelManager.Companion.getTYPE());
         Player player = commands.getComponent(ref, Player.getComponentType());
         PlayerRef playerRef = commands.getComponent(ref, PlayerRef.getComponentType());
+        TurretComponent turret = commands.getComponent(ref, TurretComponent.INSTANCE.getTYPE());
         DieselPlayerComponent dieselPlayer = commands.getComponent(ref, DieselPlayerComponent.Companion.getTYPE());
         EntityStatMap entityStatMapComponent = commands.getComponent(ref, EntityStatMap.getComponentType());
         EntityStatValue healthValue = entityStatMapComponent.get(DefaultEntityStatTypes.getHealth());
@@ -100,9 +101,10 @@ public class DieselHud {
             ui.setHudData("objective", levelManager.getCurrentLevel().getObjective());
         } else ui.setHudData("objective", "Loading...");
         int slot = player.getInventory().getActiveHotbarSlot();
+        String clazz = turret != null ? "turret" : dieselPlayer.getPlayerClass().toString();
 
         ui.setHudData("dashes", dashCharges);
-        ui.setHudData("class", dieselPlayer.getPlayerClass().toString());
+        ui.setHudData("class", clazz);
         ui.setHudData("hotbarIdx", slot > 1 ? slot > 6 ? 0 : 1 : slot);
         ui.setHudData("ammo", ammo.get());
         ui.setHudData("health", healthValue.asPercentage());
@@ -110,9 +112,7 @@ public class DieselHud {
 
     public void showMessage(@NotNull String chain) {
         ui.setHudData("chain", chain);
-
     }
-
 
     public void die() {
         ui.closeHud();

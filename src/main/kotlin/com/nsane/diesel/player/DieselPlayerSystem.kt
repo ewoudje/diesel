@@ -64,14 +64,7 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
             var4: Store<EntityStore?>,
             buffer: CommandBuffer<EntityStore?>
         ) {
-            val playerComponent = chunk.getComponent(idx, DieselPlayerComponent.TYPE) ?: throw IllegalArgumentException()
-            if (!playerComponent.disable) {
-                val player = chunk.getComponent(idx, Player.getComponentType()) ?: throw IllegalArgumentException()
-                val slot = player.inventory.activeHotbarSlot
-                if (slot > 1) {
-                    player.inventory.setActiveHotbarSlot(chunk.getReferenceTo(idx), if (slot > 6) 0 else 1, buffer)
-                }
-            }
+
         }
     }
 
@@ -83,6 +76,17 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
         commands: CommandBuffer<EntityStore?>
     ) {
         val player = chunk.getComponent(idx, DieselPlayerComponent.TYPE)!!
+        if (!player.disable) {
+            val turret = chunk.getComponent(idx, TurretComponent.TYPE)
+            val player = chunk.getComponent(idx, Player.getComponentType()) ?: throw IllegalArgumentException()
+            val slot = player.inventory.activeHotbarSlot
+            if (turret != null && slot != 0.toByte()) {
+                player.inventory.setActiveHotbarSlot(chunk.getReferenceTo(idx), 0, commands)
+            } else if (slot > 1) {
+                player.inventory.setActiveHotbarSlot(chunk.getReferenceTo(idx), if (slot > 6) 0 else 1, commands)
+            }
+        }
+
         player.hud?.onTick(commands, chunk.getReferenceTo(idx), dt)
     }
 
