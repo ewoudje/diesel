@@ -188,20 +188,13 @@ class DieselShootInteraction: ProjectileInteraction() {
                 { self: DieselShootInteraction -> self.projectileType },
                 { o, p -> o.projectileType = p.projectileType }
             )
-            .addValidator(DieselProjectileType.VALIDATOR.validator)
+            .addValidatorLate { DieselProjectileType.VALIDATOR.validator.late() }
             .add()
             .appendInherited(
                 KeyedCodec<Vector3d>("Offset", Vector3d.CODEC),
                 { self: DieselShootInteraction, i: Vector3d -> self.offset = i },
                 { self: DieselShootInteraction -> self.offset },
                 { o, p -> o.offset = p.offset }
-            )
-            .add()
-            .appendInherited(
-                KeyedCodec<String>("MagazineId", Codec.STRING),
-                { self: DieselShootInteraction, i: String -> self.magazineId = i },
-                { self: DieselShootInteraction -> self.magazineId },
-                { o, p -> o.magazineId = p.magazineId }
             )
             .add()
             .build()

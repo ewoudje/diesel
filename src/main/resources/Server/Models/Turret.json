@@ -1,0 +1,37 @@
+{
+  "Parent": "Player",
+  "Model": "NPC/Diesel/Models/Character/Player_AA.blockymodel",
+  "Texture": "NPC/Diesel/Models/Character/Player_AA.png",
+  "HitBox": {
+    "Max": {
+      "X": 0.3,
+      "Y": 1.7,
+      "Z": 0.3
+    },
+    "Min": {
+      "X": -0.3,
+      "Y": 0,
+      "Z": -0.3
+    }
+  },
+  "DefaultAttachments": [
+  ],
+  "AnimationSets": {
+    "Reload": {
+      "Animations": [
+        {
+          "Animation": "Characters/Diesel/Animations/Items/AA/Reload.blockyanim",
+          "Speed": 1
+        }
+      ]
+    },
+    "Volley": {
+      "Animations": [
+        {
+          "Animation": "Characters/Diesel/Animations/Items/AA/Volleyfire.blockyanim",
+          "Speed": 1
+        }
+      ]
+    }
+  }
+}
