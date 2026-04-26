@@ -18,6 +18,8 @@ import com.hypixel.hytale.server.core.universe.world.SoundUtil;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.nsane.diesel.DieselActor;
 import com.nsane.diesel.level.LevelManager;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntList;
 import li.kelp.vuetale.app.PlayerUi;
 import li.kelp.vuetale.app.PlayerUiManager;
 import org.jetbrains.annotations.NotNull;
@@ -46,6 +48,8 @@ public class DieselHud {
     }
 
     private final PlayerUi ui;
+    private final IntList sounds = new IntArrayList();
+    private double currentTime = 0.0;
 
     public DieselHud(Store<EntityStore> store, Ref<EntityStore> ref) {
         ui = PlayerUiManager.INSTANCE.openHud(
@@ -56,33 +60,15 @@ public class DieselHud {
                 "DieselHud"
         );
         ui.setHudData("playSound", (Consumer<String>) (s) -> {
-            playSound(s, store, ref, 1, 1);
-        });
-
-    }
-    private void playSound(String id, Store<EntityStore> store, Ref<EntityStore> ref, float vol, float pitch) {
-
-        store.getExternalData().getWorld().execute(() -> {
-            System.out.println("playSound");
-
-            int soundIndex = SoundEvent.getAssetMap().getIndex("Voice_"+id); //ignore id for now
-            SoundUtil.playSoundEvent2dToPlayer(store.getComponent(ref, PlayerRef.getComponentType()),soundIndex,SoundCategory.SFX,1,1);
-            /*SoundUtil.playLocalPlayerSoundEvent(
-                    store.getComponent(ref, PlayerRef.getComponentType()),
-                    soundIndex,0,
-                    SoundCategory.SFX, vol, pitch
-            );*/
+            synchronized (sounds) {
+                sounds.add(SoundEvent.getAssetMap().getIndex("Voice_" + s));
+            }
         });
     }
-    @FunctionalInterface
-    interface SoundConsumer {
-        void accept(String s, int[] arr, int a, int b);
-    }
-
-private int counter = 0;
-    public void onTick(@NotNull CommandBuffer<EntityStore> commands, Ref<EntityStore> ref) {
+    public void onTick(@NotNull CommandBuffer<EntityStore> commands, Ref<EntityStore> ref, float dt) {
         LevelManager levelManager = commands.getResource(LevelManager.Companion.getTYPE());
         Player player = commands.getComponent(ref, Player.getComponentType());
+        PlayerRef playerRef = commands.getComponent(ref, PlayerRef.getComponentType());
         DieselPlayerComponent dieselPlayer = commands.getComponent(ref, DieselPlayerComponent.Companion.getTYPE());
         EntityStatMap entityStatMapComponent = commands.getComponent(ref, EntityStatMap.getComponentType());
         EntityStatValue healthValue = entityStatMapComponent.get(DefaultEntityStatTypes.getHealth());
@@ -90,6 +76,17 @@ private int counter = 0;
         InteractionManager interactionManager = commands.getComponent(ref, InteractionModule.get().getInteractionManagerComponent());
         int dashCharges;
 
+        synchronized (sounds) {
+            for (int s : sounds) {
+                SoundUtil.playLocalPlayerSoundEvent(
+                        playerRef,
+                        s,
+                        0,
+                        SoundCategory.SFX
+                );
+            }
+            sounds.clear();
+        }
 
         try {
             CooldownHandler cooldownHandler = (CooldownHandler) this.cooldownHandler.get(interactionManager);
@@ -110,9 +107,9 @@ private int counter = 0;
         ui.setHudData("hotbarIdx", slot > 1 ? slot > 6 ? 0 : 1 : slot);
         ui.setHudData("ammo", ammo.get());
         ui.setHudData("health", healthValue.asPercentage());
-        //ui.setHudData("myFn", (customParam: 'pepes') -> player.kill(customParam)
-        //ui.setHudData("fn",showMessage(););
+        ui.setHudData("current_time", currentTime);
 
+        currentTime += dt;
     }
 
     public void showMessage(@NotNull String chain) {

@@ -77,7 +77,7 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
         commands: CommandBuffer<EntityStore?>
     ) {
         val player = chunk.getComponent(idx, DieselPlayerComponent.TYPE)!!
-        player.hud?.onTick(commands, chunk.getReferenceTo(idx))
+        player.hud?.onTick(commands, chunk.getReferenceTo(idx), dt)
     }
 
     override fun getQuery(): Query<EntityStore?>? = DieselPlayerComponent.TYPE
