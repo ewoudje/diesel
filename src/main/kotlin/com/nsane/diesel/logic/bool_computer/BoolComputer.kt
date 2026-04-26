@@ -26,7 +26,11 @@ class BoolComputer(override var id: String = "") : LogicComponent<ChunkStore?> {
         selfRef: Ref<ChunkStore?>
     ): CustomUIPage = BoolComputerPage(playerRef, selfRef)
 
-    override fun clone(): Component<ChunkStore?> = BoolComputer(id)
+    override fun clone(): Component<ChunkStore?> = BoolComputer(id).also {
+        it.entries = entries.clone()
+        it.operator = operator
+        it.result = result
+    }
 
     companion object {
         val CODEC = buildCodec(::BoolComputer) {

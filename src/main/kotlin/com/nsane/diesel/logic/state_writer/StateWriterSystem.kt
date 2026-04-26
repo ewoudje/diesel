@@ -5,12 +5,15 @@ import com.hypixel.hytale.component.CommandBuffer
 import com.hypixel.hytale.component.Store
 import com.hypixel.hytale.component.query.Query
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem
+import com.hypixel.hytale.function.consumer.TriIntConsumer
 import com.hypixel.hytale.math.util.ChunkUtil
+import com.hypixel.hytale.math.vector.Vector3i
+import com.hypixel.hytale.server.core.asset.type.blockhitbox.BlockBoundingBoxes
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType
 import com.hypixel.hytale.server.core.modules.block.BlockModule
 import com.hypixel.hytale.server.core.universe.world.chunk.BlockChunk
-import com.hypixel.hytale.server.core.universe.world.chunk.section.BlockSection
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
+import com.hypixel.hytale.server.core.util.FillerBlockUtil
 import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.logic.LogicUtil
 
@@ -42,19 +45,42 @@ object StateWriterSystem: EntityTickingSystem<ChunkStore>() {
                 val targetState = stateWriter.entries.entryStates[i]
                 if (targetState == (type.getStateForBlock(type) ?: "default")) return
 
-                val newType = type.getBlockKeyForState(targetState) ?:
+                val newType = type.getBlockForState(targetState) ?:
                     run { DieselPlugin.LOGGER.atInfo().log("State $targetState not found?"); return }
 
+                val world = store.externalData.world
                 val sectionIndex = ChunkUtil.indexSection(localY)
                 val section = blockChunk.getSectionAtIndex(sectionIndex)
+                val sectionIdx = ChunkUtil.indexBlock(localX, localY, localZ)
+                val rotation = section.getRotationIndex(sectionIdx)
+                val x = localX + blockChunk.x * 32
+                val z = localZ + blockChunk.z * 32
 
+                world.setBlockInteractionState(Vector3i(x, localY, z), type, targetState)
 
-                blockChunk.setBlock(
-                    localX, localY, localZ,
-                    BlockType.getAssetMap().getIndex(newType),
-                    section.getRotationIndex(info.index),
-                    section.getFiller(info.index)
-                )
+                BlockBoundingBoxes.getAssetMap().getAsset(type.getHitboxTypeIndex())?.let {
+                    FillerBlockUtil.forEachFillerBlock(
+                        it.get(rotation)
+                    ) { xP: Int, yP: Int, zP: Int ->
+                        world.performBlockUpdate(
+                            x + xP,
+                            localY + yP,
+                            z + zP
+                        )
+                    }
+                }
+
+                BlockBoundingBoxes.getAssetMap().getAsset(newType.getHitboxTypeIndex())?.let {
+                    FillerBlockUtil.forEachFillerBlock(
+                        it.get(rotation)
+                    ) { xP: Int, yP: Int, zP: Int ->
+                        world.performBlockUpdate(
+                            x + xP,
+                            localY + yP,
+                            z + zP
+                        )
+                    }
+                }
             }
         }
     }
