@@ -6,7 +6,12 @@ import { hueRotateHex, LightenDarkenColor } from './util';
 import { playChain, playDialogue } from './dialogue';
 console.log("[DIESELGAME] INIT VUE HUD")
 
-
+const playSound = useData("playSound",()=>{});
+const soundToPlay = ref('');
+watch (soundToPlay,(sound: String)=>{
+    //@ts-ignore
+    playSound.value(sound);
+})
 
 const inputMessageChain = useData<string>("chain","");
 
@@ -41,7 +46,7 @@ const colors = computed(()=>{
         dark: LightenDarkenColor(startcolor,-30),
         alt: hueRotateHex(startcolor,40),
         brass: '#c98d1c',
-        screen: `#282624`,
+        screen: `#282623`,
     }
 })
 
@@ -50,7 +55,7 @@ const displayMessage = ref('')
 const displayPortrait = ref('Img/portrait/none.png')
 watch(inputMessageChain,()=>{
     console.log("input message", inputMessageChain.value)
-    playChain(inputMessageChain.value, displayMessage, displayPortrait)
+    playChain(inputMessageChain.value, displayMessage, displayPortrait, playSound)
 })
 
 //Debug background
@@ -126,7 +131,8 @@ x            :effect-height="100"
 
         <!--Dashes-->
         <Group :anchor="{Left:350, Bottom:198, Height:100, Width:200}" :background="contentBg" :layout-mode="'Left'">
-            <Group v-for="(entry, index) in playerClass.maxDashes" :key=index :anchor="{Width: 48, Height: 48, Left:20 }" :background="index < inputDashes ? 'Img/charge_on.png' : 'Img/charge_off.png'" :mask-texture-path="'Img/mask/button.png'">
+            <Group v-for="(entry, index) in playerClass.maxDashes" :key=index :anchor="{Width: 48, Height: 48, Left:20 }" :mask-texture-path="'Img/mask/button.png'">
+                <Group :background="index < inputDashes ? 'Img/charge_on.png' : 'Img/charge_off.png'"></Group>
             </Group>
         </Group>
 

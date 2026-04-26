@@ -1,72 +1,70 @@
 import { randomInt as v } from "./util.js";
-const y = {
+const p = {
   partner: {
     portrait: "partner",
-    voice: "other"
+    voice: "Other"
   },
   ilduce: {
     portrait: "ilduce",
-    voice: "upset"
+    voice: "Upset"
   },
   nilduce: {
     portrait: "nilduce",
-    voice: "scared"
+    voice: "Scared"
   },
   fred: {
     portrait: "fred",
-    voice: "other"
+    voice: "Other"
   },
   sod: {
     portrait: "prole",
-    voice: "other"
+    voice: "Other"
   }
 };
-let c = !1, m = null;
-function h({ text: l, displayTextRef: r, displayPortraitRef: i, speed: o, actor: e, chainObj: a, chainIndex: t, chainDelay: p }) {
-  c && clearTimeout(m), c = !0, r.value = "";
-  let f = l.replace(/"/g, "").split(" "), s = 0;
-  d(f, r), console.log(e);
-  function d(n, u) {
-    s < n.length ? (u.value = `${u.value} ${n[s]}`, i.value = g(e), s++, m = setTimeout(() => {
-      d(n, u);
-    }, 100)) : (t++, t < a.length ? setTimeout(() => {
-      h({
+let d = !1, g = null;
+function c({ text: i, displayTextRef: a, displayPortraitRef: o, speed: l, actor: t, chainObj: e, chainIndex: r, chainDelay: m, playSoundRef: u }) {
+  d && clearTimeout(g), d = !0, a.value = "", h(i, a);
+  function h(n, s) {
+    u.value(p[t].voice, e), s.value = `${s.value} ${n}`, o.value = f(t), r++, r < e.length ? setTimeout(() => {
+      c({
         //@ts-ignore //lol
-        actor: a[t][0],
+        actor: e[r][0],
         //@ts-ignore //lmao
-        text: a[t][1],
+        text: e[r][1],
         //@ts-ignore //kek
-        speed: a[t][2],
+        speed: e[r][2],
         //@ts-ignore // )00))))00)
-        chainDelay: a[t][3],
+        chainDelay: e[r][3],
         //@ts-ignore //wxnstunxwfqsunwxfqus
-        chainIndex: t,
-        chainObj: a,
-        displayPortraitRef: i,
-        displayTextRef: r
+        chainIndex: r,
+        chainObj: e,
+        displayPortraitRef: o,
+        displayTextRef: a,
+        playSoundRef: u
       });
-    }, p) : setTimeout(() => {
-      i.value = "Img/portrait/none.png", r.value = "";
-    }, p));
+    }, m) : setTimeout(() => {
+      o.value = "Img/portrait/none.png", a.value = "";
+    }, 1e3);
   }
-  function g(n) {
-    return `Img/portrait/${y[n].portrait}${v(1, 3)}.png`;
+  function f(n) {
+    return `Img/portrait/${p[n].portrait}${v(1, 3)}.png`;
   }
 }
-function k(l, r, i) {
-  let o = w[l], e = 0;
-  h({
-    actor: o[e][0],
-    text: o[e][1],
-    speed: o[e][2],
-    chainDelay: o[e][3],
+function k(i, a, o, l) {
+  let t = y[i], e = 0;
+  c({
+    actor: t[e][0],
+    text: t[e][1],
+    speed: t[e][2],
+    chainDelay: t[e][3],
     chainIndex: e,
-    chainObj: o,
-    displayPortraitRef: i,
-    displayTextRef: r
+    chainObj: t,
+    displayPortraitRef: o,
+    displayTextRef: a,
+    playSoundRef: l
   });
 }
-const w = {
+const y = {
   testchain: [
     ["sod", "i'm walkin' ere!", 100, 1e3],
     ["sod", "you gotta watch where you're going, pal", 100, 1e3],
@@ -98,6 +96,6 @@ const w = {
 };
 export {
   k as playChain,
-  h as playDialogue
+  c as playDialogue
 };
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGlhbG9ndWUuanMiLCJzb3VyY2VzIjpbXSwic291cmNlc0NvbnRlbnQiOltdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OzsifQ==
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGlhbG9ndWUuanMiLCJzb3VyY2VzIjpbXSwic291cmNlc0NvbnRlbnQiOltdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7In0=

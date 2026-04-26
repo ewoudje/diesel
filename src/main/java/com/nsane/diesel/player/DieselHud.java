@@ -3,6 +3,9 @@ package com.nsane.diesel.player;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.math.vector.Vector3d;
+import com.hypixel.hytale.protocol.SoundCategory;
+import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent;
 import com.hypixel.hytale.server.core.entity.InteractionManager;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
@@ -11,6 +14,7 @@ import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntitySta
 import com.hypixel.hytale.server.core.modules.interaction.InteractionModule;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.world.SoundUtil;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.nsane.diesel.DieselActor;
 import com.nsane.diesel.level.LevelManager;
@@ -51,12 +55,28 @@ public class DieselHud {
                 "diesel",
                 "DieselHud"
         );
+        ui.setHudData("playSound", (Consumer<String>) (s) -> {
+            playSound(s, store, ref, 1, 1);
+        });
 
-        //ui.setData("testFn", (Consumer<String>) (s) -> {System.out.println(s);});
     }
+    private void playSound(String id, Store<EntityStore> store, Ref<EntityStore> ref, float vol, float pitch) {
 
-    private void testFn(String id){
-        System.out.println(id);
+        store.getExternalData().getWorld().execute(() -> {
+            System.out.println("playSound");
+
+            int soundIndex = SoundEvent.getAssetMap().getIndex("Voice_"+id); //ignore id for now
+            SoundUtil.playSoundEvent2dToPlayer(store.getComponent(ref, PlayerRef.getComponentType()),soundIndex,SoundCategory.SFX,1,1);
+            /*SoundUtil.playLocalPlayerSoundEvent(
+                    store.getComponent(ref, PlayerRef.getComponentType()),
+                    soundIndex,0,
+                    SoundCategory.SFX, vol, pitch
+            );*/
+        });
+    }
+    @FunctionalInterface
+    interface SoundConsumer {
+        void accept(String s, int[] arr, int a, int b);
     }
 
 private int counter = 0;
@@ -92,6 +112,7 @@ private int counter = 0;
         ui.setHudData("health", healthValue.asPercentage());
         //ui.setHudData("myFn", (customParam: 'pepes') -> player.kill(customParam)
         //ui.setHudData("fn",showMessage(););
+
     }
 
     public void showMessage(@NotNull String chain) {

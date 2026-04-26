@@ -1,0 +1,25 @@
+{
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/Diesel/Voice/scared1.ogg",
+        "Sounds/Diesel/Voice/scared2.ogg",
+        "Sounds/Diesel/Voice/scared3.ogg",
+        "Sounds/Diesel/Voice/scared4.ogg",
+        "Sounds/Diesel/Voice/scared5.ogg",
+        "Sounds/Diesel/Voice/scared6.ogg",
+        "Sounds/Diesel/Voice/scared7.ogg"
+      ],
+      "RandomSettings": {
+        "MinPitch": -4,
+        "MaxPitch": 3,
+        "MinVolume": -2,
+        "MaxVolume": 2
+      }
+    }
+  ],
+  "MaxInstance": 30,
+  "Volume": 1.0,
+  "PreventSoundInterruption": true,
+  "Parent": "SFX_Attn_Loud"
+}

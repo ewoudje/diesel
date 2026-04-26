@@ -9,23 +9,23 @@ import { randomInt } from "./util";
 const actors = {
     partner: {
         portrait:'partner',
-        voice: 'other'
+        voice: 'Other'
     },
     ilduce:{
         portrait:'ilduce',
-        voice: 'upset'
+        voice: 'Upset'
     },
     nilduce:{
         portrait: 'nilduce',
-        voice: 'scared'
+        voice: 'Scared'
     },
     fred:{
         portrait: 'fred',
-        voice: 'other'
+        voice: 'Other'
     },
     sod: {
         portrait: 'prole',
-        voice: 'other'
+        voice: 'Other'
     },
 }
 
@@ -34,15 +34,73 @@ const actors = {
 let inDialogue = false;
 //@ts-ignore
 let dialogueTimeout = null;
-function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, chainObj, chainIndex, chainDelay }: { 
+function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, chainObj, chainIndex, chainDelay, playSoundRef }: { 
     text: string; 
     displayTextRef: Ref; 
     displayPortraitRef: Ref;
     speed: number; 
     actor: string;
     chainObj: (number | string)[][];
-    chainIndex: number,
-    chainDelay: number
+    chainIndex: number;
+    chainDelay: number;
+    playSoundRef: Ref
+}){
+    if(inDialogue){
+        //@ts-ignore
+        clearTimeout(dialogueTimeout)
+    }
+    inDialogue = true;
+    displayTextRef.value = ''
+    printText(text, displayTextRef);
+    function printText(text: string,destination: Ref){
+            //@ts-ignore
+            playSoundRef.value(actors[actor].voice,chainObj)
+            destination.value = `${destination.value} ${text}` 
+            displayPortraitRef.value = randomPortrait(actor);
+
+            chainIndex++
+            if(chainIndex<chainObj.length){
+                setTimeout(()=>{
+                    playDialogue({
+                        //@ts-ignore //lol
+                        actor: chainObj[chainIndex][0],
+                        //@ts-ignore //lmao
+                        text: chainObj[chainIndex][1],
+                        //@ts-ignore //kek
+                        speed: chainObj[chainIndex][2],
+                        //@ts-ignore // )00))))00)
+                        chainDelay: chainObj[chainIndex][3],
+                        //@ts-ignore //wxnstunxwfqsunwxfqus
+                        chainIndex: chainIndex,
+                        chainObj: chainObj,
+                        displayPortraitRef: displayPortraitRef,
+                        displayTextRef: displayTextRef,
+                        playSoundRef: playSoundRef
+                    })
+                }, chainDelay)
+            } else {
+                setTimeout(()=>{
+                    displayPortraitRef.value = 'Img/portrait/none.png';
+                    displayTextRef.value = ''
+                },1000)
+            }
+    }
+    function randomPortrait(id: string){
+        //@ts-ignore
+       return `Img/portrait/${actors[id].portrait}${randomInt(1,3)}.png`
+    }
+}
+
+/*function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, chainObj, chainIndex, chainDelay, playSoundRef }: { 
+    text: string; 
+    displayTextRef: Ref; 
+    displayPortraitRef: Ref;
+    speed: number; 
+    actor: string;
+    chainObj: (number | string)[][];
+    chainIndex: number;
+    chainDelay: number;
+    playSoundRef: Ref
 }){
     if(inDialogue){
         //@ts-ignore
@@ -57,6 +115,8 @@ function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, 
     console.log(actor)
     function printText(text: string[],destination: Ref){
         if(i<text.length){
+            //@ts-ignore
+            playSoundRef.value(actors[actor].voice);
             destination.value = `${destination.value} ${text[i]}` 
             displayPortraitRef.value = randomPortrait(actor);
             i++;
@@ -79,7 +139,8 @@ function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, 
                         chainIndex: chainIndex,
                         chainObj: chainObj,
                         displayPortraitRef: displayPortraitRef,
-                        displayTextRef: displayTextRef
+                        displayTextRef: displayTextRef,
+                        playSoundRef: playSoundRef
                     })
                 }, chainDelay)
             } else {
@@ -95,13 +156,13 @@ function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, 
         //@ts-ignore
        return `Img/portrait/${actors[id].portrait}${randomInt(1,3)}.png`
     }
-}
+}*/
 
 //dialogue chain
 //play dialogue, then when it's over, for x time and move to the next
 //if it's interrupted, check if it's marked important. if it isn't then override it, if it is then don't start it
 //TODO FIX HCAIN OVERRIDES
-function playChain(chainName: string, displayTextRef:Ref, displayPortraitRef:Ref){
+function playChain(chainName: string, displayTextRef:Ref, displayPortraitRef:Ref, playSoundRef:Ref){
     //@ts-ignore //shut UP shut UP shut UP shut UP shut UP shut UP i wanna go HOME
     let chainObj = chains[chainName];
     let index = 0;
@@ -113,7 +174,8 @@ function playChain(chainName: string, displayTextRef:Ref, displayPortraitRef:Ref
         chainIndex: index,
         chainObj: chainObj,
         displayPortraitRef: displayPortraitRef,
-        displayTextRef: displayTextRef
+        displayTextRef: displayTextRef,
+        playSoundRef: playSoundRef
     })
 }
 
