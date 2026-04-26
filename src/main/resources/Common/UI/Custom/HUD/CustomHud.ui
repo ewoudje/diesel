@@ -1,5 +1,0 @@
-$C = "../Common.ui";
-
-$C.@Title {
-    @Text = "Your mothers";
-}
