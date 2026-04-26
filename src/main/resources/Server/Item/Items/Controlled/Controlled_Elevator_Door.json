@@ -1,0 +1,59 @@
+{
+  "TranslationProperties": {
+    "Name": "Controlled Elevator Door"
+  },
+  "PlayerAnimationsId": "Block",
+  "Categories": [
+    "DieselCategory.Blocks"
+  ],
+  "Icon": "Icons/ItemsGenerated/Controlled_Elevator_Door.png",
+  "IconProperties": {
+    "Scale": 0.3,
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Translation": [
+      0,
+      -41
+    ]
+  },
+  "BlockType": {
+    "BlockParticleSetId": "Metal",
+    "CustomModel": "Blocks/Diesel/Doors/Elevator_Door_Closed.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Diesel/Doors/Elevator_Door.png",
+        "Weight": 1
+      }
+    ],
+    "DrawType": "Model",
+    "Material": "Solid",
+    "Opacity": "Transparent",
+    "ParticleColor": "#363434",
+    "State": {
+      "Definitions": {
+        "Open": {
+          "InteractionSoundEventId": "SFX_Door_Temple_Dark_Open",
+          "CustomModelAnimation": "Blocks/Diesel/Doors/Elevator_Open.blockyanim",
+          "CustomModel": "Blocks/Diesel/Doors/Elevator_Door_Open.blockymodel",
+          "HitboxType": "Door3x3"
+        }
+      }
+    },
+    "VariantRotation": "NESW",
+    "BlockSoundSetId": "Metal",
+    "BlockEntity": {
+      "Components": {
+        "StateWriter": {}
+      }
+    },
+    "CustomModelAnimation": "Blocks/Diesel/Doors/Elevator_Close.blockyanim",
+    "HitboxType": "Door3x3",
+    "InteractionHitboxType": "Door3x3"
+  },
+  "Scale": 0.8,
+  "Model": "Blocks/Diesel/Doors/Elevator_Door_Closed.blockymodel",
+  "Texture": "Blocks/Diesel/Doors/Elevator_Door.png"
+}

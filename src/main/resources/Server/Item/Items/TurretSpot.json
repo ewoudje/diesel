@@ -3,7 +3,7 @@
     "Name": "Turret Spot",
     "Description": "server.items.Editor_Block.description"
   },
-  "Icon": "Icons/ItemsGenerated/Editor_Block.png",
+  "Icon": "Icons/ItemsGenerated/TurretSpot.png",
   "Quality": "Technical",
   "Categories": [
     "DieselCategory.Tools"
@@ -38,5 +38,17 @@
   "PlayerAnimationsId": "Block",
   "ItemSoundSetId": "ISS_Blocks_Stone",
   "Model": "Items/Diesel/turret/Turret_Mount_Point.blockymodel",
-  "Texture": "Items/Diesel/turret/Turret_Mount_Point.png"
+  "Texture": "Items/Diesel/turret/Turret_Mount_Point.png",
+  "IconProperties": {
+    "Scale": 0.58823,
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Translation": [
+      0,
+      -13.5
+    ]
+  }
 }
