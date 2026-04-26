@@ -8,7 +8,7 @@ import { randomInt } from "./util";
 //yvgrenyyl qbag rira pner nal zber shpx lbh im not making a class
 const actors = {
     partner: {
-        portrait:'partner',
+        portrait:'prole',
         voice: 'Other'
     },
     ilduce:{
@@ -20,8 +20,8 @@ const actors = {
         voice: 'Scared'
     },
     fred:{
-        portrait: 'fred',
-        voice: 'Other'
+        portrait: 'partner',
+        voice: 'Scared'
     },
     sod: {
         portrait: 'prole',
@@ -34,6 +34,8 @@ const actors = {
 let inDialogue = false;
 //@ts-ignore
 let dialogueTimeout = null;
+
+
 function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, chainObj, chainIndex, chainDelay, playSoundRef }: { 
     text: string; 
     displayTextRef: Ref; 
@@ -45,63 +47,7 @@ function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, 
     chainDelay: number;
     playSoundRef: Ref
 }){
-    if(inDialogue){
-        //@ts-ignore
-        clearTimeout(dialogueTimeout)
-    }
-    inDialogue = true;
-    displayTextRef.value = ''
-    printText(text, displayTextRef);
-    function printText(text: string,destination: Ref){
-            //@ts-ignore
-            playSoundRef.value(actors[actor].voice,chainObj)
-            destination.value = `${destination.value} ${text}` 
-            displayPortraitRef.value = randomPortrait(actor);
-
-            chainIndex++
-            if(chainIndex<chainObj.length){
-                setTimeout(()=>{
-                    playDialogue({
-                        //@ts-ignore //lol
-                        actor: chainObj[chainIndex][0],
-                        //@ts-ignore //lmao
-                        text: chainObj[chainIndex][1],
-                        //@ts-ignore //kek
-                        speed: chainObj[chainIndex][2],
-                        //@ts-ignore // )00))))00)
-                        chainDelay: chainObj[chainIndex][3],
-                        //@ts-ignore //wxnstunxwfqsunwxfqus
-                        chainIndex: chainIndex,
-                        chainObj: chainObj,
-                        displayPortraitRef: displayPortraitRef,
-                        displayTextRef: displayTextRef,
-                        playSoundRef: playSoundRef
-                    })
-                }, chainDelay)
-            } else {
-                setTimeout(()=>{
-                    displayPortraitRef.value = 'Img/portrait/none.png';
-                    displayTextRef.value = ''
-                },1000)
-            }
-    }
-    function randomPortrait(id: string){
-        //@ts-ignore
-       return `Img/portrait/${actors[id].portrait}${randomInt(1,3)}.png`
-    }
-}
-
-/*function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, chainObj, chainIndex, chainDelay, playSoundRef }: { 
-    text: string; 
-    displayTextRef: Ref; 
-    displayPortraitRef: Ref;
-    speed: number; 
-    actor: string;
-    chainObj: (number | string)[][];
-    chainIndex: number;
-    chainDelay: number;
-    playSoundRef: Ref
-}){
+    console.log("test")
     if(inDialogue){
         //@ts-ignore
         clearTimeout(dialogueTimeout)
@@ -116,7 +62,8 @@ function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, 
     function printText(text: string[],destination: Ref){
         if(i<text.length){
             //@ts-ignore
-            playSoundRef.value(actors[actor].voice);
+            if((i+2)%2==0)            playSoundRef.value(actors[actor].voice);
+
             destination.value = `${destination.value} ${text[i]}` 
             displayPortraitRef.value = randomPortrait(actor);
             i++;
@@ -156,7 +103,7 @@ function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, 
         //@ts-ignore
        return `Img/portrait/${actors[id].portrait}${randomInt(1,3)}.png`
     }
-}*/
+}
 
 //dialogue chain
 //play dialogue, then when it's over, for x time and move to the next
@@ -192,6 +139,9 @@ const chains = {
         ["fred","OUURUUGH!!!!", 100, 500],
         ["fred","RIGHT IN THE SPOPPEGT", 100, 1000]
     ],
+    planeAttackFred: [
+        ["fred","For the board!!!", 100, 500],
+    ],   
     dukat: [
         ["partner","Attention, Wallonian workers.",100,1000],
         ["partner","It has come to my attention that a handful of layabouts have...",100,1500],

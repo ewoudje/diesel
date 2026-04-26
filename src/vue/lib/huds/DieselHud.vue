@@ -61,7 +61,6 @@ watch(inputMessageChain,()=>{
 //Debug background
 const contentBg = ref('Img/empty.png')
 
-//gamer mode
 
 </script>
 <template>
