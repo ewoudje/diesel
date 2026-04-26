@@ -64,6 +64,8 @@ import com.nsane.diesel.player.DieselPlayerSystem;
 import com.nsane.diesel.player.DieselResource;
 import com.nsane.diesel.player.PlayerReviveSystem;
 import com.nsane.diesel.player.ReviveInteraction;
+import com.nsane.diesel.player.TurretComponent;
+import com.nsane.diesel.player.TurretInteraction;
 import com.nsane.diesel.projectiles.DieselProjectileComponent;
 import com.nsane.diesel.projectiles.DieselProjectileSystem;
 import com.nsane.diesel.projectiles.DieselProjectileType;
@@ -112,6 +114,7 @@ public class DieselPlugin extends JavaPlugin {
         registerEntityComponent(PlaneComponent.class, "Plane", PlaneComponent.Companion.getCODEC());
         registerEntityComponent(HelicopterComponent.class, "Helicopter", HelicopterComponent.Companion.getCODEC());
         registerEntityComponent(PartOfLevelComponent.class, "PartOfLevel", PartOfLevelComponent.INSTANCE.getCODEC());
+        registerEntityComponent(TurretComponent.class, "Turret", TurretComponent.INSTANCE.getCODEC());
         registerEntityResource(DieselResource.class, "DieselPlayersResource", DieselResource.Companion.getCODEC());
         registerEntityResource(AirSimulator.class, "AirSimulator", AirSimulator.Companion.getCODEC());
         registerEntityResource(LevelManager.class, "LevelManager", LevelManager.Companion.getCODEC());
@@ -122,7 +125,8 @@ public class DieselPlugin extends JavaPlugin {
                 .register("OpenLogicUI", OpenLogicUIInteraction.class, OpenLogicUIInteraction.Companion.getCODEC())
                 .register("RiseRock", RiseRockInteraction.class, RiseRockInteraction.Companion.getCODEC())
                 .register("DieselShoot", DieselShootInteraction.class, DieselShootInteraction.Companion.getCODEC())
-                .register("ApplyMovementConfig", ApplyMovementConfigInteraction.class,ApplyMovementConfigInteraction.CODEC)
+                .register("ApplyMovementConfig", ApplyMovementConfigInteraction.class, ApplyMovementConfigInteraction.CODEC)
+                .register("Turret", TurretInteraction.class, TurretInteraction.Companion.getCODEC())
                 .register("Revive", ReviveInteraction.class, ReviveInteraction.Companion.getCODEC());
 
         getCommandRegistry().registerCommand(new ExampleCommand("example", "An example command"));
