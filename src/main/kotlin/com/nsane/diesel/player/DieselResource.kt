@@ -15,7 +15,7 @@ import java.util.function.BiConsumer
 class DieselResource: Resource<EntityStore?> {
     val respawnPoint = Vector3d()
     var deadLevel: String? = null
-    var globalRespawnTimer = Double.NaN
+    var globalRespawnTimer = Double.MAX_VALUE
     fun broadcastMessage(accessor: ComponentAccessor<EntityStore?>, chain: String) {
         val world = accessor.externalData.world
         world.execute {
@@ -34,7 +34,6 @@ class DieselResource: Resource<EntityStore?> {
 
     companion object {
         val CODEC = BuilderCodec.builder(DieselResource::class.java, ::DieselResource)
-            /*
             .addField(
                    KeyedCodec("RespawnPoint", Vector3d.CODEC),
                 { t: DieselResource, u: Vector3d? -> t.respawnPoint.assign(u ?: Vector3d()) },
@@ -47,9 +46,9 @@ class DieselResource: Resource<EntityStore?> {
             )
             .addField(
                 KeyedCodec("GlobalRespawnTimer", Codec.DOUBLE),
-                { t: DieselResource, u: Double? -> t.globalRespawnTimer = u ?: Double.NaN },
+                { t: DieselResource, u: Double? -> t.globalRespawnTimer = u ?: Double.MAX_VALUE },
                 { t: DieselResource -> t.globalRespawnTimer }
-            )*/
+            )
             .build()
 
         val TYPE by lazy { DieselPlugin.getResource(DieselResource::class.java) }
