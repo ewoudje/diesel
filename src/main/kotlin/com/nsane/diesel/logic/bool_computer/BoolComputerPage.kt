@@ -30,7 +30,7 @@ class BoolComputerPage(playerRef: PlayerRef, val readerRef: Ref<ChunkStore?>) : 
             getter { operator }
         }
 
-        BoolComputerEntries.makeEntries(this, BoolComputerEntries.ENTRY_AMOUNT)
+        BoolComputerEntries.makeEntries(this, BoolComputerEntries.ENTRY_AMOUNT, "@")
     }
 ) {
     override fun handleDataEvent(ref: Ref<EntityStore>, store: Store<EntityStore>, data: PageData) {

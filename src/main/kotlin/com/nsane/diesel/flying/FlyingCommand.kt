@@ -11,8 +11,10 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractWorldC
 import com.hypixel.hytale.server.core.universe.world.World
 import com.hypixel.hytale.server.core.universe.world.chunk.ChunkFlag
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
+import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.flying.stage.BossStage
 import com.nsane.diesel.flying.stage.StartStage
+import java.util.function.BiConsumer
 
 class FlyingCommand : AbstractWorldCommand("flying", "flying") {
     private val x: OptionalArg<Double> = withOptionalArg("x", "Position of ship", ArgTypes.DOUBLE)
@@ -22,6 +24,7 @@ class FlyingCommand : AbstractWorldCommand("flying", "flying") {
     private val yaw: OptionalArg<Float> = withOptionalArg("yaw", "Rotation of ship", ArgTypes.FLOAT)
     private val roll: OptionalArg<Float> = withOptionalArg("roll", "Rotation of ship", ArgTypes.FLOAT)
     private val speedModifier: OptionalArg<Double> = withOptionalArg("speedModifier", "SpeedModifier of ship", ArgTypes.DOUBLE)
+    private val cleanse: FlagArg = withFlagArg("cleanse", "Cleanse")
 
     override fun execute(
         ctx: CommandContext,
@@ -36,6 +39,16 @@ class FlyingCommand : AbstractWorldCommand("flying", "flying") {
         yaw.get(ctx)?.let { sim.shipRotation.yaw = it }
         roll.get(ctx)?.let { sim.shipRotation.roll = it }
         speedModifier.get(ctx)?.let { sim.velocityModifier = it }
+
+        if (cleanse.get(ctx)) {
+            store.forEachChunk(SimulatedTransformComponent.TYPE, BiConsumer {
+                chunk, buffer ->
+                repeat(chunk.size()) {
+                    chunk.removeEntity(it, EntityStore.REGISTRY.newHolder())
+                }
+                DieselPlugin.LOGGER.atWarning().log("Deleted ${chunk.size()}")
+            })
+        }
 
         ctx.sendMessage(Message.raw("Done"))
     }

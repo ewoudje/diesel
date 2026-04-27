@@ -15,7 +15,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 class StateWriterPage(playerRef: PlayerRef, val readerRef: Ref<ChunkStore>) : com.hypixel.hytale.server.core.entity.entities.player.pages.InteractiveCustomUIPage<StateWriterEntries>(
     playerRef,
     CustomPageLifetime.CanDismiss,
-    StateWriterEntries.CODEC
+    StateWriterEntries.HUD_CODEC
 ) {
     override fun handleDataEvent(ref: Ref<EntityStore>, store: Store<EntityStore>, data: StateWriterEntries) {
         val writer = readerRef.store.getComponent(readerRef, StateWriter.TYPE) ?: return

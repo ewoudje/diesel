@@ -23,7 +23,9 @@ class StateReader(override var id: String = "") : LogicComponent<ChunkStore?> {
         selfRef: Ref<ChunkStore?>
     ): CustomUIPage = StateReaderPage(playerRef, selfRef)
 
-    override fun clone(): Component<ChunkStore?> = StateReader(id)
+    override fun clone(): Component<ChunkStore?> = StateReader(id).also {
+        it.state = state
+    }
 
     companion object {
         val CODEC = buildCodec(::StateReader) {

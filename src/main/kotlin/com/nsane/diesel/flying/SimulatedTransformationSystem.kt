@@ -9,6 +9,7 @@ import com.hypixel.hytale.component.system.tick.EntityTickingSystem
 import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
+import com.nsane.diesel.DieselPlugin
 import io.github.hytalekt.kytale.ext.minus
 import io.github.hytalekt.kytale.ext.plus
 import io.github.hytalekt.kytale.ext.plusAssign
@@ -49,6 +50,11 @@ object SimulatedTransformationSystem : EntityTickingSystem<EntityStore?>() {
         store: Store<EntityStore?>,
         buffer: CommandBuffer<EntityStore?>
     ) {
+        if (archTypes.size() > 2000) {
+            DieselPlugin.LOGGER.atWarning().log("Allot of transformations happening, starting killing spree")
+            archTypes.removeEntity(idx, EntityStore.REGISTRY.newHolder())
+        }
+
         val sim = buffer.getResource(AirSimulator.TYPE)
         val transform = archTypes.getComponent(idx, TransformComponent.getComponentType())
             ?: throw UnexpectedException("TransformComponent is null")
