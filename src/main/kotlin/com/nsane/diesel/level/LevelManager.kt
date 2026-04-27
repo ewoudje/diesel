@@ -15,6 +15,8 @@ class LevelManager : Resource<EntityStore?> {
     var currentLevel: Level? = null
         private set
 
+    var amountOfEnemies: Int = 0
+
     fun enter(key: String) {
         if (key == currentLevel?.name) return
 

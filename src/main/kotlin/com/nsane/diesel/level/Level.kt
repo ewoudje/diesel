@@ -14,7 +14,11 @@ open class Level(val name: String, open val objective: String) {
 }
 
 class AllDeadLevel(name: String, objective: String, val nextLevel: String): Level(name, objective) {
-    //TODO
+    override fun tick(store: ComponentAccessor<EntityStore?>, dt: Float) {
+        val levelManager = store.getResource(LevelManager.TYPE)
+        if (levelManager.amountOfEnemies <= 0)
+            levelManager.enter(nextLevel)
+    }
 }
 
 class LogicBasedLevel(name: String, objective: String, val logicId: String, val nextLevel: String): Level(name, objective) {

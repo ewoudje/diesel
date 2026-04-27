@@ -3,10 +3,12 @@ package com.nsane.diesel.level
 import com.hypixel.hytale.component.AddReason
 import com.hypixel.hytale.component.ArchetypeChunk
 import com.hypixel.hytale.component.CommandBuffer
+import com.hypixel.hytale.component.ComponentType
 import com.hypixel.hytale.component.Ref
 import com.hypixel.hytale.component.RemoveReason
 import com.hypixel.hytale.component.Store
 import com.hypixel.hytale.component.query.Query
+import com.hypixel.hytale.component.system.RefChangeSystem
 import com.hypixel.hytale.component.system.RefSystem
 import com.hypixel.hytale.component.system.tick.TickingSystem
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
@@ -88,5 +90,41 @@ object LevelSystem: TickingSystem<EntityStore?>()  {
             var4: CommandBuffer<EntityStore?>
         ) {
         }
+    }
+
+    object TrackPartOfLevel: RefChangeSystem<EntityStore?, PartOfLevelComponent>() {
+        override fun componentType(): ComponentType<EntityStore?, PartOfLevelComponent?> = PartOfLevelComponent.TYPE
+
+        override fun onComponentAdded(
+            var1: Ref<EntityStore?>,
+            var2: PartOfLevelComponent,
+            var3: Store<EntityStore?>,
+            commands: CommandBuffer<EntityStore?>
+        ) {
+            val levelManager = commands.getResource(LevelManager.TYPE)
+            levelManager.amountOfEnemies++
+        }
+
+        override fun onComponentSet(
+            var1: Ref<EntityStore?>,
+            var2: PartOfLevelComponent?,
+            var3: PartOfLevelComponent,
+            var4: Store<EntityStore?>,
+            var5: CommandBuffer<EntityStore?>
+        ) {
+
+        }
+
+        override fun onComponentRemoved(
+            var1: Ref<EntityStore?>,
+            var2: PartOfLevelComponent,
+            var3: Store<EntityStore?>,
+            commands: CommandBuffer<EntityStore?>
+        ) {
+            val levelManager = commands.getResource(LevelManager.TYPE)
+            levelManager.amountOfEnemies--
+        }
+
+        override fun getQuery(): Query<EntityStore?>? = PartOfLevelComponent.TYPE
     }
 }
