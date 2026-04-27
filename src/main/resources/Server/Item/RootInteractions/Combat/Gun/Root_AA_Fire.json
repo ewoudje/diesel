@@ -1,0 +1,64 @@
+{
+  "Interactions": [
+    {
+      "Type": "StatsCondition",
+      "Costs": {
+        "Turret_AA_Ammo": 1
+      },
+      "Next":  {
+        "Type": "ChangeStat",
+        "Effects": {
+          "ItemAnimationId": "Shoot"
+        },
+        "StatModifiers": {
+          "Turret_AA_Ammo": -1
+        },
+        "Next": {
+          "Type": "Serial",
+          "Interactions": [
+            {
+              "Parent": "AA_Fire",
+              "Offset": {
+                "X": 0.35,
+                "Y": -0.47,
+                "Z": 1.5
+              }
+            },
+            {
+              "Parent": "AA_Fire",
+              "Offset": {
+                "X": 0.1,
+                "Y": -0.42,
+                "Z": 1.5
+              }
+            },
+            {
+              "Parent": "AA_Fire",
+              "Offset": {
+                "X": -0.07,
+                "Y": -0.39,
+                "Z": 1.5
+              }
+            },
+            {
+              "Parent": "AA_Fire",
+              "Offset": {
+                "X": -0.27,
+                "Y": -0.34,
+                "Z": 1.5
+              }
+            },
+            {
+              "Parent": "AA_Fire",
+              "Offset": {
+                "X": -0.4,
+                "Y": -0.34,
+                "Z": 1.5
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

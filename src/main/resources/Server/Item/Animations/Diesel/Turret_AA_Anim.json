@@ -1,0 +1,15 @@
+{
+  "Parent": "Rifle",
+  "Animations": {
+    "Reload": {
+      "ThirdPerson": "Characters/Diesel/Animations/Items/AA/Reload.blockyanim",
+      "Speed": 1,
+      "Looping": false,
+      "BlendingDuration": 0.1
+    },
+    "Shoot": {
+      "ThirdPerson": "Characters/Diesel/Animations/Items/AA/Volleyfire.blockyanim",
+      "Speed": 0.5
+    }
+  }
+}

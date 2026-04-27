@@ -25,7 +25,7 @@
         }
       ]
     },
-    "Volley": {
+    "Shoot": {
       "Animations": [
         {
           "Animation": "Characters/Diesel/Animations/Items/AA/Volleyfire.blockyanim",

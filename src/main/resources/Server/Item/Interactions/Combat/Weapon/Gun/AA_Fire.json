@@ -1,0 +1,36 @@
+{
+  "Type": "DieselShoot",
+  "RunTime": 0.1,
+  "Effects": {
+    "WorldSoundEventId": "SFX_AA_Fire",
+    "LocalSoundEventId": "SFX_AA_Fire",
+    "CameraEffect": "Handgun_Shoot",
+    "FirstPersonParticles": [
+      {
+        "SystemId": "Muzzle_Flash",
+        "PositionOffset": {
+          "Z": 0.7,
+          "Y": 0.11
+        },
+        "RotationOffset": {
+          "Pitch": 90
+        },
+        "TargetEntityPart": "Self"
+      }
+    ],
+    "Particles": [
+      {
+        "SystemId": "Muzzle_Flash",
+        "PositionOffset": {
+          "Z": -0.1,
+          "Y": -0.5
+        },
+        "RotationOffset": {
+          "Pitch": 90
+        },
+        "TargetEntityPart": "Self"
+      }
+    ]
+  },
+  "ProjectileType": "Projectile_Turret_AA"
+}

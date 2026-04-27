@@ -57,21 +57,17 @@ class TurretInteraction : SimpleBlockInteraction() {
         targetBlock: Vector3i,
         fireEvent: Boolean
     ): InteractionState {
-        val playerRef = context.commandBuffer?.getComponent(context.entity, PlayerRef.getComponentType())  ?: return InteractionState.Failed
-        val movementManager = context.commandBuffer?.getComponent(context.entity, MovementManager.getComponentType()) ?: return InteractionState.Failed
         val isTurret = context.commandBuffer?.getComponent(context.entity, TurretComponent.TYPE)
-        val movementConfig: MovementConfig
         val modelAsset: ModelAsset
 
         if (isTurret != null) {
-            movementConfig = MovementConfig.getAssetMap().getAsset("Diesel_Movement_Scout")!!
+
             modelAsset = ModelAsset.getAssetMap().getAsset("Prole")!!
 
             if (fireEvent) {
                 context.commandBuffer?.removeComponent(context.entity, TurretComponent.TYPE)
             }
         } else {
-            movementConfig = MovementConfig.getAssetMap().getAsset("Turret_Movement")!!
             modelAsset = ModelAsset.getAssetMap().getAsset("Turret")!!
             val teleport = Teleport.createExact(
                 Vector3d(targetBlock.x + 0.5, targetBlock.y + 0.0, targetBlock.z + 0.5),
@@ -91,16 +87,6 @@ class TurretInteraction : SimpleBlockInteraction() {
                 ModelComponent.getComponentType(),
                 ModelComponent(model)
             )
-
-            world.execute { // For some forsaken reason is the movement reset when model changes
-                movementManager.setDefaultSettings(
-                    movementConfig.toPacket(),
-                    EntityUtils.getPhysicsValues(context.entity, world.entityStore.store),
-                    GameMode.Adventure
-                )
-                movementManager.applyDefaultSettings()
-                movementManager.update(playerRef.packetHandler)
-            }
         }
 
         return InteractionState.Finished

@@ -7,13 +7,19 @@ import com.hypixel.hytale.component.query.Query
 import com.hypixel.hytale.component.system.EntityEventSystem
 import com.hypixel.hytale.component.system.EventSystem
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem
+import com.hypixel.hytale.protocol.GameMode
+import com.hypixel.hytale.protocol.InteractionState
 import com.hypixel.hytale.server.core.Message
 import com.hypixel.hytale.server.core.asset.type.model.config.Model
 import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset
+import com.hypixel.hytale.server.core.entity.EntityUtils
 import com.hypixel.hytale.server.core.entity.entities.Player
+import com.hypixel.hytale.server.core.entity.entities.player.movement.MovementConfig
+import com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager
 import com.hypixel.hytale.server.core.event.events.ecs.SwitchActiveSlotEvent
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent
 import com.hypixel.hytale.server.core.inventory.InventoryComponent
+import com.hypixel.hytale.server.core.inventory.ItemStack
 import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent
 import com.hypixel.hytale.server.core.universe.PlayerRef
@@ -78,14 +84,53 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
         commands: CommandBuffer<EntityStore?>
     ) {
         val player = chunk.getComponent(idx, DieselPlayerComponent.TYPE)!!
+        val movementManager = chunk.getComponent(idx, MovementManager.getComponentType())!!
+        val playerRef = chunk.getComponent(idx, PlayerRef.getComponentType())!!
+        val isTurret = chunk.getComponent(idx, TurretComponent.TYPE)
+
         if (!player.disable) {
-            val turret = chunk.getComponent(idx, TurretComponent.TYPE)
             val player = chunk.getComponent(idx, Player.getComponentType()) ?: throw IllegalArgumentException()
             val slot = player.inventory.activeHotbarSlot
-            if (turret != null && slot != 0.toByte()) {
-                player.inventory.setActiveHotbarSlot(chunk.getReferenceTo(idx), 0, commands)
-            } else if (slot > 1) {
-                player.inventory.setActiveHotbarSlot(chunk.getReferenceTo(idx), if (slot > 6) 0 else 1, commands)
+            val hotbar = player.inventory.hotbar!!
+
+            val movementConfig: MovementConfig
+            if (isTurret != null) {
+                if (slot != 0.toByte()) {
+                    player.inventory.setActiveHotbarSlot(chunk.getReferenceTo(idx), 0, commands)
+                }
+
+                val current = hotbar.getItemStack(0)
+                if (current == null || current.item.id != "Turret_AA") {
+                    hotbar.setItemStackForSlot(0, ItemStack("Turret_AA"))
+                }
+
+                movementConfig = MovementConfig.getAssetMap().getAsset("Turret_Movement")!!
+            } else {
+                if (slot > 1) {
+                    player.inventory.setActiveHotbarSlot(chunk.getReferenceTo(idx), if (slot > 6) 0 else 1, commands)
+                }
+
+                val current1 = hotbar.getItemStack(0)
+                if (current1 == null || current1.item.id != "Shotgun_Scout") {
+                    hotbar.setItemStackForSlot(0, ItemStack("Shotgun_Scout"))
+                }
+
+                val current2 = hotbar.getItemStack(1)
+                if (current2 == null || current2.item.id != "Dagger_Scout") {
+                    hotbar.setItemStackForSlot(1, ItemStack("Dagger_Scout"))
+                }
+
+                movementConfig = MovementConfig.getAssetMap().getAsset("Diesel_Movement_Scout")!!
+            }
+
+            if (movementManager.settings != movementConfig) {
+                movementManager.setDefaultSettings(
+                    movementConfig.toPacket(),
+                    EntityUtils.getPhysicsValues(chunk.getReferenceTo(idx), store),
+                    GameMode.Adventure
+                )
+                movementManager.applyDefaultSettings()
+                movementManager.update(playerRef.packetHandler)
             }
         }
 

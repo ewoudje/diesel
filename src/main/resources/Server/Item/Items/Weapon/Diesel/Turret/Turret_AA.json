@@ -3,36 +3,15 @@
     "Name": "server.items.Turret_AA.name"
   },
   "Categories": [
-    "Items.Weapons",
     "DieselCategory.Weapons"
   ],
-  "$Comment": "Loading order means that shooting and ammo usage should be inline",
-  "Model": "Items/Diesel/shotgun/shotgun.blockymodel",
+  "$Comment": "Loading order means that shooting and ammo usage should be inline - not anymore",
+  "Model": "Items/Diesel/empty.blockymodel",
   "Icon": "Icons/ItemsGenerated/Weapon_Gun_Blunderbuss_Rusty.png",
   "Texture": "Items/Diesel/shotgun/shotgun.png",
-  "PlayerAnimationsId": "Shotgun_Scout_Anim",
+  "PlayerAnimationsId": "Turret_AA_Anim",
   "Interactions": {
-    "Primary": {
-      "Interactions": [
-        {
-          "Type": "Serial",
-          "Interactions": [
-            {
-              "Type": "Replace",
-              "Var": "Shoot_Weapon"
-            },
-            {
-              "Type": "Replace",
-              "Var": "Shoot_Weapon"
-            },
-            {
-              "Type": "Replace",
-              "Var": "Shoot_Weapon"
-            }
-          ]
-        }
-      ]
-    },
+    "Primary": "Root_AA_Fire",
     "Secondary": {
       "Cooldown": {
         "Cooldown": 1
@@ -65,65 +44,6 @@
     }
   },
   "InteractionVars": {
-    "Shoot_Weapon": {
-      "RequireNewClick": true,
-      "Interactions": [
-        {
-          "Type": "StatsCondition",
-          "Costs": {
-            "Turret_AA_Ammo": 1
-          },
-          "Next": {
-            "Type": "DieselShoot",
-            "RunTime": 0.1,
-            "Effects": {
-              "WorldSoundEventId": "SFX_AA_Fire",
-              "LocalSoundEventId": "SFX_AA_Fire",
-              "ItemAnimationId": "Shoot",
-              "CameraEffect": "Handgun_Shoot",
-              "FirstPersonParticles": [
-                {
-                  "SystemId": "Muzzle_Flash",
-                  "PositionOffset": {
-                    "Z": 0.7,
-                    "Y": 0.11
-                  },
-                  "RotationOffset": {
-                    "Pitch": 90
-                  },
-                  "TargetEntityPart": "Self"
-                }
-              ],
-              "Particles": [
-                {
-                  "SystemId": "Muzzle_Flash",
-                  "PositionOffset": {
-                    "Z": -0.1,
-                    "Y": -0.5
-                  },
-                  "RotationOffset": {
-                    "Pitch": 90
-                  },
-                  "TargetEntityPart": "Self"
-                }
-              ]
-            },
-            "Offset": {
-              "X": 0.05,
-              "Y": -0.03,
-              "Z": -0.8
-            },
-            "ProjectileType": "Projectile_Turret_AA",
-            "Next": {
-              "Type": "ChangeStat",
-              "StatModifiers": {
-                "Turret_AA_Ammo": -1
-              }
-            }
-          }
-        }
-      ]
-    },
     "Shoot_Weapon_Secondary": {
       "Interactions": [
         {
@@ -297,6 +217,5 @@
     ]
   },
   "Quality": "Legendary",
-  "Scale": 1,
-  "Weapon": {}
+  "Scale": 1
 }
