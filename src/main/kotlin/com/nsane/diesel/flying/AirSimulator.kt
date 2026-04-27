@@ -1,7 +1,6 @@
 package com.nsane.diesel.flying
 
 import com.hypixel.hytale.codec.Codec
-import com.hypixel.hytale.component.CommandBuffer
 import com.hypixel.hytale.component.ComponentAccessor
 import com.hypixel.hytale.component.Ref
 import com.hypixel.hytale.component.Resource
@@ -10,7 +9,6 @@ import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.math.vector.Vector3f
 import com.hypixel.hytale.server.core.entity.entities.Player
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
-import com.nsane.diesel.DieselActor
 import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.flying.stage.Stage
 import com.nsane.diesel.flying.stage.WaveStage

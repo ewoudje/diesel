@@ -1,12 +1,17 @@
 {
   "Interactions": [
     {
-      "Type": "Revive",
+      "Type": "Charging",
+      "Next": {
+        "0": {
+          "Type": "Revive",
+          "StartingHealth": 30
+        }
+      },
+      "DisplayProgress": true,
       "Effects": {
         "ItemPlayerAnimationsId": "Spellbook"
-      },
-      "StartingHealth": 30,
-      "RevivingTime": 2
+      }
     }
   ]
 }

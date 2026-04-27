@@ -9,11 +9,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayer
 import com.hypixel.hytale.server.core.universe.PlayerRef
 import com.hypixel.hytale.server.core.universe.world.World
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
-import com.nsane.diesel.DieselActor
-import com.nsane.diesel.player.DieselPlayerComponent
-import com.nsane.diesel.player.DieselPlayerComponent.Companion.TYPE
 import com.nsane.diesel.player.DieselResource
-import li.kelp.vuetale.app.PlayerUiManager
 import javax.annotation.Nonnull
 
 

@@ -3,7 +3,6 @@ package com.nsane.diesel.player
 import com.hypixel.hytale.codec.Codec
 import com.hypixel.hytale.component.Component
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
-import com.nsane.diesel.DieselActor
 import com.nsane.diesel.DieselPlugin
 import io.github.hytalekt.kytale.codec.buildCodec
 
