@@ -67,18 +67,16 @@ class TurretInteraction : SimpleBlockInteraction() {
         targetBlock: Vector3i,
         fireEvent: Boolean
     ): InteractionState {
-
         val isTurret = context.commandBuffer?.getComponent(context.entity, TurretComponent.TYPE)
         val modelAsset: ModelAsset
 
         if (isTurret != null) {
-
             modelAsset = ModelAsset.getAssetMap().getAsset("Prole")!!
 
             if (fireEvent) {
                 context.commandBuffer?.removeComponent(context.entity, TurretComponent.TYPE)
             }
-        } else if (isOccupied(world, context.commandBuffer!!, targetBlock)) {
+        } else if (!isOccupied(world, context.commandBuffer!!, targetBlock)) {
             modelAsset = ModelAsset.getAssetMap().getAsset("Turret")!!
             val teleport = Teleport.createExact(
                 Vector3d(targetBlock.x + 0.5, targetBlock.y + 0.0, targetBlock.z + 0.5),

@@ -74,7 +74,6 @@ public class DieselHud {
         DieselPlayerComponent dieselPlayer = commands.getComponent(ref, DieselPlayerComponent.Companion.getTYPE());
         EntityStatMap entityStatMapComponent = commands.getComponent(ref, EntityStatMap.getComponentType());
         EntityStatValue healthValue = entityStatMapComponent.get(DefaultEntityStatTypes.getHealth());
-        EntityStatValue ammo = entityStatMapComponent.get("Shotgun_Scout_Ammo");
         InteractionManager interactionManager = commands.getComponent(ref, InteractionModule.get().getInteractionManagerComponent());
         int dashCharges;
 
@@ -98,9 +97,10 @@ public class DieselHud {
             throw new RuntimeException(e);
         }
 
-        ui.setHudData("current_overlay", "WOW");
+        ui.setHudData("currentOverlay", "WOW");
         if (levelManager.getCurrentLevel() != null) {
             ui.setHudData("objective", levelManager.getCurrentLevel().getObjective());
+            ui.setHudData("currentLevel", levelManager.getCurrentLevel().getName());
         } else ui.setHudData("objective", "Loading...");
         int slot = player.getInventory().getActiveHotbarSlot();
         String clazz = turret != null ? "turret" : dieselPlayer.getPlayerClass().toString();
@@ -108,13 +108,10 @@ public class DieselHud {
         ui.setHudData("dashes", dashCharges);
         ui.setHudData("class", clazz);
         ui.setHudData("hotbarIdx", slot > 1 ? slot > 6 ? 0 : 1 : slot);
-        /*switch (clazz){
-            case "turret":
-                ui.setHudData("ammo", entityStatMapComponent.get("Turret_AA_Ammo").get());
-                break;
-            default:
-                ui.setHudData("ammo", entityStatMapComponent.get("Shotgun_Scout_Ammo").get());
-        }*/
+        if (clazz.equals("turret"))
+            ui.setHudData("ammo", entityStatMapComponent.get("Turret_AA_Ammo").get());
+        else
+            ui.setHudData("ammo", entityStatMapComponent.get("Shotgun_Scout_Ammo").get());
         ui.setHudData("health", healthValue.asPercentage());
 
         var sim = commands.getResource(AirSimulator.Companion.getTYPE());
