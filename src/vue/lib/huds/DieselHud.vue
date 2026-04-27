@@ -365,6 +365,7 @@ const contentBg = ref('Img/empty.png')
         <Group layout-mode="Top">
             <Group>
                 <ProgressBar
+                                v-if="inputProgress2Label.length>0"
                 :anchor="{Left:0, Top:0, Width: 700, Height: 60 }"
                 :background="{Color:LightenDarkenColor(hueRotateHex(colors.base,30),-120)}"
                 :mask-texture-path="'Img/bossbar.png'"
@@ -390,6 +391,7 @@ const contentBg = ref('Img/empty.png')
             </Group>
             <Group>
                 <ProgressBar
+                v-if="inputProgress2Label.length>0"
                 :anchor="{Left:0, Top:0, Width: 700, Height: 60 }"
                 :background="{Color:LightenDarkenColor(colors.base,-120)}"
                 :mask-texture-path="'Img/bossbar.png'"

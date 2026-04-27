@@ -132,9 +132,9 @@ public class DieselHud {
         //progress bars are progress1 and progress 2
         //ui.setHudData("progress2",foo)
         ui.setHudData("progress1",0.5);
-        ui.setHudData("progress1Label","CHAIRMAN IN CHIEF");
+        ui.setHudData("progress1Label","");
         ui.setHudData("progress2",0.6);
-        ui.setHudData("progress2Label","SHIP HEALTH");
+        ui.setHudData("progress2Label","");
         //"currentLevel" for current level
     }
 
