@@ -16,9 +16,11 @@ import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
 import com.nsane.diesel.level.LevelManager
 import com.nsane.diesel.logic.bool_computer.BoolComputer
 import com.nsane.diesel.logic.pressure_plate.PressurePlate
+import kotlin.collections.set
 
 object LogicComponentTracker: RefSystem<ChunkStore?>() {
     private val refs = HashMap<String, Ref<ChunkStore?>>()
+    private val custom = HashMap<String, (buffer: ComponentAccessor<ChunkStore?>) -> LogicComponent<*>>()
 
     override fun onEntityAdded(
         ref: Ref<ChunkStore?>,
@@ -61,23 +63,7 @@ object LogicComponentTracker: RefSystem<ChunkStore?>() {
 
     fun getComponentWithId(buffer: ComponentAccessor<ChunkStore?>, id: String): LogicComponent<*>? {
         if (id.isEmpty()) return null
-        if (id == "level") return object : LogicComponent<ChunkStore?> {
-            override val id: String
-                get() = "level"
-
-            private val world = buffer.externalData.world
-
-            override fun getAsBoolean(): Boolean = false
-            override fun getAsString(): String = world.entityStore.store.getResource(LevelManager.TYPE).currentLevel?.name ?: "none"
-            override fun getAsDouble(): Double = 0.0
-
-            override fun logicUI(
-                playerRef: PlayerRef,
-                selfRef: Ref<ChunkStore?>
-            ): CustomUIPage = throw UnsupportedOperationException()
-
-            override fun clone(): Component<ChunkStore?>? = null
-        }
+        custom.get(id)?.let { return it(buffer) }
 
         val ref = getRef(id) ?: return null
 
@@ -93,5 +79,48 @@ object LogicComponentTracker: RefSystem<ChunkStore?>() {
 
     fun clear() {
         refs.clear()
+    }
+
+    fun addCustom(key: String, value: String) {
+        val o = object : LogicComponent<ChunkStore?> {
+            override val id: String
+                get() = key
+
+            override fun getAsBoolean(): Boolean = true
+            override fun getAsString(): String = value
+            override fun getAsDouble(): Double = 0.0
+            override fun logicUI(
+                playerRef: PlayerRef,
+                selfRef: Ref<ChunkStore?>
+            ): CustomUIPage = throw UnsupportedOperationException()
+
+            override fun clone(): Component<ChunkStore?>? = null
+
+        }
+        custom[key] = { o }
+    }
+
+    init {
+        custom["level"] = { buffer ->
+            object : LogicComponent<ChunkStore?> {
+                override val id: String
+                    get() = "level"
+
+                private val world = buffer.externalData.world
+
+                override fun getAsBoolean(): Boolean = false
+                override fun getAsString(): String =
+                    world.entityStore.store.getResource(LevelManager.TYPE).currentLevel?.name ?: "none"
+
+                override fun getAsDouble(): Double = 0.0
+
+                override fun logicUI(
+                    playerRef: PlayerRef,
+                    selfRef: Ref<ChunkStore?>
+                ): CustomUIPage = throw UnsupportedOperationException()
+
+                override fun clone(): Component<ChunkStore?>? = null
+            }
+        }
     }
 }
