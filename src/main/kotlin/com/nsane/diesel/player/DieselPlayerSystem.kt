@@ -18,6 +18,8 @@ import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent
 import com.hypixel.hytale.server.core.universe.PlayerRef
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
+import com.nsane.diesel.WorldEventEntitySystem
+import com.nsane.diesel.level.ChangeLevelEvent
 
 object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
 
@@ -54,17 +56,17 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
         }
     }
 
-    object HotbarLimiter: EntityTickingSystem<EntityStore?>() {
+    object UILevelCommunication: WorldEventEntitySystem<EntityStore?, ChangeLevelEvent?>(ChangeLevelEvent::class.java) {
         override fun getQuery(): Query<EntityStore?>? = DieselPlayerComponent.TYPE
 
-        override fun tick(
-            dt: Float,
+        override fun handle(
+            buffer: CommandBuffer<EntityStore?>,
             idx: Int,
             chunk: ArchetypeChunk<EntityStore?>,
-            var4: Store<EntityStore?>,
-            buffer: CommandBuffer<EntityStore?>
+            event: ChangeLevelEvent
         ) {
-
+            val playerComp = chunk.getComponent(idx, DieselPlayerComponent.TYPE)
+            playerComp?.hud?.showMessage("level.${event.newLevel.name}")
         }
     }
 

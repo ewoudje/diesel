@@ -3,7 +3,6 @@ package com.nsane.diesel.player;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.protocol.SoundCategory;
 import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent;
 import com.hypixel.hytale.server.core.entity.InteractionManager;
@@ -15,9 +14,10 @@ import com.hypixel.hytale.server.core.modules.interaction.InteractionModule;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.SoundUtil;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import com.nsane.diesel.DieselActor;
 import com.nsane.diesel.level.LevelManager;
+import com.nsane.diesel.logic.LogicComponentTracker;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import li.kelp.vuetale.app.PlayerUi;
@@ -25,11 +25,8 @@ import li.kelp.vuetale.app.PlayerUiManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.function.BiFunction;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-
-import static java.lang.Math.round;
 
 public class DieselHud {
     private static final Field cooldownHandler;
@@ -58,12 +55,16 @@ public class DieselHud {
                 "diesel",
                 "DieselHud"
         );
+        World world = store.getExternalData().getWorld();
         ui.setHudData("playSound", (Consumer<String>) (s) -> {
             synchronized (sounds) {
                 sounds.add(SoundEvent.getAssetMap().getIndex("Voice_" + s));
             }
         });
+        ui.setHudData("setLogic", (BiConsumer<String, String>) (key, value) ->
+                world.execute(() -> LogicComponentTracker.INSTANCE.addCustom(key, value)));
     }
+
     public void onTick(@NotNull CommandBuffer<EntityStore> commands, Ref<EntityStore> ref, float dt) {
         LevelManager levelManager = commands.getResource(LevelManager.Companion.getTYPE());
         Player player = commands.getComponent(ref, Player.getComponentType());
