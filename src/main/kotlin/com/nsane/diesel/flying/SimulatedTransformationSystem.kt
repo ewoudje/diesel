@@ -3,6 +3,7 @@ package com.nsane.diesel.flying
 import com.hypixel.hytale.component.ArchetypeChunk
 import com.hypixel.hytale.component.CommandBuffer
 import com.hypixel.hytale.component.ComponentAccessor
+import com.hypixel.hytale.component.RemoveReason
 import com.hypixel.hytale.component.Store
 import com.hypixel.hytale.component.query.Query
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem
@@ -52,7 +53,8 @@ object SimulatedTransformationSystem : EntityTickingSystem<EntityStore?>() {
     ) {
         if (archTypes.size() > 2000) {
             DieselPlugin.LOGGER.atWarning().log("Allot of transformations happening, starting killing spree")
-            archTypes.removeEntity(idx, EntityStore.REGISTRY.newHolder())
+            buffer.removeEntity(archTypes.getReferenceTo(idx), RemoveReason.REMOVE)
+            return
         }
 
         val sim = buffer.getResource(AirSimulator.TYPE)

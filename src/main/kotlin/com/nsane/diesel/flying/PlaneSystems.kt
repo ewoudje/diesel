@@ -143,7 +143,7 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
         direction: Vector3d
     ) {
         val type = DieselProjectileType.ASSET_STORE.assetMap.getAsset("Plane") ?: throw IllegalArgumentException()
-        val shotSound = SoundEvent.getAssetMap().getIndex("SFX_AA_Fire")
+        val shotSound = SoundEvent.getAssetMap().getIndex("SFX_Pistol_Fire")
 
         SoundUtil.playSoundEvent3d(shotSound, SoundCategory.SFX, position, commands)
         DieselShootInteraction.shootProjectiles(commands, owner, direction.clone().scale(2.0).add(position), direction, Vector3d(), type, null, false)

@@ -44,7 +44,7 @@ class FlyingCommand : AbstractWorldCommand("flying", "flying") {
             store.forEachChunk(SimulatedTransformComponent.TYPE, BiConsumer {
                 chunk, buffer ->
                 repeat(chunk.size()) {
-                    chunk.removeEntity(it, EntityStore.REGISTRY.newHolder())
+                    chunk.removeEntity(it - 1, EntityStore.REGISTRY.newHolder())
                 }
                 DieselPlugin.LOGGER.atWarning().log("Deleted ${chunk.size()}")
             })

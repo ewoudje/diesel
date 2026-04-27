@@ -50,6 +50,16 @@ class TurretInteraction : SimpleBlockInteraction() {
         p1.state.state = doInteraction(p0, p1, p3, p4, false)
     }
 
+    private fun isOccupied(world: World, commandBuffer: CommandBuffer<EntityStore>, targetBlock: Vector3i): Boolean =
+        world.playerRefs
+            .map { it.reference!! }
+            .filter { commandBuffer.getComponent(it, TurretComponent.TYPE) != null }
+            .any { commandBuffer.getComponent(it, TransformComponent.getComponentType())!!.position.clone().subtract(
+                targetBlock.x + 0.5,
+                targetBlock.y + 0.5,
+                targetBlock.z + 0.5
+            ).length() < 2 }
+
     private fun doInteraction(
         type: InteractionType,
         context: InteractionContext,
@@ -57,6 +67,7 @@ class TurretInteraction : SimpleBlockInteraction() {
         targetBlock: Vector3i,
         fireEvent: Boolean
     ): InteractionState {
+
         val isTurret = context.commandBuffer?.getComponent(context.entity, TurretComponent.TYPE)
         val modelAsset: ModelAsset
 
@@ -67,7 +78,7 @@ class TurretInteraction : SimpleBlockInteraction() {
             if (fireEvent) {
                 context.commandBuffer?.removeComponent(context.entity, TurretComponent.TYPE)
             }
-        } else {
+        } else if (isOccupied(world, context.commandBuffer!!, targetBlock)) {
             modelAsset = ModelAsset.getAssetMap().getAsset("Turret")!!
             val teleport = Teleport.createExact(
                 Vector3d(targetBlock.x + 0.5, targetBlock.y + 0.0, targetBlock.z + 0.5),
@@ -78,7 +89,7 @@ class TurretInteraction : SimpleBlockInteraction() {
                 context.commandBuffer?.putComponent(context.entity, Teleport.getComponentType(), teleport)
                 context.commandBuffer?.putComponent(context.entity, TurretComponent.TYPE, TurretComponent)
             }
-        }
+        } else return InteractionState.Failed
 
         if (fireEvent) {
             val model = Model.createScaledModel(modelAsset, 1.0f)

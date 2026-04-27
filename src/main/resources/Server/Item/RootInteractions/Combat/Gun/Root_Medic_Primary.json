@@ -14,8 +14,8 @@
         "Type": "DieselShoot",
         "RunTime": 0.1,
         "Effects": {
-          "WorldSoundEventId": "SFX_AA_Fire",
-          "LocalSoundEventId": "SFX_AA_Fire",
+          "WorldSoundEventId": "SFX_Revolver_Fire",
+          "LocalSoundEventId": "SFX_Revolver_Fire",
           "ItemAnimationId": "Shoot",
           "CameraEffect": "Handgun_Shoot",
           "FirstPersonParticles": [
