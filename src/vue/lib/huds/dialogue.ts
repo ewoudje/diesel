@@ -8,20 +8,28 @@ import { randomInt } from "./util";
 //yvgrenyyl qbag rira pner nal zber shpx lbh im not making a class
 const actors = {
     partner: {
-        portrait:'prole',
-        voice: 'Other'
+        portrait:'partner',
+        voice: 'Afrenchevil'
+    },
+    bilduce:{
+        portrait: 'prole',
+        voice: 'Chairmanangry'
     },
     ilduce:{
-        portrait:'ilduce',
-        voice: 'Upset'
+        portrait:'prole',
+        voice: 'Charimancalm'
     },
     nilduce:{
-        portrait: 'nilduce',
-        voice: 'Scared'
+        portrait: 'prole',
+        voice: 'Chairmancared'
     },
     fred:{
-        portrait: 'partner',
-        voice: 'Scared'
+        portrait: 'fred',
+        voice: 'Fredcalm'
+    },
+    fredfighter:{
+        portrait: 'fred',
+        voice: 'Fredangry'
     },
     sod: {
         portrait: 'prole',
@@ -36,7 +44,7 @@ let inDialogue = false;
 let dialogueTimeout = null;
 
 
-function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, chainObj, chainIndex, chainDelay, playSoundRef }: { 
+function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, chainObj, chainIndex, chainDelay, playSoundRef, setLogicRef, chainName }: { 
     text: string; 
     displayTextRef: Ref; 
     displayPortraitRef: Ref;
@@ -45,9 +53,10 @@ function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, 
     chainObj: (number | string)[][];
     chainIndex: number;
     chainDelay: number;
-    playSoundRef: Ref
+    playSoundRef: Ref;
+    setLogicRef: Ref;
+    chainName: String
 }){
-    console.log("test")
     if(inDialogue){
         //@ts-ignore
         clearTimeout(dialogueTimeout)
@@ -57,8 +66,6 @@ function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, 
     let splitText = text.replace(/"/g,'').split(' ');
         let i = 0;
     printText(splitText, displayTextRef);
-
-    console.log(actor)
     function printText(text: string[],destination: Ref){
         if(i<text.length){
             //@ts-ignore
@@ -92,6 +99,8 @@ function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, 
                 }, chainDelay)
             } else {
                 setTimeout(()=>{
+                    console.log(`[DIESELHUD] Chain ${chainName} complete`)
+                    setLogicRef.value(chainName, "Done")
                     displayPortraitRef.value = 'Img/portrait/none.png';
                     displayTextRef.value = ''
                 },chainDelay)
@@ -109,10 +118,11 @@ function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, 
 //play dialogue, then when it's over, for x time and move to the next
 //if it's interrupted, check if it's marked important. if it isn't then override it, if it is then don't start it
 //TODO FIX HCAIN OVERRIDES
-function playChain(chainName: string, displayTextRef:Ref, displayPortraitRef:Ref, playSoundRef:Ref){
+function playChain(chainName: string, displayTextRef:Ref, displayPortraitRef:Ref, playSoundRef:Ref, setLogicRef:Ref){
     //@ts-ignore //shut UP shut UP shut UP shut UP shut UP shut UP i wanna go HOME
     let chainObj = chains[chainName];
     let index = 0;
+    console.log(`[DIESELHUD] Starting chain ${chainName}`)
     playDialogue({
         actor: chainObj[index][0],
         text: chainObj[index][1],
@@ -122,7 +132,9 @@ function playChain(chainName: string, displayTextRef:Ref, displayPortraitRef:Ref
         chainObj: chainObj,
         displayPortraitRef: displayPortraitRef,
         displayTextRef: displayTextRef,
-        playSoundRef: playSoundRef
+        playSoundRef: playSoundRef,
+        setLogicRef: setLogicRef,
+        chainName: chainName
     })
 }
 
@@ -137,7 +149,6 @@ const chains = {
     ],
     planeDownFred: [
         ["fred","OUURUUGH!!!!", 100, 500],
-        ["fred","RIGHT IN THE SPOPPEGT", 100, 1000]
     ],
     planeAttackFred: [
         ["fred","For the board!!!", 100, 500],

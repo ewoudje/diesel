@@ -1,62 +1,70 @@
-import { randomInt as w } from "./util.js";
-const m = {
+import { randomInt as k } from "./util.js";
+const f = {
   partner: {
+    portrait: "partner",
+    voice: "Afrenchevil"
+  },
+  bilduce: {
     portrait: "prole",
-    voice: "Other"
+    voice: "Chairmanangry"
   },
   ilduce: {
-    portrait: "ilduce",
-    voice: "Upset"
+    portrait: "prole",
+    voice: "Charimancalm"
   },
   nilduce: {
-    portrait: "nilduce",
-    voice: "Scared"
+    portrait: "prole",
+    voice: "Chairmancared"
   },
   fred: {
-    portrait: "partner",
-    voice: "Scared"
+    portrait: "fred",
+    voice: "Fredcalm"
+  },
+  fredfighter: {
+    portrait: "fred",
+    voice: "Fredangry"
   },
   sod: {
     portrait: "prole",
     voice: "Other"
   }
 };
-let h = !1, f = null;
-function g({ text: l, displayTextRef: o, displayPortraitRef: a, speed: u, actor: t, chainObj: e, chainIndex: r, chainDelay: p, playSoundRef: d }) {
-  console.log("test"), h && clearTimeout(f), h = !0, o.value = "";
-  let v = l.replace(/"/g, "").split(" "), n = 0;
-  c(v, o), console.log(t);
-  function c(i, s) {
-    n < i.length ? ((n + 2) % 2 == 0 && d.value(m[t].voice), s.value = `${s.value} ${i[n]}`, a.value = y(t), n++, f = setTimeout(() => {
-      c(i, s);
-    }, 100)) : (r++, r < e.length ? setTimeout(() => {
-      g({
+let h = !1, g = null;
+function v({ text: o, displayTextRef: r, displayPortraitRef: a, speed: s, actor: n, chainObj: t, chainIndex: e, chainDelay: u, playSoundRef: d, setLogicRef: y, chainName: c }) {
+  h && clearTimeout(g), h = !0, r.value = "";
+  let w = o.replace(/"/g, "").split(" "), l = 0;
+  m(w, r);
+  function m(i, p) {
+    l < i.length ? ((l + 2) % 2 == 0 && d.value(f[n].voice), p.value = `${p.value} ${i[l]}`, a.value = D(n), l++, g = setTimeout(() => {
+      m(i, p);
+    }, 100)) : (e++, e < t.length ? setTimeout(() => {
+      v({
         //@ts-ignore //lol
-        actor: e[r][0],
+        actor: t[e][0],
         //@ts-ignore //lmao
-        text: e[r][1],
+        text: t[e][1],
         //@ts-ignore //kek
-        speed: e[r][2],
+        speed: t[e][2],
         //@ts-ignore // )00))))00)
-        chainDelay: e[r][3],
+        chainDelay: t[e][3],
         //@ts-ignore //wxnstunxwfqsunwxfqus
-        chainIndex: r,
-        chainObj: e,
+        chainIndex: e,
+        chainObj: t,
         displayPortraitRef: a,
-        displayTextRef: o,
+        displayTextRef: r,
         playSoundRef: d
       });
-    }, p) : setTimeout(() => {
-      a.value = "Img/portrait/none.png", o.value = "";
-    }, p));
+    }, u) : setTimeout(() => {
+      console.log(`[DIESELHUD] Chain ${c} complete`), y.value(c, "Done"), a.value = "Img/portrait/none.png", r.value = "";
+    }, u));
   }
-  function y(i) {
-    return `Img/portrait/${m[i].portrait}${w(1, 3)}.png`;
+  function D(i) {
+    return `Img/portrait/${f[i].portrait}${k(1, 3)}.png`;
   }
 }
-function U(l, o, a, u) {
-  let t = T[l], e = 0;
-  g({
+function $(o, r, a, s, n) {
+  let t = C[o], e = 0;
+  console.log(`[DIESELHUD] Starting chain ${o}`), v({
     actor: t[e][0],
     text: t[e][1],
     speed: t[e][2],
@@ -64,11 +72,13 @@ function U(l, o, a, u) {
     chainIndex: e,
     chainObj: t,
     displayPortraitRef: a,
-    displayTextRef: o,
-    playSoundRef: u
+    displayTextRef: r,
+    playSoundRef: s,
+    setLogicRef: n,
+    chainName: o
   });
 }
-const T = {
+const C = {
   testchain: [
     ["sod", "i'm walkin' ere!", 100, 1e3],
     ["sod", "you gotta watch where you're going, pal", 100, 1e3],
@@ -77,8 +87,7 @@ const T = {
     ["sod", "you'd think we was Chasm Cataluña or somethin'", 100, 1e3]
   ],
   planeDownFred: [
-    ["fred", "OUURUUGH!!!!", 100, 500],
-    ["fred", "RIGHT IN THE SPOPPEGT", 100, 1e3]
+    ["fred", "OUURUUGH!!!!", 100, 500]
   ],
   planeAttackFred: [
     ["fred", "For the board!!!", 100, 500]
@@ -102,7 +111,7 @@ const T = {
   ]
 };
 export {
-  U as playChain,
-  g as playDialogue
+  $ as playChain,
+  v as playDialogue
 };
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGlhbG9ndWUuanMiLCJzb3VyY2VzIjpbXSwic291cmNlc0NvbnRlbnQiOltdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OyJ9
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGlhbG9ndWUuanMiLCJzb3VyY2VzIjpbXSwic291cmNlc0NvbnRlbnQiOltdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OyJ9

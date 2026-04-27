@@ -8,10 +8,12 @@ console.log("[DIESELGAME] INIT VUE HUD")
 
 const playSound = useData("playSound",()=>{});
 const soundToPlay = ref('');
+const setLogic = useData("setLogic",()=>{});
 watch (soundToPlay,(sound: String)=>{
     //@ts-ignore
     playSound.value(sound);
 })
+
 
 const inputMessageChain = useData<string>("chain","");
 
@@ -20,6 +22,7 @@ const inputObjective = useData<String>("objective","")
 const inputClass = useData<string>("class","scout");
 const inputHotbarIdx = useData<number>("hotbarIdx",0);
 const inputHealth = useData<number>("health",1);
+const inputOverlay = useData<string>("overlay","none")
     
 const classKey = computed(()=>{
     return inputClass.value.toLowerCase()
@@ -55,7 +58,7 @@ const displayMessage = ref('')
 const displayPortrait = ref('Img/portrait/none.png')
 watch(inputMessageChain,()=>{
     console.log("input message", inputMessageChain.value)
-    playChain(inputMessageChain.value, displayMessage, displayPortrait, playSound)
+    playChain(inputMessageChain.value, displayMessage, displayPortrait, playSound, setLogic)
 })
 
 //Debug background
@@ -83,7 +86,7 @@ const contentBg = ref('Img/empty.png')
             :background="{Color:colors.base}"
             :mask-texture-path="'Img/health/scout.png'"
             :bar-texture-path="'Img/solid.png'"
-x            :effect-height="100"
+            :effect-height="100"
                 :effect-width="100"
                 :value="1- inputHealth"
                 :alignment="'Vertical'"
@@ -285,7 +288,7 @@ x            :effect-height="100"
                         VerticalAlignment: 'Center',
                         Wrap: false,
                         TextColor: colors.base
-                    }""
+                    }"
                     >ME</Label>
                            <Label
                 :anchor="{Top:-30,Left:50,Right:0,Height:10}"
