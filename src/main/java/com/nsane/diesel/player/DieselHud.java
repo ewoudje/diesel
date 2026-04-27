@@ -108,7 +108,13 @@ public class DieselHud {
         ui.setHudData("dashes", dashCharges);
         ui.setHudData("class", clazz);
         ui.setHudData("hotbarIdx", slot > 1 ? slot > 6 ? 0 : 1 : slot);
-        ui.setHudData("ammo", ammo.get());
+        switch (clazz){
+            case "turret":
+                ui.setHudData("ammo", entityStatMapComponent.get("Turret_AA_Ammo").get());
+                break;
+            default:
+                ui.setHudData("ammo", entityStatMapComponent.get("Shotgun_Scout_Ammo").get());
+        }
         ui.setHudData("health", healthValue.asPercentage());
 
         var sim = commands.getResource(AirSimulator.Companion.getTYPE());

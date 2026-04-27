@@ -1,5 +1,5 @@
 import type { Ref } from "vue";
-declare function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, chainObj, chainIndex, chainDelay, playSoundRef }: {
+declare function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, chainObj, chainIndex, chainDelay, playSoundRef, setLogicRef, chainName }: {
     text: string;
     displayTextRef: Ref;
     displayPortraitRef: Ref;
@@ -9,6 +9,8 @@ declare function playDialogue({ text, displayTextRef, displayPortraitRef, speed,
     chainIndex: number;
     chainDelay: number;
     playSoundRef: Ref;
+    setLogicRef: Ref;
+    chainName: String;
 }): void;
-declare function playChain(chainName: string, displayTextRef: Ref, displayPortraitRef: Ref, playSoundRef: Ref): void;
+declare function playChain(chainName: string, displayTextRef: Ref, displayPortraitRef: Ref, playSoundRef: Ref, setLogicRef: Ref): void;
 export { playChain, playDialogue };

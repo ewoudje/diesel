@@ -1,0 +1,22 @@
+{
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/Diesel/Voice/bangry1.ogg",
+        "Sounds/Diesel/Voice/bangry2.ogg",
+        "Sounds/Diesel/Voice/bangry3.ogg",
+        "Sounds/Diesel/Voice/bangry4.ogg"
+      ],
+      "RandomSettings": {
+        "MinPitch": -4,
+        "MaxPitch": 3,
+        "MinVolume": -2,
+        "MaxVolume": 2
+      }
+    }
+  ],
+  "MaxInstance": 30,
+  "Volume": 1.0,
+  "PreventSoundInterruption": true,
+  "Parent": "SFX_Attn_Loud"
+}

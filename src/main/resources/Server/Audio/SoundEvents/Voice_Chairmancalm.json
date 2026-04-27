@@ -1,0 +1,24 @@
+{
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/Diesel/Voice/pro1.ogg",
+        "Sounds/Diesel/Voice/pro2.ogg",
+        "Sounds/Diesel/Voice/pro3.ogg",
+        "Sounds/Diesel/Voice/pro4.ogg",
+        "Sounds/Diesel/Voice/pro5.ogg",
+        "Sounds/Diesel/Voice/pro6.ogg"
+      ],
+      "RandomSettings": {
+        "MinPitch": -4,
+        "MaxPitch": 3,
+        "MinVolume": -2,
+        "MaxVolume": 2
+      }
+    }
+  ],
+  "MaxInstance": 30,
+  "Volume": 1.0,
+  "PreventSoundInterruption": true,
+  "Parent": "SFX_Attn_Loud"
+}

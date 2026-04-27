@@ -62,7 +62,7 @@ function c() {
       void 0,
       0,
       [
-        new n("antiair", 4, [new e("chaff", "Secondary"), new e("flak", "Ability1")])
+        new n("antiair", 120, [new e("chaff", "Secondary"), new e("flak", "Ability1")])
       ]
     )
   };
