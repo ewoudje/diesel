@@ -62,6 +62,13 @@ public class DieselHud {
                 sounds.add(SoundEvent.getAssetMap().getIndex("Voice_" + s));
             }
         });
+        //yby, yznb rira
+        ui.setHudData("playAnySound", (Consumer<String>) (s) -> {
+
+            synchronized (sounds) {
+                sounds.add(SoundEvent.getAssetMap().getIndex(s));
+            }
+        });
         ui.setHudData("setLogic", (BiConsumer<String, String>) (key, value) ->
                 world.execute(() -> LogicComponentTracker.INSTANCE.addCustom(key, value)));
     }
@@ -108,13 +115,13 @@ public class DieselHud {
         ui.setHudData("dashes", dashCharges);
         ui.setHudData("class", clazz);
         ui.setHudData("hotbarIdx", slot > 1 ? slot > 6 ? 0 : 1 : slot);
-        /*switch (clazz){
+        switch (clazz){
             case "turret":
                 ui.setHudData("ammo", entityStatMapComponent.get("Turret_AA_Ammo").get());
                 break;
             default:
                 ui.setHudData("ammo", entityStatMapComponent.get("Shotgun_Scout_Ammo").get());
-        }*/
+        }
         ui.setHudData("health", healthValue.asPercentage());
 
         var sim = commands.getResource(AirSimulator.Companion.getTYPE());
@@ -122,6 +129,13 @@ public class DieselHud {
             ui.setHudData("shipHealth", sim.getShipHealth());
         } else ui.setHudData("shipHealth", -1.0);
 
+        //progress bars are progress1 and progress 2
+        //ui.setHudData("progress2",foo)
+        ui.setHudData("progress1",0.5);
+        ui.setHudData("progress1Label","CHAIRMAN IN CHIEF");
+        ui.setHudData("progress2",0.6);
+        ui.setHudData("progress2Label","SHIP HEALTH");
+        //"currentLevel" for current level
     }
 
     public void showMessage(@NotNull String chain) {

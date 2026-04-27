@@ -6,7 +6,7 @@
     "DieselCategory.Weapons"
   ],
   "$Comment": "Loading order means that shooting and ammo usage should be inline",
-  "Reticle": "DefaultMelee",
+  "Reticle": "Diesel_Wide",
   "Model": "Items/Diesel/shotgun/shotgun.blockymodel",
   "Icon": "Icons/ItemsGenerated/Shotgun_Scout.png",
   "Texture": "Items/Diesel/shotgun/shotgun.png",

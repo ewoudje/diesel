@@ -13,7 +13,6 @@
   "Texture": "Items/Diesel/shotgun/shotgun.png",
   "PlayerAnimationsId": "Shotgun_Scout_Anim",
   "Interactions": {
-    "Ability1": "Root_Diesel_Dodge_Scout",
     "Primary": {
       "Interactions": [
         {
@@ -52,11 +51,20 @@
           "Effects": {
             "WorldSoundEventId": "SFX_Flak_Fire"
           }
-
         }
       ]
     },
-    "SwapTo": "Root_SetMovement_Scout"
+    "SwapTo": "Root_SetMovement_Scout",
+    "Ability1": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "Effects": {
+            "WorldSoundEventId": "SFX_Stamina_Regen"
+          }
+        }
+      ]
+    }
   },
   "IconProperties": {
     "Scale": 0.36,
