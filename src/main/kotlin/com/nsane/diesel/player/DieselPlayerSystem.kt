@@ -24,6 +24,7 @@ import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent
 import com.hypixel.hytale.server.core.universe.PlayerRef
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
+import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.WorldEventEntitySystem
 import com.nsane.diesel.level.ChangeLevelEvent
 
@@ -73,6 +74,28 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
         ) {
             val playerComp = chunk.getComponent(idx, DieselPlayerComponent.TYPE)
             playerComp?.hud?.showMessage("level.${event.newLevel.name}")
+        }
+    }
+
+    private var allDead: Boolean = true
+
+    override fun tick(
+        dt: Float,
+        archetypeChunk: ArchetypeChunk<EntityStore?>,
+        store: Store<EntityStore?>,
+        commandBuffer: CommandBuffer<EntityStore?>
+    ) {
+        super.tick(dt, archetypeChunk, store, commandBuffer)
+        if (!archetypeChunk.archetype.contains(DeathComponent.getComponentType()))
+            allDead = false
+    }
+
+    override fun tick(dt: Float, systemIndex: Int, store: Store<EntityStore?>) {
+        allDead = true
+        super.tick(dt, systemIndex, store)
+        if (allDead && store.externalData.world.playerCount != 0) {
+            DieselPlugin.LOGGER.atInfo().log("Everyone Died of ligma :pensive:")
+            allDead = false
         }
     }
 

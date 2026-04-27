@@ -12,11 +12,13 @@ import com.hypixel.hytale.component.system.WorldEventSystem
 import com.hypixel.hytale.component.system.tick.TickingSystem
 import com.hypixel.hytale.server.core.asset.type.weather.config.Weather
 import com.hypixel.hytale.server.core.modules.entity.tracker.NetworkId
+import com.hypixel.hytale.server.core.universe.world.ParticleUtil
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.flying.enviroment.EnvironmentalComponent
 import com.nsane.diesel.flying.stage.Stage
 import com.nsane.diesel.level.ChangeLevelEvent
 import kotlin.collections.get
+import kotlin.random.Random
 
 object SimulationSystem : TickingSystem<EntityStore?>() {
     override fun tick(
@@ -30,6 +32,43 @@ object SimulationSystem : TickingSystem<EntityStore?>() {
         val weatherIdx = sim.stage?.env?.weather?.let { Weather.getAssetMap().getIndex(it) }
         if (weather.forcedWeatherIndex != weatherIdx)
             weather.setForcedWeather(sim.stage?.env?.weather)
+
+        if (sim.shipHealth <= 40.0 && sim.shipHealthState == 0) {
+            sim.shipHealthState = 1
+            repeat(3) {
+                val pos = sim.shipPosition.clone().add(
+                    Random.nextDouble() * 10 - 5,
+                    Random.nextDouble() * 2 - 1,
+                    Random.nextDouble() * 10 - 5
+                )
+                ParticleUtil.spawnParticleEffect("Explosion_Medium", pos, store)
+            }
+        } else if (sim.shipHealth <= 15.0 && sim.shipHealthState == 1) {
+            sim.shipHealthState = 2
+            repeat(5) {
+                val pos = sim.shipPosition.clone().add(
+                    Random.nextDouble() * 10 - 5,
+                    Random.nextDouble() * 2 - 1,
+                    Random.nextDouble() * 10 - 5
+                )
+                ParticleUtil.spawnParticleEffect("Explosion_Big", pos, store)
+            }
+        } else if (sim.shipHealth <= 0.0 && sim.shipHealthState >= 2) {
+            sim.shipHealthState++
+            if (sim.shipHealthState % 10 == 0) {
+                val pos = sim.shipPosition.clone().add(
+                    Random.nextDouble() * 10 - 5,
+                    Random.nextDouble() * 2 - 1,
+                    Random.nextDouble() * 10 - 5
+                )
+                ParticleUtil.spawnParticleEffect("Explosion_Big", pos, store)
+            }
+
+            if (sim.shipHealthState >= 100) {
+                sim.shipHealthState = 0
+                sim.shipHealth = 100.0
+            }
+        }
     }
 
     object OnLevelChange: WorldEventSystem<EntityStore?, ChangeLevelEvent>(ChangeLevelEvent::class.java) {

@@ -9,8 +9,6 @@ import com.nsane.diesel.DieselPlugin
 import io.github.hytalekt.kytale.codec.buildCodec
 
 class DieselResource: Resource<EntityStore?> {
-    var deadPlayers = 0
-
     fun broadcastMessage(accessor: ComponentAccessor<EntityStore?>, chain: String) {
         val world = accessor.externalData.world
         world.execute {
@@ -25,10 +23,7 @@ class DieselResource: Resource<EntityStore?> {
 
     companion object {
         val CODEC = buildCodec(::DieselResource) {
-            addField("DeadPlayers", Codec.INTEGER) {
-                setter { deadPlayers = it}
-                getter { deadPlayers }
-            }
+
         }
 
         val TYPE by lazy { DieselPlugin.getResource(DieselResource::class.java) }

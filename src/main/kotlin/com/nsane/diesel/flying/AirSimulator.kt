@@ -31,6 +31,7 @@ class AirSimulator: Resource<EntityStore?> {
     var velocityModifier = 1.0
     var distanceTraveled = 0.0
     var shipHealth = 100.0
+    var shipHealthState = 0
     var stage: Stage? = null
     val environmentalAmounts = mutableMapOf<String, Int>()
 
@@ -76,6 +77,7 @@ class AirSimulator: Resource<EntityStore?> {
         ref: Ref<EntityStore?>,
         projectile: DieselProjectileComponent
     ) {
+        if (!(projectile.owner?.isValid ?: false)) return
         if (commands.getComponent(projectile.owner!!, Player.getComponentType()) != null) return
 
         shipHealth--

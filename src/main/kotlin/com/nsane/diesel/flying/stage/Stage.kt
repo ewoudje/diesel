@@ -31,10 +31,12 @@ abstract class Stage(name: String, objective: String): Level(name, objective) {
         val traveled = sim.shipPosition - before
         sim.distanceTraveled += traveled.length()
         sim.shipVelocity.assign(traveled.scale(1.0 / dt))
+
+        env.tick(store, dt)
     }
 
     open fun tickStage(store: ComponentAccessor<EntityStore?>, sim: AirSimulator, dt: Float) {
-        sim.shipPosition += forward(sim, 10.0) * sim.velocityModifier
+        sim.shipPosition += forward(sim, 10.0) * (sim.velocityModifier * dt)
     }
 
     protected fun cache(store: ComponentAccessor<EntityStore?>, name: String) {
