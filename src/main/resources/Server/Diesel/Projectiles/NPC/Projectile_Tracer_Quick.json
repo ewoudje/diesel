@@ -1,24 +1,24 @@
 {
   "Model": "Projectile_AA_Asset",
-  "Config": "Projectile_Config_Shotgun_Scout_Special",
-  "ProjectileCount": 20,
-  "SpreadAmount": 20,
+  "Config": "Projectile_Config_Empty_Silent",
+  "ProjectileCount": 1,
+  "SpreadAmount": 10,
   "BulletSpeed": 50,
-  "BulletDistance": 5,
+  "BulletDistance": 500,
   "DamageCalculator": {
     "Class": "Light",
     "BaseDamage": {
-      "Projectile":14
+      "Projectile": 6
     }
   },
   "DamageEffects": {
-    "Knockback": {
-      "Type": "Directional",
-      "Force": -60
-    },
     "WorldParticles": [
       {
-        "SystemId": "Gun_Impact"
+        "SystemId": "Gun_Impact",
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0
+        }
       }
     ]
   },
