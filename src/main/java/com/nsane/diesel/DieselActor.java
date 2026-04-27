@@ -1,8 +1,9 @@
 package com.nsane.diesel;
 
 public enum DieselActor {
-    TALL_DEVIL,
-    SMALL_DEVIL,
+    PARTNER, //our boss
+    ILDUCE, //big man
+    NILDUCE, //it's cold out okay
     FRED, // Soldier screaming at u
-    SOD // Deppresive guy hajking comms
+    SOD // Deppresive guy hajking comms //prole
 }

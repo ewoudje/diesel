@@ -49,5 +49,47 @@ devserver
 gradle.properties
 
 ##### VUE PROJECT #####
-/src/vue/*
-vue
+# Logs
+/src/vuelogs
+/src/vue*.log
+/src/vuenpm-debug.log*
+/src/vueyarn-debug.log*
+/src/vueyarn-error.log*
+/src/vuepnpm-debug.log*
+/src/vuelerna-debug.log*
+
+/src/vuenode_modules
+/src/vue.DS_Store
+/src/vuedist
+/src/vuedist-ssr
+/src/vuecoverage
+/src/vue*.local
+
+# Editor directories and files
+/src/vue.vscode/*
+/src/vue!.vscode/extensions.json
+/src/vue.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+*.tsbuildinfo
+
+/src/vue.eslintcache
+
+# Cypress
+/src/vue/cypress/videos/
+/src/vue/cypress/screenshots/
+
+# Vitest
+/src/vue__screenshots__/
+
+# Vite
+*.timestamp-*-*.mjs
+
+/src/vuedts-generator
+/src/vuedts-generator/**
+
+/src/vue.vuetale

@@ -17,7 +17,6 @@
     ]
   },
   "Categories": [
-    "Items.Weapons",
     "DieselCategory.Weapons"
   ],
   "Model": "NPC/Intelligent/Klops/Models/Weapons/Staff/Cane.blockymodel",

@@ -22,7 +22,7 @@ class LevelManager : Resource<EntityStore?> {
 
         currentLevel = when (key) {
             "StartOfGame" -> LogicBasedLevel("StartOfGame", "Get a job!", "enterOffice", "InOffice")
-            "InOffice " -> LogicBasedLevel("InOffice ", "Just listen", "talkDone", "ChaseInStreets")
+            "InOffice" -> LogicBasedLevel("InOffice", "Just listen", "talkDone", "ChaseInStreets")
             "ChaseInStreets" -> LogicBasedLevel("ChaseInStreets", "!get OUT!", "endOfStreet", "Shipyard")
             "Shipyard" -> AllDeadLevel("Shipyard", "Kill the guys", "StartStage")
             "StartStage" -> StartStage()

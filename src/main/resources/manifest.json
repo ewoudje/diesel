@@ -29,5 +29,8 @@
     ],
     "DisabledByDefault": false,
     "IncludesAssetPack": true,
+    "Dependencies": {
+        "kelp.li:Vuetale": "*"
+    },
     "Main": "com.nsane.diesel.DieselPlugin"
 }

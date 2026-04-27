@@ -1,0 +1,24 @@
+{
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/Diesel/Voice/upset1.ogg",
+        "Sounds/Diesel/Voice/upset2.ogg",
+        "Sounds/Diesel/Voice/upset3.ogg",
+        "Sounds/Diesel/Voice/upset4.ogg",
+        "Sounds/Diesel/Voice/upset5.ogg",
+        "Sounds/Diesel/Voice/upset6.ogg"
+      ],
+      "RandomSettings": {
+        "MinPitch": -4,
+        "MaxPitch": 3,
+        "MinVolume": -2,
+        "MaxVolume": 2
+      }
+    }
+  ],
+  "MaxInstance": 30,
+  "Volume": 1.0,
+  "PreventSoundInterruption": true,
+  "Parent": "SFX_Attn_Loud"
+}
