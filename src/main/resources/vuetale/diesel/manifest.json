@@ -5,8 +5,8 @@
   "components": [
     "Example",
     "MessageBox",
-    "Example.vue?vue&type=script&setup=true&lang",
-    "MessageBox.vue?vue&type=script&setup=true&lang"
+    "MessageBox.vue?vue&type=script&setup=true&lang",
+    "Example.vue?vue&type=script&setup=true&lang"
   ],
   "pages": [
     "TestPage",

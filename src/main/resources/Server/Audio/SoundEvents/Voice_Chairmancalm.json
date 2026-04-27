@@ -2,12 +2,12 @@
   "Layers": [
     {
       "Files": [
-        "Sounds/Diesel/Voice/pro1.ogg",
-        "Sounds/Diesel/Voice/pro2.ogg",
-        "Sounds/Diesel/Voice/pro3.ogg",
-        "Sounds/Diesel/Voice/pro4.ogg",
-        "Sounds/Diesel/Voice/pro5.ogg",
-        "Sounds/Diesel/Voice/pro6.ogg"
+        "Sounds/Diesel/Voice/proshort1.ogg",
+        "Sounds/Diesel/Voice/proshort2.ogg",
+        "Sounds/Diesel/Voice/proshort3.ogg",
+        "Sounds/Diesel/Voice/proshort4.ogg",
+        "Sounds/Diesel/Voice/proshort5.ogg",
+        "Sounds/Diesel/Voice/proshort6.ogg"
       ],
       "RandomSettings": {
         "MinPitch": -4,

@@ -4,9 +4,9 @@
   "LaunchWorldSoundEventId": "SFX_Rifle_Fire",
   "Physics": {
     "Type": "Standard",
-    "Gravity": 30,
-    "TerminalVelocityAir": 50,
-    "TerminalVelocityWater": 15,
+    "Gravity": 0,
+    "TerminalVelocityAir": 200,
+    "TerminalVelocityWater": 200,
     "RotationMode": "VelocityDamped",
     "Bounciness": 0.0,
     "SticksVertically": true,
@@ -29,5 +29,5 @@
     "Y": 0,
     "X": 0.1
   },
-  "LaunchForce": 80
+  "LaunchForce": 300
 }

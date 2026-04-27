@@ -7,6 +7,7 @@ import { playChain, playDialogue } from './dialogue';
 console.log("[DIESELGAME] INIT VUE HUD")
 
 const playSound = useData("playSound",()=>{});
+const playAnySound = useData("playAnySound",()=>{});
 const soundToPlay = ref('');
 const setLogic = useData("setLogic",()=>{});
 watch (soundToPlay,(sound: String)=>{
@@ -22,8 +23,24 @@ const inputObjective = useData<String>("objective","")
 const inputClass = useData<string>("class","scout");
 const inputHotbarIdx = useData<number>("hotbarIdx",0);
 const inputHealth = useData<number>("health",1);
-const inputOverlay = useData<string>("overlay","none")
-    
+const inputOverlay = useData<string>("overlay","none");
+const inputProgress1 = useData<number>("progress1",0);
+const inputProgress1Label = useData<string>("progress1Label",'');
+const inputProgress2 = useData<number>("progress2");
+const inputProgress2Label = useData<string>("progress2Label",'');
+const currentLevel = useData<string>("currentLevel",'')
+
+watch(inputDashes,(dash,oldDash)=>{
+    //UNUNUNUNUNUNUNUNUNUNUNUN RAQ ZL FHSSREVAT
+    console.log(dash, oldDash)
+    if(dash>oldDash){
+        //this doesnt actually use an argument
+        
+        //@ts-ignore
+        playAnySound.value(`SFX_Stamina_Regen${dash}`)
+    }
+})
+
 const classKey = computed(()=>{
     return inputClass.value.toLowerCase()
 })
@@ -38,20 +55,50 @@ const heldItem = computed(()=>{
     })
 })
 
+//level colors
+let levelColors = {
+            StartOfGame: `#FF0000`,
+        InOffice: '#282623',
+        ChaseInStreets: '#282623',
+        Shipyard: '#282623',
+        StartStage: '#282623',
+        Stage1: '#282623',
+        Stage2: '#282623',
+        BossStage: '#282623',
+        EnterMech: '#282623',
+        BreakIn: '#282623',
+        BrokeIn: '#282623',
+        UnlockedDoor: '#282623',
+        KGB: '#282623',
+        FinalStretch: '#282623',
+        BossFight: '#282623'
+}
 
 //UI Colors
 const modifiedBaseColor = ref<String | null>(null)
 const colors = computed(()=>{
-    let startcolor = modifiedBaseColor.value ?? playerClass.value.baseColor;
+    //@ts-ignore
+    let startcolor = modifiedBaseColor.value ?? ((currentLevel.length) ? levelColors[currentLevel.value] : levelColors.StartOfGame);
     return {
         base: startcolor,
         light: LightenDarkenColor(startcolor,200),
         dark: LightenDarkenColor(startcolor,-30),
         alt: hueRotateHex(startcolor,40),
         brass: '#c98d1c',
-        screen: `#282623`,
+        screen: `#282623`
     }
 })
+
+/*watch (inputHealth,(health,oldHealth)=>{
+    let startcolor = colors.value.base.slice();
+
+    if(health<oldHealth){
+        modifiedBaseColor.value = LightenDarkenColor(hueRotateHex(startcolor,-40),0)
+        setTimeout(()=>{
+            modifiedBaseColor.value = startcolor
+        },100)
+    }
+})*/
 
 //Dialogue
 const displayMessage = ref('')
@@ -83,7 +130,7 @@ const contentBg = ref('Img/empty.png')
         <!--Health-->
             <ProgressBar
             :anchor="{Left:0, Top:0, Width: 340, Height: 380 }"
-            :background="{Color:colors.base}"
+            :background="{Color:hueRotateHex(colors.base,-180*(1-inputHealth))}"
             :mask-texture-path="'Img/health/scout.png'"
             :bar-texture-path="'Img/solid.png'"
             :effect-height="100"
@@ -110,7 +157,7 @@ const contentBg = ref('Img/empty.png')
 
         <!--Text-->
         <Group :anchor="{ Left:400,Bottom:100,Width: 530, Height: 100 }" :background="contentBg">
-            
+
         <Label
                 :el-style="{
                     FontSize: 35,
@@ -120,7 +167,7 @@ const contentBg = ref('Img/empty.png')
                     TextColor: colors.base
                 }"
             >
-            {{displayMessage}}  
+            {{displayMessage}}
         </Label>
         </Group>
 
@@ -170,7 +217,7 @@ const contentBg = ref('Img/empty.png')
                     Alignment: 'End'
                 }"
             >
-              {{inputObjective}} 
+              {{inputObjective}}
             </Label>
         </Group>
 
@@ -188,7 +235,7 @@ const contentBg = ref('Img/empty.png')
         <!--weapons-->
         <Group :anchor="{Right:0, Top:0, Bottom:0, Width:120}" :background="contentBg" :layout-mode="'Top'">
             <Group v-for="(entry, index) in playerClass.hotbar" :key="index" :anchor="{Left:0, Top:22, Width: 100, Height: 100 }" :background="(inputHotbarIdx == index) ? 'Img/button_on_overlay.png' : 'Img/button_off_overlay.png'" :mask-texture-path="'Img/mask/button.png'">
-                <Group  :background="{Color:`${colors.base}(0.5)`}"/>
+                <Group  :background="{Color:`${(inputHotbarIdx == index) ? colors.base : LightenDarkenColor(colors.base,-100)}(0.5)`}"/>
                 <Group :background="(inputHotbarIdx == index) ? 'Img/button_on_top_overlay.png' : 'Img/empty.png'"/>
                 <Group :anchor="{Width:60,Height:60}" :background="(inputHotbarIdx == index) ? {Color:colors.dark} : {Color:colors.light}" :mask-texture-path="playerClass.hotbar[index]?.iconPath"/>
                 <Group :anchor="{Left:8}">
@@ -260,7 +307,7 @@ const contentBg = ref('Img/empty.png')
                     }"
                 >{{ heldItem.ammo }}</Label>
                 <Label
-                    :anchor="(heldItem.ammo.value < 10) ? 
+                    :anchor="(heldItem.ammo.value < 10) ?
                         {Top:-10,Right:80,Width:300,Height:200}
                         : {Top:60,Left:0,Right:0,Width:300,Height:200}"
                     :padding="{Full:20}"
@@ -274,7 +321,7 @@ const contentBg = ref('Img/empty.png')
                         TextColor: colors.base
                     }"
                 >{{ heldItem.o?.maxAmmo}}
-                
+
                 </Label>
             </Group>
             <Group :anchor="{Top:-30}" :layout-mode="'Top'" v-else>
@@ -301,16 +348,74 @@ const contentBg = ref('Img/empty.png')
                         Wrap: false,
                         TextColor: colors.base
                     }""
-                    >LEE</Label>         
+                    >LEE</Label>
             </Group>
         </Group>
 
-        <Group :anchor="{Bottom:0,Right:-90, Width:800,Height:450}" :background="'Img/bottom_right_shine.png'"/>
+        <Group :anchor="{Bottom:0,Right:-90, Width:80000,Height:450}" :background="'Img/bottom_right_shine.png'"/>
     </Group>
 
-    <!--All-purpose overlay-->
+    <!--OVERLAYS-->
     <Group :anchor="{Full:1}">
 
+    </Group>
+
+    <!--PROGRESS BARS-->
+    <Group :anchor="{Top:5,Left:360}">
+        <Group layout-mode="Top">
+            <Group>
+                <ProgressBar
+                                v-if="inputProgress2Label.length>0"
+                :anchor="{Left:0, Top:0, Width: 700, Height: 60 }"
+                :background="{Color:LightenDarkenColor(hueRotateHex(colors.base,30),-120)}"
+                :mask-texture-path="'Img/bossbar.png'"
+                :bar-texture-path="'Img/solid.png'"
+                :effect-height="100"
+                    :effect-width="100"
+                    :value="1 - inputProgress1"
+                    :direction="'Start'"
+                />
+                <Label
+                :anchor="{
+                    Left:10,
+                    Top:5
+                }"
+                :el-style="{
+                    TextColor:hueRotateHex(colors.base,30),
+                    FontName:'Mono',
+                    FontSize: 30
+                }"
+                >
+                    {{ inputProgress1Label.toLowerCase() }}
+                </Label>
+            </Group>
+            <Group>
+                <ProgressBar
+                v-if="inputProgress2Label.length>0"
+                :anchor="{Left:0, Top:0, Width: 700, Height: 60 }"
+                :background="{Color:LightenDarkenColor(colors.base,-120)}"
+                :mask-texture-path="'Img/bossbar.png'"
+                :bar-texture-path="'Img/solid.png'"
+                :effect-height="100"
+                    :effect-width="100"
+                    :value="1 - inputProgress2"
+                    :direction="'Start'"
+                />
+                <Label
+                :anchor="{
+                    Left:10,
+                    Top:5
+                }"
+                :el-style="{
+                    TextColor:colors.base,
+                    FontName:'Mono',
+                    FontSize: 30
+                }"
+                >
+                    {{ inputProgress2Label.toLowerCase() }}
+                </Label>
+            </Group>
+        </Group>
     </Group>
 </template>
 <!--
