@@ -15,7 +15,7 @@
       "Description": "Whether or not this NPC will patrol during its waking hours, either alone or as part of a group."
     },
     "FlockArray": {
-      "Value": [ "\"Fred\"", "\"Fred_Spread\"", "\"Fred_Burst\"" ],
+      "Value": [ ],
       "TypeHint": "String",
       "Description": "Array containing NPCs for this flock type."
     },
@@ -36,11 +36,15 @@
     "DropList": "",
     "Appearance": "Fred",
     "Weapons": [ "Shotgun_Scout" ],
-    "FlockArray": { "Compute": "FlockArray" },
+    "FlockArray": {
+      "Value": [ "\"Fred\"", "\"Fred_Spread\"", "\"Fred_Burst\"" ],
+      "TypeHint": "String",
+      "Description": "Array containing NPCs for this flock type."
+    },
     "FollowPatrolPath": { "Compute": "FollowPatrolPath" },
     "Patrol": { "Compute": "Patrol" },
     "WanderRadius": { "Compute": "WanderRadius" },
-    "Attack": "Root_NPC_Fireburst",
+    "Attack": "Root_NPC_Fireonce",
     "CombatBackOffAfterAttack": true,
     "AttackDistance": 50,
     "CombatStrafeWeight": 3,

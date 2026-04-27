@@ -1,7 +1,7 @@
 {
   "Model": "Empty",
   "Config": "Projectile_Config_Shotgun_Scout_Empty",
-  "ProjectileCount": 10,
+  "ProjectileCount": 20,
   "SpreadAmount": 7,
   "BulletSpeed": 50,
   "BulletDistance": 8,

@@ -24,49 +24,49 @@
             "Shotgun_Scout_Ammo": 1
           },
           "Next": {
-            "Type": "DieselShoot",
-            "RunTime": 0.6,
-            "Effects": {
-              "ItemAnimationId": "Shoot",
-              "CameraEffect": "Handgun_Shoot",
-              "FirstPersonParticles": [
-                {
-                  "SystemId": "Muzzle_Flash",
-                  "PositionOffset": {
-                    "Z": 0.7,
-                    "Y": 0.11
-                  },
-                  "RotationOffset": {
-                    "Pitch": 90
-                  },
-                  "TargetEntityPart": "Self"
-                }
-              ],
-              "Particles": [
-                {
-                  "SystemId": "Muzzle_Flash",
-                  "PositionOffset": {
-                    "Z": -0.1,
-                    "Y": -0.5
-                  },
-                  "RotationOffset": {
-                    "Pitch": 90
-                  },
-                  "TargetEntityPart": "Self"
-                }
-              ]
+            "Type": "ChangeStat",
+            "StatModifiers": {
+              "Shotgun_Scout_Ammo": -1
             },
-            "Offset": {
-              "X": 0.05,
-              "Y": -0.03,
-              "Z": -0.8
-            },
-            "ProjectileType": "Projectile_Shotgun",
             "Next": {
-              "Type": "ChangeStat",
-              "StatModifiers": {
-                "Shotgun_Scout_Ammo": -1
-              }
+              "Type": "DieselShoot",
+              "RunTime": 0.6,
+              "Effects": {
+                "ItemAnimationId": "Shoot",
+                "CameraEffect": "Handgun_Shoot",
+                "FirstPersonParticles": [
+                  {
+                    "SystemId": "Muzzle_Flash",
+                    "PositionOffset": {
+                      "Z": 0.7,
+                      "Y": 0.11
+                    },
+                    "RotationOffset": {
+                      "Pitch": 90
+                    },
+                    "TargetEntityPart": "Self"
+                  }
+                ],
+                "Particles": [
+                  {
+                    "SystemId": "Muzzle_Flash",
+                    "PositionOffset": {
+                      "Z": -0.1,
+                      "Y": -0.5
+                    },
+                    "RotationOffset": {
+                      "Pitch": 90
+                    },
+                    "TargetEntityPart": "Self"
+                  }
+                ]
+              },
+              "Offset": {
+                "X": 0.05,
+                "Y": -0.03,
+                "Z": -0.8
+              },
+              "ProjectileType": "Projectile_Shotgun"
             }
           },
           "Failed": "Shotgun_Scout_Reload"
@@ -80,7 +80,8 @@
           "Costs": {
             "Shotgun_Scout_Ammo": 1
           },
-          "Next": {
+          "Next":
+          {
             "Type": "DieselShoot",
             "RunTime": 0,
             "Effects": {
@@ -125,7 +126,8 @@
                 "Shotgun_Scout_Ammo": 0
               },
               "Behaviour": "Set",
-              "Next": {
+              "Next":
+              {
                 "Type": "ApplyForce",
                 "Force": 22,
                 "AdjustVertical": false,
@@ -165,7 +167,11 @@
                 "Next": {
                   "Type": "ChangeStat",
                   "StatModifiers": {
-                    "Health": 15
+                    "Health": 16
+                  },
+                  "Next": {
+                    "Type": "Projectile",
+                    "Config": "Projectile_Config_Shotgun_Scout_Special2"
                   }
                 }
               }

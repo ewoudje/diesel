@@ -1,14 +1,15 @@
 {
-  "Model": "Projectile_AA_Asset",
+  "$Comment": "Like from blockland?",
+  "Model": "Fireball",
   "Config": "Projectile_Config_Empty_Silent",
   "ProjectileCount": 1,
-  "SpreadAmount": 0.2,
-  "BulletSpeed": 60,
+  "SpreadAmount": 14,
+  "BulletSpeed": 10,
   "BulletDistance": 500,
   "DamageCalculator": {
     "Class": "Light",
     "BaseDamage": {
-      "Projectile": 10
+      "Projectile": 30
     }
   },
   "DamageEffects": {

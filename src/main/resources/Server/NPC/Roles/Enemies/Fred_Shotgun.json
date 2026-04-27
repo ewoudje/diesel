@@ -40,7 +40,7 @@
     "FollowPatrolPath": { "Compute": "FollowPatrolPath" },
     "Patrol": { "Compute": "Patrol" },
     "WanderRadius": { "Compute": "WanderRadius" },
-    "Attack": "Root_NPC_Fireburst",
+    "Attack": "Root_NPC_FireTracerShotgunSlow",
     "CombatBackOffAfterAttack": true,
     "AttackDistance": 50,
     "CombatStrafeWeight": 3,
