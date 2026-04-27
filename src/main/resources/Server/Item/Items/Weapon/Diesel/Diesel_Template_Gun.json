@@ -22,36 +22,36 @@
             "Turret_AA_Ammo": 1
           },
           "Next": {
-            "Type": "DieselShoot",
-            "RunTime": 0.6,
-            "Effects": {
-              "ItemAnimationId": "Shoot",
-              "CameraEffect": "Handgun_Shoot",
-              "Particles": [
-                {
-                  "SystemId": "Muzzle_Flash",
-                  "PositionOffset": {
-                    "Z": 0.7,
-                    "Y": 0.11
-                  },
-                  "RotationOffset": {
-                    "Pitch": 90
-                  },
-                  "TargetEntityPart": "Self"
-                }
-              ]
+            "Type": "ChangeStat",
+            "StatModifiers": {
+              "Turret_AA_Ammo": -1
             },
-            "Offset": {
-              "X": 0.05,
-              "Y": -0.03,
-              "Z": -0.8
-            },
-            "ProjectileType": "Projectile_Shotgun",
             "Next": {
-              "Type": "ChangeStat",
-              "StatModifiers": {
-                "Turret_AA_Ammo": -1
-              }
+              "Type": "DieselShoot",
+              "RunTime": 0.6,
+              "Effects": {
+                "ItemAnimationId": "Shoot",
+                "CameraEffect": "Handgun_Shoot",
+                "Particles": [
+                  {
+                    "SystemId": "Muzzle_Flash",
+                    "PositionOffset": {
+                      "Z": 0.7,
+                      "Y": 0.11
+                    },
+                    "RotationOffset": {
+                      "Pitch": 90
+                    },
+                    "TargetEntityPart": "Self"
+                  }
+                ]
+              },
+              "Offset": {
+                "X": 0.05,
+                "Y": -0.03,
+                "Z": -0.8
+              },
+              "ProjectileType": "Projectile_Shotgun"
             }
           },
           "Failed": "Shotgun_Scout_Reload"
@@ -66,78 +66,12 @@
             "Turret_AA_Ammo": 1
           },
           "Next": {
-            "Type": "DieselShoot",
-            "RunTime": 0,
-            "Effects": {
-              "ItemAnimationId": "Shoot",
-              "CameraEffect": "Handgun_Shoot",
-              "Particles": [
-                {
-                  "SystemId": "RifleShooting",
-                  "PositionOffset": {
-                    "Z": 0.7,
-                    "Y": 0.11
-                  },
-                  "RotationOffset": {
-                    "Pitch": 90
-                  },
-                  "TargetEntityPart": "Self"
-                }
-              ]
+            "Type": "ChangeStat",
+            "StatModifiers": {
+              "Turret_AA_Ammo": -1
             },
-            "Offset": {
-              "X": 0.05,
-              "Y": -0.03,
-              "Z": -0.8
-            },
-            "ProjectileType": "Projectile_Shotgun_Special",
-            "Next": {
-              "Type": "ChangeStat",
-              "StatModifiers": {
-                "Shotgun_Scout_Ammo": 0
-              },
-              "Behaviour": "Set",
-              "Next": {
-                "Type": "ApplyForce",
-                "Force": 22,
-                "AdjustVertical": false,
-                "WaitForGround": false,
-                "ChangeVelocityType": "Set",
-                "VelocityConfig": {
-                  "AirResistance": 0.97,
-                  "AirResistanceMax": 0.96,
-                  "GroundResistance": 0.94,
-                  "GroundResistanceMax": 0.82,
-                  "Threshold": 5.0,
-                  "Style": "Exp"
-                },
-                "Direction": {
-                  "X": 0,
-                  "Y": 4,
-                  "Z": 5
-                },
-                "Effects": {
-                  "CameraEffect": "Daggers_Dash",
-                  "ItemAnimationId": "DodgeBackward",
-                  "Particles": [
-                    {
-                      "SystemId": "Explosion_Small",
-                      "PositionOffset": {
-                        "Z": 0.7,
-                        "Y": 0.11
-                      },
-                      "RotationOffset": {
-                        "Pitch": 90
-                      },
-                      "TargetEntityPart": "Self"
-                    }
-                  ],
-                  "WorldSoundEventId": "SFX_Staff_Flame_Fireball_Launch"
-                }
-              }
-            }
-          },
-          "Failed": "Shotgun_Scout_Reload"
+            "Failed": "Shotgun_Scout_Reload"
+          }
         }
       ]
     },

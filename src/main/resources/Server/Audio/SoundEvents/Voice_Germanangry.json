@@ -1,0 +1,27 @@
+{
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/Diesel/Voice/ga1.ogg",
+        "Sounds/Diesel/Voice/ga2.ogg",
+        "Sounds/Diesel/Voice/ga3.ogg",
+        "Sounds/Diesel/Voice/ga4.ogg",
+        "Sounds/Diesel/Voice/ga5.ogg",
+        "Sounds/Diesel/Voice/ga6.ogg",
+        "Sounds/Diesel/Voice/ga7.ogg",
+        "Sounds/Diesel/Voice/ga8.ogg"
+
+      ],
+      "RandomSettings": {
+        "MinPitch": -4,
+        "MaxPitch": 3,
+        "MinVolume": -2,
+        "MaxVolume": 2
+      }
+    }
+  ],
+  "MaxInstance": 30,
+  "Volume": 1.0,
+  "PreventSoundInterruption": true,
+  "Parent": "SFX_Attn_Loud"
+}

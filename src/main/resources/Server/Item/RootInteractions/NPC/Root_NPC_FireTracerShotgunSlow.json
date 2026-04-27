@@ -1,0 +1,45 @@
+{
+  "Interactions": [
+    {
+      "Type": "DieselShoot",
+      "RunTime": 0.1,
+      "Effects": {
+        "WorldSoundEventId": "SFX_Shotgun_Fire_World",
+        "LocalSoundEventId": "SFX_Shotgun_Fire_World",
+        "ItemAnimationId": "Shoot",
+        "Particles": [
+          {
+            "SystemId": "Muzzle_Flash",
+            "PositionOffset": {
+              "Z": -0.1,
+              "Y": -0.5
+            },
+            "RotationOffset": {
+              "Pitch": 90
+            },
+            "TargetEntityPart": "Self"
+          }
+        ]
+      },
+      "Offset": {
+        "X": 0.05,
+        "Y": -0.03,
+        "Z": -0.8
+      },
+      "ProjectileType": "Projectile_Tracer_Shotgun"
+    },
+    {
+      "Type": "Simple",
+      "RunTime": 4,
+      "Effects": {
+        "WorldSoundEventId": "SFX_Shotgun_Reload",
+        "ItemAnimationId": "Reload"
+      }
+    }
+  ],
+  "Tags": {
+    "Attack": [
+      "Ranged"
+    ]
+  }
+}

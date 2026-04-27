@@ -1,0 +1,37 @@
+{
+  "Interactions": [
+    {
+      "Type": "Simple",
+
+      "$Comment": "Prepare Delay",
+      "RunTime": 1,
+      "Next": {
+        "Type": "Projectile",
+        "RunTime": 0.2,
+        "Effects":{
+          "ItemAnimationId": "Shoot",
+          "CameraEffect": "Handgun_Shoot",
+          "Particles": [
+            {
+              "SystemId": "RifleShooting",
+              "PositionOffset": {
+                "Z": 0.7,
+                "Y": -1
+              },
+              "RotationOffset": {
+                "Pitch": 90
+              },
+              "TargetEntityPart": "Self"
+            }
+          ]
+        },
+        "Config": "Projectile_Config_AA_Enemy"
+      }
+    }
+  ],
+  "Tags": {
+    "Attack": [
+      "Ranged"
+    ]
+  }
+}
