@@ -51,7 +51,7 @@ object LevelSystem: TickingSystem<EntityStore?>()  {
 
         levelManager.currentLevel?.tick(store, dt)
 
-        if (!dieselResource.globalRespawnTimer.isNaN())
+        if (dieselResource.globalRespawnTimer != Double.MAX_VALUE)
             dieselResource.globalRespawnTimer -= dt
 
         if (dieselResource.globalRespawnTimer <= -4.0 && levelManager.currentLevel?.name == "DeadLevel") {
@@ -59,7 +59,7 @@ object LevelSystem: TickingSystem<EntityStore?>()  {
         }
 
         if (dieselResource.globalRespawnTimer <= -5.0) {
-            dieselResource.globalRespawnTimer = Double.NaN
+            dieselResource.globalRespawnTimer = Double.MAX_VALUE
         }
     }
 
