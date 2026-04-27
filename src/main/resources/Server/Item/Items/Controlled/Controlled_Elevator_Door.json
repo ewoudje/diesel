@@ -37,7 +37,7 @@
       "Definitions": {
         "Open": {
           "InteractionSoundEventId": "SFX_Door_Temple_Dark_Open",
-          "CustomModelAnimation": "Blocks/Diesel/Doors/Elevator_Open.blockyanim",
+          "CustomModelAnimation": "Blocks/Diesel/Doors/Door3x3_Open.blockyanim",
           "CustomModel": "Blocks/Diesel/Doors/Elevator_Door_Open.blockymodel",
           "HitboxType": "Door3x3_Open",
           "InteractionHitboxType": "Door3x3_Open",
@@ -52,7 +52,7 @@
         "StateWriter": {}
       }
     },
-    "CustomModelAnimation": "Blocks/Diesel/Doors/Elevator_Close.blockyanim",
+    "CustomModelAnimation": "Blocks/Diesel/Doors/Door3x3_Close.blockyanim",
     "InteractionHitboxType": "Door3x3",
     "HitboxType": "Door3x3"
   },
