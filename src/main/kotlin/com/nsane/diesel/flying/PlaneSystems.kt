@@ -95,9 +95,9 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
             .normalize()
         val end = worldDir.clone().scale(150.0).add(worldPos)
 
-        if (sim.shipBox.clone().scale(1.7f).intersectsLine(worldPos, end) && plane.timeSinceLastBullet > FIRE_SPEED) {
+        if (sim.shipBox.intersectsLine(worldPos, end) && plane.timeSinceLastBullet > FIRE_SPEED) {
             plane.timeSinceLastBullet = 0.0f
-                fire(
+            fire(
                 buffer,
                 archTypes.getReferenceTo(idx),
                 worldPos,

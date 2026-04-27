@@ -12,10 +12,6 @@
     }
   },
   "DamageEffects": {
-    "Knockback": {
-      "Type": "Directional",
-      "Force": -50
-    },
     "WorldParticles": [
       {
         "SystemId": "Gun_Impact"

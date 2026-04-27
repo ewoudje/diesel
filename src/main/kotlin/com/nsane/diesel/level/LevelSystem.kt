@@ -19,6 +19,7 @@ import com.nsane.diesel.flying.AirSimulator
 import com.nsane.diesel.flying.HelicopterComponent
 import com.nsane.diesel.flying.PlaneComponent
 import com.nsane.diesel.flying.stage.Stage
+import com.nsane.diesel.player.DieselResource
 
 object LevelSystem: TickingSystem<EntityStore?>()  {
     override fun tick(
@@ -27,6 +28,7 @@ object LevelSystem: TickingSystem<EntityStore?>()  {
         store: Store<EntityStore?>
     ) {
         val levelManager = store.getResource(LevelManager.TYPE)
+        val dieselResource = store.getResource(DieselResource.TYPE)
         if (levelManager.currentLevel == null) return
 
         if (levelManager.oldLevel != levelManager.currentLevel) {
@@ -48,6 +50,17 @@ object LevelSystem: TickingSystem<EntityStore?>()  {
         }
 
         levelManager.currentLevel?.tick(store, dt)
+
+        if (!dieselResource.globalRespawnTimer.isNaN())
+            dieselResource.globalRespawnTimer -= dt
+
+        if (dieselResource.globalRespawnTimer <= -4.0 && levelManager.currentLevel?.name == "DeadLevel") {
+            levelManager.enter(dieselResource.deadLevel!!)
+        }
+
+        if (dieselResource.globalRespawnTimer <= -5.0) {
+            dieselResource.globalRespawnTimer = Double.NaN
+        }
     }
 
     object RemoveLevelEntities: WorldEventEntitySystem<EntityStore?, ChangeLevelEvent>(ChangeLevelEvent::class.java) {

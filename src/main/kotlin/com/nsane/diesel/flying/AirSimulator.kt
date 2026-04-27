@@ -24,13 +24,13 @@ class AirSimulator: Resource<EntityStore?> {
     val flying get() = stage != null
     val worldInShipPosition: Vector3d = Vector3d(0.0, 80.0, 0.0)
     val shipPosition: Vector3d = Vector3d(0.0, 0.0, 0.0)
-    val shipBox: Box = Box(-5.0, 77.0, -5.0, 5.0, 85.0, 5.0)
+    val shipBox: Box = Box(-7.0, 77.0, -7.0, 7.0, 85.0, 7.0)
     val shipVelocity: Vector3d = Vector3d(0.0, 0.0, 0.0)
     val shipRotation: Vector3f = Vector3f(0.0f, 0.0f, 0.0f)
 
     var velocityModifier = 1.0
     var distanceTraveled = 0.0
-    var shipHealth = 100.0
+    var shipHealth = 1.0
     var shipHealthState = 0
     var stage: Stage? = null
     val environmentalAmounts = mutableMapOf<String, Int>()
@@ -79,8 +79,10 @@ class AirSimulator: Resource<EntityStore?> {
     ) {
         if (!(projectile.owner?.isValid ?: false)) return
         if (commands.getComponent(projectile.owner!!, Player.getComponentType()) != null) return
+        var damage = 1.0
+        if (commands.getComponent(projectile.owner!!, HelicopterComponent.TYPE) != null) damage = 0.3
 
-        shipHealth--
+        shipHealth -= (damage / 200.0)
     }
 
     companion object {

@@ -7,6 +7,8 @@ import com.hypixel.hytale.component.query.Query
 import com.hypixel.hytale.component.system.EntityEventSystem
 import com.hypixel.hytale.component.system.EventSystem
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem
+import com.hypixel.hytale.math.vector.Vector3d
+import com.hypixel.hytale.math.vector.Vector3f
 import com.hypixel.hytale.protocol.GameMode
 import com.hypixel.hytale.protocol.InteractionState
 import com.hypixel.hytale.server.core.Message
@@ -22,11 +24,13 @@ import com.hypixel.hytale.server.core.inventory.InventoryComponent
 import com.hypixel.hytale.server.core.inventory.ItemStack
 import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent
+import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport
 import com.hypixel.hytale.server.core.universe.PlayerRef
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.WorldEventEntitySystem
 import com.nsane.diesel.level.ChangeLevelEvent
+import com.nsane.diesel.level.LevelManager
 
 object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
 
@@ -92,10 +96,15 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
 
     override fun tick(dt: Float, systemIndex: Int, store: Store<EntityStore?>) {
         allDead = true
+        val dieselResource = store.getResource(DieselResource.TYPE)
+        val levelManager = store.getResource(LevelManager.TYPE)
         super.tick(dt, systemIndex, store)
-        if (allDead && store.externalData.world.playerCount != 0) {
+        if (allDead && store.externalData.world.playerCount != 0 && dieselResource.globalRespawnTimer.isNaN()) {
+            dieselResource.globalRespawnTimer = 5.0
+            dieselResource.deadLevel = levelManager.currentLevel!!.name
+            dieselResource.respawnPoint.assign(levelManager.currentLevel!!.respawnPoint)
+            levelManager.enter("DeadLevel")
             DieselPlugin.LOGGER.atInfo().log("Everyone Died of ligma :pensive:")
-            allDead = false
         }
     }
 
@@ -107,9 +116,13 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
         commands: CommandBuffer<EntityStore?>
     ) {
         val player = chunk.getComponent(idx, DieselPlayerComponent.TYPE)!!
+        val ref = chunk.getReferenceTo(idx)
+        val diesel = commands.getResource(DieselResource.TYPE)
+        val levelManager = commands.getResource(LevelManager.TYPE)
         val movementManager = chunk.getComponent(idx, MovementManager.getComponentType())!!
         val playerRef = chunk.getComponent(idx, PlayerRef.getComponentType())!!
         val isTurret = chunk.getComponent(idx, TurretComponent.TYPE)
+        val isDead = chunk.getComponent(idx, DeathComponent.getComponentType())
 
         if (!player.disable) {
             val player = chunk.getComponent(idx, Player.getComponentType()) ?: throw IllegalArgumentException()
@@ -157,7 +170,20 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
             }
         }
 
-        player.hud?.onTick(commands, chunk.getReferenceTo(idx), dt)
+        if (diesel.globalRespawnTimer <= 0.0 && levelManager.currentLevel != null && isDead != null) {
+            val teleport = Teleport.createExact(
+                diesel.respawnPoint,
+                Vector3f()
+            )
+
+            if (isTurret != null)
+                commands.removeComponent(ref, TurretComponent.TYPE)
+
+            commands.addComponent(ref, Teleport.getComponentType(), teleport)
+            commands.removeComponent(ref, DeathComponent.getComponentType())
+        }
+
+        player.hud?.onTick(commands, ref, dt)
     }
 
     override fun getQuery(): Query<EntityStore?>? = DieselPlayerComponent.TYPE

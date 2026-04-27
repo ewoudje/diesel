@@ -11,6 +11,7 @@ import com.hypixel.hytale.component.system.RefSystem
 import com.hypixel.hytale.component.system.WorldEventSystem
 import com.hypixel.hytale.component.system.tick.TickingSystem
 import com.hypixel.hytale.server.core.asset.type.weather.config.Weather
+import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent
 import com.hypixel.hytale.server.core.modules.entity.tracker.NetworkId
 import com.hypixel.hytale.server.core.universe.world.ParticleUtil
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
@@ -41,7 +42,7 @@ object SimulationSystem : TickingSystem<EntityStore?>() {
                     Random.nextDouble() * 2 - 1,
                     Random.nextDouble() * 10 - 5
                 )
-                ParticleUtil.spawnParticleEffect("Explosion_Medium", pos, store)
+                ParticleUtil.spawnParticleEffect("Explosion_Big", pos, store)
             }
         } else if (sim.shipHealth <= 15.0 && sim.shipHealthState == 1) {
             sim.shipHealthState = 2
@@ -65,6 +66,9 @@ object SimulationSystem : TickingSystem<EntityStore?>() {
             }
 
             if (sim.shipHealthState >= 100) {
+                store.externalData.world.playerRefs.forEach {
+                    store.addComponent(it.reference!!, DeathComponent.getComponentType())
+                }
                 sim.shipHealthState = 0
                 sim.shipHealth = 100.0
             }

@@ -16,6 +16,7 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.SoundUtil;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.nsane.diesel.flying.AirSimulator;
 import com.nsane.diesel.level.LevelManager;
 import com.nsane.diesel.logic.LogicComponentTracker;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
@@ -109,6 +110,12 @@ public class DieselHud {
         ui.setHudData("hotbarIdx", slot > 1 ? slot > 6 ? 0 : 1 : slot);
         ui.setHudData("ammo", ammo.get());
         ui.setHudData("health", healthValue.asPercentage());
+
+        var sim = commands.getResource(AirSimulator.Companion.getTYPE());
+        if (sim.getFlying()) {
+            ui.setHudData("shipHealth", sim.getShipHealth());
+        } else ui.setHudData("shipHealth", -1.0);
+
     }
 
     public void showMessage(@NotNull String chain) {

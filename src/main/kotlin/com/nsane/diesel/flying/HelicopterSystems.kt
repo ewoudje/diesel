@@ -51,7 +51,7 @@ object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
     const val TURN_SPEED = 0.3
     const val HANG_SPEED = 22.0
     const val FOLLOW_SPEED = 30.0
-    const val FIRE_SPEED = 0.2f
+    const val FIRE_SPEED = 0.4f
 
     override fun tick(
         dt: Float,

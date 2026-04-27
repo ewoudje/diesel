@@ -12,19 +12,19 @@
     }
   },
   "DamageEffects": {
-    "Knockback": {
-      "Type": "Directional",
-      "Force": -50
-    },
     "WorldParticles": [
       {
-        "SystemId": "Gun_Impact"
+        "SystemId": "Explosion_Small",
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0
+        }
       }
     ]
   },
   "BlockHitParticles": [
     {
-      "SystemId": "Gun_Impact",
+      "SystemId": "Explosion_Small",
       "PositionOffset": {
         "X": 0,
         "Y": 0
