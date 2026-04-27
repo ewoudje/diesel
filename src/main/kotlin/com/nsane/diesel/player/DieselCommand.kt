@@ -54,7 +54,7 @@ class DieselCommand: AbstractPlayerCommand("diesel", "") {
                 HudComponent.Sleep
             )
         } else {
-            hudManager.setVisibleHudComponents(playerRef)
+            hudManager.setVisibleHudComponents(playerRef, HudComponent.Reticle)
             comp.hud = DieselHud(store, ref)
         }
     }

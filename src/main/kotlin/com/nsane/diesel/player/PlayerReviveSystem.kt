@@ -16,6 +16,7 @@ import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent
 import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport
 import com.hypixel.hytale.server.core.modules.interaction.Interactions
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
+import com.nsane.diesel.level.LevelManager
 
 object PlayerReviveSystem: RefChangeSystem<EntityStore?, DeathComponent>() {
     override fun componentType(): ComponentType<EntityStore?, DeathComponent?> = DeathComponent.getComponentType()
@@ -26,6 +27,7 @@ object PlayerReviveSystem: RefChangeSystem<EntityStore?, DeathComponent>() {
         store: Store<EntityStore?>,
         buffer: CommandBuffer<EntityStore?>
     ) {
+        val levelManager = buffer.getResource(LevelManager.TYPE)
         val interactions = Interactions()
         interactions.setInteractionId(InteractionType.Use, "Revive")
         buffer.addComponent(ref, Interactable.getComponentType(), Interactable.INSTANCE)
@@ -34,7 +36,7 @@ object PlayerReviveSystem: RefChangeSystem<EntityStore?, DeathComponent>() {
         val transform = buffer.getComponent(ref, TransformComponent.getComponentType())!!
         if (transform.position.y <= 1.0) {
             val teleport = Teleport.createExact(
-                Vector3d(-3.0, 81.0, -3.0),
+                levelManager.currentLevel?.respawnPoint ?: Vector3d(0.0, 200.0, 0.0),
                 Vector3f()
             )
             buffer.addComponent(ref, Teleport.getComponentType(), teleport)

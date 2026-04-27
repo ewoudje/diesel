@@ -1,0 +1,135 @@
+{
+  "Stars": "Sky/Stars.png",
+  "Tags": {},
+  "Moons": [],
+  "SkyTopColors": [
+    {
+      "Hour": 17,
+      "Color": "rgba(#077ddd, 1)"
+    }
+  ],
+  "SkyBottomColors": [
+    {
+      "Hour": 17,
+      "Color": "#8fd8f8ff"
+    }
+  ],
+  "SkySunsetColors": [
+    {
+      "Hour": 17,
+      "Color": "#ffb95100"
+    }
+  ],
+  "FogColors": [
+    {
+      "Hour": 17,
+      "Color": "#a8d7d9"
+    }
+  ],
+  "SunColors": [
+    {
+      "Hour": 17,
+      "Color": "#fef1ca"
+    }
+  ],
+  "MoonColors": [
+    {
+      "Hour": 3,
+      "Color": "#98aff2ff"
+    },
+    {
+      "Hour": 5,
+      "Color": "#e5c0bcff"
+    },
+    {
+      "Hour": 19,
+      "Color": "#2241a16e"
+    },
+    {
+      "Hour": 17,
+      "Color": "#e5c0bcff"
+    },
+    {
+      "Hour": 21,
+      "Color": "#6e7aaac4"
+    }
+  ],
+  "MoonGlowColors": [
+    {
+      "Hour": 3,
+      "Color": "#334258ff"
+    },
+    {
+      "Hour": 5,
+      "Color": "#ffffff00"
+    },
+    {
+      "Hour": 17,
+      "Color": "#ffffff00"
+    },
+    {
+      "Hour": 19,
+      "Color": "#334258ff"
+    }
+  ],
+  "SunGlowColors": [
+    {
+      "Hour": 3,
+      "Color": "#ffffff00"
+    },
+    {
+      "Hour": 5,
+      "Color": "#f0c08dff"
+    },
+    {
+      "Hour": 7,
+      "Color": "#ffffffff"
+    },
+    {
+      "Hour": 17,
+      "Color": "#ffffffff"
+    },
+    {
+      "Hour": 19,
+      "Color": "#f0c08dff"
+    },
+    {
+      "Hour": 21,
+      "Color": "#ffffff00"
+    }
+  ],
+  "FogDistance": [
+    -64,
+    1024
+  ],
+  "Particle": {
+    "SystemId": "OurWind"
+  },
+  "FogOptions": {
+    "EffectiveViewDistanceMultiplier": 0.34
+  },
+  "FogHeightFalloffs": [
+    {
+      "Hour": 0,
+      "Value": 20
+    }
+  ],
+  "FogDensities": [
+    {
+      "Hour": 0,
+      "Value": 0.6
+    }
+  ],
+  "SunScales": [
+    {
+      "Hour": 0,
+      "Value": 1.4
+    }
+  ],
+  "SunlightColors": [
+    {
+      "Hour": 17,
+      "Color": "#fdebcf"
+    }
+  ]
+}

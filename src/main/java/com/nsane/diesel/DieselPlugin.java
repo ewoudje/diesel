@@ -34,6 +34,7 @@ import com.nsane.diesel.boss.RisenRockTickSystem;
 import com.nsane.diesel.commands.OpenMyUiCommand;
 import com.nsane.diesel.events.ExampleEvent;
 import com.nsane.diesel.flying.AirSimulator;
+import com.nsane.diesel.flying.MoveShipInteraction;
 import com.nsane.diesel.flying.enviroment.EnvironmentalComponent;
 import com.nsane.diesel.flying.FlyingCommand;
 import com.nsane.diesel.flying.HelicopterComponent;
@@ -147,6 +148,7 @@ public class DieselPlugin extends JavaPlugin {
                 .register("DieselShoot", DieselShootInteraction.class, DieselShootInteraction.Companion.getCODEC())
                 .register("ApplyMovementConfig", ApplyMovementConfigInteraction.class, ApplyMovementConfigInteraction.CODEC)
                 .register("Turret", TurretInteraction.class, TurretInteraction.Companion.getCODEC())
+                .register("MoveShip", MoveShipInteraction.class, MoveShipInteraction.Companion.getCODEC())
                 .register("Revive", ReviveInteraction.class, ReviveInteraction.Companion.getCODEC());
 
         getCommandRegistry().registerCommand(new OpenMyUiCommand());

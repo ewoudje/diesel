@@ -4,7 +4,7 @@ import com.hypixel.hytale.math.vector.Vector3d
 import com.nsane.diesel.flying.AirSimulator
 import kotlin.random.Random
 
-class SimpleEnvironment(expectedClouds: Int): AbstractFlyingEnvironment() {
+open class SimpleEnvironment(expectedClouds: Int): AbstractFlyingEnvironment() {
     override val weather: String
         get() = "Ship"
 

@@ -11,6 +11,7 @@ import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.math.vector.Vector3f
 import com.hypixel.hytale.protocol.GameMode
 import com.hypixel.hytale.protocol.InteractionState
+import com.hypixel.hytale.protocol.packets.interface_.HudComponent
 import com.hypixel.hytale.server.core.Message
 import com.hypixel.hytale.server.core.asset.type.model.config.Model
 import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset
@@ -60,7 +61,7 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
         val hud = DieselHud(store, ref.reference)
         playerComponent.hud = hud
 
-        hudManager.setVisibleHudComponents(ref) // Clears it
+        hudManager.setVisibleHudComponents(ref, HudComponent.Reticle) // Clears it
 
         if (playerComponent.playerClass == null) {
             event.player.pageManager.openCustomPage(event.playerRef, store, ClassSelectPage(ref))

@@ -7,6 +7,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.flying.AirSimulator
 import com.nsane.diesel.flying.stage.BossStage
+import com.nsane.diesel.flying.stage.DeathStarRace
 import com.nsane.diesel.flying.stage.StartStage
 import com.nsane.diesel.flying.stage.WaveStage
 import io.github.hytalekt.kytale.codec.buildCodec
@@ -70,7 +71,7 @@ class LevelManager : Resource<EntityStore?> {
                 10f,
                 "BossStage"
             )
-            "BossStage" -> BossStage()
+            "DeathStarRace" -> DeathStarRace()
             "EnterMech" -> AllDeadLevel(
                 "EnterMech",
                 "KILL the security!",
