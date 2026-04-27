@@ -10,25 +10,31 @@ open class BoolComputerEntries(
     val entryComparisons: Array<LogicComparison> = Array(ENTRY_AMOUNT) { LogicComparison.EQUAL },
     val entryValues: Array<String> = Array(ENTRY_AMOUNT) { "" },
 ) {
+    open fun clone() = BoolComputerEntries(
+        entryIds.clone(),
+        entryComparisons.clone(),
+        entryValues.clone()
+    )
+
     companion object {
         const val ENTRY_AMOUNT = 6
         val CODEC = buildCodec(::BoolComputerEntries) {
-            makeEntries(this, ENTRY_AMOUNT)
+            makeEntries(this, ENTRY_AMOUNT, "")
         }
 
-        fun <T: BoolComputerEntries> makeEntries(self: CodecBuilder<T>, amount: Int) {
+        fun <T: BoolComputerEntries> makeEntries(self: CodecBuilder<T>, amount: Int, a: String) {
             for (i in 1..amount) {
-                self.addField("@Entry${i}Id", Codec.STRING) {
+                self.addField("${a}Entry${i}Id", Codec.STRING) {
                     setter { entryIds[i - 1] = it }
                     getter { entryIds[i - 1] }
                 }
 
-                self.addField("@Entry${i}Comparison", LogicComparison.CODEC) {
+                self.addField("${a}Entry${i}Comparison", LogicComparison.CODEC) {
                     setter { entryComparisons[i - 1] = it }
                     getter { entryComparisons[i - 1] }
                 }
 
-                self.addField("@Entry${i}Value", Codec.STRING) {
+                self.addField("${a}Entry${i}Value", Codec.STRING) {
                     setter { entryValues[i - 1] = it }
                     getter { entryValues[i - 1] }
                 }

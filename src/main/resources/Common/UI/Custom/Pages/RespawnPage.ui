@@ -8,15 +8,6 @@ Group {
     LayoutMode: Middle;
 
     Group {
-      LayoutMode: Left;
-
-      Group {
-        Anchor: (Width: 104, Height: 97, Left: 36);
-        Background: "RespawnPageSkull.png";
-      }
-    }
-
-    Group {
       Visible: false;
       Anchor: (Width: 850, Height: 215, Top: -22);
       Background: "RespawnPageBackgroundInner.png";

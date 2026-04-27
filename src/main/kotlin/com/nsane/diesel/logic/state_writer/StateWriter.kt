@@ -17,7 +17,9 @@ class StateWriter : Component<ChunkStore?> {
         selfRef: Ref<ChunkStore>
     ): CustomUIPage = StateWriterPage(playerRef, selfRef)
 
-    override fun clone(): Component<ChunkStore?> = StateWriter()
+    override fun clone(): Component<ChunkStore?> = StateWriter().also {
+        it.entries = this.entries.clone()
+    }
 
     companion object {
         val CODEC = buildCodec(::StateWriter) {
@@ -28,6 +30,6 @@ class StateWriter : Component<ChunkStore?> {
             }
         }
 
-        val TYPE get() =  DieselPlugin.getComponent(StateWriter::class.java)
+        val TYPE get() = DieselPlugin.getComponent(StateWriter::class.java)
     }
 }
