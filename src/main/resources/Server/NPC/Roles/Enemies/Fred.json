@@ -36,11 +36,7 @@
     "DropList": "",
     "Appearance": "Fred",
     "Weapons": [ "Shotgun_Scout" ],
-    "FlockArray": {
-      "Value": [ "\"Fred\"", "\"Fred_Spread\"", "\"Fred_Burst\"" ],
-      "TypeHint": "String",
-      "Description": "Array containing NPCs for this flock type."
-    },
+    "FlockArray": { "Compute": "FlockArray" },
     "FollowPatrolPath": { "Compute": "FollowPatrolPath" },
     "Patrol": { "Compute": "Patrol" },
     "WanderRadius": { "Compute": "WanderRadius" },
