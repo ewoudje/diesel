@@ -1,4 +1,4 @@
-import { randomInt as b } from "./util.js";
+import { randomInt as p } from "./util.js";
 const i = {
   partner: {
     portraits: 3,
@@ -73,62 +73,62 @@ const i = {
     voice: "Bfrenchcalm"
   }
 };
-let u = null;
-function f({ text: a, displayTextRef: o, displayPortraitRef: l, speed: d, actor: t, chainObj: e, chainIndex: r, chainDelay: c, playSoundRef: v, setLogicRef: y, chainName: h }) {
-  u && clearTimeout(u), o.value = "";
-  let g = a.replace(/"/g, "").split(" "), s = 0;
-  m(g, o);
-  function m(n, p) {
-    s < n.length ? (i[t].voice != "None" && (s + i[t].interval || 2) % (i[t].interval || 2) == 0 && v.value(i[t].voice), p.value = `${p.value} ${n[s]}`, l.value = w(t), s++, u = setTimeout(() => {
-      m(n, p);
-    }, 100)) : (r++, r < e.length ? setTimeout(() => {
-      f({
+let c = null;
+function w({ text: r, displayTextRef: o, displayPortraitRef: s, speed: v, actor: a, chainObj: e, chainIndex: t, chainDelay: y, playSoundRef: f, setLogicRef: m, chainName: u }) {
+  c && clearTimeout(c), o.value = "";
+  let b = r.replace(/"/g, "").split(" "), h = 0;
+  g(b, o);
+  function g(n, d) {
+    h < n.length ? (i[a].voice != "None" && (h + i[a].interval || 2) % (i[a].interval || 2) == 0 && f.value(i[a].voice), d.value = `${d.value} ${n[h]}`, s.value = E(a), h++, c = setTimeout(() => {
+      g(n, d);
+    }, 100)) : (t++, t < e.length ? setTimeout(() => {
+      w({
         //@ts-ignore //lol
-        actor: e[r][0],
+        actor: e[t][0],
         //@ts-ignore //lmao
-        text: e[r][1],
+        text: e[t][1],
         //@ts-ignore //kek
-        speed: e[r][2],
+        speed: e[t][2],
         //@ts-ignore // )00))))00)
-        chainDelay: e[r][3],
+        chainDelay: e[t][3],
         //@ts-ignore //wxnstunxwfqsunwxfqus
-        chainIndex: r,
+        chainIndex: t,
         chainObj: e,
-        displayPortraitRef: l,
+        displayPortraitRef: s,
         displayTextRef: o,
-        playSoundRef: v,
-        setLogicRef: y,
-        chainName: h
+        playSoundRef: f,
+        setLogicRef: m,
+        chainName: u
       });
-    }, c) : setTimeout(() => {
-      console.log(`[DIESELHUD] Chain ${h} complete`), y.value(h, "Done"), console.log("portrait ref"), l.value = "Img/portrait/none1.png", o.value = "";
-    }, c));
+    }, y) : setTimeout(() => {
+      console.log(`[DIESELHUD] Chain ${u} complete`), m.value(u, "Done"), console.log("portrait ref"), s.value = "Img/portrait/none1.png", o.value = "";
+    }, y));
   }
-  function w(n) {
-    return `Img/portrait/${i[n].portrait}${b(1, i[n].portraits)}.png`;
+  function E(n) {
+    return `Img/portrait/${i[n].portrait}${p(1, i[n].portraits)}.png`;
   }
 }
-function A(a, o, l, d, t) {
-  let e = E[a];
-  if (e) {
-    let r = 0;
-    console.log(`[DIESELHUD] Starting chain ${a}`), f({
-      actor: e[r][0],
-      text: e[r][1],
-      speed: e[r][2],
-      chainDelay: e[r][3],
-      chainIndex: r,
+function T(r, o, s, v, a) {
+  let e;
+  if (r.startsWith("death.") ? l[r].length > 0 && (console.log(p(0, l[r].length)), console.log(l[r][p(0, l[r].length - 1)]), e = l[r][p(0, l[r].length - 1)]) : e = k[r], e) {
+    let t = 0;
+    console.log(`[DIESELHUD] Starting chain ${r}`), w({
+      actor: e[t][0],
+      text: e[t][1],
+      speed: e[t][2],
+      chainDelay: e[t][3],
+      chainIndex: t,
       chainObj: e,
-      displayPortraitRef: l,
+      displayPortraitRef: s,
       displayTextRef: o,
-      playSoundRef: d,
-      setLogicRef: t,
-      chainName: a
+      playSoundRef: v,
+      setLogicRef: a,
+      chainName: r
     });
   } else
-    console.log(`bad chain not real ${a}`);
+    console.log(`bad chain not real ${r}`);
 }
-const E = {
+const k = {
   //BRIEFING
   "level.Briefing": [
     ["partner", "ah, wonderful, you've arrived", 100, 1200],
@@ -358,9 +358,22 @@ const E = {
     ["partner", "My apologies for the squalor.", 100, 1e3],
     ["partner", "The accomodations are... meager.", 100, 1e3]
   ]
+}, l = {
+  "death.BigFred": [],
+  "death.Boxin": [],
+  "death.Boxin_Bomb": [],
+  "death.Flying_Boxin": [],
+  "death.Fred": [],
+  "death.Helicopter": [],
+  "death.Prole": [
+    ["sod", "this is gonna cause my account to overdraft for sure", 100, 500],
+    ["sod", "i coulda been a fat cat", 100, 500],
+    ["sod", "i preallocated a reconstruction fund so it's ok :)", 100, 500]
+  ],
+  "death. Prole_Dirty": []
 };
 export {
-  A as playChain,
-  f as playDialogue
+  T as playChain,
+  w as playDialogue
 };
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGlhbG9ndWUuanMiLCJzb3VyY2VzIjpbXSwic291cmNlc0NvbnRlbnQiOltdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OyJ9
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGlhbG9ndWUuanMiLCJzb3VyY2VzIjpbXSwic291cmNlc0NvbnRlbnQiOltdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OzsifQ==

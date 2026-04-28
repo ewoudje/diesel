@@ -168,7 +168,20 @@ function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, 
 //TODO FIX HCAIN OVERRIDES
 function playChain(chainName: string, displayTextRef:Ref, displayPortraitRef:Ref, playSoundRef:Ref, setLogicRef:Ref){
     //@ts-ignore //shut UP shut UP shut UP shut UP shut UP shut UP i wanna go HOME
-    let chainObj = chains[chainName];
+    let chainObj;
+    if(!chainName.startsWith("death.")){
+        //@ts-ignore FUCK
+        chainObj = chains[chainName];
+        //@ts-ignore GET OUT OF MY HEAD
+    } else if(deathChains[chainName].length>0){
+        //@ts-ignore
+        console.log(randomInt(0,deathChains[chainName].length))
+        //@ts-ignore
+        console.log(deathChains[chainName][randomInt(0,deathChains[chainName].length-1)]);
+                //@ts-ignore
+
+        chainObj =deathChains[chainName][randomInt(0,deathChains[chainName].length-1)];
+    }
     if(chainObj){
         let index = 0;
         console.log(`[DIESELHUD] Starting chain ${chainName}`)
@@ -424,5 +437,30 @@ const chains = {
         ["partner","My apologies for the squalor.",100,1000],
         ["partner","The accomodations are... meager.",100,1000],
     ]
+}
+/*
+BigFred
+Boxin
+Boxin_Bomb
+Final_Boss
+Flying_Boxin
+Fred
+Helicopter
+Prole
+Prole_Dirty
+*/
+const deathChains = {
+    'death.BigFred':[],
+    'death.Boxin':[],
+    'death.Boxin_Bomb':[],
+    'death.Flying_Boxin':[],
+    'death.Fred':[],
+    'death.Helicopter':[],
+    'death.Prole':[
+        ["sod", "this is gonna cause my account to overdraft for sure", 100, 500],
+        ["sod", "i coulda been a fat cat", 100, 500],
+        ["sod", "i preallocated a reconstruction fund so it's ok :)", 100, 500],
+    ],
+   'death. Prole_Dirty':[]
 }
 export {playChain, playDialogue}
