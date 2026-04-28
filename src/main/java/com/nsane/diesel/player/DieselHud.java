@@ -69,7 +69,14 @@ public class DieselHud {
                 sounds.add(SoundEvent.getAssetMap().getIndex(s));
             }
         });
-        ui.setHudData("setLogic", (BiConsumer<String, String>) LogicComponentTracker.INSTANCE::addCustom);
+        ui.setHudData("setLogic", (BiConsumer<String, String>) (k, v) -> {
+            if (k.equals("level.TopLevel")) {
+                world.execute(() -> {
+                    var pageManager = store.getComponent(ref, Player.getComponentType()).getPageManager();
+                    pageManager.openCustomPage(ref, store, new WinPage(store.getComponent(ref, PlayerRef.getComponentType())));
+                });
+            } else LogicComponentTracker.INSTANCE.addCustom(k, v);
+        });
     }
 
     public void onTick(@NotNull CommandBuffer<EntityStore> commands, Ref<EntityStore> ref, float dt) {

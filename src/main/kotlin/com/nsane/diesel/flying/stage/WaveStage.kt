@@ -10,6 +10,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.flying.AirSimulator
 import com.nsane.diesel.flying.HelicopterTickSystem
 import com.nsane.diesel.flying.PlaneTickSystem
+import com.nsane.diesel.flying.enviroment.DeathStarEnvironment
 import com.nsane.diesel.flying.enviroment.FlyingEnvironment
 import com.nsane.diesel.flying.enviroment.SimpleEnvironment
 import com.nsane.diesel.level.LevelManager
@@ -22,11 +23,12 @@ open class WaveStage(
     var boarders: Int,
     var zoomies: Int,
     delay: Float,
+    cities: Boolean,
     val nextLevel: String,
 ): Stage(name, objective) {
     var lifetime = 60f * 5f
     override val objective = if (isWaveDead()) "Safe for now.." else super.objective
-    override val env: FlyingEnvironment = SimpleEnvironment(50)
+    override val env: FlyingEnvironment = if (cities) DeathStarEnvironment() else SimpleEnvironment(60)
     private var delay = delay
 
     override fun setup(

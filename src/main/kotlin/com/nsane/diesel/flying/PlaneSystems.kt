@@ -214,7 +214,7 @@ object PlaneRefSystem : RefSystem<EntityStore?>() {
         val transform = buffer.getComponent(ref, TransformComponent.getComponentType())!!
         val death = buffer.getComponent(ref, DeathComponent.getComponentType())
 
-        if (reason == RemoveReason.REMOVE && death != null) {
+        if (reason == RemoveReason.REMOVE && death == null) {
             buffer.addEntity(buildPlane(sim, store), AddReason.SPAWN)
         }
 
