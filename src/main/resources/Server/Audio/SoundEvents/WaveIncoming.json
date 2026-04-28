@@ -1,0 +1,17 @@
+{
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/Diesel/Enviroment/Wave_Incoming.ogg"
+      ],
+      "Volume": 10
+    }
+  ],
+  "MaxInstance": 1,
+  "Volume": 10,
+  "Parent": "SFX_Attn_Loud",
+  "StartAttenuationDistance": 100,
+  "MaxDistance": 170,
+  "SpatialBlend": 0,
+  "PreventSoundInterruption": true
+}

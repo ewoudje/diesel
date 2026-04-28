@@ -1,0 +1,13 @@
+{
+  "Priority": 80,
+  "AudioCategory": "AudioCat_Music",
+  "Conditions": {
+    "Never": true
+  },
+  "Music": {
+    "Tracks": [
+      "Music/Sky_Combat.ogg"
+    ],
+    "Volume": 10
+  }
+}

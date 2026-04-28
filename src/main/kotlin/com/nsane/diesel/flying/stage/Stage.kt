@@ -20,7 +20,11 @@ import io.github.hytalekt.kytale.ext.minus
 import io.github.hytalekt.kytale.ext.plusAssign
 import io.github.hytalekt.kytale.ext.times
 
-abstract class Stage(name: String, objective: String): Level(name, objective, Vector3d(-3.0, 82.0, -3.0)) {
+abstract class Stage(
+    name: String,
+    objective: String,
+    music: String
+): Level(name, objective, Vector3d(-3.0, 82.0, -3.0), music) {
     abstract val env: FlyingEnvironment
 
     override fun tick(store: ComponentAccessor<EntityStore?>, dt: Float) {

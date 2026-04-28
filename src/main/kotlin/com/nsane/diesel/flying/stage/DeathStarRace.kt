@@ -10,7 +10,7 @@ import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
-class DeathStarRace : Stage("DeathStarRace", "Get in the MECH") {
+class DeathStarRace : Stage("DeathStarRace", "Get in the MECH", "Sky_Boss") {
     override val env: FlyingEnvironment = DeathStarEnvironment()
     var lane: Int = 1
     var isInLane = false

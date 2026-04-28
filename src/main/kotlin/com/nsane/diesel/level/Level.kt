@@ -6,13 +6,24 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.flying.AirSimulator
 import com.nsane.diesel.logic.LogicComponentTracker
 
-open class Level(val name: String, open val objective: String, val respawnPoint: Vector3d) {
+open class Level(
+    val name: String,
+    open val objective: String,
+    val respawnPoint: Vector3d,
+    val music: String
+) {
     open fun tick(store: ComponentAccessor<EntityStore?>, dt: Float) {
 
     }
 }
 
-class AllDeadLevel(name: String, objective: String, respawnPoint: Vector3d, val nextLevel: String): Level(name, objective, respawnPoint) {
+class AllDeadLevel(
+    name: String,
+    objective: String,
+    respawnPoint: Vector3d,
+    music: String,
+    val nextLevel: String
+): Level(name, objective, respawnPoint, music) {
     override fun tick(store: ComponentAccessor<EntityStore?>, dt: Float) {
         val levelManager = store.getResource(LevelManager.TYPE)
         if (levelManager.amountOfEnemies <= 0)
@@ -20,7 +31,14 @@ class AllDeadLevel(name: String, objective: String, respawnPoint: Vector3d, val 
     }
 }
 
-class LogicBasedLevel(name: String, objective: String, respawnPoint: Vector3d, val logicId: String, val nextLevel: String): Level(name, objective, respawnPoint) {
+class LogicBasedLevel(
+    name: String,
+    objective: String,
+    respawnPoint: Vector3d,
+    music: String,
+    val logicId: String,
+    val nextLevel: String
+): Level(name, objective, respawnPoint, music) {
     override fun tick(store: ComponentAccessor<EntityStore?>, dt: Float) {
         val logic = LogicComponentTracker.getComponentWithId(store.externalData.world.chunkStore.store, logicId)
         if (logic?.getAsBoolean() ?: false) {

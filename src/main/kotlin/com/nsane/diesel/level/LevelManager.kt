@@ -26,12 +26,14 @@ class LevelManager : Resource<EntityStore?> {
             "StartOfGame" -> LogicBasedLevel("StartOfGame",
                 "Get a job!",
                 defaultPoint,
+                "Mus_Fallback_Overground",
                 "enterOffice",
-                "InOffice"
+                "InOffice",
             )
             "InOffice" -> LogicBasedLevel("InOffice",
                 "Just listen",
                 defaultPoint,
+                "Mus_Fallback_Overground",
                 "talkDone",
                 "ChaseInStreets"
             )
@@ -39,6 +41,7 @@ class LevelManager : Resource<EntityStore?> {
                 "ChaseInStreets",
                 "!get OUT!",
                 defaultPoint,
+                "Mus_Fallback_Overground",
                 "endOfStreet",
                 "Shipyard"
             )
@@ -46,6 +49,7 @@ class LevelManager : Resource<EntityStore?> {
                 "Shipyard",
                 "Kill the guys",
                 defaultPoint,
+                "Mus_Fallback_Overground",
                 "StartStage"
             )
             "StartStage" -> StartStage()
@@ -75,6 +79,7 @@ class LevelManager : Resource<EntityStore?> {
                 "EnterMech",
                 "KILL the security!",
                 defaultPoint,
+                "Mus_Fallback_Overground",
                 "BreakIn"
             )
             "BreakIn" -> LogicBasedLevel(
@@ -82,12 +87,14 @@ class LevelManager : Resource<EntityStore?> {
                 "Go deeper",
                 defaultPoint,
                 "readyToBreakIn",
+                "Mus_Fallback_Overground",
                 "BrokeIn"
             )
             "BrokeIn" -> LogicBasedLevel(
                 "BrokeIn",
                 "Find the keycard",
                 defaultPoint,
+                "Mus_Fallback_Overground",
                 "unlockedDoor",
                 "UnlockedDoor"
             )
@@ -95,6 +102,7 @@ class LevelManager : Resource<EntityStore?> {
                 "UnlockedDoor",
                 "Get back to the door",
                 defaultPoint,
+                "Mus_Fallback_Overground",
                 "enterKGB",
                 "KGB"
             )
@@ -102,21 +110,29 @@ class LevelManager : Resource<EntityStore?> {
                 "KGB",
                 "Kill the feds",
                 defaultPoint,
+                "Mus_Fallback_Overground",
                 "FinalStretch"
             )
             "FinalStretch" -> LogicBasedLevel(
                 "FinalStretch",
                 "Go kill Big Boss",
                 defaultPoint,
+                "Mus_Fallback_Overground",
                 "intoBossRoom",
                 "BossFight"
             )
             "BossFight" -> Level(
                 key,
                 "FIGHT TO DEATH",
-                defaultPoint
+                defaultPoint,
+                "Mus_Fallback_Overground",
             )
-            else -> Level(key, "No clue.. go kill some feds?", defaultPoint)
+            else -> Level(
+                key,
+                "No clue.. kill feds?",
+                defaultPoint,
+                "Mus_Fallback_Overground"
+            )
         }
     }
 

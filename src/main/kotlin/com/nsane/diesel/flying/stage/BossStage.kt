@@ -21,7 +21,7 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-class BossStage : Stage("BossStage", "Get in the MECH") {
+class BossStage : Stage("BossStage", "Get in the MECH", "Sky_Boss") {
     override val env: FlyingEnvironment = SimpleEnvironment(50)
     val bossPosition = Vector3d(0.0, -20.0, 0.0)
     lateinit var boss: Ref<EntityStore?>

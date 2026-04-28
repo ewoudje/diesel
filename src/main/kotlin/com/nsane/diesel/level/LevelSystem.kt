@@ -1,5 +1,6 @@
 package com.nsane.diesel.level
 
+import com.hypixel.hytale.builtin.ambience.resources.AmbienceResource
 import com.hypixel.hytale.component.AddReason
 import com.hypixel.hytale.component.ArchetypeChunk
 import com.hypixel.hytale.component.CommandBuffer
@@ -45,6 +46,8 @@ object LevelSystem: TickingSystem<EntityStore?>()  {
                 } else {
                     sim.stage = null
                 }
+                val ambience = store.getResource(AmbienceResource.getResourceType())
+                ambience.setForcedMusicAmbience(levelManager.currentLevel!!.music)
             } else {
                 levelManager.currentLevel = levelManager.oldLevel
             }
