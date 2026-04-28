@@ -102,7 +102,7 @@ const colors = computed(()=>{
 
 //Dialogue
 const displayMessage = ref('')
-const displayPortrait = ref('Img/portrait/none.png')
+const displayPortrait = ref('Img/portrait/none1.png')
 watch(inputMessageChain,()=>{
     console.log("input message", inputMessageChain.value)
     playChain(inputMessageChain.value, displayMessage, displayPortrait, playSound, setLogic)

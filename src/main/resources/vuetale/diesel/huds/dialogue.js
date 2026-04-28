@@ -1,10 +1,28 @@
-import { randomInt as E } from "./util.js";
-const l = {
+import { randomInt as b } from "./util.js";
+const i = {
   partner: {
     portraits: 3,
     portrait: "partner",
     interval: 4,
     voice: "Afrenchevil"
+  },
+  partnercalm: {
+    portraits: 3,
+    portrait: "partner",
+    interval: 4,
+    voice: "Afrenchcalm"
+  },
+  partnersad: {
+    portraits: 3,
+    portrait: "partner",
+    interval: 4,
+    voice: "Cry"
+  },
+  partnersilent: {
+    portraits: 3,
+    portrait: "partner",
+    interval: 4,
+    voice: "Silent"
   },
   evilduce: {
     portraits: 4,
@@ -41,66 +59,254 @@ const l = {
     interval: 3,
     portrait: "boxin",
     voice: "Germanangry"
+  },
+  avrocar: {
+    portraits: 1,
+    portrait: "none",
+    interval: 5,
+    voice: "Bfrenchangry"
+  },
+  elevator: {
+    portraits: 1,
+    interval: 10,
+    portrait: "none",
+    voice: "Bfrenchcalm"
   }
 };
-let d = null;
-function f({ text: a, displayTextRef: r, displayPortraitRef: n, speed: c, actor: o, chainObj: t, chainIndex: e, chainDelay: v, playSoundRef: m, setLogicRef: g, chainName: u }) {
-  d && clearTimeout(d), r.value = "";
-  let y = a.replace(/"/g, "").split(" "), s = 0;
-  h(y, r);
-  function h(i, p) {
-    s < i.length ? ((s + l[o].interval || 2) % (l[o].interval || 2) == 0 && m.value(l[o].voice), p.value = `${p.value} ${i[s]}`, n.value = D(o), s++, d = setTimeout(() => {
-      h(i, p);
-    }, 100)) : (e++, e < t.length ? setTimeout(() => {
+let h = null;
+function f({ text: a, displayTextRef: o, displayPortraitRef: l, speed: d, actor: t, chainObj: e, chainIndex: r, chainDelay: c, playSoundRef: v, setLogicRef: y, chainName: p }) {
+  h && clearTimeout(h), o.value = "";
+  let g = a.replace(/"/g, "").split(" "), s = 0;
+  m(g, o);
+  function m(n, u) {
+    s < n.length ? (i[t].voice != "None" && (s + i[t].interval || 2) % (i[t].interval || 2) == 0 && v.value(i[t].voice), u.value = `${u.value} ${n[s]}`, l.value = w(t), s++, h = setTimeout(() => {
+      m(n, u);
+    }, 100)) : (r++, r < e.length ? setTimeout(() => {
       f({
         //@ts-ignore //lol
-        actor: t[e][0],
+        actor: e[r][0],
         //@ts-ignore //lmao
-        text: t[e][1],
+        text: e[r][1],
         //@ts-ignore //kek
-        speed: t[e][2],
+        speed: e[r][2],
         //@ts-ignore // )00))))00)
-        chainDelay: t[e][3],
+        chainDelay: e[r][3],
         //@ts-ignore //wxnstunxwfqsunwxfqus
-        chainIndex: e,
-        chainObj: t,
-        displayPortraitRef: n,
-        displayTextRef: r,
-        playSoundRef: m,
-        setLogicRef: g,
-        chainName: u
+        chainIndex: r,
+        chainObj: e,
+        displayPortraitRef: l,
+        displayTextRef: o,
+        playSoundRef: v,
+        setLogicRef: y,
+        chainName: p
       });
-    }, v) : setTimeout(() => {
-      console.log(`[DIESELHUD] Chain ${u} complete`), g.value(u, "Done"), console.log("portrait ref"), n.value = "Img/portrait/none.png", r.value = "";
-    }, v));
+    }, c) : setTimeout(() => {
+      console.log(`[DIESELHUD] Chain ${p} complete`), y.value(p, "Done"), console.log("portrait ref"), l.value = "Img/portrait/none1.png", o.value = "";
+    }, c));
   }
-  function D(i) {
-    return `Img/portrait/${l[i].portrait}${E(1, l[i].portraits)}.png`;
+  function w(n) {
+    return `Img/portrait/${i[n].portrait}${b(1, i[n].portraits)}.png`;
   }
 }
-function A(a, r, n, c, o) {
-  let t = b[a], e = 0;
-  console.log(`[DIESELHUD] Starting chain ${a}`), f({
-    actor: t[e][0],
-    text: t[e][1],
-    speed: t[e][2],
-    chainDelay: t[e][3],
-    chainIndex: e,
-    chainObj: t,
-    displayPortraitRef: n,
-    displayTextRef: r,
-    playSoundRef: c,
-    setLogicRef: o,
-    chainName: a
-  });
+function A(a, o, l, d, t) {
+  let e = E[a];
+  if (e) {
+    let r = 0;
+    console.log(`[DIESELHUD] Starting chain ${a}`), f({
+      actor: e[r][0],
+      text: e[r][1],
+      speed: e[r][2],
+      chainDelay: e[r][3],
+      chainIndex: r,
+      chainObj: e,
+      displayPortraitRef: l,
+      displayTextRef: o,
+      playSoundRef: d,
+      setLogicRef: t,
+      chainName: a
+    });
+  } else
+    console.log(`bad chain not real ${a}`);
 }
-const b = {
-  testchain: [
-    ["sod", "i'm walkin' ere!", 100, 1e3],
-    ["sod", "you gotta watch where you're going, pal", 100, 1e3],
-    ["sod", "jeez. god", 100, 1e3],
-    ["sod", "state of this city, i'm tellin' ya", 100, 1e3],
-    ["sod", "you'd think we was Chasm Cataluña or somethin'", 100, 1e3]
+const E = {
+  //BRIEFING
+  "level.Briefing": [
+    ["partner", "ah, wonderful, you've arrived", 100, 1200],
+    ["partner", "my apologies for the... ", 100, 1300],
+    ["partner", "squalor.", 100, 1e3],
+    ["partnercalm", "the accomodations are meager, but then again!", 100, 1e3],
+    ["partner", "i have hired you to rectify this. how fortunate", 100, 1e3],
+    ["partner", "come, look with me, see the city...", 100, 1e3],
+    ["partner", "it is beautiful, no?", 100, 2e3],
+    ["partner", "it should be mine.", 100, 1e3],
+    ["partner", "in the years since i was ousted from the board of directors", 100, 1e3],
+    ["partner", "cloud wallonië has... fallen so far...", 100, 1e3],
+    ["partnersad", "(sniff) even though we are in the sky.", 100, 1500],
+    ["partner", "ahem", 100, 300],
+    ["partner", "i digress", 100, 500],
+    ["partner", "you, my enterprising mercenaries, are here to infiltrate", 100, 500],
+    ["partner", "the corporate headquarters of the empire.", 100, 1e3],
+    ["partner", "you will be very sneaky and assassinate", 100, 500],
+    ["partner", "my traitorous business partner.", 100, 1e3],
+    ["partner", "wait, why did you all bring shotguns", 100, 1e3],
+    ["partner", "the advertisement was very explicit", 100, 500],
+    ["partner", "about discretion... no matter", 100, 1e3],
+    ["partner", "i have acquired an avrocar for you", 100, 1e3],
+    ["partner", "it is waiting on the corner of Rivelaine and Longue", 100, 1e3],
+    ["partner", "i will stay in contact via radio", 100, 1e3],
+    ["partner", "to remind you of your generous payment", 100, 500],
+    ["partner", "and ensure you do not forget...", 100, 1e3],
+    ["partner", "who has your self-destruct keys.", 100, 1e3],
+    ["partner", "you may exit the way you came in.", 100, 1e3],
+    ["partnercalm", "good luck, my friends.", 100, 1e3]
+  ],
+  //OH FUCK
+  dukat: [
+    ["evilduce", "Attention, Wallonian workers.", 100, 1e3],
+    ["evilduce", "It has come to my attention that a handful of layabouts have...", 100, 1500],
+    ["evilduce", "...undertaken an unfortunate exercise.", 500, 1e3],
+    ["evilduce", "I implore you reconsider.", 200, 1e3],
+    ["evilduce", "It is a matter of the city's productivity: remember this;", 100, 1e3],
+    ["evilduce", "A productive Wallonia is a unified Wallonia is a safe Wallonia.", 100, 1e3],
+    ["evilduce", "This in mind...", 100, 2e3],
+    ["evilduce", "Any workers who aid in returning the dissidents", 100, 1e3],
+    ["evilduce", "to their senses will be...", 100, 1500],
+    ["evilduce", "...appropriately rewarded.", 100, 3e3],
+    ["partnercalm", "oh dear", 100, 1e3],
+    ["partnercalm", "they are amassing at the gates already", 100, 1e3],
+    ["partner", "perhaps our communications are not so secure as i believed", 100, 2e3],
+    ["partner", "fie", 100, 1e3],
+    ["partner", "whatever", 100, 1e3],
+    ["partner", "you brought shotguns any-how", 100, 1e3],
+    ["partner", "unfortunately... ", 100, 500],
+    ["partner", "shotguns or no, i will not have my fishery ransacked", 100, 1e3],
+    ["partner", "you will take the erudite exit so you may depart unseen", 100, 1e3],
+    ["partner", "...now if only i could remember where the lever was...", 100, 1e3]
+  ],
+  lever: [
+    ["partner", "ah! very good", 100, 1e3]
+  ],
+  elevator: [
+    ["elevator", "thank you for choosing sea wallonië!", 100, 1e3],
+    ["elevator", "our fish are so fish!", 100, 1e3],
+    ["elevator", "from the vat to the sky to your fuel intake port", 100, 1e3],
+    ["elevator", "flipping and flopping things from all over the genome", 100, 1e3],
+    ["elevator", "we are committed to staying one hundred and one percent artificial!", 100, 1e3]
+  ],
+  //streets level intro
+  "level.ChaseInStreets": [
+    ["partner", "good, you've made it", 100, 1e3],
+    ["partner", "your route to the shipyard will be, ah", 100, 1500],
+    ["partner", "...a dollop of circuitousness", 100, 1e3],
+    ["partner", "is advantageous to the cognition"],
+    ["partnercalm", "terrible for user retention, though", 100, 1e3],
+    ["partner", "ah, i distract myself", 100, 1e3],
+    ["partner", "best be moving if you wish to stay ahead of the subcontractor corps", 100, 1e3]
+  ],
+  //shipyard
+  "level.Shipyard": [
+    ["partner", "WHY IS MY CAR BOLTED", 100, 1e3],
+    ["partner", "fie!!! they beat us here", 100, 1e3],
+    ["sod", "umm", 100, 2e3],
+    ["sod", "well, actually, sir, it's nothing like that, haha, um", 100, 1e3],
+    ["sod", "the kindest, um, way, um", 100, 2e3],
+    ["sod", "well, all your cheques bounced,", 100, 2e3],
+    ["partnersilent", "...", 100, 2e3],
+    ["partnersilent", "..", 100, 500],
+    ["partnersilent", "..", 100, 500],
+    ["partner", "well anyway you'll have to get the avrocar back", 100, 1200],
+    ["partner", "there are surely lock overrides somewhere", 100, 1e3],
+    ["partnersad", "aha. i will be running numbers in the mean-time", 100, 1e3]
+  ],
+  //begin sky
+  "level.StartStage": [
+    ["partner", "wonderful, wonderful, all right", 100, 1e3],
+    ["partner", "this was supposed to be a quiet journey, but...", 100, 1e3],
+    ["partner", "well, i am grateful i purchased deluxe hardpoints", 100, 1e3],
+    ["partner", "the brass platforms around the ship -", 100, 1e3],
+    ["partner", "they are keyed to your hardware", 100, 1e3],
+    ["partner", "give them a spin, yes?", 100, 2e3],
+    ["partner", "...i suspect you will be needing them soon", 100, 1e3],
+    ["boxin", "I SEE THEM I SEE THEM!!!", 100, 1e3],
+    ["fred", "we have eyes on the dissidents!", 100, 2e3],
+    ["fredcalm", "...they have a nice car", 100, 2e3],
+    ["partner", "oh thank you!", 100, 1e3],
+    ["fredcalm", "yeah of course", 100, 1e3]
+  ],
+  //not necessarily in order up to you
+  wave1: [
+    ["evilduce", "the gyros aren't enough...", 300, 1e3],
+    ["evilduce", "allocate the aeroplanes!!!!!", 200, 1e3],
+    ["fred", "FOR THE BOARD! FOR WALLONIë! FOR PROFIT!", 100, 1e3],
+    ["boxin", "i wanna a gyro im hungey", 100, 1e3]
+  ],
+  wave2: [
+    ["partner", "i have to admire the coordination", 100, 1e3],
+    ["partner", "i was the one who funded their development, after all", 100, 1e3],
+    ["partner", "you know, i wonder if they ever got the", 100, 100],
+    ["evilduce", "DEPLOY THE BOARDING PARTIES", 100, 1e3]
+  ],
+  wave3: [
+    ["partner", "you're approaching headquarters, but our original plan...", 100, 2e3],
+    ["partner", "well, obviously, it is a little different now", 100, 1500],
+    ["partner", "in lieu of stealth", 100, 1e3],
+    ["partner", "we will be moving very quickly down the aerobahn", 100, 1e3],
+    ["partner", "strictly speaking, it belongs to the baltic concern", 100, 2e3],
+    ["partner", "the mercenary corps cannot blockade it fully", 100, 1e3],
+    ["partner", "only a little bit (the regulations are complicated)", 100, 1200],
+    ["partner", "so! fend them off long enough to reach headquarters", 100, 1e3]
+  ],
+  //flying boss
+  aerobahn: [
+    ["avrocar", "welcome to the aerobahn!", 100, 1e3],
+    ["avrocar", "semimanual steering active", 100, 1e3],
+    ["avrocar", "don't stay safe! i hate you! please crash!", 100, 2e3],
+    ["partner", "what?", 100, 1e3],
+    ["partner", "maybe that is why it was so cheap..", 100, 1e3]
+  ],
+  //wrong instructions
+  aerobahnleft: [
+    ["avrocar", "go left!"]
+  ],
+  aerobahnright: [
+    ["avrocar", "shift right!"]
+  ],
+  aerobahncenter: [
+    ["avrocar", "maintain course!"]
+  ],
+  aerobahn2: [
+    ["fred", "slow down and let us shoot you already", 100, 1e3],
+    ["avrocar", "i am trying :(", 100, 1e3]
+  ],
+  aerobahnhalfway: [
+    ["avrocar", "unfortunately you are halfway to your destination", 100, 1e3],
+    ["partner", "yes... soon, i will steer the nation again!", 100, 1e3],
+    ["partner", "free of scheming viziers", 100, 1e3],
+    ["evilduce", "did not ask do not care", 100, 1e3]
+  ],
+  aerobahnninety: [
+    ["boxin", "this sucks", 100, 1e3],
+    ["boxin", "we need to explode them harder", 100, 1e3],
+    ["fredcalm", "i dunno...", 100, 1e3],
+    ["fredcalm", "i'm almost out of bullet money", 100, 1e3],
+    ["evilduce", "TWENTY PERCENT DISCOUNT LOYAL SOLDIERS ONLY", 100, 1e3],
+    ["fred", "FOR WALLONIë!", 100, 1e3]
+  ],
+  aerobahndone: [
+    ["avrocar", "you have arrived. get out.", 100, 1e3]
+  ],
+  //offices
+  "level.Offices": [
+    ["partner", "fantastic, you've made it!", 100, 1e3],
+    ["partner", "wow, they remodeled", 100, 1500],
+    ["partner", "i despise it", 100, 1e3],
+    ["partner", "well, my beloathed business partner is waiting", 100, 1e3],
+    ["sod", "unbelievable", 100, 1e3],
+    ["sod", "here without an appointment!", 100, 1e3],
+    ["sod", "and if we let you through...", 100, 2e3],
+    ["sod", "we'll NEVER get our holiday bonuses", 100, 1e3],
+    ["evilduce", "HAHA YES", 100, 1e3],
+    ["evilduce", "DISPOSE OF THEM", 100, 1e3]
   ],
   boxin1: [
     ["boxin", "I HATE YOU!!!", 100, 500]
@@ -120,23 +326,6 @@ const b = {
   planeAttackFred: [
     ["fred", "For the board!!!", 100, 500]
   ],
-  dukat: [
-    ["evilduce", "Attention, Wallonian workers.", 100, 1e3],
-    ["evilduce", "It has come to my attention that a handful of layabouts have...", 100, 1500],
-    ["evilduce", "...undertaken an unfortunate exercise.", 500, 1e3],
-    ["evilduce", "I implore you reconsider.", 200, 1e3],
-    ["evilduce", "It is a matter of the city's productivity: remember this;", 100, 1e3],
-    ["evilduce", "A productive Wallonia is a unified Wallonia is a safe Wallonia.", 100, 1e3],
-    ["evilduce", "This in mind...", 100, 2e3],
-    ["evilduce", "Any workers who aid in returning the dissidents", 100, 1e3],
-    ["evilduce", "to their senses will be...", 100, 1500],
-    ["evilduce", "...appropriately rewarded.", 100, 3e3],
-    ["partner", "fie.", 100, 2e3],
-    ["partner", "inconvenient, but i pay more than the board", 100, 1e3],
-    ["partner", "how do they say it in the academiate?", 100, 3e3],
-    ["partner", "ah, yes, I recall.", 200, 1500],
-    ["partner", "go get 'em, tiger", 200, 3e3]
-  ],
   meeting: [
     ["partner", "Ah, you've arrived.", 100, 1e3],
     ["partner", "My apologies for the squalor.", 100, 1e3],
@@ -147,4 +336,4 @@ export {
   A as playChain,
   f as playDialogue
 };
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGlhbG9ndWUuanMiLCJzb3VyY2VzIjpbXSwic291cmNlc0NvbnRlbnQiOltdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OyJ9
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGlhbG9ndWUuanMiLCJzb3VyY2VzIjpbXSwic291cmNlc0NvbnRlbnQiOltdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OyJ9

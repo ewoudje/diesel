@@ -71,7 +71,7 @@ const K = { anchor: { Left: 0, Top: 0 } }, J = ["background", "value"], X = { an
         brass: "#c98d1c",
         screen: "#282623"
       };
-    }), W = d(""), F = d("Img/portrait/none.png");
+    }), W = d(""), F = d("Img/portrait/none1.png");
     L(f, () => {
       console.log("input message", f.value), j(f.value, W, F, I, M);
     });
