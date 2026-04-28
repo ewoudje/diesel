@@ -311,19 +311,19 @@ const chains = {
         ["fredcalm","yeah of course",100,1000]
     ],
     //not necessarily in order up to you
-    'wave1':[
+    /*'level.stage1':[
         ["evilduce","the gyros aren't enough...",300,1000],
         ["evilduce","allocate the aeroplanes!!!!!",200,1000],
         ["fred","FOR THE BOARD! FOR WALLONIë! FOR PROFIT!",100,1000],
         ["boxin","i wanna a gyro im hungey",100,1000]
     ],
-    'wave2':[
+    'level.stage2':[
         ["partner","i have to admire the coordination",100,1000],
         ["partner","i was the one who funded their development, after all",100,1000],
         ["partner","you know, i wonder if they ever got the",100,100],
         ["evilduce","DEPLOY THE BOARDING PARTIES",100,1000]
     ],
-    'wave3':[
+    'level.stage3':[
         ["partner","you're approaching the parliament, but our original plan...",100,2000],
         ["partner","well, obviously, it is a little different now",100,1500],
         ["partner","in lieu of stealth",100,1000],
@@ -332,7 +332,7 @@ const chains = {
         ["partner","the mercenary corps cannot blockade it fully",100,1000],
         ["partner","only a little bit (the regulations are complicated)",100,1200],
         ["partner","so! fend them off long enough to reach headquarters",100,1000],
-    ],
+    ],*/
     //flying boss
     'aerobahn': [
         ["avrocar","welcome to the aerobahn!",100,1000],

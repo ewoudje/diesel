@@ -31,13 +31,13 @@ class LevelManager : Resource<EntityStore?> {
                 "InOffice",
             )
             "InOffice" -> LogicBasedLevel("InOffice",
-                "Walk up",
+                "Meet the client",
                 Vector3d(557.0, 33.0, 6.0),
                 "frontDesk",
                 "Briefing"
             )
             "Briefing" -> LogicBasedLevel("Briefing",
-                    "Just listen",
+                    "Conspire and listen",
                     Vector3d(557.0, 33.0, 6.0),
                     "inOfficeDoor",
                     "Parkour"
@@ -50,14 +50,14 @@ class LevelManager : Resource<EntityStore?> {
             )
             "ChaseInStreets" -> LogicBasedLevel(
                 "ChaseInStreets",
-                "Get to the ship!",
+                "Get to the car!",
                 Vector3d(456.0, 13.0, -80.0),
                 "atShip",
                 "AtShip"
             )
             "Shipyard" -> LogicBasedLevel(
                 "Shipyard",
-                "Find 3 Levers",
+                "Find three levers",
                 Vector3d(432.0, 25.0, -13.0),
                 "launchAway",
                 "StartStage"
@@ -95,7 +95,7 @@ class LevelManager : Resource<EntityStore?> {
             )
             "Stage4" -> WaveStage(
                 "Stage4",
-                "Oh fuu",
+                "No no no no",
                 2,
                 3,
                 4,
@@ -114,19 +114,19 @@ class LevelManager : Resource<EntityStore?> {
             )
             "Offices" -> LogicBasedLevel(
                 "Offices",
-                "KILL THEM",
+                "Reach the chairman",
                 Vector3d(1047.0, 63.0, 32.0),
                 "todo",
                 "TopLevel"
             )
             "TopLevel" -> Level(
                 "TopLevel",
-                "End THE BIG BOSS",
+                "Show the boss who's boss",
                 Vector3d(1063.0, 85.0, 86.0)
             )
             else -> Level(
                 key,
-                "No clue.. kill feds?",
+                "Let me think...",
                 defaultPoint
             )
         }

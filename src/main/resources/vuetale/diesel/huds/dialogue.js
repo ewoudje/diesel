@@ -73,14 +73,14 @@ const i = {
     voice: "Bfrenchcalm"
   }
 };
-let u = null;
-function f({ text: a, displayTextRef: o, displayPortraitRef: l, speed: d, actor: t, chainObj: e, chainIndex: r, chainDelay: c, playSoundRef: v, setLogicRef: y, chainName: h }) {
-  u && clearTimeout(u), o.value = "";
+let h = null;
+function f({ text: a, displayTextRef: o, displayPortraitRef: l, speed: d, actor: t, chainObj: e, chainIndex: r, chainDelay: c, playSoundRef: v, setLogicRef: m, chainName: p }) {
+  h && clearTimeout(h), o.value = "";
   let g = a.replace(/"/g, "").split(" "), s = 0;
-  m(g, o);
-  function m(n, p) {
-    s < n.length ? (i[t].voice != "None" && (s + i[t].interval || 2) % (i[t].interval || 2) == 0 && v.value(i[t].voice), p.value = `${p.value} ${n[s]}`, l.value = w(t), s++, u = setTimeout(() => {
-      m(n, p);
+  y(g, o);
+  function y(n, u) {
+    s < n.length ? (i[t].voice != "None" && (s + i[t].interval || 2) % (i[t].interval || 2) == 0 && v.value(i[t].voice), u.value = `${u.value} ${n[s]}`, l.value = w(t), s++, h = setTimeout(() => {
+      y(n, u);
     }, 100)) : (r++, r < e.length ? setTimeout(() => {
       f({
         //@ts-ignore //lol
@@ -97,11 +97,11 @@ function f({ text: a, displayTextRef: o, displayPortraitRef: l, speed: d, actor:
         displayPortraitRef: l,
         displayTextRef: o,
         playSoundRef: v,
-        setLogicRef: y,
-        chainName: h
+        setLogicRef: m,
+        chainName: p
       });
     }, c) : setTimeout(() => {
-      console.log(`[DIESELHUD] Chain ${h} complete`), y.value(h, "Done"), console.log("portrait ref"), l.value = "Img/portrait/none1.png", o.value = "";
+      console.log(`[DIESELHUD] Chain ${p} complete`), m.value(p, "Done"), console.log("portrait ref"), l.value = "Img/portrait/none1.png", o.value = "";
     }, c));
   }
   function w(n) {
@@ -231,28 +231,28 @@ const E = {
     ["fredcalm", "yeah of course", 100, 1e3]
   ],
   //not necessarily in order up to you
-  wave1: [
-    ["evilduce", "the gyros aren't enough...", 300, 1e3],
-    ["evilduce", "allocate the aeroplanes!!!!!", 200, 1e3],
-    ["fred", "FOR THE BOARD! FOR WALLONIë! FOR PROFIT!", 100, 1e3],
-    ["boxin", "i wanna a gyro im hungey", 100, 1e3]
+  /*'level.stage1':[
+      ["evilduce","the gyros aren't enough...",300,1000],
+      ["evilduce","allocate the aeroplanes!!!!!",200,1000],
+      ["fred","FOR THE BOARD! FOR WALLONIë! FOR PROFIT!",100,1000],
+      ["boxin","i wanna a gyro im hungey",100,1000]
   ],
-  wave2: [
-    ["partner", "i have to admire the coordination", 100, 1e3],
-    ["partner", "i was the one who funded their development, after all", 100, 1e3],
-    ["partner", "you know, i wonder if they ever got the", 100, 100],
-    ["evilduce", "DEPLOY THE BOARDING PARTIES", 100, 1e3]
+  'level.stage2':[
+      ["partner","i have to admire the coordination",100,1000],
+      ["partner","i was the one who funded their development, after all",100,1000],
+      ["partner","you know, i wonder if they ever got the",100,100],
+      ["evilduce","DEPLOY THE BOARDING PARTIES",100,1000]
   ],
-  wave3: [
-    ["partner", "you're approaching the parliament, but our original plan...", 100, 2e3],
-    ["partner", "well, obviously, it is a little different now", 100, 1500],
-    ["partner", "in lieu of stealth", 100, 1e3],
-    ["partner", "we will be moving very quickly down the aerobahn", 100, 1e3],
-    ["partner", "strictly speaking, it belongs to the baltic concern", 100, 2e3],
-    ["partner", "the mercenary corps cannot blockade it fully", 100, 1e3],
-    ["partner", "only a little bit (the regulations are complicated)", 100, 1200],
-    ["partner", "so! fend them off long enough to reach headquarters", 100, 1e3]
-  ],
+  'level.stage3':[
+      ["partner","you're approaching the parliament, but our original plan...",100,2000],
+      ["partner","well, obviously, it is a little different now",100,1500],
+      ["partner","in lieu of stealth",100,1000],
+      ["partner","we will be moving very quickly down the aerobahn",100,1000],
+      ["partner","strictly speaking, it belongs to the baltic concern",100,2000],
+      ["partner","the mercenary corps cannot blockade it fully",100,1000],
+      ["partner","only a little bit (the regulations are complicated)",100,1200],
+      ["partner","so! fend them off long enough to reach headquarters",100,1000],
+  ],*/
   //flying boss
   aerobahn: [
     ["avrocar", "welcome to the aerobahn!", 100, 1e3],
