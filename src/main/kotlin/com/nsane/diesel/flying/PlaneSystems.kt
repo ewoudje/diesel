@@ -212,6 +212,12 @@ object PlaneRefSystem : RefSystem<EntityStore?>() {
     ) {
         val sim = buffer.getResource(AirSimulator.TYPE)
         val transform = buffer.getComponent(ref, TransformComponent.getComponentType())!!
+        val death = buffer.getComponent(ref, DeathComponent.getComponentType())
+
+        if (reason == RemoveReason.REMOVE && death != null) {
+            buffer.addEntity(buildPlane(sim, store), AddReason.SPAWN)
+        }
+
         if (reason == RemoveReason.UNLOAD && transform.position.squaredLength() > 200 * 200) {
             DieselPlugin.LOGGER.atWarning().log("Despawned a plane??? Spawning new one!")
             buffer.addEntity(buildPlane(sim, store), AddReason.SPAWN)
