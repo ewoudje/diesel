@@ -1,13 +1,13 @@
 {
   "Parent": "NPCSpawner",
   "TranslationProperties": {
-    "Name": "Prole Spawner"
+    "Name": "Fred Spawner"
   },
   "BlockType": {
     "BlockEntity": {
       "Components": {
         "NPCSpawner": {
-          "NpcRole": "Prole_Shotgun"
+          "NpcRole": "Fred_Shotgun"
         }
       }
     }

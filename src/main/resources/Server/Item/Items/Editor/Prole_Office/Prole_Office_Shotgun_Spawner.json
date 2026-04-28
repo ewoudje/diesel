@@ -7,7 +7,7 @@
     "BlockEntity": {
       "Components": {
         "NPCSpawner": {
-          "NpcRole": "Prole_Shotgun"
+          "NpcRole": "Prole_Office_Shotgun"
         }
       }
     }

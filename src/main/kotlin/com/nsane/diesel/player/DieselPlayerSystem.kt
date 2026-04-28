@@ -58,7 +58,7 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
         store.replaceComponent(event.playerRef, ModelComponent.getComponentType(), ModelComponent(model))
 
         if (playerComponent.disable) return
-        //event.player.pageManager.openCustomPage(event.playerRef, store, WelcomePage(ref))
+        event.player.pageManager.openCustomPage(event.playerRef, store, WelcomePage(ref))
 
         levelManager.currentLevel?.let { store.addComponent(event.playerRef,
             Teleport.getComponentType(),

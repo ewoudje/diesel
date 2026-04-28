@@ -41,7 +41,7 @@ object PlayerReviveSystem: RefChangeSystem<EntityStore?, DeathComponent>() {
                 Vector3f()
             )
             buffer.addComponent(ref, Teleport.getComponentType(), teleport)
-            if (levelManager.currentLevel is Stage)
+            if (levelManager.currentLevel !is Stage)
                 buffer.removeComponent(ref, DeathComponent.getComponentType())
         }
     }

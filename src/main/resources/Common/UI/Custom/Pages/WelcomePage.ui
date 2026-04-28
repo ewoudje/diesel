@@ -1,4 +1,4 @@
-$Common = "../Common.ui";
+$C = "../Common.ui";
 $Sounds = "../Sounds.ui";
 
 Group {

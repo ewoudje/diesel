@@ -71,6 +71,7 @@ class LevelManager : Resource<EntityStore?> {
                 0,
                 0,
                 10f,
+                false,
                 "Stage2"
             )
             "Stage2" -> WaveStage(
@@ -81,6 +82,7 @@ class LevelManager : Resource<EntityStore?> {
                 0,
                 0,
                 10f,
+                true,
                 "Stage4"
             )
             "Stage3" -> WaveStage(
@@ -88,9 +90,10 @@ class LevelManager : Resource<EntityStore?> {
                 "What are THOSE???!!",
                 0,
                 1,
-                3,
+                0,
                 0,
                 10f,
+                true,
                 "EndStage"
             )
             "Stage4" -> WaveStage(
@@ -98,9 +101,10 @@ class LevelManager : Resource<EntityStore?> {
                 "No no no no",
                 2,
                 3,
-                4,
+                0,
                 0,
                 10f,
+                true,
                 "EndStage"
             )
             "EndStage" -> EndStage()

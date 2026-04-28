@@ -9,13 +9,10 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.flying.AirSimulator
 
 
-class DeathStarEnvironment(): AbstractFlyingEnvironment() {
+class DeathStarEnvironment(): SimpleEnvironment(70) {
     val blockSize = 80
     val cityWidth = 4
     var lastZ = 0.0
-
-    override val weather: String
-        get() = "DeathStar"
 
     override fun tick(accessor: ComponentAccessor<EntityStore?>, dt: Float) {
         super.tick(accessor, dt)
@@ -38,7 +35,7 @@ class DeathStarEnvironment(): AbstractFlyingEnvironment() {
                     sim,
                     "CityBlock",
                     2.1f,
-                    Vector3d(x.toDouble(), 100.0, sim.shipPosition.z + 200.0),
+                    Vector3d(x.toDouble(), 150.0, sim.shipPosition.z + 200.0),
                     Vector3f(),
                     Vector3d(),
                     Vector3f(),
