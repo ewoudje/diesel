@@ -28,10 +28,10 @@ class MoveShipInteraction : SimpleInstantInteraction() {
         if (!stage.isInLane) return
 
         when {
-            left && stage.lane == 0 -> return
-            !left && stage.lane == 2 -> return
-            left -> stage.lane++
-            !left -> stage.lane--
+            left && stage.lane <= 0 -> return
+            !left && stage.lane >= 2 -> return
+            left -> stage.lane--
+            !left -> stage.lane++
         }
 
         context.state.state = InteractionState.Finished

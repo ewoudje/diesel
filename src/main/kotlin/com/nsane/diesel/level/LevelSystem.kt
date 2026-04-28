@@ -29,6 +29,7 @@ object LevelSystem: TickingSystem<EntityStore?>()  {
     ) {
         val levelManager = store.getResource(LevelManager.TYPE)
         val dieselResource = store.getResource(DieselResource.TYPE)
+        val sim = store.getResource(AirSimulator.TYPE)
         if (levelManager.currentLevel == null) return
 
         if (levelManager.oldLevel != levelManager.currentLevel) {
@@ -37,11 +38,18 @@ object LevelSystem: TickingSystem<EntityStore?>()  {
             if (!event.isCancelled)
                 store.externalData.world.chunkStore.store.invoke(event)
 
-            if (!event.isCancelled)
+            if (!event.isCancelled) {
                 levelManager.oldLevel = levelManager.currentLevel
+                if (levelManager.currentLevel is Stage) {
+                    sim.stage = levelManager.currentLevel as Stage
+                } else {
+                    sim.stage = null
+                }
+            } else {
+                levelManager.currentLevel = levelManager.oldLevel
+            }
         }
 
-        val sim = store.getResource(AirSimulator.TYPE)
         // should only happen on load
         if (sim.stage == null && levelManager.currentLevel is Stage) {
             DieselPlugin.LOGGER.atInfo().log("Setuping stage from load")

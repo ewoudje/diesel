@@ -16,7 +16,7 @@ class DeathStarRace : Stage("DeathStarRace", "Get in the MECH") {
     var isInLane = false
 
     override fun tickStage(store: ComponentAccessor<EntityStore?>, sim: AirSimulator, dt: Float) {
-        val targetX = (lane - 1) * 30.0
+        val targetX = (lane - 1) * 20.0
         val strafeSpeed = dt * 30
         val rotateSpeed = (PI.toFloat() / 20f) * dt
         isInLane = abs(sim.shipPosition.x - targetX) < strafeSpeed
@@ -51,6 +51,7 @@ class DeathStarRace : Stage("DeathStarRace", "Get in the MECH") {
         super.setup(store, sim, oldStage)
         sim.shipRotation.roll = 0f
         sim.distanceTraveled = 0.0
+        sim.shipPosition.x = 0.0
     }
 
     companion object {

@@ -16,7 +16,6 @@ class LevelManager : Resource<EntityStore?> {
     private val defaultPoint = Vector3d(200.0, 200.0, 0.0)
     var oldLevel: Level? = null
     var currentLevel: Level? = null
-        private set
 
     var amountOfEnemies: Int = 0
 

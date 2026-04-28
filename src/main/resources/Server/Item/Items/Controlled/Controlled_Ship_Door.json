@@ -1,0 +1,59 @@
+{
+  "TranslationProperties": {
+    "Name": "Controlled Ship Door"
+  },
+  "PlayerAnimationsId": "Block",
+  "Categories": [
+    "DieselCategory.Blocks"
+  ],
+  "Icon": "Icons/ItemsGenerated/Controlled_Ship_Door.png",
+  "IconProperties": {
+    "Scale": 0.3,
+    "Rotation": [
+      38,
+      23,
+      20
+    ],
+    "Translation": [
+      -14,
+      -12
+    ]
+  },
+  "BlockType": {
+    "Flags": {},
+    "BlockParticleSetId": "Metal",
+    "CustomModel": "Blocks/Diesel/Doors/Ship_Trap_Door_Closed.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Diesel/Doors/Ship_Trap_Door.png",
+        "Weight": 1
+      }
+    ],
+    "DrawType": "Model",
+    "Material": "Solid",
+    "Opacity": "Transparent",
+    "ParticleColor": "#363434",
+    "State": {
+      "Definitions": {
+        "Open": {
+          "InteractionSoundEventId": "SFX_Door_Temple_Dark_Open",
+          "CustomModelAnimation": "Blocks/Diesel/Doors/Ship_Trap_Door_Open.blockyanim",
+          "CustomModel": "Blocks/Diesel/Doors/Ship_Trap_Door_Open.blockymodel",
+          "HitboxType": "Ship_Trapdoor_Open",
+          "InteractionHitboxType": "Ship_Trapdoor_Open",
+          "VariantRotation": "NESW"
+        }
+      }
+    },
+    "VariantRotation": "NESW",
+    "BlockSoundSetId": "Metal",
+    "BlockEntity": {
+      "Components": {
+        "StateWriter": {}
+      }
+    },
+    "CustomModelAnimation": "Blocks/Diesel/Doors/Ship_Trap_Door_Close.blockyanim",
+    "InteractionHitboxType": "Ship_Trapdoor",
+    "HitboxType": "Ship_Trapdoor"
+  }
+}

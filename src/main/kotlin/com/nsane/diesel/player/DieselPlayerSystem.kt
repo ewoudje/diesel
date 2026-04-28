@@ -100,7 +100,7 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
         val dieselResource = store.getResource(DieselResource.TYPE)
         val levelManager = store.getResource(LevelManager.TYPE)
         super.tick(dt, systemIndex, store)
-        if (allDead && store.externalData.world.playerCount != 0 && dieselResource.globalRespawnTimer == Double.MAX_VALUE) {
+        if (allDead && store.externalData.world.playerCount != 0 && dieselResource.globalRespawnTimer == Double.MAX_VALUE && levelManager.currentLevel != null) {
             dieselResource.globalRespawnTimer = 5.0
             dieselResource.deadLevel = levelManager.currentLevel!!.name
             dieselResource.respawnPoint.assign(levelManager.currentLevel!!.respawnPoint)
