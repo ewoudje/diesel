@@ -25,7 +25,6 @@ class MoveShipInteraction : SimpleInstantInteraction() {
         val sim = context.commandBuffer?.getResource(AirSimulator.TYPE) ?: return
         val stage = sim.stage
         if (stage !is DeathStarRace) return
-        if (!stage.isInLane) return
 
         when {
             left && stage.lane <= 0 -> return

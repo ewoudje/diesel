@@ -15,7 +15,7 @@ class DeathStarEnvironment(): AbstractFlyingEnvironment() {
     var lastZ = 0.0
 
     override val weather: String
-        get() = "Default_Flat"
+        get() = "DeathStar"
 
     override fun tick(accessor: ComponentAccessor<EntityStore?>, dt: Float) {
         super.tick(accessor, dt)
@@ -37,8 +37,8 @@ class DeathStarEnvironment(): AbstractFlyingEnvironment() {
                     holder,
                     sim,
                     "CityBlock",
-                    2.0f,
-                    Vector3d(x.toDouble(), 100.0, sim.shipPosition.z + 100.0),
+                    2.1f,
+                    Vector3d(x.toDouble(), 100.0, sim.shipPosition.z + 200.0),
                     Vector3f(),
                     Vector3d(),
                     Vector3f(),

@@ -16,9 +16,9 @@ class DeathStarRace : Stage("DeathStarRace", "Get in the MECH") {
     var isInLane = false
 
     override fun tickStage(store: ComponentAccessor<EntityStore?>, sim: AirSimulator, dt: Float) {
-        val targetX = (lane - 1) * 20.0
+        val targetX = (lane - 1) * 30.0
         val strafeSpeed = dt * 30
-        val rotateSpeed = (PI.toFloat() / 20f) * dt
+        val rotateSpeed = (PI.toFloat() / 40f) * dt
         isInLane = abs(sim.shipPosition.x - targetX) < strafeSpeed
         if (isInLane) {
             sim.shipPosition.x = targetX
@@ -41,6 +41,18 @@ class DeathStarRace : Stage("DeathStarRace", "Get in the MECH") {
         }
 
         sim.shipPosition.z += 45 * dt
+
+        if (sim.distanceTraveled > 300.0) {
+            if (TARGET_Y - sim.shipPosition.y > RISE_SPEED * dt)
+                sim.shipPosition.y += RISE_SPEED * dt
+            else
+                sim.shipPosition.y = TARGET_Y
+        }
+    }
+
+    private fun occupies(sim: AirSimulator, lane: Int): Boolean {
+        val targetX = (lane - 1) * 30.0
+        return abs(sim.shipPosition.x - targetX) < 22.0
     }
 
     override fun setup(
@@ -52,9 +64,14 @@ class DeathStarRace : Stage("DeathStarRace", "Get in the MECH") {
         sim.shipRotation.roll = 0f
         sim.distanceTraveled = 0.0
         sim.shipPosition.x = 0.0
+        sim.shipPosition.y = 0.0
     }
 
     companion object {
-        const val MAX_BANK = PI.toFloat() / 16f
+        const val MAX_BANK = PI.toFloat() / 20f
+        const val TRAVEL_DISTANCE = 3000.0
+        const val HELI_RATE = 20.0
+        const val RISE_SPEED = 5.0
+        const val TARGET_Y = 110.0
     }
 }
