@@ -16,13 +16,6 @@
   },
   "DefaultAttachments": [],
   "AnimationSets": {
-    "Spawn": {
-      "Animations": [
-        {
-          "Animation": "Characters/Diesel/Animations/Character/Recover.blockyanim"
-        }
-      ]
-    },
     "Death": {
       "Animations": [
         {

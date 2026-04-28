@@ -131,12 +131,14 @@ public class DieselHud {
         ui.setHudData("health", healthValue.asPercentage());
 
         var sim = commands.getResource(AirSimulator.Companion.getTYPE());
-        if (sim.getFlying()) {
-            ui.setHudData("shipHealth", sim.getShipHealth());
-        } else ui.setHudData("shipHealth", -1.0);
+
 
         //progress bars are progress1 and progress 2
         //ui.setHudData("progress2",foo)
+        if (sim.getFlying()) {
+            ui.setHudData("progress1", sim.getShipHealth());
+            ui.setHudData("progress1Label","Ship Health");
+        } else ui.setHudData("progress1Label", "");
         ui.setHudData("progress1",0.5);
         ui.setHudData("progress1Label","");
         ui.setHudData("progress2",0.6);

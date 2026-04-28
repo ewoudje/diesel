@@ -7,6 +7,7 @@ import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.math.vector.Vector3f
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.flying.AirSimulator
+import kotlin.random.Random
 
 
 class DeathStarEnvironment(): SimpleEnvironment(70) {
@@ -23,6 +24,7 @@ class DeathStarEnvironment(): SimpleEnvironment(70) {
             lastZ = sim.shipPosition.z
             var i = cityWidth / -2
             while (i <= cityWidth / 2) {
+                val rand = Random.nextInt(1, 5)
                 val o = if (i < 0) -offset else offset
                 val x = blockSize * i + (blockSize / 2) + o
                 if (i++ == 0) continue
@@ -30,10 +32,10 @@ class DeathStarEnvironment(): SimpleEnvironment(70) {
                 val holder = EntityStore.REGISTRY.newHolder()
                 holder.ensureComponent(EntityStore.REGISTRY.nonSerializedComponentType)
                 populateEnvironmentalHolder(
-                    "CityBlock",
+                    "City",
                     holder,
                     sim,
-                    "CityBlock",
+                    "City$rand",
                     2.1f,
                     Vector3d(x.toDouble(), 150.0, sim.shipPosition.z + 200.0),
                     Vector3f(),

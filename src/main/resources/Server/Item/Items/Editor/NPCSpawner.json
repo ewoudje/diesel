@@ -10,7 +10,7 @@
   ],
   "SubCategory": "PrefabBlocks",
   "BlockType": {
-    "DrawType": "Model",
+    "DrawType": "Empty",
     "CustomModel": "Blocks/Miscellaneous/Trigger.blockymodel",
     "CustomModelTexture": [
       {
