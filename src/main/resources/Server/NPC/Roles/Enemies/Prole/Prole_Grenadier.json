@@ -29,7 +29,7 @@
     "ViewSector": 270,
     "WakingPeriod": [ 0, 24 ],
     "DropList": "",
-    "Appearance": "Fred_Blue",
+    "Appearance": "Prole_Dirty",
     "AttitudeGroup": "Diesel_Attitude",
     "Weapons": [ "Shotgun_Scout" ],
     "FollowPatrolPath": { "Compute": "FollowPatrolPath" },

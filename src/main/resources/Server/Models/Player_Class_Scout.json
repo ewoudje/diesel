@@ -1,4 +1,5 @@
 {
   "Parent": "Prole",
-  "Texture": "NPC/Diesel/Models/Character/Adventure_Player.png"
+  "Texture": "NPC/Diesel/Models/Character/Adventure_Player.png",
+  "EyeHeight": 0.8
 }

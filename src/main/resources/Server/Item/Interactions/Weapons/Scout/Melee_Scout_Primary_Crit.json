@@ -6,7 +6,7 @@
       "DamageCalculator": {
         "Class": "Light",
         "BaseDamage": {
-          "Physical": 30
+          "Physical": 100
         }
       },
       "Effects": {

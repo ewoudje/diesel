@@ -169,7 +169,9 @@ function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, 
 function playChain(chainName: string, displayTextRef:Ref, displayPortraitRef:Ref, playSoundRef:Ref, setLogicRef:Ref){
     //@ts-ignore //shut UP shut UP shut UP shut UP shut UP shut UP i wanna go HOME
     let chainObj;
-    if(!chainName.startsWith("death.")){
+    //@ts-ignore
+    chainObj = chains[chainName]
+    /*(if(!chainName.startsWith("death.")){
         //@ts-ignore FUCK
         chainObj = chains[chainName];
         //@ts-ignore GET OUT OF MY HEAD
@@ -181,7 +183,7 @@ function playChain(chainName: string, displayTextRef:Ref, displayPortraitRef:Ref
                 //@ts-ignore
 
         chainObj =deathChains[chainName][randomInt(0,deathChains[chainName].length-1)];
-    }
+    }*/
     if(chainObj){
         let index = 0;
         console.log(`[DIESELHUD] Starting chain ${chainName}`)

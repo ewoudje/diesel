@@ -31,9 +31,9 @@
       "Interactions": [
         {
           "Type": "Simple",
-          "RunTime": 4
+          "RunTime": 1
         },
-        "Bomb_Explode",
+        "Splode_Interaction",
         {
           "Type": "RemoveEntity",
           "Entity": "User"
@@ -50,7 +50,7 @@
         ]
       },
       "Interactions": [
-        "Bomb_Explode",
+        "Splode_Interaction",
         {
           "Type": "RemoveEntity",
           "Entity": "User"

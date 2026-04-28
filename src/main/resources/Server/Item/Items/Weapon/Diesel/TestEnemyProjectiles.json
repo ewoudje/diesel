@@ -1,0 +1,54 @@
+{
+  "TranslationProperties": {
+    "Name": "Projectile Dummy Gun"
+  },
+  "Categories": [
+    "Items.Weapons",
+    "DieselCategory.Weapons"
+  ],
+  "$Comment": "Loading order means that shooting and ammo usage should be inline",
+  "Reticle": "DefaultMelee",
+  "Model": "Items/Diesel/shotgun/shotgun.blockymodel",
+  "Icon": "Icons/ItemsGenerated/Weapon_Gun_Blunderbuss_Rusty.png",
+  "Texture": "Items/Diesel/shotgun/shotgun.png",
+  "PlayerAnimationsId": "Shotgun_Scout_Anim",
+  "Interactions": {
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "Projectile",
+          "Config": "Projectile_Config_Boxin_Grenade",
+          "Effects": {
+            "WorldSoundEventId": "SFX_Flak_Fire"
+          }
+        }
+      ]
+    },
+    "SwapTo": "Root_SetMovement_Scout",
+    "Ability1": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "Effects": {
+            "WorldSoundEventId": "SFX_Stamina_Regen"
+          }
+        }
+      ]
+    }
+  },
+  "IconProperties": {
+    "Scale": 0.36,
+    "Translation": [
+      -3.6,
+      -20.4
+    ],
+    "Rotation": [
+      315,
+      90,
+      0
+    ]
+  },
+  "Quality": "Epic",
+  "Scale": 2,
+  "Weapon": {}
+}

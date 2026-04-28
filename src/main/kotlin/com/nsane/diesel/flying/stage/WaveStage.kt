@@ -25,7 +25,7 @@ open class WaveStage(
     val nextLevel: String,
 ): Stage(name, objective) {
     var lifetime = 60f * 5f
-    override val objective = if (isWaveDead()) "We are safe for now.." else super.objective
+    override val objective = if (isWaveDead()) "Safe for now.." else super.objective
     override val env: FlyingEnvironment = SimpleEnvironment(50)
     private var delay = delay
 

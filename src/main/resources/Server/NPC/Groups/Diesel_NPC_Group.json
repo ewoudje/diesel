@@ -1,0 +1,19 @@
+{
+  "IncludeRoles": [
+    "Fred",
+    "Fred_Burst",
+    "Fred_Shotgun",
+    "Fred_Melee",
+    "Fred_Grenadier",
+    "Prole",
+    "Prole_Burst",
+    "Prole_Shotgun",
+    "Prole_Melee",
+    "Prole_Grenadier",
+    "Prole_Office",
+    "Prole_Office_Burst",
+    "Prole_Office_Shotgun",
+    "Prole_Office_Melee",
+    "Prole_Office_Grenadier"
+  ]
+}
