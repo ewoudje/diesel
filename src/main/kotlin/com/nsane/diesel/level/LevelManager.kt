@@ -53,7 +53,7 @@ class LevelManager : Resource<EntityStore?> {
                 "Get to the ship!",
                 Vector3d(456.0, 13.0, -80.0),
                 "atShip",
-                "AtShip"
+                "Shipyard"
             )
             "Shipyard" -> LogicBasedLevel(
                 "Shipyard",
