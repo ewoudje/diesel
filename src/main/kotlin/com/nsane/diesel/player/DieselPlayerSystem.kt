@@ -50,6 +50,7 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
 
         val modelAsset = ModelAsset.getAssetMap().getAsset("Prole")!!
         val model = Model.createScaledModel(modelAsset, 1.0f)
+        val levelManager = store.getResource(LevelManager.TYPE)
         val playersResource = store.getResource(DieselResource.TYPE)
         val playerComponent = store.getComponent(event.playerRef, DieselPlayerComponent.TYPE) ?: throw IllegalArgumentException()
         val hudManager = event.player.hudManager
@@ -57,6 +58,7 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
         store.replaceComponent(event.playerRef, ModelComponent.getComponentType(), ModelComponent(model))
 
         if (playerComponent.disable) return
+        levelManager.currentLevel?.let { Teleport.createForPlayer(it.respawnPoint, Vector3f()) }
 
         val hud = DieselHud(store, ref.reference)
         playerComponent.hud = hud
