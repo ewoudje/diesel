@@ -15,15 +15,12 @@
     "Material": "Solid",
     "DrawType": "Model",
     "Group": "Wood",
-    "Flags": {},
+    "Flags": {
+      "IsUsable": true
+    },
     "BlockParticleSetId": "Dust",
     "ParticleColor": "#c49a6c",
     "BlockSoundSetId": "Cloth",
-    "CustomModelTexture": [
-      {
-        "Texture": "Blocks/Hypixel/Hyspace/Moving_Boxes/Moving_Box_1x1_Texture.png"
-      }
-    ],
     "Interactions": {
       "Use": {
         "Interactions": [
@@ -32,7 +29,16 @@
           }
         ]
       }
-    }
+    },
+    "CustomModel": "Blocks/Diesel/Interactables/Ship_Dodge_Button.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Diesel/Interactables/Ship_Dodge_Button_Right.png"
+      }
+    ],
+    "HitboxType": "Ship_Button",
+    "InteractionHitboxType": "Ship_Button",
+    "VariantRotation": "NESW"
   },
   "IconProperties": {
     "Scale": 0.58823,

@@ -12,7 +12,7 @@ class DieselPlayerComponent : Component<EntityStore?> {
     var disable: Boolean = false
 
     fun showMessage(chain: String) {
-        hud!!.showMessage(chain)
+        hud?.showMessage(chain)
     }
 
     override fun clone(): Component<EntityStore?> = DieselPlayerComponent()

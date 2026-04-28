@@ -1,0 +1,16 @@
+{
+  "Model": "NPC/Diesel/Models/CityBlock.blockymodel",
+  "Texture": "NPC/Diesel/Models/CityBlock.png",
+  "HitBox": {
+    "Max": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    },
+    "Min": {
+      "X": -40,
+      "Y": -70,
+      "Z": -40
+    }
+  }
+}

@@ -8,7 +8,7 @@ open class SimpleEnvironment(expectedClouds: Int): AbstractFlyingEnvironment() {
     override val weather: String
         get() = "Ship"
 
-    private fun randomPosition(sim: AirSimulator): Vector3d {
+    protected open fun randomPosition(sim: AirSimulator): Vector3d {
         val max_distance = 180
         return Vector3d(
             (Random.nextDouble() * max_distance * 2) - max_distance,

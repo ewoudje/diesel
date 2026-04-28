@@ -1,0 +1,15 @@
+{
+  "Priority": 80,
+  "AudioCategory": "AudioCat_Music",
+  "Music": {
+    "Tracks": [
+      "Music/Sky_Boss.ogg"
+    ],
+    "Volume": 10
+  },
+  "Conditions": {
+    "EnvironmentIds": [
+      "SkyBoss"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "Priority": 50,
+  "AudioCategory": "AudioCat_Music",
+  "Music": {
+    "Tracks": [
+      "Music/Briefing_Drums_Only.ogg"
+    ],
+    "Volume": 7
+  },
+  "Conditions": {
+    "EnvironmentIds": [
+      "StarterArea"
+    ]
+  }
+}

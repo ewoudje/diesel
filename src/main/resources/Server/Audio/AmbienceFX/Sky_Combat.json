@@ -1,0 +1,15 @@
+{
+  "Priority": 80,
+  "AudioCategory": "AudioCat_Music",
+  "Music": {
+    "Tracks": [
+      "Music/Sky_Combat.ogg"
+    ],
+    "Volume": 10
+  },
+  "Conditions": {
+    "EnvironmentIds": [
+      "SkyCombat"
+    ]
+  }
+}

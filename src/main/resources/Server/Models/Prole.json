@@ -1,7 +1,7 @@
 {
   "Parent": "Player",
   "Model": "NPC/Diesel/Models/Character/Prole.blockymodel",
-  "Texture": "NPC/Diesel/Models/Character/Prole.png",
+  "Texture": "NPC/Diesel/Models/Character/Prole_MDR.png",
   "HitBox": {
     "Max": {
       "X": 0.3,
@@ -14,8 +14,7 @@
       "Z": -0.3
     }
   },
-  "DefaultAttachments": [
-  ],
+  "DefaultAttachments": [],
   "AnimationSets": {
     "Spawn": {
       "Animations": [
@@ -27,7 +26,8 @@
     "Death": {
       "Animations": [
         {
-          "Animation": "Characters/Diesel/Animations/Character/Downed.blockyanim"
+          "Animation": "Characters/Diesel/Animations/Character/Downed.blockyanim",
+          "Looping": false
         }
       ]
     }

@@ -1,0 +1,15 @@
+{
+  "Priority": 80,
+  "AudioCategory": "AudioCat_Music",
+  "Music": {
+    "Tracks": [
+      "Music/Briefing.ogg"
+    ],
+    "Volume": 10
+  },
+  "Conditions": {
+    "EnvironmentIds": [
+      "Briefing"
+    ]
+  }
+}

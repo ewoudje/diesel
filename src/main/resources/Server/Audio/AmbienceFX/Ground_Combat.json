@@ -1,0 +1,16 @@
+{
+  "Priority": 80,
+  "AudioCategory": "AudioCat_Music",
+  "Music": {
+    "Tracks": [
+      "Music/Ground_Combat.ogg",
+      "Music/More_Combat.ogg"
+    ],
+    "Volume": 10
+  },
+  "Conditions": {
+    "EnvironmentIds": [
+      "GroundCombat"
+    ]
+  }
+}

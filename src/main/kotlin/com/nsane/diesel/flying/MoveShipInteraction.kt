@@ -25,13 +25,12 @@ class MoveShipInteraction : SimpleInstantInteraction() {
         val sim = context.commandBuffer?.getResource(AirSimulator.TYPE) ?: return
         val stage = sim.stage
         if (stage !is DeathStarRace) return
-        if (!stage.isInLane) return
 
         when {
-            left && stage.lane == 0 -> return
-            !left && stage.lane == 2 -> return
-            left -> stage.lane++
-            !left -> stage.lane--
+            left && stage.lane <= 0 -> return
+            !left && stage.lane >= 2 -> return
+            left -> stage.lane--
+            !left -> stage.lane++
         }
 
         context.state.state = InteractionState.Finished

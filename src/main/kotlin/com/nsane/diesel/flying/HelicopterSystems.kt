@@ -29,6 +29,7 @@ import com.hypixel.hytale.server.core.modules.entity.tracker.NetworkId
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes
 import com.hypixel.hytale.server.core.modules.physics.util.PhysicsMath
+import com.hypixel.hytale.server.core.universe.world.ParticleUtil
 import com.hypixel.hytale.server.core.universe.world.SoundUtil
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselPlugin
@@ -144,8 +145,7 @@ object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
         val modelAsset = ModelAsset.getAssetMap().getAsset("CrashingHelicopter") ?: throw NullPointerException("CrashingHelicopter asset not found")
         val model = Model.createScaledModel(modelAsset, 4.0f)
         buffer.replaceComponent(ref, ModelComponent.getComponentType(), ModelComponent(model))
-
-        //TODO explosion
+        ParticleUtil.spawnParticleEffect("Explosion_Big", buffer.getComponent(ref, TransformComponent.getComponentType())!!.position, buffer)
     }
 
     fun fire(

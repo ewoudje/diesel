@@ -50,6 +50,7 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
 
         val modelAsset = ModelAsset.getAssetMap().getAsset("Prole")!!
         val model = Model.createScaledModel(modelAsset, 1.0f)
+        val levelManager = store.getResource(LevelManager.TYPE)
         val playersResource = store.getResource(DieselResource.TYPE)
         val playerComponent = store.getComponent(event.playerRef, DieselPlayerComponent.TYPE) ?: throw IllegalArgumentException()
         val hudManager = event.player.hudManager
@@ -57,6 +58,10 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
         store.replaceComponent(event.playerRef, ModelComponent.getComponentType(), ModelComponent(model))
 
         if (playerComponent.disable) return
+        levelManager.currentLevel?.let { store.addComponent(event.playerRef,
+            Teleport.getComponentType(),
+            Teleport.createForPlayer(it.respawnPoint, Vector3f())
+        ) }
 
         val hud = DieselHud(store, ref.reference)
         playerComponent.hud = hud
@@ -100,7 +105,7 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
         val dieselResource = store.getResource(DieselResource.TYPE)
         val levelManager = store.getResource(LevelManager.TYPE)
         super.tick(dt, systemIndex, store)
-        if (allDead && store.externalData.world.playerCount != 0 && dieselResource.globalRespawnTimer == Double.MAX_VALUE) {
+        if (allDead && store.externalData.world.playerCount != 0 && dieselResource.globalRespawnTimer == Double.MAX_VALUE && levelManager.currentLevel != null) {
             dieselResource.globalRespawnTimer = 5.0
             dieselResource.deadLevel = levelManager.currentLevel!!.name
             dieselResource.respawnPoint.assign(levelManager.currentLevel!!.respawnPoint)

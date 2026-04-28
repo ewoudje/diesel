@@ -1,0 +1,15 @@
+{
+  "Priority": 80,
+  "AudioCategory": "AudioCat_Music",
+  "Music": {
+    "Tracks": [
+      "Music/Elevator.ogg"
+    ],
+    "Volume": 10
+  },
+  "Conditions": {
+    "EnvironmentIds": [
+      "Elevator"
+    ]
+  }
+}

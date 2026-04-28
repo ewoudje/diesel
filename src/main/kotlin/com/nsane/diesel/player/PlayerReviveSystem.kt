@@ -16,6 +16,7 @@ import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent
 import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport
 import com.hypixel.hytale.server.core.modules.interaction.Interactions
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
+import com.nsane.diesel.flying.stage.Stage
 import com.nsane.diesel.level.LevelManager
 
 object PlayerReviveSystem: RefChangeSystem<EntityStore?, DeathComponent>() {
@@ -40,6 +41,8 @@ object PlayerReviveSystem: RefChangeSystem<EntityStore?, DeathComponent>() {
                 Vector3f()
             )
             buffer.addComponent(ref, Teleport.getComponentType(), teleport)
+            if (levelManager.currentLevel is Stage)
+                buffer.removeComponent(ref, DeathComponent.getComponentType())
         }
     }
 

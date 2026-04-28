@@ -1,0 +1,15 @@
+{
+  "Priority": 30,
+  "AudioCategory": "AudioCat_Music",
+  "Music": {
+    "Tracks": [
+      "Music/Quick_Amb.ogg"
+    ],
+    "Volume": 4
+  },
+  "Conditions": {
+    "EnvironmentIds": [
+      "QuickAmb"
+    ]
+  }
+}

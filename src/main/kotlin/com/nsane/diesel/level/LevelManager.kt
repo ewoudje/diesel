@@ -8,6 +8,7 @@ import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.flying.AirSimulator
 import com.nsane.diesel.flying.stage.BossStage
 import com.nsane.diesel.flying.stage.DeathStarRace
+import com.nsane.diesel.flying.stage.EndStage
 import com.nsane.diesel.flying.stage.StartStage
 import com.nsane.diesel.flying.stage.WaveStage
 import io.github.hytalekt.kytale.codec.buildCodec
@@ -16,7 +17,6 @@ class LevelManager : Resource<EntityStore?> {
     private val defaultPoint = Vector3d(200.0, 200.0, 0.0)
     var oldLevel: Level? = null
     var currentLevel: Level? = null
-        private set
 
     var amountOfEnemies: Int = 0
 
@@ -26,27 +26,40 @@ class LevelManager : Resource<EntityStore?> {
         currentLevel = when (key) {
             "StartOfGame" -> LogicBasedLevel("StartOfGame",
                 "Get a job!",
-                defaultPoint,
+                Vector3d(556.0, 23.0, 94.0),
                 "enterOffice",
-                "InOffice"
+                "InOffice",
             )
             "InOffice" -> LogicBasedLevel("InOffice",
-                "Just listen",
-                defaultPoint,
-                "talkDone",
-                "ChaseInStreets"
+                "Walk up",
+                Vector3d(557.0, 33.0, 6.0),
+                "frontDesk",
+                "Briefing"
+            )
+            "Briefing" -> LogicBasedLevel("Briefing",
+                    "Just listen",
+                    Vector3d(557.0, 33.0, 6.0),
+                    "inOfficeDoor",
+                    "Parkour"
+            )
+            "Parkour" -> LogicBasedLevel("Parkour",
+                    "Jump!",
+                    Vector3d(550.0, 37.0, -10.0),
+                    "parkourDone",
+                    "ChaseInStreets"
             )
             "ChaseInStreets" -> LogicBasedLevel(
                 "ChaseInStreets",
-                "!get OUT!",
-                defaultPoint,
-                "endOfStreet",
-                "Shipyard"
+                "Get to the ship!",
+                Vector3d(456.0, 13.0, -80.0),
+                "atShip",
+                "AtShip"
             )
-            "Shipyard" -> AllDeadLevel(
+            "Shipyard" -> LogicBasedLevel(
                 "Shipyard",
-                "Kill the guys",
-                defaultPoint,
+                "Find 3 Levers",
+                Vector3d(432.0, 25.0, -13.0),
+                "launchAway",
                 "StartStage"
             )
             "StartStage" -> StartStage()
@@ -60,7 +73,6 @@ class LevelManager : Resource<EntityStore?> {
                 10f,
                 "Stage2"
             )
-
             "Stage2" -> WaveStage(
                 "Stage2",
                 "What are THOSE?",
@@ -69,55 +81,54 @@ class LevelManager : Resource<EntityStore?> {
                 0,
                 0,
                 10f,
-                "BossStage"
+                "Stage4"
             )
+            "Stage3" -> WaveStage(
+                "Stage3",
+                "What are THOSE???!!",
+                0,
+                1,
+                3,
+                0,
+                10f,
+                "EndStage"
+            )
+            "Stage4" -> WaveStage(
+                "Stage4",
+                "Oh fuu",
+                2,
+                3,
+                4,
+                0,
+                10f,
+                "EndStage"
+            )
+            "EndStage" -> EndStage()
             "DeathStarRace" -> DeathStarRace()
-            "EnterMech" -> AllDeadLevel(
-                "EnterMech",
-                "KILL the security!",
-                defaultPoint,
-                "BreakIn"
+            "Docks" -> LogicBasedLevel(
+                "Docks",
+                "Get into the offices",
+                Vector3d(983.0, 57.0, 30.0),
+                "openOffice",
+                "Offices"
             )
-            "BreakIn" -> LogicBasedLevel(
-                "BreakIn",
-                "Go deeper",
-                defaultPoint,
-                "readyToBreakIn",
-                "BrokeIn"
+            "Offices" -> LogicBasedLevel(
+                "Offices",
+                "KILL THEM",
+                Vector3d(1047.0, 63.0, 32.0),
+                "todo",
+                "TopLevel"
             )
-            "BrokeIn" -> LogicBasedLevel(
-                "BrokeIn",
-                "Find the keycard",
-                defaultPoint,
-                "unlockedDoor",
-                "UnlockedDoor"
+            "TopLevel" -> Level(
+                "TopLevel",
+                "End THE BIG BOSS",
+                Vector3d(1063.0, 85.0, 86.0)
             )
-            "UnlockedDoor" -> LogicBasedLevel(
-                "UnlockedDoor",
-                "Get back to the door",
-                defaultPoint,
-                "enterKGB",
-                "KGB"
-            )
-            "KGB" -> AllDeadLevel(
-                "KGB",
-                "Kill the feds",
-                defaultPoint,
-                "FinalStretch"
-            )
-            "FinalStretch" -> LogicBasedLevel(
-                "FinalStretch",
-                "Go kill Big Boss",
-                defaultPoint,
-                "intoBossRoom",
-                "BossFight"
-            )
-            "BossFight" -> Level(
+            else -> Level(
                 key,
-                "FIGHT TO DEATH",
+                "No clue.. kill feds?",
                 defaultPoint
             )
-            else -> Level(key, "No clue.. go kill some feds?", defaultPoint)
         }
     }
 
