@@ -1,10 +1,10 @@
 {
-  "Priority": 80,
+  "Priority": 50,
   "AudioCategory": "AudioCat_Music",
   "Music": {
     "Tracks": [
-      "Music/Sky_Combat.ogg"
+      "Music/Briefing_Drums_Only.ogg"
     ],
-    "Volume": 10
+    "Volume": 7
   }
 }

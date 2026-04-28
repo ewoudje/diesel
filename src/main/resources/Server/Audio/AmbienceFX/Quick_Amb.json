@@ -1,10 +1,10 @@
 {
-  "Priority": 80,
+  "Priority": 30,
   "AudioCategory": "AudioCat_Music",
   "Music": {
     "Tracks": [
-      "Music/Sky_Combat.ogg"
+      "Music/Quick_Amb.ogg"
     ],
-    "Volume": 10
+    "Volume": 4
   }
 }

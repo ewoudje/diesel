@@ -67,7 +67,7 @@ object LogicComponentTracker: RefSystem<ChunkStore?>() {
 
         val ref = getRef(id) ?: return null
 
-        return find(ref, buffer).find { it.id == id }
+        return find(ref, ref.store).find { it.id == id }
     }
 
     fun getRef(id: String): Ref<ChunkStore?>? = refs[id]

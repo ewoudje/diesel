@@ -25,32 +25,47 @@ class LevelManager : Resource<EntityStore?> {
         currentLevel = when (key) {
             "StartOfGame" -> LogicBasedLevel("StartOfGame",
                 "Get a job!",
-                defaultPoint,
-                "Mus_Fallback_Overground",
+                Vector3d(556.0, 23.0, 94.0),
+                "Briefing_Drums_Only",
                 "enterOffice",
                 "InOffice",
             )
             "InOffice" -> LogicBasedLevel("InOffice",
-                "Just listen",
-                defaultPoint,
-                "Mus_Fallback_Overground",
-                "talkDone",
-                "ChaseInStreets"
+                "Walk up",
+                Vector3d(557.0, 33.0, 6.0),
+                "Briefing_Drums_Only",
+                "frontDesk",
+                "Briefing"
+            )
+            "Briefing" -> LogicBasedLevel("Briefing",
+                    "Just listen",
+                    Vector3d(557.0, 33.0, 6.0),
+                    "Briefing",
+                    "inOfficeDoor",
+                    "Parkour"
+            )
+            "Parkour" -> LogicBasedLevel("Parkour",
+                    "Jump!",
+                    Vector3d(550.0, 37.0, -10.0),
+                    "Quick_Amb",
+                    "parkourDone",
+                    "ChaseInStreets"
             )
             "ChaseInStreets" -> LogicBasedLevel(
                 "ChaseInStreets",
-                "!get OUT!",
-                defaultPoint,
-                "Mus_Fallback_Overground",
-                "endOfStreet",
-                "Shipyard"
+                "Get to the ship!",
+                Vector3d(456.0, 13.0, -80.0),
+                "Ground_Combat1",
+                "atShip",
+                "AtShip"
             )
-            "Shipyard" -> AllDeadLevel(
+            "Shipyard" -> LogicBasedLevel(
                 "Shipyard",
-                "Kill the guys",
-                defaultPoint,
-                "Mus_Fallback_Overground",
-                "StartStage"
+                "Find 3 Levers",
+                Vector3d(432.0, 25.0, -13.0),
+                "Ground_Combat2",
+                "launchAway",
+                "StartOfGame"
             )
             "StartStage" -> StartStage()
             "Stage1" -> WaveStage(
