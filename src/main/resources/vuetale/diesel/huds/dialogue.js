@@ -1,4 +1,4 @@
-import { randomInt as w } from "./util.js";
+import { randomInt as b } from "./util.js";
 const i = {
   partner: {
     portraits: 3,
@@ -73,12 +73,12 @@ const i = {
     voice: "Bfrenchcalm"
   }
 };
-function m({ text: t, displayTextRef: o, displayPortraitRef: l, speed: u, actor: a, chainObj: e, chainIndex: r, chainDelay: d, playSoundRef: c, setLogicRef: v, chainName: p }) {
+function m({ text: a, displayTextRef: o, displayPortraitRef: l, speed: u, actor: t, chainObj: e, chainIndex: r, chainDelay: d, playSoundRef: c, setLogicRef: v, chainName: p }) {
   o.value = "";
-  let f = t.replace(/"/g, "").split(" "), s = 0;
+  let f = a.replace(/"/g, "").split(" "), s = 0;
   y(f, o);
   function y(n, h) {
-    s < n.length ? (i[a].voice != "None" && (s + i[a].interval || 2) % (i[a].interval || 2) == 0 && c.value(i[a].voice), h.value = `${h.value} ${n[s]}`, l.value = g(a), s++, setTimeout(() => {
+    s < n.length ? (i[t].voice != "None" && (s + i[t].interval || 2) % (i[t].interval || 2) == 0 && c.value(i[t].voice), h.value = `${h.value} ${n[s]}`, l.value = g(t), s++, setTimeout(() => {
       y(n, h);
     }, 100)) : (r++, r < e.length ? setTimeout(() => {
       m({
@@ -104,14 +104,14 @@ function m({ text: t, displayTextRef: o, displayPortraitRef: l, speed: u, actor:
     }, d));
   }
   function g(n) {
-    return `Img/portrait/${i[n].portrait}${w(1, i[n].portraits)}.png`;
+    return `Img/portrait/${i[n].portrait}${b(1, i[n].portraits)}.png`;
   }
 }
-function k(t, o, l, u, a) {
+function k(a, o, l, u, t) {
   let e;
-  if (e = b[t], e) {
+  if (e = w[a], e) {
     let r = 0;
-    console.log(`[DIESELHUD] Starting chain ${t}`), m({
+    console.log(`[DIESELHUD] Starting chain ${a}`), m({
       actor: e[r][0],
       text: e[r][1],
       speed: e[r][2],
@@ -121,13 +121,13 @@ function k(t, o, l, u, a) {
       displayPortraitRef: l,
       displayTextRef: o,
       playSoundRef: u,
-      setLogicRef: a,
-      chainName: t
+      setLogicRef: t,
+      chainName: a
     });
   } else
-    console.log(`bad chain not real ${t}`);
+    console.log(`bad chain not real ${a}`);
 }
-const b = {
+const w = {
   //BRIEFING
   "level.Briefing": [
     ["partner", "ah, wonderful, you've arrived", 100, 1200],
@@ -230,28 +230,22 @@ const b = {
     ["fredcalm", "yeah of course", 100, 1e3]
   ],
   //not necessarily in order up to you
-  /*'level.stage1':[
-      ["evilduce","the gyros aren't enough...",300,1000],
-      ["evilduce","allocate the aeroplanes!!!!!",200,1000],
-      ["fred","FOR THE BOARD! FOR WALLONIë! FOR PROFIT!",100,1000],
-      ["boxin","i wanna a gyro im hungey",100,1000]
+  "level.stage2": [
+    ["evilduce", "the gyros aren't enough...", 300, 1e3],
+    ["evilduce", "allocate the aeroplanes!!!!!", 200, 1e3],
+    ["fred", "FOR THE BOARD! FOR WALLONIë! FOR PROFIT!", 100, 1e3],
+    ["boxin", "i wanna a gyro im hungey", 100, 1e3]
   ],
-  'level.stage2':[
-      ["partner","i have to admire the coordination",100,1000],
-      ["partner","i was the one who funded their development, after all",100,1000],
-      ["partner","you know, i wonder if they ever got the",100,100],
-      ["evilduce","DEPLOY THE BOARDING PARTIES",100,1000]
+  "level.stage4": [
+    ["partner", "you're approaching the parliament, but our original plan...", 100, 2e3],
+    ["partner", "well, obviously, it is a little different now", 100, 1500],
+    ["partner", "in lieu of stealth", 100, 1e3],
+    ["partner", "we will be moving very quickly down the aerobahn", 100, 1e3],
+    ["partner", "strictly speaking, it belongs to the baltic concern", 100, 2e3],
+    ["partner", "the mercenary corps cannot blockade it fully", 100, 1e3],
+    ["partner", "only a little bit (the regulations are complicated)", 100, 1200],
+    ["partner", "so! fend them off long enough to reach headquarters", 100, 1e3]
   ],
-  'level.stage3':[
-      ["partner","you're approaching the parliament, but our original plan...",100,2000],
-      ["partner","well, obviously, it is a little different now",100,1500],
-      ["partner","in lieu of stealth",100,1000],
-      ["partner","we will be moving very quickly down the aerobahn",100,1000],
-      ["partner","strictly speaking, it belongs to the baltic concern",100,2000],
-      ["partner","the mercenary corps cannot blockade it fully",100,1000],
-      ["partner","only a little bit (the regulations are complicated)",100,1200],
-      ["partner","so! fend them off long enough to reach headquarters",100,1000],
-  ],*/
   //flying boss
   aerobahn: [
     ["avrocar", "welcome to the aerobahn!", 100, 1e3],
@@ -317,7 +311,7 @@ const b = {
     ["partner", "i suppose he is not wholly devoid of taste after all..."]
   ],
   //boss
-  "level.BossFight": [
+  "level.TopLevel": [
     ["evilduce", "AHA! NOW YOU WILL FACE ME!", 200, 2e3],
     ["ilduce", "What? they're not even with you?", 200, 1e3],
     ["partner", "it would be supremely stupid if i were", 100, 1e3],
@@ -329,6 +323,7 @@ const b = {
     ["partner", "he is no threat any longer", 100, 1200],
     ["nilduce", "i do not get a big fight?", 100, 1200],
     ["partner", "no. also we do not have the budget for that", 100, 2e3],
+    ["partner", "but maybe in the future...", 100, 1e3],
     ["partner", "the money will be in your bank accounts soon, my friends...", 100, 1e3],
     ["partner", "relax and imagine mansions", 100, 1e3],
     ["boxin", "i love that song", 100, 1e3]
@@ -362,4 +357,4 @@ export {
   k as playChain,
   m as playDialogue
 };
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGlhbG9ndWUuanMiLCJzb3VyY2VzIjpbXSwic291cmNlc0NvbnRlbnQiOltdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7In0=
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGlhbG9ndWUuanMiLCJzb3VyY2VzIjpbXSwic291cmNlc0NvbnRlbnQiOltdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OyJ9
