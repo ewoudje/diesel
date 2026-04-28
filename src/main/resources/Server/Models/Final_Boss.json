@@ -1,0 +1,70 @@
+{
+  "Model": "NPC/Diesel/Models/Character/Final_Boss.blockymodel",
+  "Texture": "NPC/Diesel/Models/Character/Final_Boss.png",
+  "EyeHeight": 0.6,
+  "CrouchOffset": -0.4,
+  "HitBox": {
+    "Max": {
+      "X": 1.5,
+      "Y": 3,
+      "Z": 1.5
+    },
+    "Min": {
+      "X": -1.5,
+      "Y": 0,
+      "Z": -1.5
+    }
+  },
+  "DefaultAttachments": [
+  ],
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Characters/Diesel/Animations/Boss/Idle.blockyanim",
+          "Speed": 1
+        }
+      ]
+    },
+    "Influence_Arena": {
+      "Animations": [
+        {
+          "Animation": "Characters/Diesel/Animations/Boss/Influence_Arena.blockyanim",
+          "Speed": 1
+        }
+      ]
+    },
+    "Laser_Charge": {
+      "Animations": [
+        {
+          "Animation": "Characters/Diesel/Animations/Boss/Laser_Charge.blockyanim",
+          "Speed": 1
+        }
+      ]
+    },
+    "Laser_Fire": {
+      "Animations": [
+        {
+          "Animation": "Characters/Diesel/Animations/Boss/Laser_Fire.blockyanim",
+          "Speed": 1
+        }
+      ]
+    },
+    "Laser_Fire_Continuous": {
+      "Animations": [
+        {
+          "Animation": "Characters/Diesel/Animations/Boss/Laser_Fire_Continuous.blockyanim",
+          "Speed": 1
+        }
+      ]
+    },
+    "Melee": {
+      "Animations": [
+        {
+          "Animation": "Characters/Diesel/Animations/Boss/Laser_Fire_Continuous.blockyanim",
+          "Speed": 1
+        }
+      ]
+    }
+  }
+}

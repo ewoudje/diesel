@@ -62,7 +62,7 @@ const K = { anchor: { Left: 0, Top: 0 } }, J = ["background", "value"], X = { an
       BossFight: "#282623"
     };
     const D = d(null), e = b(() => {
-      let u = D.value ?? (H.length ? S[H.value] : S.StartOfGame);
+      let u = D.value ?? (H.value.length ? S[H.value] : S.StartOfGame);
       return {
         base: u,
         light: m(u, 200),

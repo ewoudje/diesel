@@ -78,7 +78,7 @@ let levelColors = {
 const modifiedBaseColor = ref<String | null>(null)
 const colors = computed(()=>{
     //@ts-ignore
-    let startcolor = modifiedBaseColor.value ?? ((currentLevel.length) ? levelColors[currentLevel.value] : levelColors.StartOfGame);
+    let startcolor = modifiedBaseColor.value ?? ((currentLevel.value.length) ? levelColors[currentLevel.value] : levelColors.StartOfGame);
     return {
         base: startcolor,
         light: LightenDarkenColor(startcolor,200),

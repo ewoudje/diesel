@@ -1,0 +1,68 @@
+{
+  "Type": "Generic",
+  "Appearance": "Final_Boss",
+  "MaxHealth": 20000,
+  "StartState": "IdlePhase1",
+  "MotionControllerList": [
+    {
+      "Type": "Fly",
+      "Acceleration": 10,
+      "FloatsDown": true,
+      "Gravity": 1,
+      "MaxFallSpeed": 1,
+      "MaxHorizontalSpeed": 8,
+      "MaxHover": 5,
+      "MaxWalkSpeed": 3.1,
+      "MinHover": 3,
+      "RunThreshold": 0.7
+    }
+  ],
+  "Instructions": [
+    {
+      "Sensor": {
+        "Type": "State",
+        "State": "IdlePhase1"
+      },
+      "Instructions": [
+        {
+          "Sensor": {
+            "Type": "Player",
+            "Range": 8,
+            "Filters": [ ]
+          },
+          "HeadMotion": {
+            "Type": "Watch"
+          }
+        },
+        {
+          "Actions": [
+            {
+              "Type": "PlayAnimation",
+              "Animation": "Laser_Fire",
+              "Slot": "Face"
+            },
+            {
+              "Type": "Timeout",
+              "Delay": [ 1, 1 ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Sensor": {
+        "Type": "State",
+        "IgnoreMissingSetState": true,
+        "State": "IdlePhase2"
+      }
+    },
+    {
+      "Sensor": {
+        "Type": "State",
+        "IgnoreMissingSetState": true,
+        "State": "IdlePhase3"
+      }
+    }
+  ],
+  "NameTranslationKey": "server.npcRoles.Final_Boss.name"
+}
