@@ -1,8 +1,69 @@
 {
   "Type": "Generic",
   "Appearance": "Final_Boss",
+  "Invulnerable": false,
   "MaxHealth": 20000,
-  "StartState": "IdlePhase1",
+  "NameTranslationKey": "server.npcRoles.Final_Boss.name",
+  "StartState": "OpenMonologue",
+  "Instructions": [
+    {
+      "$Comment": "get in range, he triggers his monologue, you wait for it to end, then he moves on to the start of the fight. he should start invulnerable (how?)",
+      "Sensor": {
+        "Type": "State",
+        "State": "OpenMonologue"
+      },
+      "Instructions": [
+        {
+          "Actions": [
+            {
+              "Type": "ApplyEntityEffect",
+              "EntityEffect": "Boss_Invulnerability"
+            }
+          ]
+        },
+        {
+          "Sensor": {
+            "Type": "Player",
+            "Range": 100,
+            "Filters": [
+              {
+                "Type": "LineOfSight"
+              }
+            ]
+          },
+          "Actions": [
+            {
+              "Type": "PlayAnimation",
+              "Animation": "Influence_Arena",
+              "Once": true,
+              "Slot": "Face"
+            },
+            {
+              "Type": "State",
+              "State": "BossFighting"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$Comment": "retreat. at this point we take stock of health to pursue a course of action (phase 1, 2, 3)",
+      "Sensor": {
+        "Type": "State",
+        "State": "BossFighting"
+      },
+      "BodyMotion": {
+        "Type": "Path",
+        "Shape": "LOOP"
+      },
+      "Actions": [
+        {
+          "Type": "State",
+          "State": "Idle"
+        }
+      ]
+    }
+  ],
   "MotionControllerList": [
     {
       "Type": "Fly",
@@ -16,53 +77,5 @@
       "MinHover": 3,
       "RunThreshold": 0.7
     }
-  ],
-  "Instructions": [
-    {
-      "Sensor": {
-        "Type": "State",
-        "State": "IdlePhase1"
-      },
-      "Instructions": [
-        {
-          "Sensor": {
-            "Type": "Player",
-            "Range": 8,
-            "Filters": [ ]
-          },
-          "HeadMotion": {
-            "Type": "Watch"
-          }
-        },
-        {
-          "Actions": [
-            {
-              "Type": "PlayAnimation",
-              "Animation": "Laser_Fire",
-              "Slot": "Face"
-            },
-            {
-              "Type": "Timeout",
-              "Delay": [ 1, 1 ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "Sensor": {
-        "Type": "State",
-        "IgnoreMissingSetState": true,
-        "State": "IdlePhase2"
-      }
-    },
-    {
-      "Sensor": {
-        "Type": "State",
-        "IgnoreMissingSetState": true,
-        "State": "IdlePhase3"
-      }
-    }
-  ],
-  "NameTranslationKey": "server.npcRoles.Final_Boss.name"
+  ]
 }
