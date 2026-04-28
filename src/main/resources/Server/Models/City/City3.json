@@ -1,5 +1,5 @@
 {
-  "Model": "NPC/Diesel/Models/Environment/City3.blockymodel",
+  "Model": "NPC/Diesel/Models/Environment/city3.blockymodel",
   "Texture": "NPC/Diesel/Models/Environment/texture.png",
   "HitBox": {
     "Max": {
