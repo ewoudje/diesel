@@ -5,16 +5,16 @@ class e {
   iconPath;
 }
 class n {
-  constructor(t, a, i, o = "default", r = "bullets") {
-    this.name = t, this.maxAmmo = a, this.abilities = i, this.reticleName = o, this.iconName = r, this.previewPath = `Img/item/${t}.png`, this.reticle = `Img/reticle/${o}.png`, this.iconPath = `Img/icon/${r}.png`;
+  constructor(t, a, i, o = "default", h = "bullets") {
+    this.name = t, this.maxAmmo = a, this.abilities = i, this.reticleName = o, this.iconName = h, this.previewPath = `Img/item/${t}.png`, this.reticle = `Img/reticle/${o}.png`, this.iconPath = `Img/icon/${h}.png`;
   }
   previewPath;
   reticle;
   iconPath;
 }
 class s {
-  constructor(t, a = "default", i, o, r = "#FB0004") {
-    this.name = t, this.voiceName = a, this.maxDashes = i, this.hotbar = o, this.baseColor = r, this.healthPath = `Img/health/${t}.png`;
+  constructor(t, a = "default", i, o, h = "#FB0004") {
+    this.name = t, this.voiceName = a, this.maxDashes = i, this.hotbar = o, this.baseColor = h, this.healthPath = `Img/health/${t}.png`;
   }
   healthPath;
 }
@@ -62,7 +62,7 @@ function c() {
       void 0,
       0,
       [
-        new n("antiair", 120, [new e("chaff", "Secondary"), new e("flak", "Ability1")])
+        new n("jczlk", 120, [new e("chaff", "Secondary"), new e("flak", "Ability1")])
       ]
     )
   };

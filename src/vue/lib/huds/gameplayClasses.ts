@@ -75,7 +75,7 @@ function getPlayerClasses(){
         turret: new playerClass('turret',
             undefined,
             0,[
-            new hotbarEntry('antiair',120,[new abilityEntry('chaff','Secondary'),new abilityEntry('flak','Ability1')]),
+            new hotbarEntry('jczlk',120,[new abilityEntry('chaff','Secondary'),new abilityEntry('flak','Ability1')]),
         ])
     }
 }

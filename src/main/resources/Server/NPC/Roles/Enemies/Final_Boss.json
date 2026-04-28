@@ -1,0 +1,81 @@
+{
+  "Type": "Generic",
+  "Appearance": "Final_Boss",
+  "Invulnerable": false,
+  "MaxHealth": 20000,
+  "NameTranslationKey": "server.npcRoles.Final_Boss.name",
+  "StartState": "OpenMonologue",
+  "Instructions": [
+    {
+      "$Comment": "get in range, he triggers his monologue, you wait for it to end, then he moves on to the start of the fight. he should start invulnerable (how?)",
+      "Sensor": {
+        "Type": "State",
+        "State": "OpenMonologue"
+      },
+      "Instructions": [
+        {
+          "Actions": [
+            {
+              "Type": "ApplyEntityEffect",
+              "EntityEffect": "Boss_Invulnerability"
+            }
+          ]
+        },
+        {
+          "Sensor": {
+            "Type": "Player",
+            "Range": 100,
+            "Filters": [
+              {
+                "Type": "LineOfSight"
+              }
+            ]
+          },
+          "Actions": [
+            {
+              "Type": "PlayAnimation",
+              "Animation": "Influence_Arena",
+              "Once": true,
+              "Slot": "Face"
+            },
+            {
+              "Type": "State",
+              "State": "BossFighting"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$Comment": "retreat. at this point we take stock of health to pursue a course of action (phase 1, 2, 3)",
+      "Sensor": {
+        "Type": "State",
+        "State": "BossFighting"
+      },
+      "BodyMotion": {
+        "Type": "Path",
+        "Shape": "LOOP"
+      },
+      "Actions": [
+        {
+          "Type": "State",
+          "State": "Idle"
+        }
+      ]
+    }
+  ],
+  "MotionControllerList": [
+    {
+      "Type": "Fly",
+      "Acceleration": 10,
+      "FloatsDown": true,
+      "Gravity": 1,
+      "MaxFallSpeed": 1,
+      "MaxHorizontalSpeed": 8,
+      "MaxHover": 5,
+      "MaxWalkSpeed": 3.1,
+      "MinHover": 3,
+      "RunThreshold": 0.7
+    }
+  ]
+}

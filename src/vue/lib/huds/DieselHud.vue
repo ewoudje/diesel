@@ -78,7 +78,7 @@ let levelColors = {
 const modifiedBaseColor = ref<String | null>(null)
 const colors = computed(()=>{
     //@ts-ignore
-    let startcolor = modifiedBaseColor.value ?? ((currentLevel.length) ? levelColors[currentLevel.value] : levelColors.StartOfGame);
+    let startcolor = modifiedBaseColor.value ?? ((currentLevel.value.length) ? levelColors[currentLevel.value] : levelColors.StartOfGame);
     return {
         base: startcolor,
         light: LightenDarkenColor(startcolor,200),
@@ -102,7 +102,7 @@ const colors = computed(()=>{
 
 //Dialogue
 const displayMessage = ref('')
-const displayPortrait = ref('Img/portrait/none.png')
+const displayPortrait = ref('Img/portrait/none1.png')
 watch(inputMessageChain,()=>{
     console.log("input message", inputMessageChain.value)
     playChain(inputMessageChain.value, displayMessage, displayPortrait, playSound, setLogic)

@@ -62,7 +62,7 @@ const K = { anchor: { Left: 0, Top: 0 } }, J = ["background", "value"], X = { an
       BossFight: "#282623"
     };
     const D = d(null), e = b(() => {
-      let u = D.value ?? (H.length ? S[H.value] : S.StartOfGame);
+      let u = D.value ?? (H.value.length ? S[H.value] : S.StartOfGame);
       return {
         base: u,
         light: m(u, 200),
@@ -71,7 +71,7 @@ const K = { anchor: { Left: 0, Top: 0 } }, J = ["background", "value"], X = { an
         brass: "#c98d1c",
         screen: "#282623"
       };
-    }), W = d(""), F = d("Img/portrait/none.png");
+    }), W = d(""), F = d("Img/portrait/none1.png");
     L(f, () => {
       console.log("input message", f.value), j(f.value, W, F, I, M);
     });
