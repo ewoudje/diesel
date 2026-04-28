@@ -83,9 +83,8 @@ const actors = {
 
 
 
-let inDialogue = false;
 //@ts-ignore
-let dialogueTimeout = null;
+//let dialogueTimeout = null;
 
 
 function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, chainObj, chainIndex, chainDelay, playSoundRef, setLogicRef, chainName }: {
@@ -102,11 +101,10 @@ function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, 
     chainName: String
 }){
     //@ts-ignore
-    if(dialogueTimeout){
+    /*if(dialogueTimeout){
         //@ts-ignore
         clearTimeout(dialogueTimeout)
-    }
-    inDialogue = true;
+    }*/
     displayTextRef.value = ''
     let splitText = text.replace(/"/g,'').split(' ');
         let i = 0;
@@ -119,7 +117,8 @@ function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, 
             destination.value = `${destination.value} ${text[i]}`
             displayPortraitRef.value = randomPortrait(actor);
             i++;
-            dialogueTimeout = setTimeout(()=>{printText(text,destination)},100);
+            //dialogueTimeout = 
+            setTimeout(()=>{printText(text,destination)},100);
         } else {
             //displayPortraitRef.value = 'Img/portrait/none1.png'
             chainIndex++

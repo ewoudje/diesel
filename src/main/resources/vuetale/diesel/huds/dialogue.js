@@ -1,4 +1,4 @@
-import { randomInt as b } from "./util.js";
+import { randomInt as w } from "./util.js";
 const i = {
   partner: {
     portraits: 3,
@@ -73,16 +73,15 @@ const i = {
     voice: "Bfrenchcalm"
   }
 };
-let h = null;
-function f({ text: a, displayTextRef: o, displayPortraitRef: l, speed: d, actor: t, chainObj: e, chainIndex: r, chainDelay: c, playSoundRef: v, setLogicRef: m, chainName: p }) {
-  h && clearTimeout(h), o.value = "";
-  let g = a.replace(/"/g, "").split(" "), s = 0;
-  y(g, o);
-  function y(n, u) {
-    s < n.length ? (i[t].voice != "None" && (s + i[t].interval || 2) % (i[t].interval || 2) == 0 && v.value(i[t].voice), u.value = `${u.value} ${n[s]}`, l.value = w(t), s++, h = setTimeout(() => {
-      y(n, u);
+function m({ text: t, displayTextRef: o, displayPortraitRef: l, speed: u, actor: a, chainObj: e, chainIndex: r, chainDelay: d, playSoundRef: c, setLogicRef: v, chainName: p }) {
+  o.value = "";
+  let f = t.replace(/"/g, "").split(" "), s = 0;
+  y(f, o);
+  function y(n, h) {
+    s < n.length ? (i[a].voice != "None" && (s + i[a].interval || 2) % (i[a].interval || 2) == 0 && c.value(i[a].voice), h.value = `${h.value} ${n[s]}`, l.value = g(a), s++, setTimeout(() => {
+      y(n, h);
     }, 100)) : (r++, r < e.length ? setTimeout(() => {
-      f({
+      m({
         //@ts-ignore //lol
         actor: e[r][0],
         //@ts-ignore //lmao
@@ -96,23 +95,23 @@ function f({ text: a, displayTextRef: o, displayPortraitRef: l, speed: d, actor:
         chainObj: e,
         displayPortraitRef: l,
         displayTextRef: o,
-        playSoundRef: v,
-        setLogicRef: m,
+        playSoundRef: c,
+        setLogicRef: v,
         chainName: p
       });
-    }, c) : setTimeout(() => {
-      console.log(`[DIESELHUD] Chain ${p} complete`), m.value(p, "Done"), console.log("portrait ref"), l.value = "Img/portrait/none1.png", o.value = "";
-    }, c));
+    }, d) : setTimeout(() => {
+      console.log(`[DIESELHUD] Chain ${p} complete`), v.value(p, "Done"), console.log("portrait ref"), l.value = "Img/portrait/none1.png", o.value = "";
+    }, d));
   }
-  function w(n) {
-    return `Img/portrait/${i[n].portrait}${b(1, i[n].portraits)}.png`;
+  function g(n) {
+    return `Img/portrait/${i[n].portrait}${w(1, i[n].portraits)}.png`;
   }
 }
-function A(a, o, l, d, t) {
+function k(t, o, l, u, a) {
   let e;
-  if (e = E[a], e) {
+  if (e = b[t], e) {
     let r = 0;
-    console.log(`[DIESELHUD] Starting chain ${a}`), f({
+    console.log(`[DIESELHUD] Starting chain ${t}`), m({
       actor: e[r][0],
       text: e[r][1],
       speed: e[r][2],
@@ -121,14 +120,14 @@ function A(a, o, l, d, t) {
       chainObj: e,
       displayPortraitRef: l,
       displayTextRef: o,
-      playSoundRef: d,
-      setLogicRef: t,
-      chainName: a
+      playSoundRef: u,
+      setLogicRef: a,
+      chainName: t
     });
   } else
-    console.log(`bad chain not real ${a}`);
+    console.log(`bad chain not real ${t}`);
 }
-const E = {
+const b = {
   //BRIEFING
   "level.Briefing": [
     ["partner", "ah, wonderful, you've arrived", 100, 1200],
@@ -360,7 +359,7 @@ const E = {
   ]
 };
 export {
-  A as playChain,
-  f as playDialogue
+  k as playChain,
+  m as playDialogue
 };
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGlhbG9ndWUuanMiLCJzb3VyY2VzIjpbXSwic291cmNlc0NvbnRlbnQiOltdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OyJ9
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGlhbG9ndWUuanMiLCJzb3VyY2VzIjpbXSwic291cmNlc0NvbnRlbnQiOltdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7In0=
