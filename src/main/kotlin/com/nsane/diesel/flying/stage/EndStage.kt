@@ -9,6 +9,7 @@ import com.nsane.diesel.flying.enviroment.SimpleEnvironment
 import com.nsane.diesel.flying.enviroment.FlyingEnvironment
 import com.nsane.diesel.level.LevelManager
 import com.nsane.diesel.logic.LogicComponentTracker
+import com.nsane.diesel.player.TurretComponent
 
 class EndStage : Stage("EndStage", "") {
     override val env: FlyingEnvironment = SimpleEnvironment(0)
@@ -17,6 +18,7 @@ class EndStage : Stage("EndStage", "") {
         val levelManager = store.getResource(LevelManager.TYPE)
         levelManager.enter("Docks")
         store.externalData.world.playerRefs.forEach {
+            store.tryRemoveComponent(it.reference!!, TurretComponent.TYPE)
             store.addComponent(
                 it.reference!!,
                 Teleport.getComponentType(),

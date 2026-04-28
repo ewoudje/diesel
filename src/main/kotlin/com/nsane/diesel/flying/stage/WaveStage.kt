@@ -24,6 +24,7 @@ open class WaveStage(
     delay: Float,
     val nextLevel: String,
 ): Stage(name, objective) {
+    var lifetime = 60f * 5f
     override val objective = if (isWaveDead()) "We are safe for now.." else super.objective
     override val env: FlyingEnvironment = SimpleEnvironment(50)
     private var delay = delay
@@ -51,8 +52,9 @@ open class WaveStage(
 
     override fun tickStage(store: ComponentAccessor<EntityStore?>, sim: AirSimulator, dt: Float) {
         super.tickStage(store, sim, dt)
+        lifetime -= dt
         val levelManager = store.getResource(LevelManager.TYPE)
-        if (isWaveDead()) {
+        if (isWaveDead() || lifetime <= 0) {
             delay -= dt
             if (delay <= 0)
                 levelManager.enter(nextLevel)

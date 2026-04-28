@@ -63,7 +63,9 @@ object LogicComponentTracker: RefSystem<ChunkStore?>() {
 
     fun getComponentWithId(buffer: ComponentAccessor<ChunkStore?>, id: String): LogicComponent<*>? {
         if (id.isEmpty()) return null
-        custom.get(id)?.let { return it(buffer) }
+        synchronized(custom) {
+            custom.get(id)?.let { return it(buffer) }
+        }
 
         val ref = getRef(id) ?: return null
 
@@ -82,22 +84,21 @@ object LogicComponentTracker: RefSystem<ChunkStore?>() {
     }
 
     fun addCustom(key: String, value: String) {
-        val o = object : LogicComponent<ChunkStore?> {
-            override val id: String
-                get() = key
+        synchronized(custom) {
+            custom[key] = { object : LogicComponent<ChunkStore?> {
+                override val id: String = key
 
-            override fun getAsBoolean(): Boolean = true
-            override fun getAsString(): String = value
-            override fun getAsDouble(): Double = 0.0
-            override fun logicUI(
-                playerRef: PlayerRef,
-                selfRef: Ref<ChunkStore?>
-            ): CustomUIPage = throw UnsupportedOperationException()
+                override fun getAsBoolean(): Boolean = true
+                override fun getAsString(): String = value
+                override fun getAsDouble(): Double = 0.0
+                override fun logicUI(
+                    playerRef: PlayerRef,
+                    selfRef: Ref<ChunkStore?>
+                ): CustomUIPage = throw UnsupportedOperationException()
 
-            override fun clone(): Component<ChunkStore?>? = null
-
+                override fun clone(): Component<ChunkStore?>? = null
+            } }
         }
-        custom[key] = { o }
     }
 
     init {

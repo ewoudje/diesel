@@ -96,8 +96,8 @@ class LevelManager : Resource<EntityStore?> {
             "Stage4" -> WaveStage(
                 "Stage4",
                 "Oh fuu",
+                2,
                 3,
-                5,
                 4,
                 0,
                 10f,
@@ -112,10 +112,11 @@ class LevelManager : Resource<EntityStore?> {
                 "openOffice",
                 "Offices"
             )
-            "Offices" -> AllDeadLevel(
+            "Offices" -> LogicBasedLevel(
                 "Offices",
                 "KILL THEM",
                 Vector3d(1047.0, 63.0, 32.0),
+                "todo",
                 "TopLevel"
             )
             "TopLevel" -> Level(

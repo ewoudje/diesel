@@ -22,7 +22,13 @@ class AllDeadLevel(
     respawnPoint: Vector3d,
     val nextLevel: String
 ): Level(name, objective, respawnPoint) {
+    private var initial = 0f
     override fun tick(store: ComponentAccessor<EntityStore?>, dt: Float) {
+        if (initial < 1f) {
+            initial += dt
+            return
+        }
+
         val levelManager = store.getResource(LevelManager.TYPE)
         if (levelManager.amountOfEnemies <= 0)
             levelManager.enter(nextLevel)

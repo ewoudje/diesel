@@ -185,6 +185,7 @@ public class DieselPlugin extends JavaPlugin {
         getEntityStoreRegistry().registerSystem(LevelSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(LevelSystem.RemoveLevelEntities.INSTANCE);
         getEntityStoreRegistry().registerSystem(LevelSystem.TrackLevelEntities.INSTANCE);
+        getEntityStoreRegistry().registerSystem(LevelSystem.TrackPartOfLevel.INSTANCE);
         getEntityStoreRegistry().registerSystem(PlayerReviveSystem.INSTANCE);
         getEntityStoreRegistry().registerSystem(DeathMessageSystem.INSTANCE);
 

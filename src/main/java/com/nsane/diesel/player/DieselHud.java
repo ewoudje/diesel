@@ -69,8 +69,7 @@ public class DieselHud {
                 sounds.add(SoundEvent.getAssetMap().getIndex(s));
             }
         });
-        ui.setHudData("setLogic", (BiConsumer<String, String>) (key, value) ->
-                world.execute(() -> LogicComponentTracker.INSTANCE.addCustom(key, value)));
+        ui.setHudData("setLogic", (BiConsumer<String, String>) LogicComponentTracker.INSTANCE::addCustom);
     }
 
     public void onTick(@NotNull CommandBuffer<EntityStore> commands, Ref<EntityStore> ref, float dt) {
