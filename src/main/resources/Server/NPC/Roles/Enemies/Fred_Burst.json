@@ -14,11 +14,6 @@
       "Value": false,
       "Description": "Whether or not this NPC will patrol during its waking hours, either alone or as part of a group."
     },
-    "FlockArray": {
-      "Value": [ "\"Fred\"", "\"Fred_Spread\"", "\"Fred_Burst\"" ],
-      "TypeHint": "String",
-      "Description": "Array containing NPCs for this flock type."
-    },
     "ApplySeparation": {
       "Value": false,
       "Description": "When set to false, NPCs wont try to avoid each other or player, it can lead to them stacking together, but can help to avoid jerky-like movemenet in enclosed space."
@@ -29,12 +24,12 @@
     }
   },
   "Modify": {
-    "MaxHealth": 120,
+    "MaxHealth": 250,
     "HearingRange": 25,
     "ViewSector": 270,
     "WakingPeriod": [ 0, 24 ],
     "DropList": "",
-    "Appearance": "Fred",
+    "Appearance": "Fred_Red",
     "Weapons": [ "Shotgun_Scout" ],
     "FlockArray": { "Compute": "FlockArray" },
     "FollowPatrolPath": { "Compute": "FollowPatrolPath" },
@@ -42,13 +37,13 @@
     "WanderRadius": { "Compute": "WanderRadius" },
     "Attack": "Root_NPC_Fireburst",
     "CombatBackOffAfterAttack": true,
-    "AttackDistance": 50,
+    "AttackDistance": 100,
     "CombatStrafeWeight": 3,
     "CombatFleeIfTooCloseDistance": 1.5,
-    "CombatBackOffDistanceRange": [ 5, 8 ],
-    "DesiredAttackDistanceRange": [ 5, 40 ],
-    "CombatBehaviorDistance": 100,
-    "TargetRange": 15,
+    "CombatBackOffDistanceRange": [ 5, 20 ],
+    "DesiredAttackDistanceRange": [ 50, 70 ],
+    "CombatBehaviorDistance": 200,
+    "TargetRange": 30,
     "LeashMinPlayerDistance": 18,
     "ApplySeparation": { "Compute": "ApplySeparation" },
     "IsMemory": false,
