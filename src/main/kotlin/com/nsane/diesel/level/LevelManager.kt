@@ -60,7 +60,7 @@ class LevelManager : Resource<EntityStore?> {
                 "Find 3 Levers",
                 Vector3d(432.0, 25.0, -13.0),
                 "launchAway",
-                "Docks"
+                "StartStage"
             )
             "StartStage" -> StartStage()
             "Stage1" -> WaveStage(

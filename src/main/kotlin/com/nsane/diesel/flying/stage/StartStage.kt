@@ -16,7 +16,7 @@ class StartStage : Stage("StartStage", "We on our way") {
     override fun tickStage(store: ComponentAccessor<EntityStore?>, sim: AirSimulator, dt: Float) {
         super.tickStage(store, sim, dt)
 
-        val logic = LogicComponentTracker.getComponentWithId(store.externalData.world.chunkStore.store, "chain.level.StartStage")
+        val logic = LogicComponentTracker.getComponentWithId(store.externalData.world.chunkStore.store, "level.StartStage")
         store.externalData.world.execute {
             if (logic?.getAsBoolean() ?: false) {
                 val levelManager = store.getResource(LevelManager.TYPE)
