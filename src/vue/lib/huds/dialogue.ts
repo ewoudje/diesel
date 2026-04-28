@@ -223,10 +223,7 @@ const chains = {
         ["partner","and ensure you do not forget...",100,1000],
         ["partner","who has your self-destruct keys.",100,1000],
         ["partner","you may exit the way you came in.",100,1000],
-        ["partnercalm","good luck, my friends.",100,1000]
-    ],
-    //OH FUCK
-    'dukat':[
+        ["partnercalm","good luck, my friends.",100,10000],
         ["evilduce","Attention, Wallonian workers.",100,1000],
         ["evilduce","It has come to my attention that a handful of layabouts have...",100,1500],
         ["evilduce","...undertaken an unfortunate exercise.",500,1000],
@@ -263,7 +260,7 @@ const chains = {
         ["partner","good, you've made it",100,1000],
         ["partner","your route to the shipyard will be, ah",100,1500],
         ["partner","...a dollop of circuitousness",100,1000],
-        ["partner","is advantageous to the cognition"],
+        ["partner","is advantageous to the cognition",100,1000],
         ["partnercalm","terrible for user retention, though",100,1000],
         ["partner","ah, i distract myself",100,1000],
         ["partner","best be moving if you wish to stay ahead of the subcontractor corps",100,1000]
@@ -312,7 +309,7 @@ const chains = {
         ["evilduce","DEPLOY THE BOARDING PARTIES",100,1000]
     ],
     'wave3':[
-        ["partner","you're approaching headquarters, but our original plan...",100,2000],
+        ["partner","you're approaching the parliament, but our original plan...",100,2000],
         ["partner","well, obviously, it is a little different now",100,1500],
         ["partner","in lieu of stealth",100,1000],
         ["partner","we will be moving very quickly down the aerobahn",100,1000],
@@ -373,6 +370,37 @@ const chains = {
         ["evilduce","HAHA YES",100,1000],
         ["evilduce","DISPOSE OF THEM",100,1000]
     ],
+    'offices1':[
+        ["partner","ahh... i remember being a middle manager",100,1000],
+        ["partner","ha ha ha ha",100,1000],
+        ["partner","broke away from the balkan corporation with big dreams",100,1000],
+        ["evilduce","FOOLISH",100,1500],
+        ["evilduce","WE ALL DID THAT",100,1000]
+    ],
+    'offices2':[
+        ["partner","you are nearing the chairman",100,1000],
+        ["partner","he left this part of the building intact",100,1000],
+        ["partner","i suppose he is not wholly devoid of taste after all..."]
+    ],
+    //boss
+    'level.BossFight':[
+        ["evilduce","AHA! NOW YOU WILL FACE ME!",200,2000],
+        ["ilduce","What? they're not even with you?",200,1000],
+        ["partner","it would be supremely stupid if i were",100,1000],
+        ["nilduce","oh",100,2000],
+        ["nilduce","i expected hand-to-hand combat",100,1000],
+        ["nilduce","do you mind if i at least fetch my revolver",100,1000],
+        ["partner","remove him if you like",100,1000],
+        ["partner","the corps have already seen the way the wind blows",100,1200],
+        ["partner","he is no threat any longer",100,1200],
+        ["nilduce","i do not get a big fight?",100,1200],
+        ["partner","no. also we do not have the budget for that",100,2000],
+        ["partner","the money will be in your bank accounts soon, my friends...",100,1000],
+        ["partner","relax and imagine mansions",100,1000],
+        ["boxin","i love that song",100,1000],
+    ],
+
+    //test stuff mostly
     boxin1: [
         ["boxin","I HATE YOU!!!",100,500],
     ],
