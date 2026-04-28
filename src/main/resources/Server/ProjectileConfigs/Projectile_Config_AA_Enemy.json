@@ -1,0 +1,29 @@
+{
+  "Model": "Projectile_AA_Asset",
+  "LaunchLocalSoundEventId": "SFX_Rifle_Fire_Local",
+  "LaunchWorldSoundEventId": "SFX_Rifle_Fire",
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 0,
+    "TerminalVelocityAir": 50,
+    "TerminalVelocityWater": 15,
+    "RotationMode": "VelocityDamped",
+    "Bounciness": 0.0,
+    "SticksVertically": true,
+    "SwimmingDampingFactor": 0
+  },
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        "Common_Projectile_Despawn"
+      ]
+    },
+    "ProjectileMiss": {
+      "Interactions": [
+        "Common_Projectile_Despawn"
+      ]
+    }
+  },
+
+  "LaunchForce": 20
+}

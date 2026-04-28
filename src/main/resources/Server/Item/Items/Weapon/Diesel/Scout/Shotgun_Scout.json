@@ -6,15 +6,17 @@
     "DieselCategory.Weapons"
   ],
   "$Comment": "Loading order means that shooting and ammo usage should be inline",
-  "Reticle": "DefaultMelee",
+  "Reticle": "Diesel_Wide",
   "Model": "Items/Diesel/shotgun/shotgun.blockymodel",
   "Icon": "Icons/ItemsGenerated/Shotgun_Scout.png",
   "Texture": "Items/Diesel/shotgun/shotgun.png",
   "PlayerAnimationsId": "Shotgun_Scout_Anim",
   "Interactions": {
     "Ability1": "Root_Diesel_Dodge_Scout",
-    "Primary": "Root_Scout_Shotgun_Primary",
-    "Secondary": {
+    "Primary": {
+      "Cooldown": {
+        "Cooldown": 0.6
+      },
       "Interactions": [
         {
           "Type": "StatsCondition",
@@ -22,6 +24,64 @@
             "Shotgun_Scout_Ammo": 1
           },
           "Next": {
+            "Type": "ChangeStat",
+            "StatModifiers": {
+              "Shotgun_Scout_Ammo": -1
+            },
+            "Next": {
+              "Type": "DieselShoot",
+              "RunTime": 0.6,
+              "Effects": {
+                "ItemAnimationId": "Shoot",
+                "CameraEffect": "Handgun_Shoot",
+                "FirstPersonParticles": [
+                  {
+                    "SystemId": "Muzzle_Flash",
+                    "PositionOffset": {
+                      "Z": 0.7,
+                      "Y": 0.11
+                    },
+                    "RotationOffset": {
+                      "Pitch": 90
+                    },
+                    "TargetEntityPart": "Self"
+                  }
+                ],
+                "Particles": [
+                  {
+                    "SystemId": "Muzzle_Flash",
+                    "PositionOffset": {
+                      "Z": -0.1,
+                      "Y": -0.5
+                    },
+                    "RotationOffset": {
+                      "Pitch": 90
+                    },
+                    "TargetEntityPart": "Self"
+                  }
+                ]
+              },
+              "Offset": {
+                "X": 0.05,
+                "Y": -0.03,
+                "Z": -0.8
+              },
+              "ProjectileType": "Projectile_Shotgun"
+            }
+          },
+          "Failed": "Shotgun_Scout_Reload"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "StatsCondition",
+          "Costs": {
+            "Shotgun_Scout_Ammo": 1
+          },
+          "Next":
+          {
             "Type": "DieselShoot",
             "RunTime": 0,
             "Effects": {
@@ -66,7 +126,8 @@
                 "Shotgun_Scout_Ammo": 0
               },
               "Behaviour": "Set",
-              "Next": {
+              "Next":
+              {
                 "Type": "ApplyForce",
                 "Force": 22,
                 "AdjustVertical": false,
@@ -106,7 +167,11 @@
                 "Next": {
                   "Type": "ChangeStat",
                   "StatModifiers": {
-                    "Health": 15
+                    "Health": 16
+                  },
+                  "Next": {
+                    "Type": "Projectile",
+                    "Config": "Projectile_Config_Shotgun_Scout_Special2"
                   }
                 }
               }
@@ -116,8 +181,12 @@
         }
       ]
     },
-    "SwapTo": "Root_SetMovement_Scout",
-    "Ability3": "Root_Shotgun_Scout_Reload"
+    "Ability3": {
+      "Interactions": [
+        "Shotgun_Scout_Reload"
+      ]
+    },
+    "SwapTo": "Root_SetMovement_Scout"
   },
   "IconProperties": {
     "Scale": 0.6,

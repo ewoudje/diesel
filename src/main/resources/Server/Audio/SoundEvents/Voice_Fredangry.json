@@ -2,12 +2,13 @@
   "Layers": [
     {
       "Files": [
-        "Sounds/Diesel/Voice/acalm1.ogg",
-        "Sounds/Diesel/Voice/acalm2.ogg",
-        "Sounds/Diesel/Voice/acalm3.ogg",
-        "Sounds/Diesel/Voice/acalm4.ogg",
-        "Sounds/Diesel/Voice/acalm5.ogg",
-        "Sounds/Diesel/Voice/acalm6.ogg"
+        "Sounds/Diesel/Voice/p1.ogg",
+        "Sounds/Diesel/Voice/p2.ogg",
+        "Sounds/Diesel/Voice/p3.ogg",
+        "Sounds/Diesel/Voice/p4.ogg",
+        "Sounds/Diesel/Voice/p5.ogg",
+        "Sounds/Diesel/Voice/p6.ogg",
+        "Sounds/Diesel/Voice/p7.ogg"
       ],
       "RandomSettings": {
         "MinPitch": -4,

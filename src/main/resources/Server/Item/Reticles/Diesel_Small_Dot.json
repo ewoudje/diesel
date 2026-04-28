@@ -1,0 +1,31 @@
+{
+  "Base": [
+    "UI/Reticles/small_dot.png"
+  ],
+  "ServerEvents": {
+    "OnHit": {
+      "Parts": [
+        "UI/Reticles/small_hit.png"
+      ]
+    },
+    "OnKill": {
+      "HideBase": true,
+      "Parts": [
+        "UI/Reticles/small_kill.png"
+      ]
+    }
+  },
+  "ClientEvents": {
+    "OnHit": {
+      "Parts": [
+        "UI/Reticles/small_hit.png"
+      ]
+    },
+    "Wielding": {
+      "HideBase": true,
+      "Parts": [
+        "UI/Reticles/ClientEvents/Wielding/Blocking.png"
+      ]
+    }
+  }
+}

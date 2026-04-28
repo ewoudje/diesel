@@ -8,33 +8,47 @@ import { randomInt } from "./util";
 //yvgrenyyl qbag rira pner nal zber shpx lbh im not making a class
 const actors = {
     partner: {
+        portraits: 3,
         portrait:'partner',
+        interval: 4,
         voice: 'Afrenchevil'
     },
-    bilduce:{
-        portrait: 'prole',
-        voice: 'Chairmanangry'
+    evilduce:{
+        portraits: 4,
+        portrait: 'duce',
+        voice: 'Chairmancalm'
     },
     ilduce:{
-        portrait:'prole',
-        voice: 'Charimancalm'
+        portraits: 3,
+        portrait:'nilduce',
+        voice: 'Chairmanupset'
     },
     nilduce:{
-        portrait: 'prole',
-        voice: 'Chairmancared'
+        portraits: 3,
+        portrait: 'nilduce',
+        voice: 'Chairmanscared'
     },
-    fred:{
+    fredcalm:{
+        portraits: 3,
         portrait: 'fred',
         voice: 'Fredcalm'
     },
-    fredfighter:{
+    fred:{
+        portraits: 3,
         portrait: 'fred',
         voice: 'Fredangry'
     },
     sod: {
+        portraits: 3,
         portrait: 'prole',
-        voice: 'Other'
+        voice: 'Fredcalm'
     },
+    boxin: {
+        portraits: 1,
+        interval: 3,
+        portrait: 'boxin',
+        voice: 'Germanangry'
+    }
 }
 
 
@@ -44,11 +58,11 @@ let inDialogue = false;
 let dialogueTimeout = null;
 
 
-function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, chainObj, chainIndex, chainDelay, playSoundRef, setLogicRef, chainName }: { 
-    text: string; 
-    displayTextRef: Ref; 
+function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, chainObj, chainIndex, chainDelay, playSoundRef, setLogicRef, chainName }: {
+    text: string;
+    displayTextRef: Ref;
     displayPortraitRef: Ref;
-    speed: number; 
+    speed: number;
     actor: string;
     chainObj: (number | string)[][];
     chainIndex: number;
@@ -57,7 +71,8 @@ function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, 
     setLogicRef: Ref;
     chainName: String
 }){
-    if(inDialogue){
+    //@ts-ignore
+    if(dialogueTimeout){
         //@ts-ignore
         clearTimeout(dialogueTimeout)
     }
@@ -69,9 +84,9 @@ function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, 
     function printText(text: string[],destination: Ref){
         if(i<text.length){
             //@ts-ignore
-            if((i+2)%2==0)            playSoundRef.value(actors[actor].voice);
+            if((i+actors[actor].interval || 2)%(actors[actor].interval || 2 )==0)            playSoundRef.value(actors[actor].voice);
 
-            destination.value = `${destination.value} ${text[i]}` 
+            destination.value = `${destination.value} ${text[i]}`
             displayPortraitRef.value = randomPortrait(actor);
             i++;
             dialogueTimeout = setTimeout(()=>{printText(text,destination)},100);
@@ -94,13 +109,16 @@ function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, 
                         chainObj: chainObj,
                         displayPortraitRef: displayPortraitRef,
                         displayTextRef: displayTextRef,
-                        playSoundRef: playSoundRef
+                        playSoundRef: playSoundRef,
+                        setLogicRef: setLogicRef,
+                        chainName: chainName
                     })
                 }, chainDelay)
             } else {
                 setTimeout(()=>{
                     console.log(`[DIESELHUD] Chain ${chainName} complete`)
                     setLogicRef.value(chainName, "Done")
+                    console.log("portrait ref")
                     displayPortraitRef.value = 'Img/portrait/none.png';
                     displayTextRef.value = ''
                 },chainDelay)
@@ -110,7 +128,7 @@ function playDialogue({ text, displayTextRef, displayPortraitRef, speed, actor, 
     }
     function randomPortrait(id: string){
         //@ts-ignore
-       return `Img/portrait/${actors[id].portrait}${randomInt(1,3)}.png`
+       return `Img/portrait/${actors[id].portrait}${randomInt(1,actors[id].portraits)}.png`
     }
 }
 
@@ -138,7 +156,7 @@ function playChain(chainName: string, displayTextRef:Ref, displayPortraitRef:Ref
     })
 }
 
-//actor, text, speed, delay (before next message), important 
+//actor, text, speed, delay (before next message), important
 const chains = {
     testchain: [
         ["sod", "i'm walkin' ere!", 100, 1000],
@@ -147,28 +165,45 @@ const chains = {
         ["sod", "state of this city, i'm tellin' ya", 100, 1000],
         ["sod", "you'd think we was Chasm Cataluña or somethin'", 100, 1000]
     ],
+    boxin1: [
+        ["boxin","I HATE YOU!!!",100,500],
+    ],
+    boxin2: [
+        ["boxin","YOU ARE BAD!!!",100,500],
+    ],
+    boxin3: [
+        ["boxin","UMM DIE?",100,500],
+    ],
+    boxin4: [
+        ["boxin","GET SCARED GET SCARED GET SCARED",50,500],
+    ],
     planeDownFred: [
         ["fred","OUURUUGH!!!!", 100, 500],
     ],
     planeAttackFred: [
         ["fred","For the board!!!", 100, 500],
-    ],   
+    ],
     dukat: [
-        ["partner","Attention, Wallonian workers.",100,1000],
-        ["partner","It has come to my attention that a handful of layabouts have...",100,1500],
-        ["partner","...undertaken an unfortunate exercise.",500,1000],
-        ["partner","I implore you reconsider.",200,1000],
-        ["partner","It is a matter of the city's productivity: remember this;",100,1000],
-        ["partner","A productive Wallonia is a unified Wallonia is a safe Wallonia.",100,1000],
-        ["partner","This in mind...",100,2000],
-        ["partner","Any workers who aid in returning the dissidents",100,1000],
-        ["partner","to their senses will be...",100,1500],
-        ["partner","...appropriately rewarded.",100,3000],
-        ["fred","fie.",100,2000],
-        ["fred","inconvenient, but i pay more than the board",100,1000],
-        ["fred","how do they say it in the academiate?",100,3000],
-        ["fred","ah, yes, I recall.",200,1500],
-        ["fred","go get 'em, tiger",200,3000]
+        ["evilduce","Attention, Wallonian workers.",100,1000],
+        ["evilduce","It has come to my attention that a handful of layabouts have...",100,1500],
+        ["evilduce","...undertaken an unfortunate exercise.",500,1000],
+        ["evilduce","I implore you reconsider.",200,1000],
+        ["evilduce","It is a matter of the city's productivity: remember this;",100,1000],
+        ["evilduce","A productive Wallonia is a unified Wallonia is a safe Wallonia.",100,1000],
+        ["evilduce","This in mind...",100,2000],
+        ["evilduce","Any workers who aid in returning the dissidents",100,1000],
+        ["evilduce","to their senses will be...",100,1500],
+        ["evilduce","...appropriately rewarded.",100,3000],
+        ["partner","fie.",100,2000],
+        ["partner","inconvenient, but i pay more than the board",100,1000],
+        ["partner","how do they say it in the academiate?",100,3000],
+        ["partner","ah, yes, I recall.",200,1500],
+        ["partner","go get 'em, tiger",200,3000]
+    ],
+    meeting: [
+        ["partner","Ah, you've arrived.",100,1000],
+        ["partner","My apologies for the squalor.",100,1000],
+        ["partner","The accomodations are... meager.",100,1000]
     ]
 }
 export {playChain, playDialogue}
