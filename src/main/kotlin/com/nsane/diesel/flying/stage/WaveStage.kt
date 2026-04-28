@@ -23,7 +23,7 @@ open class WaveStage(
     var zoomies: Int,
     delay: Float,
     val nextLevel: String,
-): Stage(name, objective, "Sky_Combat") {
+): Stage(name, objective) {
     override val objective = if (isWaveDead()) "We are safe for now.." else super.objective
     override val env: FlyingEnvironment = SimpleEnvironment(50)
     private var delay = delay

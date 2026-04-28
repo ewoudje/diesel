@@ -26,28 +26,24 @@ class LevelManager : Resource<EntityStore?> {
             "StartOfGame" -> LogicBasedLevel("StartOfGame",
                 "Get a job!",
                 Vector3d(556.0, 23.0, 94.0),
-                "Briefing_Drums_Only",
                 "enterOffice",
                 "InOffice",
             )
             "InOffice" -> LogicBasedLevel("InOffice",
                 "Walk up",
                 Vector3d(557.0, 33.0, 6.0),
-                "Briefing_Drums_Only",
                 "frontDesk",
                 "Briefing"
             )
             "Briefing" -> LogicBasedLevel("Briefing",
                     "Just listen",
                     Vector3d(557.0, 33.0, 6.0),
-                    "Briefing",
                     "inOfficeDoor",
                     "Parkour"
             )
             "Parkour" -> LogicBasedLevel("Parkour",
                     "Jump!",
                     Vector3d(550.0, 37.0, -10.0),
-                    "Quick_Amb",
                     "parkourDone",
                     "ChaseInStreets"
             )
@@ -55,7 +51,6 @@ class LevelManager : Resource<EntityStore?> {
                 "ChaseInStreets",
                 "Get to the ship!",
                 Vector3d(456.0, 13.0, -80.0),
-                "Ground_Combat1",
                 "atShip",
                 "AtShip"
             )
@@ -63,9 +58,8 @@ class LevelManager : Resource<EntityStore?> {
                 "Shipyard",
                 "Find 3 Levers",
                 Vector3d(432.0, 25.0, -13.0),
-                "Ground_Combat2",
                 "launchAway",
-                "StartOfGame"
+                "Docks"
             )
             "StartStage" -> StartStage()
             "Stage1" -> WaveStage(
@@ -78,7 +72,6 @@ class LevelManager : Resource<EntityStore?> {
                 10f,
                 "Stage2"
             )
-
             "Stage2" -> WaveStage(
                 "Stage2",
                 "What are THOSE?",
@@ -90,63 +83,28 @@ class LevelManager : Resource<EntityStore?> {
                 "BossStage"
             )
             "DeathStarRace" -> DeathStarRace()
-            "EnterMech" -> AllDeadLevel(
-                "EnterMech",
-                "KILL the security!",
-                defaultPoint,
-                "Mus_Fallback_Overground",
-                "BreakIn"
+            "Docks" -> LogicBasedLevel(
+                "Docks",
+                "Get into the offices",
+                Vector3d(983.0, 57.0, 30.0),
+                "openOffice",
+                "Offices"
             )
-            "BreakIn" -> LogicBasedLevel(
-                "BreakIn",
-                "Go deeper",
-                defaultPoint,
-                "readyToBreakIn",
-                "Mus_Fallback_Overground",
-                "BrokeIn"
+            "Offices" -> AllDeadLevel(
+                "Offices",
+                "KILL THEM",
+                Vector3d(1047.0, 63.0, 32.0),
+                "TopLevel"
             )
-            "BrokeIn" -> LogicBasedLevel(
-                "BrokeIn",
-                "Find the keycard",
-                defaultPoint,
-                "Mus_Fallback_Overground",
-                "unlockedDoor",
-                "UnlockedDoor"
-            )
-            "UnlockedDoor" -> LogicBasedLevel(
-                "UnlockedDoor",
-                "Get back to the door",
-                defaultPoint,
-                "Mus_Fallback_Overground",
-                "enterKGB",
-                "KGB"
-            )
-            "KGB" -> AllDeadLevel(
-                "KGB",
-                "Kill the feds",
-                defaultPoint,
-                "Mus_Fallback_Overground",
-                "FinalStretch"
-            )
-            "FinalStretch" -> LogicBasedLevel(
-                "FinalStretch",
-                "Go kill Big Boss",
-                defaultPoint,
-                "Mus_Fallback_Overground",
-                "intoBossRoom",
-                "BossFight"
-            )
-            "BossFight" -> Level(
-                key,
-                "FIGHT TO DEATH",
-                defaultPoint,
-                "Mus_Fallback_Overground",
+            "TopLevel" -> Level(
+                "TopLevel",
+                "End THE BIG BOSS",
+                Vector3d(1063.0, 85.0, 86.0)
             )
             else -> Level(
                 key,
                 "No clue.. kill feds?",
-                defaultPoint,
-                "Mus_Fallback_Overground"
+                defaultPoint
             )
         }
     }

@@ -6,5 +6,10 @@
       "Music/Sky_Boss.ogg"
     ],
     "Volume": 10
+  },
+  "Conditions": {
+    "EnvironmentIds": [
+      "SkyBoss"
+    ]
   }
 }

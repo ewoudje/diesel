@@ -22,9 +22,8 @@ import io.github.hytalekt.kytale.ext.times
 
 abstract class Stage(
     name: String,
-    objective: String,
-    music: String
-): Level(name, objective, Vector3d(-3.0, 82.0, -3.0), music) {
+    objective: String
+): Level(name, objective, Vector3d(-3.0, 82.0, -3.0)) {
     abstract val env: FlyingEnvironment
 
     override fun tick(store: ComponentAccessor<EntityStore?>, dt: Float) {

@@ -6,5 +6,10 @@
       "Music/Sky_Combat.ogg"
     ],
     "Volume": 10
+  },
+  "Conditions": {
+    "EnvironmentIds": [
+      "SkyCombat"
+    ]
   }
 }

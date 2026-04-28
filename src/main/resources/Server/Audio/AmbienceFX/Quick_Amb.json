@@ -6,5 +6,10 @@
       "Music/Quick_Amb.ogg"
     ],
     "Volume": 4
+  },
+  "Conditions": {
+    "EnvironmentIds": [
+      "QuickAmb"
+    ]
   }
 }

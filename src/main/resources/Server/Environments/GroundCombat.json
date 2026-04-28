@@ -1,0 +1,151 @@
+{
+  "WaterTint": "#3a4e3d",
+  "SpawnDensity": 0,
+  "WeatherForecasts": {
+    "0": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "1": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "2": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "3": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "4": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "5": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "6": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "7": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "8": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "9": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "10": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "11": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "12": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "13": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "14": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "15": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "16": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "17": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "18": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "19": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "20": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "21": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "22": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ],
+    "23": [
+      {
+        "WeatherId": "DieselWeather",
+        "Weight": 0
+      }
+    ]
+  },
+  "BlockModificationAllowed": false
+}

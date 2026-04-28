@@ -10,16 +10,18 @@ import com.nsane.diesel.flying.enviroment.FlyingEnvironment
 import com.nsane.diesel.level.LevelManager
 import com.nsane.diesel.logic.LogicComponentTracker
 
-class StartStage : Stage("StartStage", "We on our way", "Mus_Fallback_Overground") {
+class StartStage : Stage("StartStage", "We on our way") {
     override val env: FlyingEnvironment = SimpleEnvironment(70)
 
     override fun tickStage(store: ComponentAccessor<EntityStore?>, sim: AirSimulator, dt: Float) {
         super.tickStage(store, sim, dt)
 
         val logic = LogicComponentTracker.getComponentWithId(store.externalData.world.chunkStore.store, "chain.level.StartStage")
-        if (logic?.getAsBoolean() ?: false) {
-            val levelManager = store.getResource(LevelManager.TYPE)
-            levelManager.enter("Stage1")
+        store.externalData.world.execute {
+            if (logic?.getAsBoolean() ?: false) {
+                val levelManager = store.getResource(LevelManager.TYPE)
+                levelManager.enter("Stage1")
+            }
         }
     }
 

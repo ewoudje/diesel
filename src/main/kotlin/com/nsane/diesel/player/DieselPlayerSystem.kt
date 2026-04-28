@@ -58,7 +58,10 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
         store.replaceComponent(event.playerRef, ModelComponent.getComponentType(), ModelComponent(model))
 
         if (playerComponent.disable) return
-        levelManager.currentLevel?.let { Teleport.createForPlayer(it.respawnPoint, Vector3f()) }
+        levelManager.currentLevel?.let { store.addComponent(event.playerRef,
+            Teleport.getComponentType(),
+            Teleport.createForPlayer(it.respawnPoint, Vector3f())
+        ) }
 
         val hud = DieselHud(store, ref.reference)
         playerComponent.hud = hud

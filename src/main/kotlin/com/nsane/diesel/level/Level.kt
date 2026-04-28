@@ -9,8 +9,7 @@ import com.nsane.diesel.logic.LogicComponentTracker
 open class Level(
     val name: String,
     open val objective: String,
-    val respawnPoint: Vector3d,
-    val music: String
+    val respawnPoint: Vector3d
 ) {
     open fun tick(store: ComponentAccessor<EntityStore?>, dt: Float) {
 
@@ -21,9 +20,8 @@ class AllDeadLevel(
     name: String,
     objective: String,
     respawnPoint: Vector3d,
-    music: String,
     val nextLevel: String
-): Level(name, objective, respawnPoint, music) {
+): Level(name, objective, respawnPoint) {
     override fun tick(store: ComponentAccessor<EntityStore?>, dt: Float) {
         val levelManager = store.getResource(LevelManager.TYPE)
         if (levelManager.amountOfEnemies <= 0)
@@ -35,15 +33,16 @@ class LogicBasedLevel(
     name: String,
     objective: String,
     respawnPoint: Vector3d,
-    music: String,
     val logicId: String,
     val nextLevel: String
-): Level(name, objective, respawnPoint, music) {
+): Level(name, objective, respawnPoint) {
     override fun tick(store: ComponentAccessor<EntityStore?>, dt: Float) {
-        val logic = LogicComponentTracker.getComponentWithId(store.externalData.world.chunkStore.store, logicId)
-        if (logic?.getAsBoolean() ?: false) {
-            val levelManager = store.getResource(LevelManager.TYPE)
-            levelManager.enter(nextLevel)
+        store.externalData.world.execute {
+            val logic = LogicComponentTracker.getComponentWithId(store.externalData.world.chunkStore.store, logicId)
+            if (logic?.getAsBoolean() ?: false) {
+                val levelManager = store.getResource(LevelManager.TYPE)
+                levelManager.enter(nextLevel)
+            }
         }
     }
 }

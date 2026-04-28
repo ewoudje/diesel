@@ -46,8 +46,6 @@ object LevelSystem: TickingSystem<EntityStore?>()  {
                 } else {
                     sim.stage = null
                 }
-                val ambience = store.getResource(AmbienceResource.getResourceType())
-                ambience.setForcedMusicAmbience(levelManager.currentLevel!!.music)
             } else {
                 levelManager.currentLevel = levelManager.oldLevel
             }
