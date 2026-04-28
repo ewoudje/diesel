@@ -8,6 +8,7 @@ import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.flying.AirSimulator
 import com.nsane.diesel.flying.stage.BossStage
 import com.nsane.diesel.flying.stage.DeathStarRace
+import com.nsane.diesel.flying.stage.EndStage
 import com.nsane.diesel.flying.stage.StartStage
 import com.nsane.diesel.flying.stage.WaveStage
 import io.github.hytalekt.kytale.codec.buildCodec
@@ -80,8 +81,29 @@ class LevelManager : Resource<EntityStore?> {
                 0,
                 0,
                 10f,
-                "BossStage"
+                "Stage4"
             )
+            "Stage3" -> WaveStage(
+                "Stage3",
+                "What are THOSE???!!",
+                0,
+                1,
+                3,
+                0,
+                10f,
+                "EndStage"
+            )
+            "Stage4" -> WaveStage(
+                "Stage4",
+                "Oh fuu",
+                3,
+                5,
+                4,
+                0,
+                10f,
+                "EndStage"
+            )
+            "EndStage" -> EndStage()
             "DeathStarRace" -> DeathStarRace()
             "Docks" -> LogicBasedLevel(
                 "Docks",

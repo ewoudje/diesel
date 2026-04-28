@@ -65,6 +65,7 @@ import com.nsane.diesel.logic.state_reader.StateReader;
 import com.nsane.diesel.logic.state_reader.StateReaderSystem;
 import com.nsane.diesel.logic.state_writer.StateWriter;
 import com.nsane.diesel.logic.state_writer.StateWriterSystem;
+import com.nsane.diesel.player.DeathMessageSystem;
 import com.nsane.diesel.player.DieselCommand;
 import com.nsane.diesel.player.DieselPlayerComponent;
 import com.nsane.diesel.player.DieselPlayerSystem;
@@ -185,6 +186,7 @@ public class DieselPlugin extends JavaPlugin {
         getEntityStoreRegistry().registerSystem(LevelSystem.RemoveLevelEntities.INSTANCE);
         getEntityStoreRegistry().registerSystem(LevelSystem.TrackLevelEntities.INSTANCE);
         getEntityStoreRegistry().registerSystem(PlayerReviveSystem.INSTANCE);
+        getEntityStoreRegistry().registerSystem(DeathMessageSystem.INSTANCE);
 
         getChunkStoreRegistry().registerSystem(NPCSpawnerRefSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(NPCSpawnerSpawnSystem.INSTANCE);
