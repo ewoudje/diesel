@@ -1,0 +1,15 @@
+{
+  "Parent": "NPCSpawner",
+  "TranslationProperties": {
+    "Name": "Prole Burst Spawner"
+  },
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "NPCSpawner": {
+          "NpcRole": "Prole_Burst"
+        }
+      }
+    }
+  }
+}
