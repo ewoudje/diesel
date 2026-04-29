@@ -55,7 +55,7 @@ import com.nsane.diesel.level.PartOfLevelComponent;
 import com.nsane.diesel.level.spawner.NPCSpawner;
 import com.nsane.diesel.level.spawner.NPCSpawnerRefSystem;
 import com.nsane.diesel.level.spawner.NPCSpawnerSpawnSystem;
-import com.nsane.diesel.logic.LogicComponentTracker;
+import com.nsane.diesel.logic.LogicResource;
 import com.nsane.diesel.logic.OpenLogicUIInteraction;
 import com.nsane.diesel.logic.bool_computer.BoolComputer;
 import com.nsane.diesel.logic.bool_computer.BoolComputerSystem;
@@ -140,6 +140,7 @@ public class DieselPlugin extends JavaPlugin {
         registerEntityResource(DieselResource.class, "DieselPlayersResource", DieselResource.Companion.getCODEC());
         registerEntityResource(AirSimulator.class, "AirSimulator", AirSimulator.Companion.getCODEC());
         registerEntityResource(LevelManager.class, "LevelManager", LevelManager.Companion.getCODEC());
+        registerEntityResource(LogicResource.class, "Logic", LogicResource.Companion.getCODEC());
 
         registerWorldEvent(ChangeLevelEvent.class);
 
@@ -195,7 +196,6 @@ public class DieselPlugin extends JavaPlugin {
         getChunkStoreRegistry().registerSystem(StateReaderSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(StateWriterSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(BoolComputerSystem.INSTANCE);
-        getChunkStoreRegistry().registerSystem(LogicComponentTracker.INSTANCE);
     }
 
     public static <C extends Component<STORE>, STORE> ComponentType<STORE, C> getComponent(@Nonnull Class<C> componentClass) {

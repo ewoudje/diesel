@@ -18,7 +18,7 @@ import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.nsane.diesel.flying.AirSimulator;
 import com.nsane.diesel.level.LevelManager;
-import com.nsane.diesel.logic.LogicComponentTracker;
+import com.nsane.diesel.logic.LogicResource;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import li.kelp.vuetale.app.PlayerUi;
@@ -70,12 +70,12 @@ public class DieselHud {
             }
         });
         ui.setHudData("setLogic", (BiConsumer<String, String>) (k, v) -> {
-            if (k.equals("level.TopLevel")) {
-                world.execute(() -> {
-                    var pageManager = store.getComponent(ref, Player.getComponentType()).getPageManager();
-                    pageManager.openCustomPage(ref, store, new WinPage(store.getComponent(ref, PlayerRef.getComponentType())));
-                });
-            } else LogicComponentTracker.INSTANCE.addCustom(k, v);
+            world.execute(() -> {
+                if (k.equals("level.TopLevel")) {
+                        var pageManager = store.getComponent(ref, Player.getComponentType()).getPageManager();
+                        pageManager.openCustomPage(ref, store, new WinPage(store.getComponent(ref, PlayerRef.getComponentType())));
+                } else store.getResource(LogicResource.Companion.getTYPE()).initValue(k, v);
+            });
         });
     }
 
@@ -87,7 +87,6 @@ public class DieselHud {
         DieselPlayerComponent dieselPlayer = commands.getComponent(ref, DieselPlayerComponent.Companion.getTYPE());
         EntityStatMap entityStatMapComponent = commands.getComponent(ref, EntityStatMap.getComponentType());
         EntityStatValue healthValue = entityStatMapComponent.get(DefaultEntityStatTypes.getHealth());
-        EntityStatValue ammo = entityStatMapComponent.get("Shotgun_Scout_Ammo");
         InteractionManager interactionManager = commands.getComponent(ref, InteractionModule.get().getInteractionManagerComponent());
         int dashCharges;
 

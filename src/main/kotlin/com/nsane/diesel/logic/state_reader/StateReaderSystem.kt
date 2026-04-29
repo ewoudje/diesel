@@ -11,6 +11,7 @@ import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType
 import com.hypixel.hytale.server.core.modules.block.BlockModule
 import com.hypixel.hytale.server.core.universe.world.chunk.BlockChunk
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
+import com.nsane.diesel.logic.LogicResource
 
 object StateReaderSystem: EntityTickingSystem<ChunkStore>() {
 
@@ -31,7 +32,15 @@ object StateReaderSystem: EntityTickingSystem<ChunkStore>() {
         val blockId = blockChunk.getBlock(localX, localY, localZ)
         val type = BlockType.getAssetMap().getAsset(blockId)
 
-        stateReader.state = type?.getStateForBlock(type) // TODO could be done on change instead?
+        val logic = store.externalData.world.entityStore.store.getResource(LogicResource.TYPE)
+        val before = stateReader.state
+        stateReader.state = type?.getStateForBlock(type)
+        if (!stateReader.registered) {
+            stateReader.registered = true
+            logic.initValue(stateReader.id, stateReader.state ?: "default")
+        } else if (before != stateReader.state) {
+            logic.valueChanged(stateReader.id, stateReader.state ?: "default")
+        }
     }
 
     override fun getQuery(): Query<ChunkStore?> = StateReader.TYPE

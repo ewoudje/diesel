@@ -12,11 +12,10 @@ import io.github.hytalekt.kytale.codec.buildCodec
 
 
 class StateReader(override var id: String = "") : LogicComponent<ChunkStore?> {
+    override var registered: Boolean = false
     var state: String? = null
 
-    override fun getAsBoolean(): Boolean = state != null && state != "default"
     override fun getAsString(): String = state ?: "default"
-    override fun getAsDouble(): Double = state?.length?.toDouble() ?: -1.0
 
     override fun logicUI(
         playerRef: PlayerRef,

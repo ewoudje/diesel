@@ -12,12 +12,13 @@ import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType
 import com.hypixel.hytale.server.core.modules.block.BlockModule
 import com.hypixel.hytale.server.core.universe.world.chunk.BlockChunk
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
+import com.nsane.diesel.logic.LogicResource
 import com.nsane.diesel.logic.state_reader.StateReader
 
 object PressurePlateSystem: EntityTickingSystem<ChunkStore>() {
     val BOX = Box(
     -1.0, 0.0, -1.0,
-        1.0, 4.0, 1.0
+        1.0, 3.0, 1.0
     )
 
     override fun tick(
@@ -37,13 +38,21 @@ object PressurePlateSystem: EntityTickingSystem<ChunkStore>() {
         val x = blockChunk.x * 32 + localX
         val z = blockChunk.z * 32 + localZ
 
-
         val world = store.externalData.world
+        val logic = world.entityStore.store.getResource(LogicResource.TYPE)
+        val before = pressurePlate.pressedIn
         pressurePlate.pressedIn = world.playerRefs.all { BOX.containsPosition(
             it.transform.position.x - x,
             it.transform.position.y - y,
             it.transform.position.z - z
         ) }
+
+        if (!pressurePlate.registered) {
+            pressurePlate.registered = true
+            logic.initValue(pressurePlate.id, pressurePlate.pressedIn.toString())
+        } else if (before != pressurePlate.pressedIn) {
+            logic.valueChanged(pressurePlate.id, pressurePlate.pressedIn.toString())
+        }
     }
 
     override fun getQuery(): Query<ChunkStore?> = PressurePlate.TYPE

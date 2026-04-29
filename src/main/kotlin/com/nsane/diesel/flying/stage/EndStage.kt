@@ -8,7 +8,6 @@ import com.nsane.diesel.flying.AirSimulator
 import com.nsane.diesel.flying.enviroment.SimpleEnvironment
 import com.nsane.diesel.flying.enviroment.FlyingEnvironment
 import com.nsane.diesel.level.LevelManager
-import com.nsane.diesel.logic.LogicComponentTracker
 import com.nsane.diesel.player.TurretComponent
 
 class EndStage : Stage("EndStage", "") {

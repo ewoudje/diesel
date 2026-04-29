@@ -13,13 +13,12 @@ import io.github.hytalekt.kytale.codec.buildCodec
 
 
 class BoolComputer(override var id: String = "") : LogicComponent<ChunkStore?> {
+    override var registered: Boolean = false
     var entries = BoolComputerEntries()
     var operator = BooleanOperator.OR
     var result: Boolean = false
 
-    override fun getAsBoolean(): Boolean = result
     override fun getAsString(): String = result.toString()
-    override fun getAsDouble(): Double = if (result) 1.0 else 0.0
 
     override fun logicUI(
         playerRef: PlayerRef,

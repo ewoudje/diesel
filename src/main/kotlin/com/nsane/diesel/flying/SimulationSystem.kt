@@ -103,7 +103,7 @@ object SimulationSystem : TickingSystem<EntityStore?>() {
             val sim = buffer.getResource(AirSimulator.TYPE)
             val component = buffer.getComponent(ref, EnvironmentalComponent.TYPE)!!
 
-            sim.environmentalAmounts[component.id!!] = 1 + (sim.environmentalAmounts[component.id] ?: 0)
+            component.id?.let { id -> sim.environmentalAmounts[id] = (sim.environmentalAmounts[id] ?: 0) + 1}
         }
 
         override fun onEntityRemove(
@@ -115,7 +115,12 @@ object SimulationSystem : TickingSystem<EntityStore?>() {
             val sim = buffer.getResource(AirSimulator.TYPE)
             val component = buffer.getComponent(ref, EnvironmentalComponent.TYPE)!!
 
-            sim.environmentalAmounts[component.id!!] = sim.environmentalAmounts[component.id]!! - 1
+            component.id?.let { id ->
+                val i = sim.environmentalAmounts[id]
+                if (i != null)
+                    sim.environmentalAmounts[id] = i - 1
+            }
+
             sim.stage?.env?.environmentalUnloaded(buffer, ref, component)
         }
 

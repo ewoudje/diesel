@@ -147,5 +147,5 @@
       }
     ]
   },
-  "BlockModificationAllowed": false
+  "BlockModificationAllowed": true
 }

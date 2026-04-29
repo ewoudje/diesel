@@ -12,7 +12,7 @@ import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder
 import com.hypixel.hytale.server.core.universe.PlayerRef
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
-import com.nsane.diesel.logic.LogicComponentTracker
+import com.nsane.diesel.logic.LogicResource
 import io.github.hytalekt.kytale.codec.buildCodec
 
 class StateReaderPage(playerRef: PlayerRef, val readerRef: Ref<ChunkStore?>) : InteractiveCustomUIPage<StateReaderPage.PageData>(
@@ -27,9 +27,10 @@ class StateReaderPage(playerRef: PlayerRef, val readerRef: Ref<ChunkStore?>) : I
 ) {
     override fun handleDataEvent(ref: Ref<EntityStore>, store: Store<EntityStore>, data: PageData) {
         val reader = readerRef.store.getComponent(readerRef, StateReader.TYPE) ?: return
+        val logic = store.getResource(LogicResource.TYPE)
         if (reader.id != data.id) {
             reader.id = data.id
-            LogicComponentTracker.idChanged(reader.id, readerRef, data.id)
+            logic.idChanged(reader.id, data.id)
         }
 
         close()

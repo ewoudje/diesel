@@ -6,9 +6,11 @@ import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
 object LogicUtil {
     fun isEntryTrue(buffer: CommandBuffer<ChunkStore?>, id: String, comparison: LogicComparison, value: String): Boolean? {
         if (id.isEmpty()) return null
-        val value1 = LogicComponentTracker.getComponentWithId(buffer, id) ?: return false
+        val logic = buffer.externalData.world.entityStore.store.getResource(LogicResource.TYPE)
+
+        val value1 = logic.getValue(id) ?: return false
         val value2 = if (value.startsWith("@"))
-            LogicComponentTracker.getComponentWithId(buffer, value.substring(1))?.getAsString() ?: "Not Found"
+            logic.getValue(value.substring(1)) ?: "Not Found"
         else
             value
 

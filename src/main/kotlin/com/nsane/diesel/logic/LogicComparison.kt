@@ -13,13 +13,13 @@ enum class LogicComparison {
     GREATER_OR_EQUAL,
     LESS_OR_EQUAL;
 
-    fun between(value1: LogicComponent<*>, value2: String): Boolean = when (this) {
-        EQUAL -> value1.getAsString() == value2
-        NOT_EQUAL -> value1.getAsString() != value2
-        GREATER -> value1.getAsDouble() > (value2.toDoubleOrNull() ?: Double.NaN)
-        LESSER -> value1.getAsDouble() < (value2.toDoubleOrNull() ?: Double.NaN)
-        GREATER_OR_EQUAL -> value1.getAsDouble() >= (value2.toDoubleOrNull() ?: Double.NaN)
-        LESS_OR_EQUAL -> value1.getAsDouble() <= (value2.toDoubleOrNull() ?: Double.NaN)
+    fun between(value1: String, value2: String): Boolean = when (this) {
+        EQUAL -> value1 == value2
+        NOT_EQUAL -> value1 != value2
+        GREATER -> (value1.toDoubleOrNull() ?: Double.NaN) > (value2.toDoubleOrNull() ?: Double.NaN)
+        LESSER -> (value1.toDoubleOrNull() ?: Double.NaN) < (value2.toDoubleOrNull() ?: Double.NaN)
+        GREATER_OR_EQUAL -> (value1.toDoubleOrNull() ?: Double.NaN) >= (value2.toDoubleOrNull() ?: Double.NaN)
+        LESS_OR_EQUAL -> (value1.toDoubleOrNull() ?: Double.NaN) <= (value2.toDoubleOrNull() ?: Double.NaN)
     }
 
     companion object {

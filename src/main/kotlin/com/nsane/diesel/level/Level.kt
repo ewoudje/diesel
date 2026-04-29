@@ -4,7 +4,7 @@ import com.hypixel.hytale.component.ComponentAccessor
 import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.flying.AirSimulator
-import com.nsane.diesel.logic.LogicComponentTracker
+import com.nsane.diesel.logic.LogicResource
 
 open class Level(
     val name: String,
@@ -44,8 +44,9 @@ class LogicBasedLevel(
 ): Level(name, objective, respawnPoint) {
     override fun tick(store: ComponentAccessor<EntityStore?>, dt: Float) {
         store.externalData.world.execute {
-            val logic = LogicComponentTracker.getComponentWithId(store.externalData.world.chunkStore.store, logicId)
-            if (logic?.getAsBoolean() ?: false) {
+
+            val logic = store.getResource(LogicResource.TYPE)
+            if (logic.getValue(logicId)?.toBooleanStrictOrNull() ?: false) {
                 val levelManager = store.getResource(LevelManager.TYPE)
                 levelManager.enter(nextLevel)
             }

@@ -15,16 +15,17 @@ import io.github.hytalekt.kytale.codec.buildCodec
 import kotlin.random.Random
 
 class PressurePlate(override var id: String = "") : LogicComponent<ChunkStore?> {
+    override var registered: Boolean = false
     var pressedIn = false
+
 
     override fun clone(): Component<ChunkStore?>? = PressurePlate().also {
         it.id = id
         it.pressedIn = pressedIn
     }
 
-    override fun getAsBoolean(): Boolean = pressedIn
+
     override fun getAsString(): String = pressedIn.toString()
-    override fun getAsDouble(): Double = if (pressedIn) 1.0 else 0.0
 
     override fun logicUI(
         playerRef: PlayerRef,

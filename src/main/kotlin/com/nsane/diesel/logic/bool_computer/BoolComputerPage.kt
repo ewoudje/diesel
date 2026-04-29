@@ -13,7 +13,7 @@ import com.hypixel.hytale.server.core.universe.PlayerRef
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.logic.BooleanOperator
-import com.nsane.diesel.logic.LogicComponentTracker
+import com.nsane.diesel.logic.LogicResource
 import io.github.hytalekt.kytale.codec.buildCodec
 
 class BoolComputerPage(playerRef: PlayerRef, val readerRef: Ref<ChunkStore?>) : InteractiveCustomUIPage<BoolComputerPage.PageData>(
@@ -35,9 +35,10 @@ class BoolComputerPage(playerRef: PlayerRef, val readerRef: Ref<ChunkStore?>) : 
 ) {
     override fun handleDataEvent(ref: Ref<EntityStore>, store: Store<EntityStore>, data: PageData) {
         val computer = readerRef.store.getComponent(readerRef, BoolComputer.TYPE) ?: return
+        val logic = store.getResource(LogicResource.TYPE)
         if (computer.id != data.id) {
             computer.id = data.id
-            LogicComponentTracker.idChanged(computer.id, readerRef, data.id)
+            logic.idChanged(computer.id, data.id)
         }
 
         computer.entries = data

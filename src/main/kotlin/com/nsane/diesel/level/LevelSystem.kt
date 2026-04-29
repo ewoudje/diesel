@@ -20,6 +20,7 @@ import com.nsane.diesel.flying.AirSimulator
 import com.nsane.diesel.flying.HelicopterComponent
 import com.nsane.diesel.flying.PlaneComponent
 import com.nsane.diesel.flying.stage.Stage
+import com.nsane.diesel.logic.LogicResource
 import com.nsane.diesel.player.DieselResource
 
 object LevelSystem: TickingSystem<EntityStore?>()  {
@@ -31,6 +32,7 @@ object LevelSystem: TickingSystem<EntityStore?>()  {
         val levelManager = store.getResource(LevelManager.TYPE)
         val dieselResource = store.getResource(DieselResource.TYPE)
         val sim = store.getResource(AirSimulator.TYPE)
+        val logic = store.getResource(LogicResource.TYPE)
         if (levelManager.currentLevel == null) return
 
         if (levelManager.oldLevel != levelManager.currentLevel) {
@@ -41,6 +43,7 @@ object LevelSystem: TickingSystem<EntityStore?>()  {
 
             if (!event.isCancelled) {
                 levelManager.oldLevel = levelManager.currentLevel
+                logic.valueChanged("level", levelManager.currentLevel!!.name)
                 if (levelManager.currentLevel is Stage) {
                     sim.stage = levelManager.currentLevel as Stage
                 } else {

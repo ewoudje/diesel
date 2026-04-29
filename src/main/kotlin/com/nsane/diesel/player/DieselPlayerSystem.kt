@@ -32,6 +32,7 @@ import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.WorldEventEntitySystem
 import com.nsane.diesel.level.ChangeLevelEvent
 import com.nsane.diesel.level.LevelManager
+import com.nsane.diesel.logic.LogicResource
 
 object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
 
@@ -84,8 +85,11 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
             chunk: ArchetypeChunk<EntityStore?>,
             event: ChangeLevelEvent
         ) {
-            val playerComp = chunk.getComponent(idx, DieselPlayerComponent.TYPE)
-            playerComp?.hud?.showMessage("level.${event.newLevel.name}")
+            val playerComp = chunk.getComponent(idx, DieselPlayerComponent.TYPE) ?: return
+            if (playerComp.disable) {
+                buffer.getResource(LogicResource.TYPE)
+                    .initValue("level.${event.newLevel.name}", "Done")
+            } else playerComp.showMessage("level.${event.newLevel.name}")
         }
     }
 

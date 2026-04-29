@@ -9,10 +9,8 @@ import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
 
 interface LogicComponent<T> : Component<T> {
     val id: String
+    var registered: Boolean
 
-    fun getAsBoolean(): Boolean
     fun getAsString(): String
-    fun getAsDouble(): Double
-
     fun logicUI(playerRef: PlayerRef, selfRef: Ref<ChunkStore?>): CustomUIPage
 }
