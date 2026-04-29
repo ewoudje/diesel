@@ -2,7 +2,6 @@ package com.nsane.diesel.flying.stage
 
 import com.hypixel.hytale.component.AddReason
 import com.hypixel.hytale.component.ComponentAccessor
-import com.hypixel.hytale.component.Store
 import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.math.vector.Vector3f
 import com.hypixel.hytale.server.core.asset.type.model.config.Model
@@ -23,7 +22,7 @@ import io.github.hytalekt.kytale.ext.times
 abstract class Stage(
     name: String,
     objective: String
-): Level(name, objective, Vector3d(-3.0, 82.0, -3.0)) {
+) : Level(name, objective, Vector3d(-3.0, 82.0, -3.0)) {
     abstract val env: FlyingEnvironment
 
     override fun tick(store: ComponentAccessor<EntityStore?>, dt: Float) {
@@ -46,7 +45,9 @@ abstract class Stage(
         val modelAsset = ModelAsset.getAssetMap().getAsset(name) ?: throw NullPointerException("$name asset not found")
         val model = Model.createScaledModel(modelAsset, 0.5f)
         val holder = EntityStore.REGISTRY.newHolder()
-        holder.addComponent(TransformComponent.getComponentType(), TransformComponent().apply { position.assign(-155.0,0.0,-155.0) })
+        holder.addComponent(
+            TransformComponent.getComponentType(),
+            TransformComponent().apply { position.assign(-155.0, 0.0, -155.0) })
         holder.addComponent(PersistentModel.getComponentType(), PersistentModel(model.toReference()))
         holder.addComponent(ModelComponent.getComponentType(), ModelComponent(model))
         holder.addComponent(NetworkId.getComponentType(), NetworkId(store.externalData.takeNextNetworkId()))
@@ -64,7 +65,8 @@ abstract class Stage(
     }
 
     protected fun rotateTo(sim: AirSimulator, pitch: Double, yaw: Double, roll: Double, speed: Double): Vector3f {
-        val targetRotation = Vector3f(Math.toRadians(pitch).toFloat(), Math.toRadians(yaw).toFloat(), Math.toRadians(roll).toFloat())
+        val targetRotation =
+            Vector3f(Math.toRadians(pitch).toFloat(), Math.toRadians(yaw).toFloat(), Math.toRadians(roll).toFloat())
         val diff = targetRotation - sim.shipRotation
         val l = diff.length()
         if (l > speed) diff.scale(speed.toFloat() / l)

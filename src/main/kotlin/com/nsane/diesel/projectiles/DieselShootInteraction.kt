@@ -8,12 +8,10 @@ import com.hypixel.hytale.component.CommandBuffer
 import com.hypixel.hytale.component.Ref
 import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.math.vector.Vector3f
-import com.hypixel.hytale.protocol.InteractionState
 import com.hypixel.hytale.protocol.InteractionType
 import com.hypixel.hytale.server.core.asset.type.model.config.Model
 import com.hypixel.hytale.server.core.entity.InteractionContext
 import com.hypixel.hytale.server.core.entity.UUIDComponent
-import com.hypixel.hytale.server.core.inventory.ItemStack
 import com.hypixel.hytale.server.core.modules.entity.DespawnComponent
 import com.hypixel.hytale.server.core.modules.entity.component.BoundingBox
 import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent
@@ -31,14 +29,13 @@ import com.hypixel.hytale.server.core.util.PositionUtil
 import com.hypixel.hytale.server.core.util.TargetUtil
 import com.nsane.diesel.flying.AirSimulator
 import com.nsane.diesel.flying.SimulatedTransformComponent
-import com.nsane.diesel.player.DieselPlayerComponent
 import java.time.Duration
 import java.util.*
 import kotlin.math.asin
 import kotlin.math.atan2
 import kotlin.random.Random
 
-class DieselShootInteraction: ProjectileInteraction() {
+class DieselShootInteraction : ProjectileInteraction() {
     var projectileType: String? = null
     var offset: Vector3d = Vector3d(0.0, 0.0, 0.0)
 
@@ -93,10 +90,23 @@ class DieselShootInteraction: ProjectileInteraction() {
             onShip: Boolean? = null
         ) {
             repeat(type.projectileCount) {
-                val yaw = (atan2(-direction.x, -direction.z) + (Random.nextDouble() - 0.5) * Math.toRadians(type.spreadAmount)).toFloat()
-                val pitch = (asin(direction.y) + (Random.nextDouble() - 0.5) * Math.toRadians(type.spreadAmount)).toFloat()
+                val yaw = (atan2(
+                    -direction.x,
+                    -direction.z
+                ) + (Random.nextDouble() - 0.5) * Math.toRadians(type.spreadAmount)).toFloat()
+                val pitch =
+                    (asin(direction.y) + (Random.nextDouble() - 0.5) * Math.toRadians(type.spreadAmount)).toFloat()
 
-                shootProjectile(buffer, type, owner, position, Vector3d(yaw, pitch), offset, if (it == 0) uuid else null, onShip)
+                shootProjectile(
+                    buffer,
+                    type,
+                    owner,
+                    position,
+                    Vector3d(yaw, pitch),
+                    offset,
+                    if (it == 0) uuid else null,
+                    onShip
+                )
             }
         }
 
@@ -142,7 +152,10 @@ class DieselShootInteraction: ProjectileInteraction() {
             holder.addComponent(ModelComponent.getComponentType(), ModelComponent(model))
             holder.addComponent(PersistentModel.getComponentType(), PersistentModel(model.toReference()))
             holder.addComponent(BoundingBox.getComponentType(), BoundingBox(model.boundingBox!!))
-            holder.addComponent(NetworkId.getComponentType(), NetworkId(commandBuffer.getExternalData().takeNextNetworkId()))
+            holder.addComponent(
+                NetworkId.getComponentType(),
+                NetworkId(commandBuffer.getExternalData().takeNextNetworkId())
+            )
 
             if (uuid != null) {
                 holder.addComponent(UUIDComponent.getComponentType(), UUIDComponent(uuid))
@@ -180,7 +193,11 @@ class DieselShootInteraction: ProjectileInteraction() {
             return commandBuffer.addEntity(holder, AddReason.SPAWN)
         }
 
-        val CODEC = BuilderCodec.builder(DieselShootInteraction::class.java, ::DieselShootInteraction, SimpleInstantInteraction.CODEC)
+        val CODEC = BuilderCodec.builder(
+            DieselShootInteraction::class.java,
+            ::DieselShootInteraction,
+            SimpleInstantInteraction.CODEC
+        )
             .appendInherited(
                 KeyedCodec<String>("ProjectileType", Codec.STRING),
                 { self: DieselShootInteraction, i: String -> self.projectileType = i },

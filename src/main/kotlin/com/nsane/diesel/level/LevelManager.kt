@@ -5,8 +5,6 @@ import com.hypixel.hytale.component.Resource
 import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselPlugin
-import com.nsane.diesel.flying.AirSimulator
-import com.nsane.diesel.flying.stage.BossStage
 import com.nsane.diesel.flying.stage.DeathStarRace
 import com.nsane.diesel.flying.stage.EndStage
 import com.nsane.diesel.flying.stage.StartStage
@@ -24,30 +22,38 @@ class LevelManager : Resource<EntityStore?> {
         if (key == currentLevel?.name) return
 
         currentLevel = when (key) {
-            "StartOfGame" -> LogicBasedLevel("StartOfGame",
+            "StartOfGame" -> LogicBasedLevel(
+                "StartOfGame",
                 "Get a job!",
                 Vector3d(556.0, 23.0, 94.0),
                 "enterOffice",
                 "InOffice",
             )
-            "InOffice" -> LogicBasedLevel("InOffice",
+
+            "InOffice" -> LogicBasedLevel(
+                "InOffice",
                 "Meet the client",
                 Vector3d(557.0, 33.0, 6.0),
                 "frontDesk",
                 "Briefing"
             )
-            "Briefing" -> LogicBasedLevel("Briefing",
-                    "Conspire and listen",
-                    Vector3d(557.0, 33.0, 6.0),
-                    "inOfficeDoor",
-                    "Parkour"
+
+            "Briefing" -> LogicBasedLevel(
+                "Briefing",
+                "Conspire and listen",
+                Vector3d(557.0, 33.0, 6.0),
+                "inOfficeDoor",
+                "Parkour"
             )
-            "Parkour" -> LogicBasedLevel("Parkour",
-                    "Jump!",
-                    Vector3d(550.0, 37.0, -10.0),
-                    "parkourDone",
-                    "ChaseInStreets"
+
+            "Parkour" -> LogicBasedLevel(
+                "Parkour",
+                "Jump!",
+                Vector3d(550.0, 37.0, -10.0),
+                "parkourDone",
+                "ChaseInStreets"
             )
+
             "ChaseInStreets" -> LogicBasedLevel(
                 "ChaseInStreets",
                 "Get to the car!",
@@ -55,6 +61,7 @@ class LevelManager : Resource<EntityStore?> {
                 "atShip",
                 "Shipyard"
             )
+
             "Shipyard" -> LogicBasedLevel(
                 "Shipyard",
                 "Find three levers",
@@ -62,6 +69,7 @@ class LevelManager : Resource<EntityStore?> {
                 "launchAway",
                 "StartStage"
             )
+
             "StartStage" -> StartStage()
             "Stage1" -> WaveStage(
                 "Stage1",
@@ -74,6 +82,7 @@ class LevelManager : Resource<EntityStore?> {
                 false,
                 "Stage2"
             )
+
             "Stage2" -> WaveStage(
                 "Stage2",
                 "What are THOSE?",
@@ -85,6 +94,7 @@ class LevelManager : Resource<EntityStore?> {
                 true,
                 "Stage4"
             )
+
             "Stage3" -> WaveStage(
                 "Stage3",
                 "What are THOSE???!!",
@@ -96,6 +106,7 @@ class LevelManager : Resource<EntityStore?> {
                 true,
                 "EndStage"
             )
+
             "Stage4" -> WaveStage(
                 "Stage4",
                 "No no no no",
@@ -107,6 +118,7 @@ class LevelManager : Resource<EntityStore?> {
                 true,
                 "EndStage"
             )
+
             "EndStage" -> EndStage()
             "DeathStarRace" -> DeathStarRace()
             "Docks" -> LogicBasedLevel(
@@ -116,6 +128,7 @@ class LevelManager : Resource<EntityStore?> {
                 "openOffice",
                 "Offices"
             )
+
             "Offices" -> LogicBasedLevel(
                 "Offices",
                 "Reach the chairman",
@@ -123,11 +136,13 @@ class LevelManager : Resource<EntityStore?> {
                 "todo",
                 "TopLevel"
             )
+
             "TopLevel" -> Level(
                 "TopLevel",
                 "Show the boss who's boss",
                 Vector3d(1063.0, 85.0, 86.0)
             )
+
             else -> Level(
                 key,
                 "Let me think...",
@@ -141,7 +156,7 @@ class LevelManager : Resource<EntityStore?> {
     companion object {
         val CODEC = buildCodec(::LevelManager) {
             addField("Level", Codec.STRING) {
-                setter { enter(it); oldLevel = currentLevel}
+                setter { enter(it); oldLevel = currentLevel }
                 getter { currentLevel?.name }
             }
         }

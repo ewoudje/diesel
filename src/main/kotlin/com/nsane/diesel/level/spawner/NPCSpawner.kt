@@ -5,11 +5,9 @@ import com.hypixel.hytale.component.Component
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
 import com.hypixel.hytale.server.npc.validators.NPCRoleValidator
 import com.nsane.diesel.DieselPlugin
-import com.nsane.diesel.logic.state_writer.StateWriter
-import com.nsane.diesel.logic.state_writer.StateWriterEntries
 import io.github.hytalekt.kytale.codec.buildCodec
 
-class NPCSpawner: Component<ChunkStore?> {
+class NPCSpawner : Component<ChunkStore?> {
     var npcRole: String? = null
     var level: String? = null
 

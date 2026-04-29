@@ -14,16 +14,13 @@ import com.hypixel.hytale.server.core.inventory.ItemStack
 import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent
 import com.hypixel.hytale.server.core.modules.entity.component.PersistentModel
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent
-import com.hypixel.hytale.server.core.modules.entity.tracker.NetworkId
-import com.hypixel.hytale.server.core.modules.interaction.Interactions
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler
-import com.hypixel.hytale.server.core.modules.interaction.interaction.config.SimpleInstantInteraction
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.client.SimpleBlockInteraction
 import com.hypixel.hytale.server.core.universe.world.World
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import io.github.hytalekt.kytale.codec.buildCodec
 
-class RiseRockInteraction: SimpleBlockInteraction() {
+class RiseRockInteraction : SimpleBlockInteraction() {
 
     override fun interactWithBlock(
         p0: World,
@@ -33,7 +30,7 @@ class RiseRockInteraction: SimpleBlockInteraction() {
         p4: ItemStack?,
         p5: Vector3i,
         p6: CooldownHandler
-    )  {
+    ) {
         p3.state.state = doInteraction(p2, p3, p0, p5, p1)
     }
 
@@ -57,7 +54,8 @@ class RiseRockInteraction: SimpleBlockInteraction() {
 
         val modelAsset = ModelAsset.getAssetMap().getAsset("Rock") ?: throw NullPointerException("Rock asset not found")
         val model = Model.createScaledModel(modelAsset, 3.0f)
-        val position = com.hypixel.hytale.math.vector.Vector3d(targetBlock.x + 0.5, targetBlock.y - 2.0, targetBlock.z + 0.5)
+        val position =
+            com.hypixel.hytale.math.vector.Vector3d(targetBlock.x + 0.5, targetBlock.y - 2.0, targetBlock.z + 0.5)
 
         val holder = EntityStore.REGISTRY.newHolder()
         holder.addComponent(TransformComponent.getComponentType(), TransformComponent(position, Vector3f()))

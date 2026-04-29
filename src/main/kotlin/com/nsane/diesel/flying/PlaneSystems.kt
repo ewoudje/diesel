@@ -123,17 +123,23 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
             return
         }
 
-        simulatedPos.omega.x = max(min(PhysicsMath.normalizeTurnAngle(pitch), VERTICAL_TURN_SPEED), -VERTICAL_TURN_SPEED)
+        simulatedPos.omega.x =
+            max(min(PhysicsMath.normalizeTurnAngle(pitch), VERTICAL_TURN_SPEED), -VERTICAL_TURN_SPEED)
         simulatedPos.omega.y = max(min(PhysicsMath.normalizeTurnAngle(yaw), TURN_SPEED), -TURN_SPEED)
 
         simulatedPos.rotation.z += (atan(simulatedPos.omega.y * 9) - simulatedPos.rotation.z) * dt
     }
 
     fun crashingDown(buffer: CommandBuffer<EntityStore?>, ref: Ref<EntityStore?>) {
-        val modelAsset = ModelAsset.getAssetMap().getAsset("CrashingPlane") ?: throw NullPointerException("Plane asset not found")
+        val modelAsset =
+            ModelAsset.getAssetMap().getAsset("CrashingPlane") ?: throw NullPointerException("Plane asset not found")
         val model = Model.createScaledModel(modelAsset, 5.0f)
         buffer.replaceComponent(ref, ModelComponent.getComponentType(), ModelComponent(model))
-        ParticleUtil.spawnParticleEffect("Explosion_Big", buffer.getComponent(ref, TransformComponent.getComponentType())!!.position, buffer)
+        ParticleUtil.spawnParticleEffect(
+            "Explosion_Big",
+            buffer.getComponent(ref, TransformComponent.getComponentType())!!.position,
+            buffer
+        )
     }
 
     fun fire(
@@ -146,7 +152,16 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
         val shotSound = SoundEvent.getAssetMap().getIndex("SFX_Pistol_Fire")
 
         SoundUtil.playSoundEvent3d(shotSound, SoundCategory.SFX, position, commands)
-        DieselShootInteraction.shootProjectiles(commands, owner, direction.clone().scale(2.0).add(position), direction, Vector3d(), type, null, false)
+        DieselShootInteraction.shootProjectiles(
+            commands,
+            owner,
+            direction.clone().scale(2.0).add(position),
+            direction,
+            Vector3d(),
+            type,
+            null,
+            false
+        )
     }
 
     override fun getQuery(): Query<EntityStore?>? = PlaneComponent.TYPE
@@ -158,7 +173,8 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
             -MAX_DISTANCE + (Random.nextDouble() * 20) + 40
         ).rotateX(sim.shipRotation.x).rotateY(sim.shipRotation.y).rotateZ(sim.shipRotation.z)
 
-        val modelAsset = ModelAsset.getAssetMap().getAsset("Plane") ?: throw NullPointerException("Plane asset not found")
+        val modelAsset =
+            ModelAsset.getAssetMap().getAsset("Plane") ?: throw NullPointerException("Plane asset not found")
         val model = Model.createScaledModel(modelAsset, 5.0f)
         val sounds = IntArrayList()
         val stats = EntityStatMap()
@@ -171,7 +187,9 @@ object PlaneTickSystem : EntityTickingSystem<EntityStore?>() {
 
         val holder = EntityStore.REGISTRY.newHolder()
         holder.addComponent(AudioComponent.getComponentType(), AudioComponent(sounds))
-        holder.addComponent(TransformComponent.getComponentType(), TransformComponent().apply { position.assign(direction) })
+        holder.addComponent(
+            TransformComponent.getComponentType(),
+            TransformComponent().apply { position.assign(direction) })
         holder.addComponent(PersistentModel.getComponentType(), PersistentModel(model.toReference()))
         holder.addComponent(BoundingBox.getComponentType(), BoundingBox().apply {
             boundingBox = model.boundingBox!!

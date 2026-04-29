@@ -19,7 +19,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.flying.stage.Stage
 import com.nsane.diesel.level.LevelManager
 
-object PlayerReviveSystem: RefChangeSystem<EntityStore?, DeathComponent>() {
+object PlayerReviveSystem : RefChangeSystem<EntityStore?, DeathComponent>() {
     override fun componentType(): ComponentType<EntityStore?, DeathComponent?> = DeathComponent.getComponentType()
 
     override fun onComponentAdded(

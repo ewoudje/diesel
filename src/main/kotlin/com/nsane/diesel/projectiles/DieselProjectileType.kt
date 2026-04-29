@@ -93,7 +93,9 @@ data class DieselProjectileType(
             { t -> t?.data })
 
         val ASSET_STORE by lazy {
-            AssetRegistry.getAssetStore<String, DieselProjectileType, DefaultAssetMap<String, DieselProjectileType>>(DieselProjectileType::class.java)!!
+            AssetRegistry.getAssetStore<String, DieselProjectileType, DefaultAssetMap<String, DieselProjectileType>>(
+                DieselProjectileType::class.java
+            )!!
         }
 
         val ASSET_MAP by lazy { ASSET_STORE.assetMap!! }

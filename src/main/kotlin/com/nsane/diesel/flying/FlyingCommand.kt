@@ -1,7 +1,6 @@
 package com.nsane.diesel.flying
 
 import com.hypixel.hytale.component.Store
-import com.hypixel.hytale.math.util.ChunkUtil
 import com.hypixel.hytale.server.core.Message
 import com.hypixel.hytale.server.core.command.system.CommandContext
 import com.hypixel.hytale.server.core.command.system.arguments.system.FlagArg
@@ -9,11 +8,8 @@ import com.hypixel.hytale.server.core.command.system.arguments.system.OptionalAr
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractWorldCommand
 import com.hypixel.hytale.server.core.universe.world.World
-import com.hypixel.hytale.server.core.universe.world.chunk.ChunkFlag
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselPlugin
-import com.nsane.diesel.flying.stage.BossStage
-import com.nsane.diesel.flying.stage.StartStage
 import java.util.function.BiConsumer
 
 class FlyingCommand : AbstractWorldCommand("flying", "flying") {
@@ -23,7 +19,8 @@ class FlyingCommand : AbstractWorldCommand("flying", "flying") {
     private val pitch: OptionalArg<Float> = withOptionalArg("pitch", "Rotation of ship", ArgTypes.FLOAT)
     private val yaw: OptionalArg<Float> = withOptionalArg("yaw", "Rotation of ship", ArgTypes.FLOAT)
     private val roll: OptionalArg<Float> = withOptionalArg("roll", "Rotation of ship", ArgTypes.FLOAT)
-    private val speedModifier: OptionalArg<Double> = withOptionalArg("speedModifier", "SpeedModifier of ship", ArgTypes.DOUBLE)
+    private val speedModifier: OptionalArg<Double> =
+        withOptionalArg("speedModifier", "SpeedModifier of ship", ArgTypes.DOUBLE)
     private val cleanse: FlagArg = withFlagArg("cleanse", "Cleanse")
 
     override fun execute(
@@ -41,8 +38,7 @@ class FlyingCommand : AbstractWorldCommand("flying", "flying") {
         speedModifier.get(ctx)?.let { sim.velocityModifier = it }
 
         if (cleanse.get(ctx)) {
-            store.forEachChunk(SimulatedTransformComponent.TYPE, BiConsumer {
-                chunk, buffer ->
+            store.forEachChunk(SimulatedTransformComponent.TYPE, BiConsumer { chunk, buffer ->
                 repeat(chunk.size()) {
                     chunk.removeEntity(it - 1, EntityStore.REGISTRY.newHolder())
                 }

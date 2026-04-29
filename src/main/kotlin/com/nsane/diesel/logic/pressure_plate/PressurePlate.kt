@@ -3,16 +3,12 @@ package com.nsane.diesel.logic.pressure_plate
 import com.hypixel.hytale.codec.Codec
 import com.hypixel.hytale.component.Component
 import com.hypixel.hytale.component.Ref
-import com.hypixel.hytale.math.vector.Vector3d
-import com.hypixel.hytale.math.vector.Vector3f
 import com.hypixel.hytale.server.core.entity.entities.player.pages.CustomUIPage
 import com.hypixel.hytale.server.core.universe.PlayerRef
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
-import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.logic.LogicComponent
 import io.github.hytalekt.kytale.codec.buildCodec
-import kotlin.random.Random
 
 class PressurePlate(override var id: String = "") : LogicComponent<ChunkStore?> {
     override var registered: Boolean = false

@@ -27,47 +27,86 @@
     "MaxHealth": 100,
     "HearingRange": 25,
     "ViewSector": 270,
-    "WakingPeriod": [ 0, 24 ],
+    "WakingPeriod": [
+      0,
+      24
+    ],
     "DropList": "",
     "Appearance": "Prole_Office",
-    "Weapons": [ "Diesel_Wrench" ],
+    "Weapons": [
+      "Diesel_Wrench"
+    ],
     "AttitudeGroup": "Diesel_Attitude",
-    "FollowPatrolPath": { "Compute": "FollowPatrolPath" },
-    "Patrol": { "Compute": "Patrol" },
-    "WanderRadius": { "Compute": "WanderRadius" },
+    "FollowPatrolPath": {
+      "Compute": "FollowPatrolPath"
+    },
+    "Patrol": {
+      "Compute": "Patrol"
+    },
+    "WanderRadius": {
+      "Compute": "WanderRadius"
+    },
     "Attack": "Root_NPC_KnockoffSkeleton",
     "CombatBackOffAfterAttack": true,
     "AttackDistance": 50,
     "CombatStrafeWeight": 10,
     "CombatFleeIfTooCloseDistance": 0.1,
-    "CombatBackOffDistanceRange": [ 0, 1 ],
-    "DesiredAttackDistanceRange": [ 0, 30 ],
+    "CombatBackOffDistanceRange": [
+      0,
+      1
+    ],
+    "DesiredAttackDistanceRange": [
+      0,
+      30
+    ],
     "CombatBehaviorDistance": 100,
     "TargetRange": 15,
     "LeashMinPlayerDistance": 18,
-    "ApplySeparation": { "Compute": "ApplySeparation" },
+    "ApplySeparation": {
+      "Compute": "ApplySeparation"
+    },
     "IsMemory": false,
     "MemoriesCategory": "null",
     "MemoriesNameOverride": "",
     "BreathesInWater": true,
-    "NameTranslationKey": { "Compute": "NameTranslationKey" },
+    "NameTranslationKey": {
+      "Compute": "NameTranslationKey"
+    },
     "DeathAnimationTime": 1.5,
-    "DayFlavorAnimationLength": [ 3, 5 ],
+    "DayFlavorAnimationLength": [
+      3,
+      5
+    ],
     "LeashDistance": 400,
     "CombatRelativeTurnSpeed": 0.5,
-    "CombatStrafingFrequencyRange": [ 2, 2 ],
+    "CombatStrafingFrequencyRange": [
+      2,
+      2
+    ],
     "ChaseRelativeSpeed": 1,
     "CombatAlwaysMovingWeight": 1,
-    "CombatAttackPostDelay": [ 0.2, 0.2 ],
-    "CombatAttackPreDelay": [ 0.2, 0.2 ],
-    "CombatBackOffDurationRange": [ 2, 3 ],
+    "CombatAttackPostDelay": [
+      0.2,
+      0.2
+    ],
+    "CombatAttackPreDelay": [
+      0.2,
+      0.2
+    ],
+    "CombatBackOffDurationRange": [
+      2,
+      3
+    ],
     "CombatBackwardsRelativeSpeed": 0.3,
     "CombatDirectWeight": 10,
-    "CombatMessageTargetGroups": [ ],
+    "CombatMessageTargetGroups": [],
     "CombatMovingRelativeSpeed": 2,
-    "CombatStrafingDurationRange": [ 1, 1 ],
+    "CombatStrafingDurationRange": [
+      1,
+      1
+    ],
     "DayFlavorAnimation": "",
-    "OffHand": [ ],
+    "OffHand": [],
     "AlertedRange": 150
   }
 }

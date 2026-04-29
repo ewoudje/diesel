@@ -7,11 +7,10 @@ import com.hypixel.hytale.component.query.Query
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
 import com.nsane.diesel.logic.BooleanOperator
-import com.nsane.diesel.logic.LogicComparison
 import com.nsane.diesel.logic.LogicResource
 import com.nsane.diesel.logic.LogicUtil
 
-object BoolComputerSystem: EntityTickingSystem<ChunkStore>() {
+object BoolComputerSystem : EntityTickingSystem<ChunkStore>() {
 
     override fun tick(
         dt: Float,
@@ -21,7 +20,7 @@ object BoolComputerSystem: EntityTickingSystem<ChunkStore>() {
         buffer: CommandBuffer<ChunkStore?>
     ) {
 
-        val computer = chunk.getComponent(index,BoolComputer.TYPE) ?: return
+        val computer = chunk.getComponent(index, BoolComputer.TYPE) ?: return
         val logic = store.externalData.world.entityStore.store.getResource(LogicResource.TYPE)
         val before = computer.result
         computer.result = calculateResult(buffer, computer)
@@ -38,7 +37,12 @@ object BoolComputerSystem: EntityTickingSystem<ChunkStore>() {
         val operator = computer.operator
 
         for (i in 0 until BoolComputerEntries.ENTRY_AMOUNT) {
-            val r = LogicUtil.isEntryTrue(buffer, computer.entries.entryIds[i], computer.entries.entryComparisons[i], computer.entries.entryValues[i])
+            val r = LogicUtil.isEntryTrue(
+                buffer,
+                computer.entries.entryIds[i],
+                computer.entries.entryComparisons[i],
+                computer.entries.entryValues[i]
+            )
             when (operator to r) {
                 (BooleanOperator.AND to false) -> return false
                 (BooleanOperator.OR to true) -> return true

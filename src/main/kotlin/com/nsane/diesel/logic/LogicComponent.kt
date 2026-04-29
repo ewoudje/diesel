@@ -1,6 +1,5 @@
 package com.nsane.diesel.logic
 
-import com.nsane.diesel.logic.state_reader.StateReader
 import com.hypixel.hytale.component.Component
 import com.hypixel.hytale.component.Ref
 import com.hypixel.hytale.server.core.entity.entities.player.pages.CustomUIPage

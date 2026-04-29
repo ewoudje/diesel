@@ -6,9 +6,6 @@ import com.hypixel.hytale.codec.builder.BuilderCodec
 import com.hypixel.hytale.protocol.InteractionState
 import com.hypixel.hytale.protocol.InteractionType
 import com.hypixel.hytale.server.core.entity.InteractionContext
-import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent
-import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap
-import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.SimpleInstantInteraction
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.SimpleInteraction
@@ -37,14 +34,15 @@ class MoveShipInteraction : SimpleInstantInteraction() {
     }
 
     companion object {
-        val CODEC = BuilderCodec.builder(MoveShipInteraction::class.java, ::MoveShipInteraction, SimpleInteraction.CODEC)
-            .appendInherited(
-                KeyedCodec<Boolean>("Left", Codec.BOOLEAN),
-                { self: MoveShipInteraction, i: Boolean -> self.left = i },
-                { self: MoveShipInteraction -> self.left },
-                { o, p -> o.left = p.left }
-            )
-            .add()
-            .build()
+        val CODEC =
+            BuilderCodec.builder(MoveShipInteraction::class.java, ::MoveShipInteraction, SimpleInteraction.CODEC)
+                .appendInherited(
+                    KeyedCodec<Boolean>("Left", Codec.BOOLEAN),
+                    { self: MoveShipInteraction, i: Boolean -> self.left = i },
+                    { self: MoveShipInteraction -> self.left },
+                    { o, p -> o.left = p.left }
+                )
+                .add()
+                .build()
     }
 }

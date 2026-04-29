@@ -1,6 +1,5 @@
 package com.nsane.diesel.logic.state_reader
 
-import com.nsane.diesel.DieselPlugin
 import com.hypixel.hytale.component.ArchetypeChunk
 import com.hypixel.hytale.component.CommandBuffer
 import com.hypixel.hytale.component.Store
@@ -13,7 +12,7 @@ import com.hypixel.hytale.server.core.universe.world.chunk.BlockChunk
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
 import com.nsane.diesel.logic.LogicResource
 
-object StateReaderSystem: EntityTickingSystem<ChunkStore>() {
+object StateReaderSystem : EntityTickingSystem<ChunkStore>() {
 
     override fun tick(
         dt: Float,
@@ -22,7 +21,7 @@ object StateReaderSystem: EntityTickingSystem<ChunkStore>() {
         store: Store<ChunkStore?>,
         buffer: CommandBuffer<ChunkStore?>
     ) {
-        val stateReader = chunk.getComponent(index,StateReader.TYPE) ?: return
+        val stateReader = chunk.getComponent(index, StateReader.TYPE) ?: return
         val info = chunk.getComponent(index, BlockModule.BlockStateInfo.getComponentType()) ?: return
         val blockChunk = store.getComponent<BlockChunk?>(info.chunkRef, BlockChunk.getComponentType()) ?: return
         val localX = ChunkUtil.xFromBlockInColumn(info.index)

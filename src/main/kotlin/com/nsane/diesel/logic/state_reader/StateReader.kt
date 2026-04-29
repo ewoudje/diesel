@@ -1,13 +1,13 @@
 package com.nsane.diesel.logic.state_reader
 
-import com.nsane.diesel.DieselPlugin
-import com.nsane.diesel.logic.LogicComponent
 import com.hypixel.hytale.codec.Codec
 import com.hypixel.hytale.component.Component
 import com.hypixel.hytale.component.Ref
 import com.hypixel.hytale.server.core.entity.entities.player.pages.CustomUIPage
 import com.hypixel.hytale.server.core.universe.PlayerRef
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
+import com.nsane.diesel.DieselPlugin
+import com.nsane.diesel.logic.LogicComponent
 import io.github.hytalekt.kytale.codec.buildCodec
 
 

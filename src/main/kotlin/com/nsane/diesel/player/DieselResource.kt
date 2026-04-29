@@ -8,11 +8,8 @@ import com.hypixel.hytale.component.Resource
 import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselPlugin
-import io.github.hytalekt.kytale.codec.CodecBuilder
-import io.github.hytalekt.kytale.codec.buildCodec
-import java.util.function.BiConsumer
 
-class DieselResource: Resource<EntityStore?> {
+class DieselResource : Resource<EntityStore?> {
     val respawnPoint = Vector3d()
     var deadLevel: String? = null
     var globalRespawnTimer = Double.MAX_VALUE
@@ -35,7 +32,7 @@ class DieselResource: Resource<EntityStore?> {
     companion object {
         val CODEC = BuilderCodec.builder(DieselResource::class.java, ::DieselResource)
             .addField(
-                   KeyedCodec("RespawnPoint", Vector3d.CODEC),
+                KeyedCodec("RespawnPoint", Vector3d.CODEC),
                 { t: DieselResource, u: Vector3d? -> t.respawnPoint.assign(u ?: Vector3d()) },
                 { t: DieselResource -> t.respawnPoint }
             )

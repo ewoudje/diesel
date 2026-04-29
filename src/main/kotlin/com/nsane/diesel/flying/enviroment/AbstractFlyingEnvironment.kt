@@ -19,7 +19,7 @@ import com.nsane.diesel.flying.SimulatedTransformationSystem
 import kotlin.math.PI
 import kotlin.random.Random
 
-abstract class AbstractFlyingEnvironment: FlyingEnvironment {
+abstract class AbstractFlyingEnvironment : FlyingEnvironment {
     override val weather: String
         get() = "Default_Void"
 
@@ -33,7 +33,8 @@ abstract class AbstractFlyingEnvironment: FlyingEnvironment {
         accessor: ComponentAccessor<EntityStore?>,
         ref: Ref<EntityStore?>,
         component: EnvironmentalComponent
-    ) {}
+    ) {
+    }
 
     protected fun spawnCloud(
         accessor: ComponentAccessor<EntityStore?>,
@@ -45,13 +46,15 @@ abstract class AbstractFlyingEnvironment: FlyingEnvironment {
         val rand = Random.nextInt(1, 5)
 
         val holder = EntityStore.REGISTRY.newHolder()
-        populateEnvironmentalHolder("Cloud", holder, sim,
+        populateEnvironmentalHolder(
+            "Cloud", holder, sim,
             "Cloud$rand",
             Random.nextFloat() * 5 + 3,
             position,
             rotation,
             velocity,
-            Vector3f())
+            Vector3f()
+        )
 
         accessor.addEntity(holder, AddReason.SPAWN)
     }
@@ -67,7 +70,8 @@ abstract class AbstractFlyingEnvironment: FlyingEnvironment {
         velocity: Vector3d,
         omega: Vector3f
     ) {
-        val modelAsset = ModelAsset.getAssetMap().getAsset(model) ?: throw NullPointerException("$model asset not found")
+        val modelAsset =
+            ModelAsset.getAssetMap().getAsset(model) ?: throw NullPointerException("$model asset not found")
         val model = Model.createScaledModel(modelAsset, scale)
 
         holder.addComponent(TransformComponent.getComponentType(), TransformComponent().apply {

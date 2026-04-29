@@ -23,7 +23,7 @@
           "StaminaRegenDelay": -1.5
         },
         "Next": {
-          "Parent":"DodgeB",
+          "Parent": "DodgeB",
           "Force": 20
         }
       }

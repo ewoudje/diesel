@@ -22,18 +22,21 @@ class SimulatedTransformComponent : Component<EntityStore?> {
     }
 
     fun setWithWorldPosition(sim: AirSimulator, vector: Vector3d) =
-        position.assign((vector - sim.worldInShipPosition)
-            .rotateZ(sim.shipRotation.z)
-            .rotateY(sim.shipRotation.y)
-            .rotateX(sim.shipRotation.x)
-            .add(sim.shipPosition))
+        position.assign(
+            (vector - sim.worldInShipPosition)
+                .rotateZ(sim.shipRotation.z)
+                .rotateY(sim.shipRotation.y)
+                .rotateX(sim.shipRotation.x)
+                .add(sim.shipPosition)
+        )
 
     fun setWithWorldVelocity(sim: AirSimulator, vector: Vector3d, onShip: Boolean) =
-        velocity.assign(vector
-            .rotateZ(sim.shipRotation.z)
-            .rotateY(sim.shipRotation.y)
-            .rotateX(sim.shipRotation.x)
-            .let { if (onShip) it.add(sim.shipVelocity) else it })
+        velocity.assign(
+            vector
+                .rotateZ(sim.shipRotation.z)
+                .rotateY(sim.shipRotation.y)
+                .rotateX(sim.shipRotation.x)
+                .let { if (onShip) it.add(sim.shipVelocity) else it })
 
     fun setWithWorldRotation(sim: AirSimulator, vector: Vector3f) =
         rotation.assign(vector.x + sim.shipRotation.x, vector.y + sim.shipRotation.y, vector.z + sim.shipRotation.z)

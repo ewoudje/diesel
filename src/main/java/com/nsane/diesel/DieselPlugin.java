@@ -17,7 +17,6 @@ import com.hypixel.hytale.server.core.asset.type.particle.config.ParticleSystem;
 import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import com.hypixel.hytale.server.core.io.adapter.PacketAdapters;
-import com.hypixel.hytale.server.core.io.handlers.game.InventoryPacketHandler;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.RootInteraction;
 import com.hypixel.hytale.server.core.modules.projectile.config.ProjectileConfig;
@@ -34,18 +33,18 @@ import com.nsane.diesel.boss.RisenRockTickSystem;
 import com.nsane.diesel.commands.OpenMyUiCommand;
 import com.nsane.diesel.events.ExampleEvent;
 import com.nsane.diesel.flying.AirSimulator;
-import com.nsane.diesel.flying.MoveShipInteraction;
-import com.nsane.diesel.flying.enviroment.EnvironmentalComponent;
 import com.nsane.diesel.flying.FlyingCommand;
 import com.nsane.diesel.flying.HelicopterComponent;
 import com.nsane.diesel.flying.HelicopterRefSystem;
 import com.nsane.diesel.flying.HelicopterTickSystem;
+import com.nsane.diesel.flying.MoveShipInteraction;
 import com.nsane.diesel.flying.PlaneComponent;
 import com.nsane.diesel.flying.PlaneRefSystem;
 import com.nsane.diesel.flying.PlaneTickSystem;
-import com.nsane.diesel.flying.SimulatedTransformationSystem;
 import com.nsane.diesel.flying.SimulatedTransformComponent;
+import com.nsane.diesel.flying.SimulatedTransformationSystem;
 import com.nsane.diesel.flying.SimulationSystem;
+import com.nsane.diesel.flying.enviroment.EnvironmentalComponent;
 import com.nsane.diesel.interactions.ApplyMovementConfigInteraction;
 import com.nsane.diesel.level.ChangeLevelEvent;
 import com.nsane.diesel.level.LevelCommand;
@@ -79,9 +78,8 @@ import com.nsane.diesel.projectiles.DieselProjectileSystem;
 import com.nsane.diesel.projectiles.DieselProjectileType;
 import com.nsane.diesel.projectiles.DieselShootInteraction;
 import kotlin.Pair;
-import org.jetbrains.annotations.NotNull;
 import li.kelp.vuetale.javascript.ModuleRegistry;
-
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -96,6 +94,18 @@ public class DieselPlugin extends JavaPlugin {
         super(init);
     }
 
+    public static <C extends Component<STORE>, STORE> ComponentType<STORE, C> getComponent(@Nonnull Class<C> componentClass) {
+        return (ComponentType<STORE, C>) instance.registeredTypes.get(componentClass);
+    }
+
+    public static <C extends Resource<STORE>, STORE> ResourceType<STORE, C> getResource(@Nonnull Class<C> resourceClass) {
+        return (ResourceType<STORE, C>) instance.registeredTypes.get(resourceClass);
+    }
+
+    public static <C extends EcsEvent> Pair<WorldEventType<EntityStore, C>, WorldEventType<ChunkStore, C>> getEvent(@NotNull Class<C> clazz) {
+        return (Pair<WorldEventType<EntityStore, C>, WorldEventType<ChunkStore, C>>) instance.registeredTypes.get(clazz);
+    }
+
     @Override
     protected void setup() {
         instance = this;
@@ -108,7 +118,8 @@ public class DieselPlugin extends JavaPlugin {
             Object instance = reg.getField("INSTANCE").get(null);
             reg.getMethod("registerModule", String.class, Class.class)
                     .invoke(instance, "diesel", DieselPlugin.class);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
 
 
         HytaleAssetStore.Builder<String, DieselProjectileType, DefaultAssetMap<String, DieselProjectileType>> builder =
@@ -161,7 +172,7 @@ public class DieselPlugin extends JavaPlugin {
         getEventRegistry().registerGlobal(PlayerReadyEvent.class, ExampleEvent::onPlayerReady);
         getEventRegistry().registerGlobal(PlayerReadyEvent.class, DieselPlayerSystem::playerReadyEvent);
 
-        ModuleRegistry.INSTANCE.registerModule("diesel", DieselPlugin.class,null);
+        ModuleRegistry.INSTANCE.registerModule("diesel", DieselPlugin.class, null);
 
         LOGGER.atInfo().log("Setup complete!!!");
     }
@@ -196,18 +207,6 @@ public class DieselPlugin extends JavaPlugin {
         getChunkStoreRegistry().registerSystem(StateReaderSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(StateWriterSystem.INSTANCE);
         getChunkStoreRegistry().registerSystem(BoolComputerSystem.INSTANCE);
-    }
-
-    public static <C extends Component<STORE>, STORE> ComponentType<STORE, C> getComponent(@Nonnull Class<C> componentClass) {
-        return (ComponentType<STORE, C>) instance.registeredTypes.get(componentClass);
-    }
-
-    public static <C extends Resource<STORE>, STORE> ResourceType<STORE, C> getResource(@Nonnull Class<C> resourceClass) {
-        return (ResourceType<STORE, C>) instance.registeredTypes.get(resourceClass);
-    }
-
-    public static  <C extends EcsEvent> Pair<WorldEventType<EntityStore, C>, WorldEventType<ChunkStore, C>> getEvent(@NotNull Class<C> clazz) {
-        return (Pair<WorldEventType<EntityStore, C>, WorldEventType<ChunkStore, C>>) instance.registeredTypes.get(clazz);
     }
 
     @Override

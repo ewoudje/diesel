@@ -40,12 +40,12 @@
   },
   "CancelOnOtherClick": false,
   "Failed": {
-  "Type": "Simple",
-  "Effects": {
-    "WorldSoundEventId": "SFX_Light_Melee_T2_Guard_Break",
-    "LocalSoundEventId": "SFX_Light_Melee_T2_Guard_Break"
-  }
-},
+    "Type": "Simple",
+    "Effects": {
+      "WorldSoundEventId": "SFX_Light_Melee_T2_Guard_Break",
+      "LocalSoundEventId": "SFX_Light_Melee_T2_Guard_Break"
+    }
+  },
   "BlockedEffects": {
     "WorldParticles": [
       {

@@ -1,13 +1,6 @@
 package com.nsane.diesel.flying
 
-import com.hypixel.hytale.component.AddReason
-import com.hypixel.hytale.component.ArchetypeChunk
-import com.hypixel.hytale.component.CommandBuffer
-import com.hypixel.hytale.component.ComponentAccessor
-import com.hypixel.hytale.component.Holder
-import com.hypixel.hytale.component.Ref
-import com.hypixel.hytale.component.RemoveReason
-import com.hypixel.hytale.component.Store
+import com.hypixel.hytale.component.*
 import com.hypixel.hytale.component.query.Query
 import com.hypixel.hytale.component.system.RefSystem
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem
@@ -34,13 +27,11 @@ import com.hypixel.hytale.server.core.universe.world.SoundUtil
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.flying.HelicopterTickSystem.buildHelicopter
-import com.nsane.diesel.flying.PlaneTickSystem.buildPlane
 import com.nsane.diesel.projectiles.DieselProjectileType
 import com.nsane.diesel.projectiles.DieselShootInteraction
 import io.github.hytalekt.kytale.ext.minus
 import io.github.hytalekt.kytale.ext.plus
 import it.unimi.dsi.fastutil.ints.IntArrayList
-import kotlin.math.atan
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.random.Random
@@ -84,7 +75,7 @@ object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
         if (Random.nextDouble() / dt < 0.05) heli.hoverLeft = !heli.hoverLeft
 
         val distance = diff.length()
-        val direction = diff.clone().scale(1.0/distance)
+        val direction = diff.clone().scale(1.0 / distance)
         val dir2 = (sim.shipPosition - simulatedPos.position).normalize()
 
         var targetVelocity = simulatedPos.velocity.clone()
@@ -104,9 +95,11 @@ object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
         val length = targetVelocity.length()
         val maxSpeed = if (heli.hovering) HANG_SPEED else FOLLOW_SPEED
         if (length > maxSpeed)
-            targetVelocity.scale(maxSpeed/length)
+            targetVelocity.scale(maxSpeed / length)
 
-        targetVelocity.add(direction.clone().cross(Vector3d.POS_Y).scale(if (heli.hoverLeft) TURN_SPEED else -TURN_SPEED))
+        targetVelocity.add(
+            direction.clone().cross(Vector3d.POS_Y).scale(if (heli.hoverLeft) TURN_SPEED else -TURN_SPEED)
+        )
         simulatedPos.velocity.assign(targetVelocity)
 
         val yaw = PhysicsMath.normalizeAngle(PhysicsMath.headingFromDirection(dir2.x, dir2.z))
@@ -115,14 +108,16 @@ object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
         val pitch = if (distance < FIRING_DISTANCE)
             PhysicsMath.pitchFromDirection(dir2.x, dir2.y, dir2.z)
         else
-                (targetVelocity.z / maxSpeed) * Math.PI * 0.04
+            (targetVelocity.z / maxSpeed) * Math.PI * 0.04
 
-        val roll = (targetVelocity.x  / -maxSpeed)* Math.PI * 0.04
-        simulatedPos.rotation.assign(Vector3f.lerp(
-            simulatedPos.rotation,
-            Vector3f(pitch.toFloat(), yaw, roll.toFloat()),
-            dt * 4
-        ))
+        val roll = (targetVelocity.x / -maxSpeed) * Math.PI * 0.04
+        simulatedPos.rotation.assign(
+            Vector3f.lerp(
+                simulatedPos.rotation,
+                Vector3f(pitch.toFloat(), yaw, roll.toFloat()),
+                dt * 4
+            )
+        )
 
         heli.timeSinceLastBullet += dt
 
@@ -142,10 +137,15 @@ object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
     }
 
     fun crashingDown(buffer: CommandBuffer<EntityStore?>, ref: Ref<EntityStore?>) {
-        val modelAsset = ModelAsset.getAssetMap().getAsset("CrashingHelicopter") ?: throw NullPointerException("CrashingHelicopter asset not found")
+        val modelAsset = ModelAsset.getAssetMap().getAsset("CrashingHelicopter")
+            ?: throw NullPointerException("CrashingHelicopter asset not found")
         val model = Model.createScaledModel(modelAsset, 4.0f)
         buffer.replaceComponent(ref, ModelComponent.getComponentType(), ModelComponent(model))
-        ParticleUtil.spawnParticleEffect("Explosion_Big", buffer.getComponent(ref, TransformComponent.getComponentType())!!.position, buffer)
+        ParticleUtil.spawnParticleEffect(
+            "Explosion_Big",
+            buffer.getComponent(ref, TransformComponent.getComponentType())!!.position,
+            buffer
+        )
     }
 
     fun fire(
@@ -158,7 +158,15 @@ object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
         val shotSound = SoundEvent.getAssetMap().getIndex("SFX_Revolver_Fire")
 
         SoundUtil.playSoundEvent3d(shotSound, SoundCategory.SFX, position, commands)
-        DieselShootInteraction.shootProjectiles(commands, owner, direction.clone().add(position), direction, Vector3d(), type, null)
+        DieselShootInteraction.shootProjectiles(
+            commands,
+            owner,
+            direction.clone().add(position),
+            direction,
+            Vector3d(),
+            type,
+            null
+        )
     }
 
     fun buildHelicopter(sim: AirSimulator, accessor: ComponentAccessor<EntityStore?>): Holder<EntityStore?> {
@@ -168,7 +176,8 @@ object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
             150 - (Random.nextDouble() * 20)
         ).rotateX(sim.shipRotation.x).rotateY(sim.shipRotation.y).rotateZ(sim.shipRotation.z)
 
-        val modelAsset = ModelAsset.getAssetMap().getAsset("Helicopter") ?: throw NullPointerException("Helicopter asset not found")
+        val modelAsset =
+            ModelAsset.getAssetMap().getAsset("Helicopter") ?: throw NullPointerException("Helicopter asset not found")
         val model = Model.createScaledModel(modelAsset, 4.0f)
         val sounds = IntArrayList()
         val stats = EntityStatMap()
@@ -179,7 +188,9 @@ object HelicopterTickSystem : EntityTickingSystem<EntityStore?>() {
 
         val holder = EntityStore.REGISTRY.newHolder()
         holder.addComponent(AudioComponent.getComponentType(), AudioComponent(sounds))
-        holder.addComponent(TransformComponent.getComponentType(), TransformComponent().apply { position.assign(direction) })
+        holder.addComponent(
+            TransformComponent.getComponentType(),
+            TransformComponent().apply { position.assign(direction) })
         holder.addComponent(PersistentModel.getComponentType(), PersistentModel(model.toReference()))
         holder.addComponent(ModelComponent.getComponentType(), ModelComponent(model))
         holder.addComponent(SimulatedTransformComponent.TYPE, SimulatedTransformComponent().apply {

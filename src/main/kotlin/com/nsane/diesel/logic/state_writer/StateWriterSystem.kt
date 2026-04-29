@@ -5,7 +5,6 @@ import com.hypixel.hytale.component.CommandBuffer
 import com.hypixel.hytale.component.Store
 import com.hypixel.hytale.component.query.Query
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem
-import com.hypixel.hytale.function.consumer.TriIntConsumer
 import com.hypixel.hytale.math.util.ChunkUtil
 import com.hypixel.hytale.math.vector.Vector3i
 import com.hypixel.hytale.server.core.asset.type.blockhitbox.BlockBoundingBoxes
@@ -17,7 +16,7 @@ import com.hypixel.hytale.server.core.util.FillerBlockUtil
 import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.logic.LogicUtil
 
-object StateWriterSystem: EntityTickingSystem<ChunkStore>() {
+object StateWriterSystem : EntityTickingSystem<ChunkStore>() {
 
     override fun tick(
         dt: Float,
@@ -38,15 +37,19 @@ object StateWriterSystem: EntityTickingSystem<ChunkStore>() {
 
 
         for (i in 0 until StateWriterEntries.ENTRY_AMOUNT) {
-            if (LogicUtil.isEntryTrue(buffer,
+            if (LogicUtil.isEntryTrue(
+                    buffer,
                     stateWriter.entries.entryIds[i],
                     stateWriter.entries.entryComparisons[i],
-                    stateWriter.entries.entryValues[i]) ?: false) {
+                    stateWriter.entries.entryValues[i]
+                ) ?: false
+            ) {
                 val targetState = stateWriter.entries.entryStates[i]
                 if (targetState == (type.getStateForBlock(type) ?: "default")) return
 
-                val newType = type.getBlockForState(targetState) ?:
-                    run { DieselPlugin.LOGGER.atInfo().log("State $targetState not found?"); return }
+                val newType = type.getBlockForState(targetState) ?: run {
+                    DieselPlugin.LOGGER.atInfo().log("State $targetState not found?"); return
+                }
 
                 val world = store.externalData.world
                 val sectionIndex = ChunkUtil.indexSection(localY)

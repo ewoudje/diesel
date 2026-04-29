@@ -1,11 +1,11 @@
 <template>
-    <Group :anchor="{ Full: 1, Left: 0, Right: 0 }">
-        <Label>Example {{ props.test }}</Label>
-    </Group>
+  <Group :anchor="{ Full: 1, Left: 0, Right: 0 }">
+    <Label>Example {{ props.test }}</Label>
+  </Group>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
 interface Props {
-    test: string
+  test: string
 }
 
 const props = defineProps<Props>()

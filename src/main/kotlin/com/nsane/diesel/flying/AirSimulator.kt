@@ -17,7 +17,7 @@ import com.nsane.diesel.projectiles.DieselProjectileComponent
 import io.github.hytalekt.kytale.codec.buildCodec
 import kotlin.random.Random
 
-class AirSimulator: Resource<EntityStore?> {
+class AirSimulator : Resource<EntityStore?> {
 
     val flying get() = stage != null
     val worldInShipPosition: Vector3d = Vector3d(0.0, 80.0, 0.0)
@@ -37,9 +37,9 @@ class AirSimulator: Resource<EntityStore?> {
         if (Random.nextDouble() < 0.4) {
             val resource = accessor.getResource(DieselResource.TYPE)
             if (Random.nextDouble() < 0.3)
-                resource.broadcastMessage(accessor,  "planeDownSod")
+                resource.broadcastMessage(accessor, "planeDownSod")
             else
-                resource.broadcastMessage(accessor,  "planeDownFred")
+                resource.broadcastMessage(accessor, "planeDownFred")
         }
 
         if (stage is WaveStage)
@@ -50,13 +50,13 @@ class AirSimulator: Resource<EntityStore?> {
         if (Random.nextDouble() < 0.3) {
             val resource = accessor.getResource(DieselResource.TYPE)
             if (Random.nextDouble() < 0.3)
-                resource.broadcastMessage(accessor,  "heliDownSod")
+                resource.broadcastMessage(accessor, "heliDownSod")
             else
-                resource.broadcastMessage(accessor,  "heliDownFred")
+                resource.broadcastMessage(accessor, "heliDownFred")
         }
 
         if (stage is WaveStage)
-                (stage as WaveStage).helicopters--
+            (stage as WaveStage).helicopters--
     }
 
     override fun clone(): Resource<EntityStore?>? = AirSimulator().also {
@@ -87,17 +87,17 @@ class AirSimulator: Resource<EntityStore?> {
         val CODEC = buildCodec(::AirSimulator) {
             addField("VelocityModifier", Codec.DOUBLE) {
                 getter { velocityModifier }
-                setter { velocityModifier = it}
+                setter { velocityModifier = it }
             }
 
             addField("DistanceTraveled", Codec.DOUBLE) {
                 getter { distanceTraveled }
-                setter { distanceTraveled = it}
+                setter { distanceTraveled = it }
             }
 
             addField("ShipHealth", Codec.DOUBLE) {
                 getter { shipHealth }
-                setter { shipHealth = it}
+                setter { shipHealth = it }
             }
 
             addField("ShipPosition", Vector3d.CODEC) {

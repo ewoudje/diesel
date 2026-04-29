@@ -1,6 +1,5 @@
 package com.nsane.diesel.flying.stage
 
-import com.hypixel.hytale.builtin.ambience.resources.AmbienceResource
 import com.hypixel.hytale.component.AddReason
 import com.hypixel.hytale.component.ComponentAccessor
 import com.hypixel.hytale.protocol.SoundCategory
@@ -25,7 +24,7 @@ open class WaveStage(
     delay: Float,
     cities: Boolean,
     val nextLevel: String,
-): Stage(name, objective) {
+) : Stage(name, objective) {
     var lifetime = 60f * 5f
     override val objective = if (isWaveDead()) "Safe for now.." else super.objective
     override val env: FlyingEnvironment = if (cities) DeathStarEnvironment() else SimpleEnvironment(60)

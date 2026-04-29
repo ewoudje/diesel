@@ -6,21 +6,11 @@ import com.hypixel.hytale.component.Ref
 import com.hypixel.hytale.component.Store
 import com.hypixel.hytale.component.query.Query
 import com.hypixel.hytale.component.system.RefChangeSystem
-import com.hypixel.hytale.math.vector.Vector3d
-import com.hypixel.hytale.math.vector.Vector3f
-import com.hypixel.hytale.protocol.InteractionType
-import com.hypixel.hytale.server.core.entity.entities.Player
-import com.hypixel.hytale.server.core.modules.entity.component.Interactable
 import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent
-import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent
-import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport
-import com.hypixel.hytale.server.core.modules.interaction.Interactions
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
-import com.nsane.diesel.flying.stage.Stage
-import com.nsane.diesel.level.LevelManager
 
-object DeathMessageSystem: RefChangeSystem<EntityStore?, DeathComponent>() {
+object DeathMessageSystem : RefChangeSystem<EntityStore?, DeathComponent>() {
     override fun componentType(): ComponentType<EntityStore?, DeathComponent?> = DeathComponent.getComponentType()
 
     override fun onComponentAdded(
@@ -31,7 +21,7 @@ object DeathMessageSystem: RefChangeSystem<EntityStore?, DeathComponent>() {
     ) {
         val model = buffer.getComponent(ref, ModelComponent.getComponentType())!!
         val diesel = buffer.getResource(DieselResource.TYPE)
-        diesel.broadcastMessage(buffer,"death.${model.model.modelAssetId}")
+        diesel.broadcastMessage(buffer, "death.${model.model.modelAssetId}")
     }
 
     override fun onComponentSet(

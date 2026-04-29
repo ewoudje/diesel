@@ -3,7 +3,6 @@ package com.nsane.diesel.level
 import com.hypixel.hytale.component.ComponentAccessor
 import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
-import com.nsane.diesel.flying.AirSimulator
 import com.nsane.diesel.logic.LogicResource
 
 open class Level(
@@ -21,7 +20,7 @@ class AllDeadLevel(
     objective: String,
     respawnPoint: Vector3d,
     val nextLevel: String
-): Level(name, objective, respawnPoint) {
+) : Level(name, objective, respawnPoint) {
     private var initial = 0f
     override fun tick(store: ComponentAccessor<EntityStore?>, dt: Float) {
         if (initial < 1f) {
@@ -41,7 +40,7 @@ class LogicBasedLevel(
     respawnPoint: Vector3d,
     val logicId: String,
     val nextLevel: String
-): Level(name, objective, respawnPoint) {
+) : Level(name, objective, respawnPoint) {
     override fun tick(store: ComponentAccessor<EntityStore?>, dt: Float) {
         store.externalData.world.execute {
 

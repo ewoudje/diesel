@@ -15,8 +15,8 @@ import com.hypixel.hytale.server.core.modules.physics.util.PhysicsMath
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.flying.AirSimulator
 import com.nsane.diesel.flying.SimulatedTransformComponent
-import com.nsane.diesel.flying.enviroment.SimpleEnvironment
 import com.nsane.diesel.flying.enviroment.FlyingEnvironment
+import com.nsane.diesel.flying.enviroment.SimpleEnvironment
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -54,7 +54,8 @@ class BossStage : Stage("BossStage", "Get in the MECH") {
     }
 
     private fun spawnBoss(store: ComponentAccessor<EntityStore?>) {
-        val modelAsset = ModelAsset.getAssetMap().getAsset("Mech") ?: throw NullPointerException("Skyboss asset not found")
+        val modelAsset =
+            ModelAsset.getAssetMap().getAsset("Mech") ?: throw NullPointerException("Skyboss asset not found")
         val model = Model.createScaledModel(modelAsset, 10f)
         val holder = EntityStore.REGISTRY.newHolder()
 

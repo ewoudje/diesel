@@ -4,25 +4,25 @@
   ],
   "DefaultBiome": "City",
   "DefaultTransitionDistance": 32,
-  "MaxBiomeEdgeDistance" : 32,
+  "MaxBiomeEdgeDistance": 32,
   "Density": {
-    "Type" : "Imported",
-    "Name" : "Biome-Map"
+    "Type": "Imported",
+    "Name": "Biome-Map"
   },
-  "SpawnPositions" : {
-    "Type" : "Imported",
-    "Name" : "Example-Spawns"
+  "SpawnPositions": {
+    "Type": "Imported",
+    "Name": "Example-Spawns"
   },
-  "Framework" : [
+  "Framework": [
     {
-      "Type" : "Positions",
-      "Entries" : [
+      "Type": "Positions",
+      "Entries": [
         {
-          "Name" : "Example-Spawns",
+          "Name": "Example-Spawns",
           "$Comment": "Spawn Positions Provider",
-          "Positions" : {
-            "Type" : "List",
-            "ExportAs" : "Example-Spawns",
+          "Positions": {
+            "Type": "List",
+            "ExportAs": "Example-Spawns",
             "Positions": [
               {
                 "X": 0,
@@ -35,19 +35,19 @@
       ]
     },
     {
-      "Type" : "DecimalConstants",
-      "Entries" : [
+      "Type": "DecimalConstants",
+      "Entries": [
         {
-          "Name" : "Base",
-          "Value" : 100
+          "Name": "Base",
+          "Value": 100
         },
         {
-          "Name" : "Water",
-          "Value" : 100
+          "Name": "Water",
+          "Value": 100
         },
         {
-          "Name" : "Bedrock",
-          "Value" : 0
+          "Name": "Bedrock",
+          "Value": 0
         }
       ]
     }

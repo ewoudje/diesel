@@ -6,10 +6,10 @@
  * Usage:
  *   tsx scripts/build-types.ts [--watch]
  */
-import { resolve } from 'node:path'
-import { readFileSync } from 'node:fs'
-import { spawnSync } from 'node:child_process'
-import { fileURLToPath } from 'node:url'
+import {resolve} from 'node:path'
+import {readFileSync} from 'node:fs'
+import {spawnSync} from 'node:child_process'
+import {fileURLToPath} from 'node:url'
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 const root = resolve(__dirname, '..')
@@ -22,20 +22,20 @@ const outDir = resolve(vuetaleConfig.resourcesLocation, 'vuetale', vuetalePlugin
 const watchMode = process.argv.includes('--watch')
 
 const args = [
-    'vue-tsc',
-    '--declaration',
-    '--emitDeclarationOnly',
-    '--outDir', outDir,
-    '-p', 'tsconfig.build-types.json',
-    ...(watchMode ? ['--watch'] : []),
+  'vue-tsc',
+  '--declaration',
+  '--emitDeclarationOnly',
+  '--outDir', outDir,
+  '-p', 'tsconfig.build-types.json',
+  ...(watchMode ? ['--watch'] : []),
 ]
 
 console.log(`[build-types] outDir → ${outDir}`)
 
 const result = spawnSync('pnpm', ['exec', ...args], {
-    cwd: root,
-    stdio: 'inherit',
-    shell: true,
+  cwd: root,
+  stdio: 'inherit',
+  shell: true,
 })
 
 process.exit(result.status ?? 0)

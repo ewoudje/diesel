@@ -1,11 +1,6 @@
 package com.nsane.diesel.level.spawner
 
-import com.hypixel.hytale.component.AddReason
-import com.hypixel.hytale.component.ArchetypeChunk
-import com.hypixel.hytale.component.CommandBuffer
-import com.hypixel.hytale.component.Ref
-import com.hypixel.hytale.component.RemoveReason
-import com.hypixel.hytale.component.Store
+import com.hypixel.hytale.component.*
 import com.hypixel.hytale.component.query.Query
 import com.hypixel.hytale.component.system.RefSystem
 import com.hypixel.hytale.math.util.ChunkUtil
@@ -14,13 +9,12 @@ import com.hypixel.hytale.math.vector.Vector3f
 import com.hypixel.hytale.server.core.modules.block.BlockModule
 import com.hypixel.hytale.server.core.universe.world.chunk.BlockChunk
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
-import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.hypixel.hytale.server.npc.NPCPlugin
 import com.nsane.diesel.WorldEventEntitySystem
 import com.nsane.diesel.level.ChangeLevelEvent
 import com.nsane.diesel.level.LevelManager
 
-object NPCSpawnerRefSystem: RefSystem<ChunkStore?>() {
+object NPCSpawnerRefSystem : RefSystem<ChunkStore?>() {
     override fun onEntityAdded(
         ref: Ref<ChunkStore?>,
         var2: AddReason,
@@ -47,7 +41,7 @@ object NPCSpawnerRefSystem: RefSystem<ChunkStore?>() {
 
 }
 
-object NPCSpawnerSpawnSystem: WorldEventEntitySystem<ChunkStore?, ChangeLevelEvent>(ChangeLevelEvent::class.java) {
+object NPCSpawnerSpawnSystem : WorldEventEntitySystem<ChunkStore?, ChangeLevelEvent>(ChangeLevelEvent::class.java) {
     override fun getQuery(): Query<ChunkStore?>? = NPCSpawner.TYPE
     override fun handle(
         buffer: CommandBuffer<ChunkStore?>,

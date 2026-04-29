@@ -3,20 +3,14 @@ package com.nsane.diesel.player
 import com.hypixel.hytale.component.Ref
 import com.hypixel.hytale.component.Store
 import com.hypixel.hytale.protocol.packets.interface_.HudComponent
-import com.hypixel.hytale.server.core.command.commands.player.PlayerCommand
 import com.hypixel.hytale.server.core.command.system.CommandContext
-import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand
-import com.hypixel.hytale.server.core.command.system.basecommands.AbstractWorldCommand
 import com.hypixel.hytale.server.core.entity.entities.Player
-import com.hypixel.hytale.server.core.entity.entities.player.hud.HudManager
 import com.hypixel.hytale.server.core.universe.PlayerRef
-
 import com.hypixel.hytale.server.core.universe.world.World
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
-import com.nsane.diesel.level.LevelManager
 
-class DieselCommand: AbstractPlayerCommand("diesel", "") {
+class DieselCommand : AbstractPlayerCommand("diesel", "") {
     override fun execute(
         ctx: CommandContext,
         store: Store<EntityStore?>,
@@ -30,7 +24,8 @@ class DieselCommand: AbstractPlayerCommand("diesel", "") {
         if (comp.disable) {
 
             comp.hud?.die()
-            hudManager.setVisibleHudComponents(playerRef,
+            hudManager.setVisibleHudComponents(
+                playerRef,
                 HudComponent.UtilitySlotSelector,
                 HudComponent.BlockVariantSelector,
                 HudComponent.StatusIcons,

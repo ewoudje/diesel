@@ -13,19 +13,19 @@ import com.hypixel.hytale.server.core.universe.PlayerRef
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.logic.LogicResource
-import com.nsane.diesel.logic.state_reader.StateReader
 import io.github.hytalekt.kytale.codec.buildCodec
 
-class PressurePlatePage(playerRef: PlayerRef, val readerRef: Ref<ChunkStore?>) : InteractiveCustomUIPage<PressurePlatePage.PageData>(
-    playerRef,
-    CustomPageLifetime.CanDismiss,
-    buildCodec(::PageData) {
-        addField("@Id", Codec.STRING) {
-            setter { id = it }
-            getter { id }
+class PressurePlatePage(playerRef: PlayerRef, val readerRef: Ref<ChunkStore?>) :
+    InteractiveCustomUIPage<PressurePlatePage.PageData>(
+        playerRef,
+        CustomPageLifetime.CanDismiss,
+        buildCodec(::PageData) {
+            addField("@Id", Codec.STRING) {
+                setter { id = it }
+                getter { id }
+            }
         }
-    }
-) {
+    ) {
     override fun handleDataEvent(ref: Ref<EntityStore>, store: Store<EntityStore>, data: PageData) {
         val reader = readerRef.store.getComponent(readerRef, PressurePlate.TYPE) ?: return
         val logic = store.getResource(LogicResource.TYPE)

@@ -1,12 +1,12 @@
 {
   "Interactions": [
-        {
-          "Type": "Projectile",
-          "Config": "Projectile_Config_Boxin_Grenade",
-          "Effects": {
-            "WorldSoundEventId": "SFX_Flak_Fire"
-          }
-        }
+    {
+      "Type": "Projectile",
+      "Config": "Projectile_Config_Boxin_Grenade",
+      "Effects": {
+        "WorldSoundEventId": "SFX_Flak_Fire"
+      }
+    }
   ],
   "Tags": {
     "Attack": [

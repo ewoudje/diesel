@@ -60,8 +60,8 @@
         }
       ]
     },
-
-    {"Type": "ChangeStat",
+    {
+      "Type": "ChangeStat",
       "StatModifiers": {
         "Shotgun_Scout_Ammo": 1
       }

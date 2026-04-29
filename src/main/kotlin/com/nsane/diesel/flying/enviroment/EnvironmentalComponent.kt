@@ -12,6 +12,7 @@ class EnvironmentalComponent : Component<EntityStore?> {
     override fun clone(): Component<EntityStore?>? = EnvironmentalComponent().also {
         it.id = id
     }
+
     companion object {
         val CODEC = buildCodec(::EnvironmentalComponent) {
             addField("EnvironmentalId", Codec.STRING) {

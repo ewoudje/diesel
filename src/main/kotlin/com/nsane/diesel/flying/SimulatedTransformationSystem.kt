@@ -1,10 +1,6 @@
 package com.nsane.diesel.flying
 
-import com.hypixel.hytale.component.ArchetypeChunk
-import com.hypixel.hytale.component.CommandBuffer
-import com.hypixel.hytale.component.ComponentAccessor
-import com.hypixel.hytale.component.RemoveReason
-import com.hypixel.hytale.component.Store
+import com.hypixel.hytale.component.*
 import com.hypixel.hytale.component.query.Query
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem
 import com.hypixel.hytale.math.vector.Vector3d
@@ -12,7 +8,6 @@ import com.hypixel.hytale.server.core.modules.entity.component.TransformComponen
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselPlugin
 import io.github.hytalekt.kytale.ext.minus
-import io.github.hytalekt.kytale.ext.plus
 import io.github.hytalekt.kytale.ext.plusAssign
 import java.rmi.UnexpectedException
 
@@ -69,5 +64,7 @@ object SimulatedTransformationSystem : EntityTickingSystem<EntityStore?>() {
         simulatedPos.position += simulatedPos.velocity.clone().scale(dt.toDouble())
         simulatedPos.rotation += simulatedPos.omega.clone().scale(dt)
     }
-    override fun getQuery(): Query<EntityStore?>? = Query.and(SimulatedTransformComponent.TYPE, TransformComponent.getComponentType())
+
+    override fun getQuery(): Query<EntityStore?>? =
+        Query.and(SimulatedTransformComponent.TYPE, TransformComponent.getComponentType())
 }

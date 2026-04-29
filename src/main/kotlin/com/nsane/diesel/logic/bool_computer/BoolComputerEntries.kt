@@ -22,7 +22,7 @@ open class BoolComputerEntries(
             makeEntries(this, ENTRY_AMOUNT, "")
         }
 
-        fun <T: BoolComputerEntries> makeEntries(self: CodecBuilder<T>, amount: Int, a: String) {
+        fun <T : BoolComputerEntries> makeEntries(self: CodecBuilder<T>, amount: Int, a: String) {
             for (i in 1..amount) {
                 self.addField("${a}Entry${i}Id", Codec.STRING) {
                     setter { entryIds[i - 1] = it }

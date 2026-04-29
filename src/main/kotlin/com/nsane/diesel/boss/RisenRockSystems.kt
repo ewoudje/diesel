@@ -42,7 +42,8 @@ object RisenRockTickSystem : EntityTickingSystem<EntityStore>() {
         commands: CommandBuffer<EntityStore?>
     ) {
         val risenRock = chunk.getComponent(index, RisenRockComponent.TYPE) ?: throw IndexOutOfBoundsException()
-        val transform = chunk.getComponent(index, TransformComponent.getComponentType()) ?: throw IndexOutOfBoundsException()
+        val transform =
+            chunk.getComponent(index, TransformComponent.getComponentType()) ?: throw IndexOutOfBoundsException()
         val world = store.externalData.world
 
         risenRock.lifetime++
@@ -52,14 +53,25 @@ object RisenRockTickSystem : EntityTickingSystem<EntityStore>() {
                 transform.position.y += ROCK_RISE_AMOUNT / ROCK_RISE_LIFETIME
                 damageNear(commands, world, transform.position)
             }
+
             in (ROCK_LIFETIME - ROCK_RISE_LIFETIME)..ROCK_LIFETIME -> transform.position.y -= ROCK_RISE_AMOUNT / ROCK_RISE_LIFETIME
             in ROCK_LIFETIME..Int.MAX_VALUE -> commands.removeEntity(chunk.getReferenceTo(index), RemoveReason.REMOVE)
         }
 
         if (risenRock.lifetime == ROCK_RISE_LIFETIME + 3) {
-            world.setBlock(floor(transform.position.x).toInt(),transform.position.y.toInt() + 1, floor(transform.position.z).toInt(), "RockBlock")
+            world.setBlock(
+                floor(transform.position.x).toInt(),
+                transform.position.y.toInt() + 1,
+                floor(transform.position.z).toInt(),
+                "RockBlock"
+            )
         } else if (risenRock.lifetime == ROCK_LIFETIME - ROCK_RISE_LIFETIME) {
-            world.setBlock(floor(transform.position.x).toInt(), transform.position.y.toInt() + 1, floor(transform.position.z).toInt(), "Empty")
+            world.setBlock(
+                floor(transform.position.x).toInt(),
+                transform.position.y.toInt() + 1,
+                floor(transform.position.z).toInt(),
+                "Empty"
+            )
         }
     }
 
@@ -70,7 +82,7 @@ object RisenRockTickSystem : EntityTickingSystem<EntityStore>() {
 
             val diff = transform.position - pos
             if (abs(diff.x) < 0.65 && abs(diff.y) < 2 && abs(diff.z) < 0.65) {
-               dealDamage(commands, diff, transform.rotation, player.reference!!)
+                dealDamage(commands, diff, transform.rotation, player.reference!!)
             }
         }
     }
@@ -80,10 +92,15 @@ object RisenRockTickSystem : EntityTickingSystem<EntityStore>() {
         val damage = Damage(damageSource, DamageCause.PHYSICAL!!, 20.0f)
         DamageSystems.executeDamage(player, commands, damage)
 
-        var knockbackComponent = commands.getComponent<KnockbackComponent?>(player, KnockbackComponent.getComponentType())
+        var knockbackComponent =
+            commands.getComponent<KnockbackComponent?>(player, KnockbackComponent.getComponentType())
         if (knockbackComponent == null) {
             knockbackComponent = KnockbackComponent()
-            commands.putComponent<KnockbackComponent?>(player, KnockbackComponent.getComponentType(), knockbackComponent)
+            commands.putComponent<KnockbackComponent?>(
+                player,
+                KnockbackComponent.getComponentType(),
+                knockbackComponent
+            )
         }
 
         diff.y *= 0.9
@@ -93,7 +110,8 @@ object RisenRockTickSystem : EntityTickingSystem<EntityStore>() {
         knockbackComponent.duration = 0.1f
     }
 
-    override fun getQuery(): Query<EntityStore?> = Query.and(RisenRockComponent.TYPE, TransformComponent.getComponentType())
+    override fun getQuery(): Query<EntityStore?> =
+        Query.and(RisenRockComponent.TYPE, TransformComponent.getComponentType())
 }
 
 object RisenRockRefSystem : RefSystem<EntityStore>() {

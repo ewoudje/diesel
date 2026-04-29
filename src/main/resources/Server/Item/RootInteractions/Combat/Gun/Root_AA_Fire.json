@@ -5,7 +5,7 @@
       "Costs": {
         "Turret_AA_Ammo": 1
       },
-      "Next":  {
+      "Next": {
         "Type": "ChangeStat",
         "Effects": {
           "ItemAnimationId": "Shoot"

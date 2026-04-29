@@ -11,7 +11,7 @@ import com.hypixel.hytale.server.core.universe.PlayerRef
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import io.github.hytalekt.kytale.codec.buildCodec
 
-class ClassSelectPage(ref: PlayerRef): InteractiveCustomUIPage<ClassSelectPage.PageData>(
+class ClassSelectPage(ref: PlayerRef) : InteractiveCustomUIPage<ClassSelectPage.PageData>(
     ref,
     CustomPageLifetime.CantClose,
     buildCodec(::PageData) {

@@ -4,7 +4,12 @@ import com.hypixel.hytale.component.CommandBuffer
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
 
 object LogicUtil {
-    fun isEntryTrue(buffer: CommandBuffer<ChunkStore?>, id: String, comparison: LogicComparison, value: String): Boolean? {
+    fun isEntryTrue(
+        buffer: CommandBuffer<ChunkStore?>,
+        id: String,
+        comparison: LogicComparison,
+        value: String
+    ): Boolean? {
         if (id.isEmpty()) return null
         val logic = buffer.externalData.world.entityStore.store.getResource(LogicResource.TYPE)
 

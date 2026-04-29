@@ -1,17 +1,16 @@
-import { fileURLToPath, URL } from 'node:url'
+import {fileURLToPath, URL} from 'node:url'
 
-import { defineConfig, type UserConfig } from 'vite'
+import {defineConfig, type UserConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import tailwindcss from '@tailwindcss/vite'
 import vueDevTools from 'vite-plugin-vue-devtools'
-import { resolve } from 'node:path'
-import { readdirSync } from 'node:fs'
-import { existsSync, readFileSync } from 'node:fs'
-import { CssBuildPlugin, HmrIdsPlugin, VuetalePlugin } from 'vuetale/vite'
-import { NATIVE_UI_TAGS } from 'vuetale'
-import vuetaleConfig from './.vuetale/config.json' with { type: 'json' }
-import vuetalePlugin from './lib/vuetale-plugin.json' with { type: 'json' }
+import {resolve} from 'node:path'
+import {existsSync, readdirSync, readFileSync} from 'node:fs'
+import {CssBuildPlugin, HmrIdsPlugin, VuetalePlugin} from 'vuetale/vite'
+import {NATIVE_UI_TAGS} from 'vuetale'
+import vuetaleConfig from './.vuetale/config.json' with {type: 'json'}
+import vuetalePlugin from './lib/vuetale-plugin.json' with {type: 'json'}
 import dts from 'unplugin-dts'
 
 function loadVuetaleAliases(): Record<string, string> {
@@ -67,6 +66,7 @@ function getPageEntries() {
       return entries
     }, {} as Record<string, string>)
 }
+
 function getHudEntries() {
   const hudsDir = resolve(__dirname, 'lib/huds')
   return readdirSync(hudsDir)
@@ -95,7 +95,7 @@ function getComposableEntries() {
 
 
 // https://vite.dev/config/
-export default defineConfig(({ mode }): UserConfig => ({
+export default defineConfig(({mode}): UserConfig => ({
   plugins: [
     tailwindcss(),
     vue({
@@ -107,7 +107,7 @@ export default defineConfig(({ mode }): UserConfig => ({
       },
     }),
     vueJsx(),
-    dts.vite({ tsconfigPath: './tsconfig.app.json', processor: 'vue' }),
+    dts.vite({tsconfigPath: './tsconfig.app.json', processor: 'vue'}),
 
     vueDevTools(),
     // @ts-expect-error - vite version may mismatch slightly

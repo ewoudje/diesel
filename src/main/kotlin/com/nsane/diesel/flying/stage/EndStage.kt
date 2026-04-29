@@ -5,8 +5,8 @@ import com.hypixel.hytale.math.vector.Vector3f
 import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.flying.AirSimulator
-import com.nsane.diesel.flying.enviroment.SimpleEnvironment
 import com.nsane.diesel.flying.enviroment.FlyingEnvironment
+import com.nsane.diesel.flying.enviroment.SimpleEnvironment
 import com.nsane.diesel.level.LevelManager
 import com.nsane.diesel.player.TurretComponent
 

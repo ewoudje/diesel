@@ -1,19 +1,13 @@
 package com.nsane.diesel;
 
 import com.hypixel.hytale.protocol.Packet;
-import com.hypixel.hytale.protocol.packets.interaction.CancelInteractionChain;
-import com.hypixel.hytale.protocol.packets.interaction.SyncInteractionChain;
-import com.hypixel.hytale.protocol.packets.interaction.SyncInteractionChains;
 import com.hypixel.hytale.protocol.packets.window.ClientOpenWindow;
 import com.hypixel.hytale.protocol.packets.window.CloseWindow;
 import com.hypixel.hytale.server.core.io.adapter.PlayerPacketFilter;
-import com.hypixel.hytale.server.core.modules.interaction.interaction.config.none.ChangeActiveSlotInteraction;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.nsane.diesel.player.DieselPlayerComponent;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DieselPacketFilter implements PlayerPacketFilter {

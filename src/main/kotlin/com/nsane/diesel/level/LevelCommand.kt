@@ -8,7 +8,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractWorldC
 import com.hypixel.hytale.server.core.universe.world.World
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 
-class LevelCommand: AbstractWorldCommand("level", "") {
+class LevelCommand : AbstractWorldCommand("level", "") {
     val levelNameArg = withRequiredArg("name", "An level", ArgTypes.STRING)
 
     override fun execute(

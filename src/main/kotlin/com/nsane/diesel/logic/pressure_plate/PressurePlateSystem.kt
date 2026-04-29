@@ -1,6 +1,5 @@
 package com.nsane.diesel.logic.pressure_plate
 
-import com.nsane.diesel.DieselPlugin
 import com.hypixel.hytale.component.ArchetypeChunk
 import com.hypixel.hytale.component.CommandBuffer
 import com.hypixel.hytale.component.Store
@@ -8,16 +7,14 @@ import com.hypixel.hytale.component.query.Query
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem
 import com.hypixel.hytale.math.shape.Box
 import com.hypixel.hytale.math.util.ChunkUtil
-import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType
 import com.hypixel.hytale.server.core.modules.block.BlockModule
 import com.hypixel.hytale.server.core.universe.world.chunk.BlockChunk
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore
 import com.nsane.diesel.logic.LogicResource
-import com.nsane.diesel.logic.state_reader.StateReader
 
-object PressurePlateSystem: EntityTickingSystem<ChunkStore>() {
+object PressurePlateSystem : EntityTickingSystem<ChunkStore>() {
     val BOX = Box(
-    -1.0, 0.0, -1.0,
+        -1.0, 0.0, -1.0,
         1.0, 3.0, 1.0
     )
 
@@ -41,11 +38,13 @@ object PressurePlateSystem: EntityTickingSystem<ChunkStore>() {
         val world = store.externalData.world
         val logic = world.entityStore.store.getResource(LogicResource.TYPE)
         val before = pressurePlate.pressedIn
-        pressurePlate.pressedIn = world.playerRefs.all { BOX.containsPosition(
-            it.transform.position.x - x,
-            it.transform.position.y - y,
-            it.transform.position.z - z
-        ) }
+        pressurePlate.pressedIn = world.playerRefs.all {
+            BOX.containsPosition(
+                it.transform.position.x - x,
+                it.transform.position.y - y,
+                it.transform.position.z - z
+            )
+        }
 
         if (!pressurePlate.registered) {
             pressurePlate.registered = true

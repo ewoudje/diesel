@@ -48,10 +48,10 @@
       "Behaviour": "Set"
     },
     {
-    "Type": "ChangeStat",
-    "StatModifiers": {
-      "Health" : 15
-    }
+      "Type": "ChangeStat",
+      "StatModifiers": {
+        "Health": 15
+      }
     }
   ]
 }

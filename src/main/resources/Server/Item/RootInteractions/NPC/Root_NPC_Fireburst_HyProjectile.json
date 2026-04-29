@@ -2,13 +2,12 @@
   "Interactions": [
     {
       "Type": "Simple",
-
       "$Comment": "Prepare Delay",
       "RunTime": 1,
       "Next": {
         "Type": "Projectile",
         "RunTime": 0.2,
-        "Effects":{
+        "Effects": {
           "ItemAnimationId": "Shoot",
           "CameraEffect": "Handgun_Shoot",
           "Particles": [

@@ -10,7 +10,7 @@ class StateWriterEntries(
     entryIds: Array<String> = Array(BoolComputerEntries.Companion.ENTRY_AMOUNT) { "" },
     entryComparisons: Array<LogicComparison> = Array(BoolComputerEntries.Companion.ENTRY_AMOUNT) { LogicComparison.EQUAL },
     entryValues: Array<String> = Array(BoolComputerEntries.Companion.ENTRY_AMOUNT) { "" },
-): BoolComputerEntries(entryIds, entryComparisons, entryValues) {
+) : BoolComputerEntries(entryIds, entryComparisons, entryValues) {
 
     override fun clone() = StateWriterEntries(
         this.entryStates.clone(),
@@ -18,6 +18,7 @@ class StateWriterEntries(
         this.entryComparisons.clone(),
         this.entryValues.clone()
     )
+
     companion object {
         const val ENTRY_AMOUNT = 6
         val HUD_CODEC = codec("@")

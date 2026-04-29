@@ -15,16 +15,17 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.logic.LogicResource
 import io.github.hytalekt.kytale.codec.buildCodec
 
-class StateReaderPage(playerRef: PlayerRef, val readerRef: Ref<ChunkStore?>) : InteractiveCustomUIPage<StateReaderPage.PageData>(
-    playerRef,
-    CustomPageLifetime.CanDismiss,
-    buildCodec(::PageData) {
-        addField("@Id", Codec.STRING) {
-            setter { id = it }
-            getter { id }
+class StateReaderPage(playerRef: PlayerRef, val readerRef: Ref<ChunkStore?>) :
+    InteractiveCustomUIPage<StateReaderPage.PageData>(
+        playerRef,
+        CustomPageLifetime.CanDismiss,
+        buildCodec(::PageData) {
+            addField("@Id", Codec.STRING) {
+                setter { id = it }
+                getter { id }
+            }
         }
-    }
-) {
+    ) {
     override fun handleDataEvent(ref: Ref<EntityStore>, store: Store<EntityStore>, data: PageData) {
         val reader = readerRef.store.getComponent(readerRef, StateReader.TYPE) ?: return
         val logic = store.getResource(LogicResource.TYPE)

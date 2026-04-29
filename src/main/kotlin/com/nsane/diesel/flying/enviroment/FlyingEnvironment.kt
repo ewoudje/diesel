@@ -8,6 +8,10 @@ interface FlyingEnvironment {
     val weather: String
 
     fun tick(accessor: ComponentAccessor<EntityStore?>, dt: Float)
-    fun environmentalUnloaded(accessor: ComponentAccessor<EntityStore?>, ref: Ref<EntityStore?>, component: EnvironmentalComponent)
+    fun environmentalUnloaded(
+        accessor: ComponentAccessor<EntityStore?>,
+        ref: Ref<EntityStore?>,
+        component: EnvironmentalComponent
+    )
 }
 

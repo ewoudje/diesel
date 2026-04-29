@@ -16,23 +16,24 @@ import com.nsane.diesel.logic.BooleanOperator
 import com.nsane.diesel.logic.LogicResource
 import io.github.hytalekt.kytale.codec.buildCodec
 
-class BoolComputerPage(playerRef: PlayerRef, val readerRef: Ref<ChunkStore?>) : InteractiveCustomUIPage<BoolComputerPage.PageData>(
-    playerRef,
-    CustomPageLifetime.CanDismiss,
-    buildCodec(::PageData) {
-        addField("@Id", Codec.STRING) {
-            setter { id = it }
-            getter { id }
-        }
+class BoolComputerPage(playerRef: PlayerRef, val readerRef: Ref<ChunkStore?>) :
+    InteractiveCustomUIPage<BoolComputerPage.PageData>(
+        playerRef,
+        CustomPageLifetime.CanDismiss,
+        buildCodec(::PageData) {
+            addField("@Id", Codec.STRING) {
+                setter { id = it }
+                getter { id }
+            }
 
-        addField("@Operator", BooleanOperator.CODEC) {
-            setter { operator = it }
-            getter { operator }
-        }
+            addField("@Operator", BooleanOperator.CODEC) {
+                setter { operator = it }
+                getter { operator }
+            }
 
-        BoolComputerEntries.makeEntries(this, BoolComputerEntries.ENTRY_AMOUNT, "@")
-    }
-) {
+            BoolComputerEntries.makeEntries(this, BoolComputerEntries.ENTRY_AMOUNT, "@")
+        }
+    ) {
     override fun handleDataEvent(ref: Ref<EntityStore>, store: Store<EntityStore>, data: PageData) {
         val computer = readerRef.store.getComponent(readerRef, BoolComputer.TYPE) ?: return
         val logic = store.getResource(LogicResource.TYPE)
@@ -78,5 +79,5 @@ class BoolComputerPage(playerRef: PlayerRef, val readerRef: Ref<ChunkStore?>) : 
         )
     }
 
-    data class PageData(var id: String = "", var operator: BooleanOperator = BooleanOperator.OR): BoolComputerEntries()
+    data class PageData(var id: String = "", var operator: BooleanOperator = BooleanOperator.OR) : BoolComputerEntries()
 }

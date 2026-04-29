@@ -1,13 +1,6 @@
 package com.nsane.diesel.level
 
-import com.hypixel.hytale.builtin.ambience.resources.AmbienceResource
-import com.hypixel.hytale.component.AddReason
-import com.hypixel.hytale.component.ArchetypeChunk
-import com.hypixel.hytale.component.CommandBuffer
-import com.hypixel.hytale.component.ComponentType
-import com.hypixel.hytale.component.Ref
-import com.hypixel.hytale.component.RemoveReason
-import com.hypixel.hytale.component.Store
+import com.hypixel.hytale.component.*
 import com.hypixel.hytale.component.query.Query
 import com.hypixel.hytale.component.system.RefChangeSystem
 import com.hypixel.hytale.component.system.RefSystem
@@ -23,7 +16,7 @@ import com.nsane.diesel.flying.stage.Stage
 import com.nsane.diesel.logic.LogicResource
 import com.nsane.diesel.player.DieselResource
 
-object LevelSystem: TickingSystem<EntityStore?>()  {
+object LevelSystem : TickingSystem<EntityStore?>() {
     override fun tick(
         dt: Float,
         idx: Int,
@@ -75,7 +68,7 @@ object LevelSystem: TickingSystem<EntityStore?>()  {
         }
     }
 
-    object RemoveLevelEntities: WorldEventEntitySystem<EntityStore?, ChangeLevelEvent>(ChangeLevelEvent::class.java) {
+    object RemoveLevelEntities : WorldEventEntitySystem<EntityStore?, ChangeLevelEvent>(ChangeLevelEvent::class.java) {
         override fun getQuery(): Query<EntityStore?>? = PartOfLevelComponent.TYPE
         override fun handle(
             buffer: CommandBuffer<EntityStore?>,
@@ -87,7 +80,7 @@ object LevelSystem: TickingSystem<EntityStore?>()  {
         }
     }
 
-    object TrackLevelEntities: RefSystem<EntityStore?>() {
+    object TrackLevelEntities : RefSystem<EntityStore?>() {
         override fun getQuery(): Query<EntityStore?>? = Query.and(
             Query.or(
                 NPCEntity.getComponentType(),
@@ -117,7 +110,7 @@ object LevelSystem: TickingSystem<EntityStore?>()  {
         }
     }
 
-    object TrackPartOfLevel: RefChangeSystem<EntityStore?, PartOfLevelComponent>() {
+    object TrackPartOfLevel : RefChangeSystem<EntityStore?, PartOfLevelComponent>() {
         override fun componentType(): ComponentType<EntityStore?, PartOfLevelComponent?> = PartOfLevelComponent.TYPE
 
         override fun onComponentAdded(

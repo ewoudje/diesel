@@ -1,36 +1,36 @@
 {
-    "Group": "nsane",
-    "Name": "DieselPlugin",
-    "Version": "1.0-SNAPSHOT",
-    "Description": "Epic robot adventure play now free",
-    "Authors": [
-        {
-            "Name": "ewoudje",
-            "Email": "me@ewoudje.com",
-            "Url": "https://ewoudje.com"
-        },
-        {
-            "Name": "rainyatrium",
-            "Email": "ana@rainyatrium.net",
-            "Url": "https://rainyatrium.net"
-        },
-        {
-            "Name": "ComicalSomber",
-            "Url": "https://github.com/ComicalSomber"
-        },
-        {
-            "Name": "Noisyrejects",
-            "Url": "https://sola.nekoweb.org/"
-        },
-        {
-            "Name": "Nahu Pyrope",
-            "Url": "https://www.youtube.com/nahupyrope"
-        }
-    ],
-    "DisabledByDefault": false,
-    "IncludesAssetPack": true,
-    "Dependencies": {
-        "kelp.li:Vuetale": "*"
+  "Group": "nsane",
+  "Name": "DieselPlugin",
+  "Version": "1.0-SNAPSHOT",
+  "Description": "Epic robot adventure play now free",
+  "Authors": [
+    {
+      "Name": "ewoudje",
+      "Email": "me@ewoudje.com",
+      "Url": "https://ewoudje.com"
     },
-    "Main": "com.nsane.diesel.DieselPlugin"
+    {
+      "Name": "rainyatrium",
+      "Email": "ana@rainyatrium.net",
+      "Url": "https://rainyatrium.net"
+    },
+    {
+      "Name": "ComicalSomber",
+      "Url": "https://github.com/ComicalSomber"
+    },
+    {
+      "Name": "Noisyrejects",
+      "Url": "https://sola.nekoweb.org/"
+    },
+    {
+      "Name": "Nahu Pyrope",
+      "Url": "https://www.youtube.com/nahupyrope"
+    }
+  ],
+  "DisabledByDefault": false,
+  "IncludesAssetPack": true,
+  "Dependencies": {
+    "kelp.li:Vuetale": "*"
+  },
+  "Main": "com.nsane.diesel.DieselPlugin"
 }

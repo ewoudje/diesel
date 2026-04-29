@@ -4,13 +4,9 @@ import com.hypixel.hytale.component.ArchetypeChunk
 import com.hypixel.hytale.component.CommandBuffer
 import com.hypixel.hytale.component.Store
 import com.hypixel.hytale.component.query.Query
-import com.hypixel.hytale.component.system.EntityEventSystem
-import com.hypixel.hytale.component.system.EventSystem
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem
-import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.math.vector.Vector3f
 import com.hypixel.hytale.protocol.GameMode
-import com.hypixel.hytale.protocol.InteractionState
 import com.hypixel.hytale.protocol.packets.interface_.HudComponent
 import com.hypixel.hytale.server.core.Message
 import com.hypixel.hytale.server.core.asset.type.model.config.Model
@@ -19,9 +15,7 @@ import com.hypixel.hytale.server.core.entity.EntityUtils
 import com.hypixel.hytale.server.core.entity.entities.Player
 import com.hypixel.hytale.server.core.entity.entities.player.movement.MovementConfig
 import com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager
-import com.hypixel.hytale.server.core.event.events.ecs.SwitchActiveSlotEvent
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent
-import com.hypixel.hytale.server.core.inventory.InventoryComponent
 import com.hypixel.hytale.server.core.inventory.ItemStack
 import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent
@@ -34,7 +28,7 @@ import com.nsane.diesel.level.ChangeLevelEvent
 import com.nsane.diesel.level.LevelManager
 import com.nsane.diesel.logic.LogicResource
 
-object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
+object DieselPlayerSystem : EntityTickingSystem<EntityStore?>() {
 
     @JvmStatic
     fun playerReadyEvent(event: PlayerReadyEvent) {
@@ -53,7 +47,8 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
         val model = Model.createScaledModel(modelAsset, 1.0f)
         val levelManager = store.getResource(LevelManager.TYPE)
         val playersResource = store.getResource(DieselResource.TYPE)
-        val playerComponent = store.getComponent(event.playerRef, DieselPlayerComponent.TYPE) ?: throw IllegalArgumentException()
+        val playerComponent =
+            store.getComponent(event.playerRef, DieselPlayerComponent.TYPE) ?: throw IllegalArgumentException()
         val hudManager = event.player.hudManager
         playerComponent.playerClass = PlayerClass.SCOUT
         store.replaceComponent(event.playerRef, ModelComponent.getComponentType(), ModelComponent(model))
@@ -61,10 +56,13 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
         if (playerComponent.disable) return
         event.player.pageManager.openCustomPage(event.playerRef, store, WelcomePage(ref))
 
-        levelManager.currentLevel?.let { store.addComponent(event.playerRef,
-            Teleport.getComponentType(),
-            Teleport.createForPlayer(it.respawnPoint, Vector3f())
-        ) }
+        levelManager.currentLevel?.let {
+            store.addComponent(
+                event.playerRef,
+                Teleport.getComponentType(),
+                Teleport.createForPlayer(it.respawnPoint, Vector3f())
+            )
+        }
 
         val hud = DieselHud(store, ref.reference)
         playerComponent.hud = hud
@@ -76,7 +74,8 @@ object DieselPlayerSystem: EntityTickingSystem<EntityStore?>() {
         }
     }
 
-    object UILevelCommunication: WorldEventEntitySystem<EntityStore?, ChangeLevelEvent?>(ChangeLevelEvent::class.java) {
+    object UILevelCommunication :
+        WorldEventEntitySystem<EntityStore?, ChangeLevelEvent?>(ChangeLevelEvent::class.java) {
         override fun getQuery(): Query<EntityStore?>? = DieselPlayerComponent.TYPE
 
         override fun handle(

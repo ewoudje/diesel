@@ -4,14 +4,12 @@ import com.hypixel.hytale.assetstore.map.IndexedLookupTableAssetMap
 import com.hypixel.hytale.component.*
 import com.hypixel.hytale.component.query.Query
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem
-import com.hypixel.hytale.math.shape.Box
 import com.hypixel.hytale.math.vector.Vector2d
 import com.hypixel.hytale.math.vector.Vector3d
 import com.hypixel.hytale.math.vector.Vector4d
 import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect
 import com.hypixel.hytale.server.core.entity.EntityUtils
 import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent
-import com.hypixel.hytale.server.core.entity.entities.Player
 import com.hypixel.hytale.server.core.entity.entities.ProjectileComponent
 import com.hypixel.hytale.server.core.entity.knockback.KnockbackComponent
 import com.hypixel.hytale.server.core.inventory.InventoryComponent.Armor
@@ -35,11 +33,7 @@ import com.hypixel.hytale.server.core.modules.physics.util.PhysicsMath
 import com.hypixel.hytale.server.core.modules.projectile.component.Projectile
 import com.hypixel.hytale.server.core.universe.world.ParticleUtil
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
-import com.nsane.diesel.flying.AirSimulator
-import com.nsane.diesel.flying.HelicopterComponent
-import com.nsane.diesel.flying.PlaneComponent
-import com.nsane.diesel.flying.SimulatedTransformComponent
-import com.nsane.diesel.flying.SimulatedTransformationSystem
+import com.nsane.diesel.flying.*
 import it.unimi.dsi.fastutil.objects.Object2FloatMap
 import it.unimi.dsi.fastutil.objects.ObjectIterator
 import java.util.function.DoubleBinaryOperator
@@ -48,7 +42,7 @@ import java.util.stream.IntStream
 import javax.annotation.Nonnull
 import kotlin.math.max
 
-object DieselProjectileSystem: EntityTickingSystem<EntityStore?>() {
+object DieselProjectileSystem : EntityTickingSystem<EntityStore?>() {
     override fun tick(
         dt: Float,
         idx: Int,
@@ -75,16 +69,18 @@ object DieselProjectileSystem: EntityTickingSystem<EntityStore?>() {
             .mapNotNull { EntityUtils.getEntity(it, commands) }
 
         CollisionModule.findCollisions(
-                boundingBox.boundingBox,
-                pos,
+            boundingBox.boundingBox,
+            pos,
             velocity.clone(),
-                collisions,
-                commands)
+            collisions,
+            commands
+        )
 
         for (entity in entities) {
             if (entity == projectile.owner) continue
             if (commands.getComponent(entity, PlaneComponent.TYPE) != null ||
-                commands.getComponent(entity, HelicopterComponent.TYPE) != null) {
+                commands.getComponent(entity, HelicopterComponent.TYPE) != null
+            ) {
                 additiveCollision(
                     entity,
                     pos,
@@ -100,11 +96,23 @@ object DieselProjectileSystem: EntityTickingSystem<EntityStore?>() {
         if (firstChar != null) {
             attemptEntityDamage(commands, projectile, ref, firstChar, velocity.clone().normalize())
             type.damageEffects?.worldParticles?.let {
-                ParticleUtil.spawnParticleEffects(it, firstChar.collisionPoint, null, commands.externalData.world.playerRefs.map { it.reference }, commands)
+                ParticleUtil.spawnParticleEffects(
+                    it,
+                    firstChar.collisionPoint,
+                    null,
+                    commands.externalData.world.playerRefs.map { it.reference },
+                    commands
+                )
             }
         } else if (firstBlock != null) {
             type.blockHitParticles?.let {
-                ParticleUtil.spawnParticleEffects(it, firstBlock.collisionPoint, null, commands.externalData.world.playerRefs.map { it.reference }, commands)
+                ParticleUtil.spawnParticleEffects(
+                    it,
+                    firstBlock.collisionPoint,
+                    null,
+                    commands.externalData.world.playerRefs.map { it.reference },
+                    commands
+                )
             }
 
             val sim = commands.getResource(AirSimulator.TYPE)
@@ -142,14 +150,15 @@ object DieselProjectileSystem: EntityTickingSystem<EntityStore?>() {
                     val position = entityTransformComponent.position
                     val boundingBox = entityBoundingBoxComponent.boundingBox
                     if (CollisionMath.intersectVectorAABB(
-                        pos,
-                        v,
-                        position.getX(),
-                        position.getY(),
-                        position.getZ(),
-                        boundingBox,
-                        minMax
-                    )) {
+                            pos,
+                            v,
+                            position.getX(),
+                            position.getY(),
+                            position.getZ(),
+                            boundingBox,
+                            minMax
+                        )
+                    ) {
                         coll.assign(pos).addScaled(v, minMax.x)
                         result.allocCharacterCollision().assign(coll, minMax.x, ref, false)
                     }
@@ -170,7 +179,8 @@ object DieselProjectileSystem: EntityTickingSystem<EntityStore?>() {
         val targetRef = target.entityReference
         val yaw = PhysicsMath.normalizeTurnAngle(PhysicsMath.headingFromDirection(direction.x, direction.z))
         val targetPos = commandBuffer.getComponent(targetRef, TransformComponent.getComponentType())!!.position
-        val hit = Vector4d(target.collisionPoint.x, target.collisionPoint.y, target.collisionPoint.z, target.collisionStart)
+        val hit =
+            Vector4d(target.collisionPoint.x, target.collisionPoint.y, target.collisionPoint.z, target.collisionStart)
 
         val damageCalculator: DamageCalculator? = type.damageCalculator
         val damageEffects: DamageEffects? = type.damageEffects

@@ -72,8 +72,8 @@ public class DieselHud {
         ui.setHudData("setLogic", (BiConsumer<String, String>) (k, v) -> {
             world.execute(() -> {
                 if (k.equals("level.TopLevel")) {
-                        var pageManager = store.getComponent(ref, Player.getComponentType()).getPageManager();
-                        pageManager.openCustomPage(ref, store, new WinPage(store.getComponent(ref, PlayerRef.getComponentType())));
+                    var pageManager = store.getComponent(ref, Player.getComponentType()).getPageManager();
+                    pageManager.openCustomPage(ref, store, new WinPage(store.getComponent(ref, PlayerRef.getComponentType())));
                 } else store.getResource(LogicResource.Companion.getTYPE()).initValue(k, v);
             });
         });
@@ -120,7 +120,7 @@ public class DieselHud {
         ui.setHudData("dashes", dashCharges);
         ui.setHudData("class", clazz);
         ui.setHudData("hotbarIdx", slot > 1 ? slot > 6 ? 0 : 1 : slot);
-        switch (clazz){
+        switch (clazz) {
             case "turret":
                 ui.setHudData("ammo", entityStatMapComponent.get("Turret_AA_Ammo").get());
                 break;
@@ -136,12 +136,12 @@ public class DieselHud {
         //ui.setHudData("progress2",foo)
         if (sim.getFlying()) {
             ui.setHudData("progress1", sim.getShipHealth());
-            ui.setHudData("progress1Label","Ship Health");
+            ui.setHudData("progress1Label", "Ship Health");
         } else ui.setHudData("progress1Label", "");
-        ui.setHudData("progress1",0.5);
-        ui.setHudData("progress1Label","");
-        ui.setHudData("progress2",0.6);
-        ui.setHudData("progress2Label","");
+        ui.setHudData("progress1", 0.5);
+        ui.setHudData("progress1Label", "");
+        ui.setHudData("progress2", 0.6);
+        ui.setHudData("progress2Label", "");
         //"currentLevel" for current level
     }
 

@@ -80,8 +80,7 @@
           "Costs": {
             "Shotgun_Scout_Ammo": 1
           },
-          "Next":
-          {
+          "Next": {
             "Type": "DieselShoot",
             "RunTime": 0,
             "Effects": {
@@ -126,8 +125,7 @@
                 "Shotgun_Scout_Ammo": 0
               },
               "Behaviour": "Set",
-              "Next":
-              {
+              "Next": {
                 "Type": "ApplyForce",
                 "Force": 22,
                 "AdjustVertical": false,
