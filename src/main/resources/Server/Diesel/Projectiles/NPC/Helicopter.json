@@ -8,7 +8,7 @@
   "DamageCalculator": {
     "Class": "Light",
     "BaseDamage": {
-      "Projectile":7
+      "AirProjectiles": 2
     }
   },
   "DamageEffects": {
