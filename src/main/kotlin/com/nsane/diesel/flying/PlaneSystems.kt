@@ -23,6 +23,7 @@ import com.hypixel.hytale.server.core.universe.world.SoundUtil
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
 import com.nsane.diesel.DieselPlugin
 import com.nsane.diesel.flying.PlaneTickSystem.buildPlane
+import com.nsane.diesel.level.LevelManager
 import com.nsane.diesel.projectiles.DieselProjectileType
 import com.nsane.diesel.projectiles.DieselShootInteraction
 import io.github.hytalekt.kytale.ext.minus
@@ -229,10 +230,12 @@ object PlaneRefSystem : RefSystem<EntityStore?>() {
         buffer: CommandBuffer<EntityStore?>
     ) {
         val sim = buffer.getResource(AirSimulator.TYPE)
+        val levelManager = buffer.getResource(LevelManager.TYPE)
         val transform = buffer.getComponent(ref, TransformComponent.getComponentType())!!
         val death = buffer.getComponent(ref, DeathComponent.getComponentType())
 
-        if (reason == RemoveReason.REMOVE && death == null) {
+        if (reason == RemoveReason.REMOVE && death == null && levelManager.currentLevel == levelManager.oldLevel) {
+            DieselPlugin.LOGGER.atWarning().log("Despawned a plane??? Spawning new one!")
             buffer.addEntity(buildPlane(sim, store), AddReason.SPAWN)
         }
 

@@ -9,8 +9,11 @@ import com.hypixel.hytale.server.core.entity.entities.Player
 import com.hypixel.hytale.server.core.universe.PlayerRef
 import com.hypixel.hytale.server.core.universe.world.World
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore
+import com.nsane.diesel.logic.LogicResource
 
 class DieselCommand : AbstractPlayerCommand("diesel", "") {
+    val resetLogic = withFlagArg("resetLogic", "")
+
     override fun execute(
         ctx: CommandContext,
         store: Store<EntityStore?>,
@@ -18,6 +21,12 @@ class DieselCommand : AbstractPlayerCommand("diesel", "") {
         playerRef: PlayerRef,
         var5: World
     ) {
+        if (resetLogic.get(ctx)) {
+            val logic = store.getResource(LogicResource.TYPE)
+            logic.clear()
+            return
+        }
+
         val comp = store.getComponent(ref, DieselPlayerComponent.TYPE)!!
         comp.disable = !comp.disable
         val hudManager = store.getComponent(ref, Player.getComponentType())!!.hudManager

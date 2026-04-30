@@ -25,6 +25,10 @@ class LogicResource(
         refs[id] = value
     }
 
+    fun clear() {
+        refs.clear()
+    }
+
     override fun clone(): Resource<EntityStore?> = LogicResource(refs.toMutableMap())
 
 
