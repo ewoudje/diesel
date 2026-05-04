@@ -24,7 +24,7 @@
     }
   },
   "Modify": {
-    "MaxHealth": 300,
+    "MaxHealth": 90,
     "HearingRange": 25,
     "ViewSector": 270,
     "WakingPeriod": [
