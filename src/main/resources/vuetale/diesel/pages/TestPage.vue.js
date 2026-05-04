@@ -1,58 +1,42 @@
-import {
-    createBlock as c,
-    createCommentVNode as E,
-    createElementVNode as r,
-    createVNode as d,
-    defineComponent as I,
-    openBlock as m,
-    ref as n,
-    toDisplayString as a,
-    unref as e,
-    withCtx as i
-} from "vue";
-import {Common as _} from "vt:@core/components/Common";
-import {Core as V} from "vt:@core/components/core";
-import {useData as h} from "vt:@core/composables/useData";
-
-const x = {
-    "layout-mode": "TopScrolling",
-    anchor: {Full: 1}
-}, t = /* @__PURE__ */ I({
-    __name: "TestPage",
-    setup(s) {
-        console.log("WORKS!");
-
-        function p() {
-            console.log("CLICKED ME"), l.value = !l.value;
-        }
-
-        const o = n("Hello!"), l = n(!1), f = n("nothing yet"), v = h("test", "default value");
-        return (T, u) => (m(), c(e(_).DecoratedContainer, {anchor: {Width: 500, Height: 300}}, {
-            title: i(() => [
-                d(e(_).Title, {text: "Vuetale Starter!"})
-            ]),
-            content: i(() => [
-                r("Group", x, [
-                    r("Label", null, "Custom! " + a(f.value) + " | " + a(e(v)), 1),
-                    r("Label", null, a(o.value), 1),
-                    d(e(_).TextButton, {
-                        onActivating: p,
-                        text: "CLICK ME"
-                    }),
-                    l.value ? (m(), c(e(V).TextField, {
-                        key: 0,
-                        modelValue: o.value,
-                        "onUpdate:modelValue": u[0] || (u[0] = (C) => o.value = C)
-                    }, null, 8, ["modelValue"])) : E("", !0)
-                ])
-            ]),
-            _: 1
-        }));
+import { defineComponent as v, ref as l, openBlock as c, createBlock as i, unref as e, withCtx as m, createElementVNode as n, toDisplayString as a, createVNode as s, createCommentVNode as x } from "vue";
+import { Common as r } from "vt:@core/components/Common";
+import { Core as _ } from "vt:@core/components/core";
+import { useData as g } from "vt:@core/composables/useData";
+const V = {
+  anchor: { Full: 1 },
+  "layout-mode": "TopScrolling"
+}, E = /* @__PURE__ */ v({
+  __name: "TestPage",
+  setup(h) {
+    console.log("WORKS!");
+    function d() {
+      console.log("CLICKED ME"), o.value = !o.value;
     }
+    const t = l("Hello!"), o = l(!1), p = l("nothing yet"), f = g("test", "default value");
+    return (T, u) => (c(), i(e(r).DecoratedContainer, { anchor: { Width: 500, Height: 300 } }, {
+      title: m(() => [
+        s(e(r).Title, { text: "Vuetale Starter!" })
+      ]),
+      content: m(() => [
+        n("Group", V, [
+          n("Label", null, "Custom! " + a(p.value) + " | " + a(e(f)), 1),
+          n("Label", null, a(t.value), 1),
+          s(e(r).TextButton, {
+            text: "CLICK ME",
+            onActivating: d
+          }),
+          o.value ? (c(), i(e(_).TextField, {
+            key: 0,
+            modelValue: t.value,
+            "onUpdate:modelValue": u[0] || (u[0] = (C) => t.value = C)
+          }, null, 8, ["modelValue"])) : x("", !0)
+        ])
+      ]),
+      _: 1
+    }));
+  }
 });
-t.__hmrId = "7de778b2";
-typeof __VUE_HMR_RUNTIME__ < "u" && (__VUE_HMR_RUNTIME__.createRecord(t.__hmrId, t) || __VUE_HMR_RUNTIME__.reload(t.__hmrId, t));
 export {
-    t as default
+  E as default
 };
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVGVzdFBhZ2UudnVlLmpzIiwic291cmNlcyI6W10sInNvdXJjZXNDb250ZW50IjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OzsifQ==
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVGVzdFBhZ2UudnVlLmpzIiwic291cmNlcyI6W10sInNvdXJjZXNDb250ZW50IjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7In0=

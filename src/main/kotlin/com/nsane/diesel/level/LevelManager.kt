@@ -56,7 +56,7 @@ class LevelManager : Resource<EntityStore?> {
 
             "ChaseInStreets" -> LogicBasedLevel(
                 "ChaseInStreets",
-                "Get to the car!",
+                "Get to the ship",
                 Vector3d(456.0, 13.0, -80.0),
                 "atShip",
                 "Shipyard"
@@ -139,7 +139,7 @@ class LevelManager : Resource<EntityStore?> {
 
             "TopLevel" -> Level(
                 "TopLevel",
-                "Show the boss who's boss",
+                "Depose him",
                 Vector3d(1063.0, 85.0, 86.0)
             )
 
